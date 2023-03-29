@@ -1,15 +1,14 @@
 import React from "react";
-import "./app.scss"
 
-class App extends React.Component {
+class Login extends React.Component {
 
     render() {
         return (
             <div>
-                Hello
+                Login
             </div>
         )
     }
 }
 
-export default App
+export default Login

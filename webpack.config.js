@@ -87,7 +87,7 @@ module.exports = (env, argv) => {
       historyApiFallback: true,
       // Cấu hình phục vụ file html trong public
       static: {
-        directory: path.resolve(__dirname, 'public', 'index.html'),
+        directory: path.resolve(__dirname, 'src', 'index.html'),
         serveIndex: true,
         watch: true
       }
@@ -102,7 +102,7 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: 'public',
+            from: 'src',
             to: '.',
             filter: (name) => {
               return !name.endsWith('index.html')
@@ -112,7 +112,7 @@ module.exports = (env, argv) => {
       }),
 
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'public', 'index.html'),
+        template: path.resolve(__dirname, 'src', 'index.html'),
         filename: 'index.html'
       }),
       new ESLintPlugin({
