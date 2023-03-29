@@ -1,5 +1,5 @@
-import utils from "./common"
+import Common from "./common"
 
-export default {
-    utils
+export {
+    Common
 }

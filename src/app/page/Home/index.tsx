@@ -1,11 +1,12 @@
 import React from "react";
+import { Common } from "utils";
 
 class Home extends React.Component {
 
     render() {
         return (
             <div>
-                Home
+                {Common.convertShortenString("Home", 2)}
             </div>
         )
     }

@@ -22,9 +22,11 @@ module.exports = (env, argv) => {
       alias: {
         // Cấu hình alias cho webpack
         // để khi import cho ngắn gọn
-        // Ví dụ: import Login from '@pages/Login'
-        // Thay vì: import Login from '../pages/Login' chẳng hạn
-        '@pages': path.resolve(__dirname, './src/pages')
+        // Ví dụ: import Login from 'pages/app'
+        // Thay vì: import Login from '../pages/app' chẳng hạn
+        'model': path.resolve(__dirname, './src/model/index.ts'),
+        'utils': path.resolve(__dirname, './src/utils/index.ts'),
+        'redux': path.resolve(__dirname, './src/redux/index.ts'),
       }
     },
     // File đầu vào cho webpack, file này thường là file import mọi file khác
