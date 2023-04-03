@@ -6,14 +6,20 @@
 ## Common
 Icon name=""
 Label
-TextField
+TextField  (1 dong or nhieu dong)
 Button
 Dropdown
 
-
 Table
+messagerBar
 Loading
 openLoading();
 closeLoading();
 
 # redux toolkit: https://freetuts.net/xay-dung-ung-dung-crud-voi-redux-toolkit-5666.html
+
+
+# components
+chi tiết thuốc
+chi tiết user
+reportstatic dùng table....
