@@ -4,15 +4,15 @@
 
 # https://bachenoke.ketoa.vn/ phamduythang22@gmail.com	phamd
 ## Common
-<Icon name="">
-<Label>
-<TextField>
-<Button>
-<Dropdown>
+Icon name=""
+Label
+TextField
+Button
+Dropdown
 
 
-<Table>
-<Loading>
+Table
+Loading
 openLoading();
 closeLoading();
 
