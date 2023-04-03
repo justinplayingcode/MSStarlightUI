@@ -10,12 +10,15 @@ class App extends React.Component {
         const id = 11;
 
         return (
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path={`/login${id}`} element={<Login />} />
-                </Routes>
-            </Router>
+            <div className="app">
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path={`/login${id}`} element={<Login />} />
+                    </Routes>
+                </Router>
+
+            </div>
         )
     }
 }

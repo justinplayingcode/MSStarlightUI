@@ -6,7 +6,7 @@
   "author": "Justin small hands <phamduythang00@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@fluentui/react": "^8.106.10",
+    "@fluentui/react": "^8.107.1",
     "@reduxjs/toolkit": "^1.9.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

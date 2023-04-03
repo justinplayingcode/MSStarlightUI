@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path')
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+const path = require('path');
 module.exports = {
   extends: [
     'eslint:recommended',
@@ -26,6 +27,9 @@ module.exports = {
   },
   rules: {
     'react/react-in-jsx-scope': 'off',
-    'react/jsx-no-target-blank': 'warn',
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars":"off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain":"off",
   }
 }
