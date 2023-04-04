@@ -27,7 +27,7 @@ module.exports = (env, argv) => {
         'src':path.resolve(__dirname, './src'),
         'model': path.resolve(__dirname, './src/model/index.ts'),
         'utils': path.resolve(__dirname, './src/utils/index.ts'),
-        'redux': path.resolve(__dirname, './src/redux/index.ts'),
+        'reduxs': path.resolve(__dirname, './src/redux/reducers/index.ts'),
       }
     },
     // File đầu vào cho webpack, file này thường là file import mọi file khác

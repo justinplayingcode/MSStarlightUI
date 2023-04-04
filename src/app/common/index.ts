@@ -1,4 +1,4 @@
-import { DetailsListTable } from "./DetailsListTable";
+import { DetailsListTable } from "./detailsListTable";
 
 export {
     DetailsListTable
