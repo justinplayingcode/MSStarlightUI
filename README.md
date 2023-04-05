@@ -4,9 +4,9 @@
 
 # https://bachenoke.ketoa.vn/ phamduythang22@gmail.com	phamd
 ## Common
-Icon name=""
-Label
-TextField  (1 dong or nhieu dong)
+Icon name="" (check)
+TextField  (1 dong or nhieu dong) (check)
+Label (check)
 Button
 Dropdown
 
