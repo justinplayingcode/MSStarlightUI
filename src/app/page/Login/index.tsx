@@ -1,14 +1,11 @@
-import React from "react";
+import * as React from "react";
+import "./index.scss";
 
-class Login extends React.Component {
+export const Login = () =>  {
 
-    render() {
-        return (
+    return (
             <div>
                 Login
             </div>
         )
-    }
 }
-
-export default Login

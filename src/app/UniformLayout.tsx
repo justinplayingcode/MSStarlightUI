@@ -4,8 +4,6 @@ import Layout from "./common/layout";
 import { pageConstant } from "model";
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
-import { LoadingDot } from "./common/loading";
-
 interface UniformLayoutPropsFromState {
 }
 
@@ -36,8 +34,8 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
             <div id="uniform-layout-wrapper">
                 <Router>
                     <Routes>
-                        <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
-                        <Route path="/login" element={<Layout page={pageConstant.LAYOUT_LOGIN}/>} />
+                        <Route path="/home" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
+                        <Route path="/" element={<Layout page={pageConstant.LAYOUT_LOGIN}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}
                     </Routes>
                 </Router>

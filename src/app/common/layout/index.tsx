@@ -5,18 +5,18 @@ import { connect } from "react-redux";
 import UniformHeader from "../header";
 import { pageConstant } from "model";
 import Home from "src/app/page/Home";
-import Login from "src/app/page/Login";
+import { Login } from "src/app/page/Login";
 import { LoadingDot } from "../loading";
 
-interface DefaultLayoutOwnProps {
+interface LayoutOwnProps {
 	page: string;
 }
 
-interface DefaultLayoutPropsFromState {
+interface LayoutPropsFromState {
     isLoading: boolean;
 }
 
-interface DefaultLayoutPropsFromDispatch {
+interface LayoutPropsFromDispatch {
     
 }
 
@@ -26,37 +26,56 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = { };
 
-type DefaultLayoutProps = DefaultLayoutOwnProps & DefaultLayoutPropsFromState & DefaultLayoutPropsFromDispatch;
+type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispatch;
 
-class Layout extends React.Component<DefaultLayoutProps> {
-    constructor(props: DefaultLayoutProps) {
+interface LayoutState {
+    hasLayout: boolean;
+}
+
+class Layout extends React.Component<LayoutProps, LayoutState> {
+    constructor(props: LayoutProps) {
 		super(props);
+        this.state = {
+            hasLayout: false
+        }
 	}
 
-    renderContent() {
+    withoutDefaulLayout() {
         const { page } = this.props;
         switch(page) {
-            case pageConstant.LAYOUT_HOME:
-                return <Home/>
             case pageConstant.LAYOUT_LOGIN:
                 return <Login/>
+            default:
+                this.setState({hasLayout: true});
+                return;
         }
     }
 
-    renderWrapper() {
+    hasDefaulLayout() {
+        const { page } = this.props;
+        let content: JSX.Element;
+        switch(page) {
+            case pageConstant.LAYOUT_HOME:
+                content = <Home/>
+                break;
+            default:
+                content = <></>
+                break;
+        }
         return (
-                <div id="layout-wrapper">
+            <div id="layout-wrapper">
                 <UniformHeader/>
-                {this.renderContent()}    
+                {content}    
             </div>
         )
     }
 
     render() {
+        const { hasLayout } = this.state;
         return (
             <>
             {this.props.isLoading ? <LoadingDot/> : <React.Fragment/>}
-            {this.renderWrapper()}
+            {hasLayout ? this.hasDefaulLayout() : this.withoutDefaulLayout()}
             </>
         )
     }
