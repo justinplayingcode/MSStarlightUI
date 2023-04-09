@@ -44,7 +44,7 @@ export interface ITableGridProps<T> {
 
     enableAutoPercentColumnWidth?: boolean;
 
-    onGridRowClick?: (item: T) => void;
+    onGridRowClicks?: (item: T) => void;
 
     hasCheckbox?: boolean;
 

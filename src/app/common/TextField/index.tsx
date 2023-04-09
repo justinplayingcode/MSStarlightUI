@@ -1,7 +1,7 @@
-import { TextField } from "@fluentui/react"
+import { IRenderFunction, TextField } from "@fluentui/react"
 import * as React from "react"
 
-export interface ITextFieldProps{
+export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElement | HTMLTextAreaElement>{
     autoAdjustHeight?: boolean;
     borderless?: boolean;
     canRevealPassword?: boolean;
@@ -14,6 +14,7 @@ export interface ITextFieldProps{
     label?: string;
     multiline?: boolean;
     onChange?:(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void
+    onRenderDescription?: IRenderFunction<ITextFieldProps>;
     readonly?:boolean;
     resizable?: boolean;
     value?: string
@@ -35,8 +36,10 @@ export const TextFieldComponent = (props: ITextFieldProps ) => {
             label={props?.label}
             multiline={props?.multiline}
             onChange={props?.onChange}
+            onRenderDescription={props.onRenderDescription!}
             readOnly={props?.readonly}
             resizable={props?.resizable}
+            type={props?.type}
             value={props?.value}
         />
     )

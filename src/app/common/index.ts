@@ -1,5 +1,15 @@
 import { DetailsListTable } from "./detailsListTable";
+import { TextFieldComponent } from "./TextField";
+import { Avatar } from "./Avatar/avatar";
+import { DropdownComponent } from "./Dropdown";
+import { IconComponent } from "./Icon";
+import { LabelComponent } from "./Label";
 
 export {
-    DetailsListTable
+    Avatar,
+    DetailsListTable,
+    DropdownComponent,
+    IconComponent,
+    LabelComponent,
+    TextFieldComponent
 }
