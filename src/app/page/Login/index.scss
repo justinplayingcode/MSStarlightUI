@@ -1,0 +1,13 @@
+.login-container{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("https://res.cloudinary.com/dipiauw0v/image/upload/v1681017217/DATN/login-background_n4dhzx.jpg");
+    background-size: cover;
+    .login-form-container{
+        width: 300px;
+        padding: 50px 30px 30px 30px;
+        border: 1px solid rgb(0, 120, 212);
+        border-radius: 8px;
+        background-color: white;
+    }
+}

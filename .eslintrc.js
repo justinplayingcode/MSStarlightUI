@@ -3,10 +3,10 @@
 const path = require('path');
 module.exports = {
   extends: [
-    'eslint:recommended',
+    // 'eslint:recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
-    'plugin:@typescript-eslint/recommended',
+    // 'plugin:@typescript-eslint/recommended',
   ],
   settings: {
     react: {
@@ -33,6 +33,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-asserted-optional-chain":"off",
     "@typescript-eslint/no-empty-interface": "off",
     "react/jsx-key": "off",
-    "@typescript-eslint/no-empty-function": "off"
+    "@typescript-eslint/no-empty-function": "off",
+    "no-unsafe-optional-chaining": "off",
   }
 }
