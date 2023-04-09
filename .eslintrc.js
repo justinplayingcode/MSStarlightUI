@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 const path = require('path');
 module.exports = {
   extends: [
@@ -23,17 +21,26 @@ module.exports = {
     }
   },
   env: {
-    node: true
+    node: true,
+    es6: true
   },
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    allowImportExportEverywhere: true
+  },
+  parser: "@typescript-eslint/parser",
   rules: {
     'react/react-in-jsx-scope': 'off',
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-unused-vars":"off",
+    "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-non-null-asserted-optional-chain":"off",
     "@typescript-eslint/no-empty-interface": "off",
     "react/jsx-key": "off",
     "@typescript-eslint/no-empty-function": "off",
     "no-unsafe-optional-chaining": "off",
-  }
+    "no-const-assign": "off",
+    "@typescript-eslint/no-var-requires": "off",
+  },
 }
