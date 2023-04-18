@@ -4,7 +4,7 @@ import { Avatar } from "./Avatar/avatar";
 import { DropdownComponent } from "./Dropdown";
 import { IconComponent } from "./Icon";
 import { LabelComponent } from "./Label";
-import { ErrorPage } from "./Error404"
+import { ErrorPage } from "./ErrorPage"
 
 export {
     Avatar,

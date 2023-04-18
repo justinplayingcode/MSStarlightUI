@@ -1,3 +1,6 @@
+$header-height: 60px;
+$theme-blue: rgb(0, 120, 212);
+
 .login-container{
     width: 100vw;
     height: 100vh;
@@ -9,5 +12,63 @@
         border: 1px solid rgb(0, 120, 212);
         border-radius: 8px;
         background-color: white;
+    }
+}
+
+.home-container{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    .home-content{
+        width: 1200px;
+        min-height: 100vh;
+
+        display: flex;
+        flex-direction: row;
+
+        .left-content{
+            height: 100vh;
+            width: 220px;
+
+            display: flex;
+            justify-content: space-between;
+            .header-container{
+                height: $header-height;
+                .nav-header{
+                    height: 42px;
+    
+                    color: $theme-blue;
+                    font-size: 24px;
+                    font-weight: bold;
+    
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+        .right-content{
+            width: 980px;
+            .header-content{
+                height: $header-height;
+
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                .header-text{
+                    
+                }
+                .header-icon-group{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: row;
+                }
+            }
+        }
     }
 }

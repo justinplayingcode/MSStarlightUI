@@ -3,6 +3,7 @@ import loadingReducer, { openLoading, closeLoading } from './common/loadingReduc
 
 const rootReducer = combineReducers({
     loading: loadingReducer,
+    //add reducer here
 });
 
 export default rootReducer;

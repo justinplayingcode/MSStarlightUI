@@ -1,64 +1,43 @@
-import React from "react";
-import { connect } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { openLoading, closeLoading } from "src/redux/reducers";
-import { RootState } from "src/redux/store";
 
-interface HomePropsFromState {
 
-}
+const Home = () => {
+    const [items, setItems] = useState([]);
 
-interface HomePropsFromDispatch {
-    openLoading: () => void;
-    closeLoading: () => void;
-}
+    const dispatch = useDispatch();
 
-interface HomeState {
-    item: any[];
-}
+    useEffect(() => {
+        dispatch(openLoading());
+        setTimeout(fetchaasa, 5000)
+    }, [])
 
-type HomeProps = HomePropsFromState & HomePropsFromDispatch;
+    useEffect(() => {
+        console.log('item');
+        //catch api here
+    }, [items])
 
-const mapStateToProps = (state: RootState) => ({
+    const fetchaasa = () => {
+        console.log('here');
 
-})
-
-const mapDispatchToProps = { openLoading, closeLoading };
-
-class Home extends React.Component<HomeProps, HomeState> {
-    constructor(props: HomeProps) {
-        super(props);
-        this.state = {
-            item: []
-        }
-    }
-
-    componentDidMount() {
-        const { openLoading, closeLoading } = this.props;
-        openLoading();
-        setTimeout(this.fetchaasa, 5000)
-    }
-
-    fetchaasa = () => {
-        const { closeLoading } = this.props;
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(res => res.json())
             .then(result => {
-                this.setState({item: result});
-            }).catch(() => {}).finally(() => { closeLoading() })
+                setItems(result);
+            }).catch(() => { }).finally(() => { dispatch(closeLoading()) })
     }
 
-    render() {
-
-        return (
-            <div>
-                {this.state.item.map(e => {
-                    return (
-                        <div>{e.name}</div>
-                    )
-                })}
-            </div>
-        )
-    }
+    return (
+        <>
+            {items.map((e, index) => {
+                return (
+                    <div key={index}>{e.name}</div>
+                )
+            })
+            }
+        </>
+    )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default Home;
