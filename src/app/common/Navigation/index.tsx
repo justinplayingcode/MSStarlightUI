@@ -14,8 +14,6 @@ const Navigation = (props: INavigationProps) => {
 
     const navStyles: Partial<INavStyles> = {
         root: {
-            width: 208,
-            //   height: 350,
             boxSizing: 'border-box',
             overflowY: 'auto',
         },

@@ -32,6 +32,7 @@ const UniformHeader = (props: UniformHeaderProps) => {
                     <Avatar
                         avatar_scr="https://res.cloudinary.com/dipiauw0v/image/upload/v1681015649/DATN/avatar_dexs0y.png"
                         size={AvatarSize.Large}
+                        hasCallout={true}
                     />
                 </Stack>
             </Stack>

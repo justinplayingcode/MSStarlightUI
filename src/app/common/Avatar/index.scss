@@ -1,0 +1,22 @@
+.avatar-container{
+    .avatar{        
+        background-size: cover;
+        background-position: 'top center';
+
+        border-radius: '50%';
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}
+.callout{
+    .ms-Callout-main{
+        width: 180px;
+        display: flex;
+        flex-direction: column;
+
+        .ms-Button{
+            border: none;
+        }
+    }
+}
