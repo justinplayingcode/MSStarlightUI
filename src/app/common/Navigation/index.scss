@@ -1,0 +1,23 @@
+.left-content{
+    // height: 100vh;
+    // width: 220px;
+
+    // display: flex;
+    // justify-content: space-between;
+    padding-left: 40px;
+    .header-container{
+        height: 60px;
+        .nav-header{
+            height: 42px;
+            padding-top: 16px;
+
+            color: rgb(0, 120, 212);
+            font-size: 24px;
+            font-weight: bold;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

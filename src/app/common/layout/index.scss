@@ -1,0 +1,30 @@
+$header-height: 60px;
+$theme-blue: rgb(0, 120, 212);
+
+#layout-wrapper {
+    width: 100vw;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .left-wrapper {
+        height: 100vh;
+        width: 280px;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .right-wrapper {
+        width: 100%;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding: 16px 40px;
+        .main-content{
+            padding-top: 16px;
+        }
+    }
+
+}

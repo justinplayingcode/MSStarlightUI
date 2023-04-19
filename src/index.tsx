@@ -4,8 +4,6 @@ import App from './app'
 import { initializeIcons } from '@fluentui/react';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
         <App />
-    </React.StrictMode>
 )
 initializeIcons();
