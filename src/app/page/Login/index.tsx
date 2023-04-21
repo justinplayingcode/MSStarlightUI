@@ -9,6 +9,20 @@ import { AvatarSize } from "src/app/common/Avatar/avatar";
 export const Login: React.FunctionComponent = () => {
     const [userName, setUserName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
+    const clickSave = () => {
+        if(!userName || !password){
+            setErrorMessage("Please enter username/ password");
+            return;
+        }
+        //wrong pwd or username check with api useEffect
+
+    }
+
+    React.useEffect(() => {
+
+    },[])
 
     return (
         <Stack
@@ -28,6 +42,7 @@ export const Login: React.FunctionComponent = () => {
                     label="Tên đăng nhập"
                     value={userName}
                     onChange={(e, val) => {
+                        setErrorMessage("")
                         if (val!) {
                             const name = val!.trim();
                             setUserName(name);
@@ -37,26 +52,23 @@ export const Login: React.FunctionComponent = () => {
                 />
                 <TextFieldComponent
                     label="Mật khẩu"
-                    description="Quên mật khẩu?"
                     type="password"
                     canRevealPassword={true}
-                    onRenderDescription={(p, r) => {
-                        return (
-                            <Stack horizontalAlign="end" >
-                                {/* display link to forgot password panel */}
-                                <Link to={""} style={{textDecoration:"none", color:"rgb(0, 120, 212)"}}>{p?.description}</Link>
-                            </Stack>
-                        )
-                    }}
                     value={password}
                     onChange={(e, val) => {
+                        setErrorMessage("")
                         if (val!) {
                             const pwd = val!.trim();
                             setPassword(pwd);
                         } else setPassword("");
                     }}
                 />
-                <PrimaryButton text="Đăng nhập" />
+                <Stack className="error-message">{errorMessage}</Stack>
+                <PrimaryButton text="Đăng nhập" onClick={clickSave}/>
+                <Stack horizontalAlign="end" >
+                    {/* display link to forgot password panel */}
+                    <Link to={""} style={{ textDecoration: "none", color: "rgb(0, 120, 212)" }}>Quên mật khẩu?</Link>
+                </Stack>
             </Stack>
         </Stack>
 
