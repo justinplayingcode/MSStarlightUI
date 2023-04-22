@@ -9,9 +9,6 @@ interface UniformHeaderProps {
 }
 
 const UniformHeader = (props: UniformHeaderProps) => {
-
-    const userProfileName = 'Phạm Duy Thắng';
-
     const breadcrumItems: IBreadcrumbItem[] = [
         {
             text: 'Home',
@@ -24,7 +21,6 @@ const UniformHeader = (props: UniformHeaderProps) => {
             <Stack className="header-info">
                 <Stack className="header-text">
                     <Text className="hospital-name">Bệnh viện huyện XXX </Text>
-                    <Text className="current-user">{`Xin Chào, ${userProfileName}`} </Text>
                 </Stack>
                 <Stack className="header-icon-group" >
                     <IconButton className="header-icon" iconProps={{ iconName: 'Ringer' }} />

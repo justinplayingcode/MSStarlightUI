@@ -58,6 +58,10 @@ export const Login: React.FunctionComponent = () => {
                     onChange={(e, val) => {
                         setErrorMessage("")
                         if (val!) {
+                            if(val.length < 6){
+                                setErrorMessage('Mật khẩu có độ dài tối thiểu 6 kí tự')
+                                return;
+                            }
                             const pwd = val!.trim();
                             setPassword(pwd);
                         } else setPassword("");

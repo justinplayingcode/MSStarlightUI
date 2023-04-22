@@ -38,6 +38,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         {/* <Route path="/" element={<Layout page={pageConstant.LAYOUT_LOGIN}/>} /> */}
                         <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
                         <Route path="/home" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
+                        <Route path="/account" element={<Layout page={pageConstant.LAYOUT_ACCOUNT}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}
                     </Routes>
                 </Router>

@@ -1,5 +1,9 @@
 import Common from "./common"
-
+import { validateUserName, validateEmail, validatePhoneNumber, validateFullName} from "./validate"
 export {
-    Common
+    Common,
+    validateUserName,
+    validateEmail,
+    validatePhoneNumber,
+    validateFullName
 }

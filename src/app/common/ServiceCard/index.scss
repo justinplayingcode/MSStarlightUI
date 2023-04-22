@@ -1,0 +1,24 @@
+.card-container{
+    border: 1px solid #eee;
+    border-radius: 25px;
+    width: 260px;
+
+    padding: 30px 20px;
+    background-color: #fff;
+    &:hover{
+        color: #fff !important;
+        background: rgb(0, 120, 212)
+    }
+
+    .card-header{
+        margin-bottom: 10px;
+        .card-icon{
+            font-size: 60px;
+        }
+        .card-title{
+            box-sizing: border-box;
+            padding-left: 10px;
+            font-size: 24px;
+        }
+    }
+}
