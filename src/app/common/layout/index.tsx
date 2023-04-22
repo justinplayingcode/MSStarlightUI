@@ -10,7 +10,7 @@ import { LoadingDot } from "../loading";
 import { ErrorPage } from "../ErrorPage";
 import { Stack } from "@fluentui/react";
 import { Navigation } from "../Navigation";
-import { AccountManagement } from "src/app/page/AccountManagement";
+import AccountManagement from "src/app/page/AccountManagement";
 
 interface LayoutOwnProps {
     page: string;
@@ -66,9 +66,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 break;
             case pageConstant.LAYOUT_ACCOUNT:
                 content = <AccountManagement/>
-                return;
+                break;
             default:
-                content = <>a</>
+                content = <></>
                 break;
         }
         return (
