@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Callout, DefaultButton, Stack, mergeStyleSets } from "@fluentui/react";
 import './index.scss'
+import { useState } from "react";
 interface IAvatarProps {
     avatar_scr: string;
     size?: AvatarSize;
@@ -31,33 +32,28 @@ export const getAvatarSize = (size: AvatarSize | undefined) => {
 
 export const Avatar = (props: IAvatarProps) => {
     const [isCalloutVisible, setIsCalloutVisible] = React.useState<boolean>(false);
+    const [isHover, setIsHover] = useState(false);
+
+   const handleMouseEnter = () => {
+      setIsHover(true);
+   };
+
+   const handleMouseLeave = () => {
+      setIsHover(false);
+   };
 
     const defaultSize = "32px";
+    const defaultAvatar = 'https://res.cloudinary.com/dipiauw0v/image/upload/v1682100699/DATN/unisex_avatar.jpg'
     const avatarStyle = getAvatarSize(props.size) || defaultSize;
-    const defaultHasCallout = props.hasCallout || false
+    const defaultHasCallout = props.hasCallout || false;
 
     const style: React.CSSProperties = {
-        backgroundImage: `url(${props.avatar_scr})`,
+        backgroundImage: `url(${props.avatar_scr !== '' ? props.avatar_scr : defaultAvatar})`,
 
         width: avatarStyle,
         height: avatarStyle,
+        cursor: isHover && props.hasCallout ? 'pointer': 'auto'
     }
-
-    const styles = mergeStyleSets({
-        button: {
-          width: 130,
-        },
-        callout: {
-          
-        },
-        title: {
-          marginBottom: 12,
-        },
-        link: {
-          display: 'block',
-          marginTop: 20,
-        },
-      });
 
     return (
         <Stack className="avatar-container">
@@ -66,6 +62,8 @@ export const Avatar = (props: IAvatarProps) => {
                 id={'callout-button'}
                 onClick={() => setIsCalloutVisible(!isCalloutVisible)}
                 style={style}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
             > 
             </Stack>
             {isCalloutVisible && defaultHasCallout && (

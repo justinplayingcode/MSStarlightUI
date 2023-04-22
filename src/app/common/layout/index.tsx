@@ -8,8 +8,9 @@ import Home from "src/app/page/Home";
 import { Login } from "src/app/page/Login";
 import { LoadingDot } from "../loading";
 import { ErrorPage } from "../ErrorPage";
-import Navigation from "src/app/common/Navigation";
 import { Stack } from "@fluentui/react";
+import { Navigation } from "../Navigation";
+import { AccountManagement } from "src/app/page/AccountManagement";
 
 interface LayoutOwnProps {
     page: string;
@@ -63,9 +64,11 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_HOME:
                 content = <Home />
                 break;
-
+            case pageConstant.LAYOUT_ACCOUNT:
+                content = <AccountManagement/>
+                return;
             default:
-                content = <></>
+                content = <>a</>
                 break;
         }
         return (

@@ -15,6 +15,7 @@ $theme-blue: rgb(0, 120, 212);
 
         display: flex;
         justify-content: space-between;
+
     }
 
     .right-wrapper {
@@ -22,6 +23,7 @@ $theme-blue: rgb(0, 120, 212);
         min-height: 100vh;
         box-sizing: border-box;
         padding: 16px 40px;
+        background-color: #f6faff;
         .main-content{
             padding-top: 16px;
         }
