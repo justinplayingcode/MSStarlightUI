@@ -1,10 +1,10 @@
 import { Stack } from '@fluentui/react';
 import * as React from 'react'
 
-const AccountManagement = () => {
+const Account = () => {
     return (
         <Stack>Account Management</Stack>
     )
 }
 
-export default AccountManagement;
+export default Account;

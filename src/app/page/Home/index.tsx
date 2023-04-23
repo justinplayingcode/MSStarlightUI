@@ -8,25 +8,30 @@ import { INavListProps } from "src/app/common/Navigation";
 import { accountRole } from "model";
 import { Avatar } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
+import { getNavList } from "src/app/common/Navigation/index.type";
+import { getAge } from "utils";
+import { primaryHealthStatus } from "./index.type";
 
 
 const Home = () => {
     const [items, setItems] = useState([]);    
-    const [role, setRole] = useState<accountRole>(accountRole.Admin);
+    const [role, setRole] = useState<accountRole>(accountRole.Patient);
     const [homeMenu, setHomeMenu] = useState<IServiceCard[]>([]);
-    const [name, setName] = useState<string>('Phạm Duy Thắng');
     const [selectedDate, setSelectedDate] = useState<Date>();
 
     const profile ={
         name: 'Phạm Duy Thắng',
         dateOfBirth: new Date(2001, 1, 30),
         avatarUrl: '',
+        heartRate: 97,
+        temperature: 36,
+        bloodPressure: '120/80',
+        glucose: 90,
+        weight: 53,
+        height: 165
     }
 
-    const defaultAvatar = 'https://res.cloudinary.com/dipiauw0v/image/upload/v1682100699/DATN/unisex_avatar.jpg';
-
     const dispatch = useDispatch();
-
 
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
       setSelectedDate(date);
@@ -38,7 +43,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        assembleMenu(getNavList())
+        assembleMenu(getNavList(role, true))
     },[])
 
     useEffect(() => {
@@ -56,64 +61,6 @@ const Home = () => {
             }).catch(() => { }).finally(() => { dispatch(closeLoading()) })
     }
 
-
-    const getNavList = () => {
-        const list: INavListProps[] = [];
-        if(role !== accountRole.Patient){
-            list.push({
-                name: 'Tài khoản',
-                icon: 'AccountManagement',
-                description:'Quản lý tài khoản của bác sĩ và bệnh nhân',
-                url: '#',   
-                imageUrl: '#'
-            });
-
-            if(role !== accountRole.Doctor){
-                list.push(
-                {
-                    name: 'Khoa, viện',
-                    icon: 'ManagerSelfService',
-                    description: '',
-                    url: '#',
-                    imageUrl: ''
-                }
-                )
-            }
-        };
-
-        list.push(
-            {
-                name: 'Lịch sử khám bệnh',
-                icon: 'Clock',
-                description: '',
-                url: '#',
-                imageUrl: ''
-            },
-            {
-                name: 'Bệnh',
-                icon: 'Trackers',
-                description:'',
-                url: '#',
-                imageUrl:''
-            },
-            {
-                name: 'Thuốc',
-                icon: 'Pill',
-                description:'',
-                url: '#',
-                imageUrl:''
-            },
-            {
-                name: 'Thông tin, tư vấn',
-                icon: 'News',
-                description: '',
-                url: '#',
-                imageUrl: ''
-            }
-        );
-        return list;
-    }
-
     const assembleMenu = (list: INavListProps[]) => {
         const newHomeMenu : IServiceCard[] = [];
         list.map((item) => {
@@ -126,17 +73,55 @@ const Home = () => {
         setHomeMenu(newHomeMenu);
     }
 
+    const assembleHealthStatus = () => {
+
+        return;
+    }
+
     const renderWelcome = () => {
         return(
             <Stack className="welcome-section">
                 <Stack className="welcome-text">
-                    <Stack className="text-header">Xin chào, {name}</Stack>
+                    <Stack className="text-header">Xin chào, {profile.name}</Stack>
                     <Text className="text-remind">Chúc một ngày tốt lành và đừng quên chăm sóc sức khỏe bản thân nhé</Text>
                 </Stack>
-                <Stack className="welcome-image">
-
-                </Stack>
+                <img alt="" className="welcome-image" src="https://res.cloudinary.com/dipiauw0v/image/upload/v1682179593/DATN/welcome-logo.png"
+                />
             </Stack>
+        )
+    }
+
+    const renderMenu = () => {
+        return (
+            <>
+                {homeMenu.map((item, index) =>
+                    <ServiceCard key={index} iconName={item.iconName} name={item.name} description={item.description} />
+                )}
+            </>
+        )
+    }
+
+    const renderHealthStatus = () => {
+        return(
+            <>
+            {
+                primaryHealthStatus.map((item,index) => {
+                    return(
+                        <Stack className="status-container">
+                            <Stack className="status-info">
+                                <img alt="" src={item.imageUrl}/>
+                                {item.unit === 'C' 
+                                    ? <>&#8451;</>
+                                    : <>{item.unit}</>
+                                }
+                            </Stack>
+                            <Stack className="status-name">{item.name}</Stack>
+                            <Stack className="status-description">{item.description}</Stack>
+                        </Stack>
+                    )
+                })
+            }
+            </>
         )
     }
 
@@ -145,11 +130,12 @@ const Home = () => {
             <Stack className="preview-profile">
                 <Stack className="profile-info">
                     <Avatar size={AvatarSize.SuperLarge} avatar_scr={profile.avatarUrl}/>
-                    <Stack>{name}</Stack>
-                    <Stack>{ }</Stack>
+                    <Stack className="info-name">{profile.name}</Stack>
+                    <Stack>{`${getAge(profile.dateOfBirth)} years`}</Stack>
                 </Stack>
 
                 <Calendar
+                    className="calendar"
                     showMonthPickerAsOverlay
                     highlightSelectedMonth
                     showGoToToday={false}
@@ -168,9 +154,12 @@ const Home = () => {
             <Stack className="home-left-section">
                 {renderWelcome()}
                 <Stack className="menu-section">
-                    {homeMenu.map((item,index) =>
-                        <ServiceCard key={index} iconName={item.iconName} name={item.name} description={item.description} />
-                    )}
+                    {
+                        role === accountRole.Patient
+                        ? renderHealthStatus()
+                        : renderMenu()
+                    }
+                    
                 </Stack>
             </Stack>
             <Stack className="home-right-section">

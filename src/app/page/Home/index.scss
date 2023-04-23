@@ -16,15 +16,29 @@
             margin-bottom: 20px;
 
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
             
+            position: relative;
             .welcome-text{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                max-width: 500px;
                 .text-header{
                     font-size: 24px;
                 }
                 .text-remind{
 
                 }
+            }
+            .welcome-image{
+                position: absolute;
+                height: 150px;    
+                
+                right: 90px;
+                bottom: 0
             }
         }
         .menu-section{
@@ -40,9 +54,20 @@
 
         .preview-profile{
             align-items: center;
+            min-height: 80vh;
 
             .profile-info{
                 align-items: center;
+                color: #fff;
+
+                padding: 40px;
+                .info-name{
+                    margin-top: 10px;
+                }
+            }
+            .calendar {
+                background: #fff;
+                border-radius: 25px;
             }
         }
     }
