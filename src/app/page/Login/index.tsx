@@ -17,6 +17,7 @@ export const Login: React.FunctionComponent = () => {
             return;
         }
         //wrong pwd or username check with api useEffect
+        // neu login thanh cong, useNagative de chuyen huong sang trang chu
 
     }
 
