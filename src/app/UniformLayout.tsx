@@ -35,11 +35,17 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                 <Router>
                     <Routes>
                         {/* jump to "/" first */}
-                        <Route path="/login" element={<Layout page={pageConstant.LAYOUT_LOGIN}/>} />
+                        <Route path="/" element={<Layout page={pageConstant.LAYOUT_LOGIN}/>} />
                         <Route path="*" element={<Layout page={pageConstant.LAYOUT_ERROR_PAGE} />} />
-                        <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
+                        {/* <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} /> */}
                         <Route path="/home" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
+                        <Route path="/profile" element={<Layout page={pageConstant.LAYOUT_PROFILE}/>} />
                         <Route path="/account" element={<Layout page={pageConstant.LAYOUT_ACCOUNT}/>} />
+                        <Route path="/speciality" element={<Layout page={pageConstant.LAYOUT_SPECIALITY}/>} />
+                        <Route path="/cure-history" element={<Layout page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
+                        <Route path="/diseases" element={<Layout page={pageConstant.LAYOUT_DISEASES}/>} />
+                        <Route path="/pills" element={<Layout page={pageConstant.LAYOUT_PILLS}/>} />
+                        <Route path="/news" element={<Layout page={pageConstant.LAYOUT_NEWS}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}
                     </Routes>
                 </Router>

@@ -3,18 +3,22 @@ import "./index.scss"
 import { Breadcrumb, IBreadcrumbItem, Icon, IconButton, Stack, Text } from "@fluentui/react";
 import { IconComponent } from "../Icon";
 import { Avatar, AvatarSize } from "../Avatar/avatar";
+import { pageConstant } from "model";
 
 interface UniformHeaderProps {
-
+    page?: number
 }
 
 const UniformHeader = (props: UniformHeaderProps) => {
-    const breadcrumItems: IBreadcrumbItem[] = [
-        {
-            text: 'Home',
-            key: 'Key0'
-        }
-    ];
+    const breadcrumItems: IBreadcrumbItem[] =
+        props?.page === 1
+            ? []
+            : [
+                {
+                    text: 'Home',
+                    key: 'Key0'
+                }
+            ];
 
     return (
         <div id="uniform-header">

@@ -3,6 +3,12 @@ import * as React from 'react'
 import './index.scss'
 import { useEffect } from 'react';
 import { accountRole } from 'model';
+import { getNavList } from './index.type';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
+import { updateSelectedMenu } from 'src/redux/reducers';
+import { useNavigate } from 'react-router';
 
 export interface INavigationProps{
     
@@ -23,6 +29,10 @@ export interface INavListProps{
     const [role, setRole] =React.useState<accountRole>(accountRole.Admin);
     const [navGroup, setNavGroup] = React.useState<INavLinkGroup[]>([]);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {selectedMenu} = useSelector((state: RootState) => state.navigation)
+
     const navStyles: Partial<INavStyles> = {
         root: {
             boxSizing: 'border-box',
@@ -31,73 +41,25 @@ export interface INavListProps{
     };
 
     useEffect(() => {
-        assembleTopNavLinkGroups(getNavList());
+        assembleTopNavLinkGroups(getNavList(role, false));
+        setSelectedKey(selectedMenu)
     },[])
 
-    const getNavList = () => {
-        const list: INavListProps[] = [];
-        list.push({
-            name: 'Trang chủ',
-            icon: 'Home',
-            description: '',
-            url: '#',
-            imageUrl: ''
-        });
+    useEffect(() => {
+        if(navGroup.length){
+            setSelectedKey(navGroup[0].links[0].key);
+        }
+    },[])
 
-        if(role !== accountRole.Patient){
-            list.push({
-                name: 'Tài khoản',
-                icon: 'AccountManagement',
-                description:'Quản lý tài khoản của bác sĩ và bệnh nhân',
-                url: '#',   
-                imageUrl: '#'
-            });
+    useEffect(() => {
+        setSelectedKey(selectedMenu)
+    },[selectedMenu])
 
-            if(role !== accountRole.Doctor){
-                list.push(
-                {
-                    name: 'Khoa, viện',
-                    icon: 'ManagerSelfService',
-                    description: '',
-                    url: '#',
-                    imageUrl: ''
-                }
-                )
-            }
-        };
-
-        list.push(
-            {
-                name: 'Lịch sử khám bệnh',
-                icon: 'Clock',
-                description: '',
-                url: '#',
-                imageUrl: ''
-            },
-            {
-                name: 'Bệnh',
-                icon: 'Trackers',
-                description:'',
-                url: '#',
-                imageUrl:''
-            },
-            {
-                name: 'Thuốc',
-                icon: 'Pill',
-                description:'',
-                url: '#',
-                imageUrl:''
-            },
-            {
-                name: 'Thông tin, tư vấn',
-                icon: 'News',
-                description: '',
-                url: '#',
-                imageUrl: ''
-            }
-        );
-        return list;
-    }
+    useEffect(() => {
+        if(navGroup.length){
+            setSelectedKey(navGroup[0].links[0].key);
+        }
+    },[navGroup])
 
     const assembleTopNavLinkGroups = (list: INavListProps[]) => {
         const groups: INavLinkGroup[] = [
@@ -111,10 +73,15 @@ export interface INavListProps{
                 icon: item.icon,
                 url: item.url,
                 key: `key${index}`,
+                onClick: (ev, item ) => {
+                    ev.preventDefault();
+                    navigate(item.url)
+                    dispatch(updateSelectedMenu(item.key))
+                }
             })
         });        
         setNavGroup(groups);
-        setSelectedKey(groups[0].links[0].key);
+        
     }
 
     return (
@@ -130,10 +97,6 @@ export interface INavListProps{
                         <Stack className="nav-header">{p!.name}</Stack>
                     </Stack>
                 )}
-                onLinkClick={(ev, item) => {
-                    ev.stopPropagation();
-                    setSelectedKey(item.key)
-                }}
             />
         </Stack>
     )

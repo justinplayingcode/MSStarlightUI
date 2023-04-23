@@ -1,21 +1,69 @@
-$header-height: 60px;
-$theme-blue: rgb(0, 120, 212);
+$radius : 20px;
 
 .login-container{
     width: 100vw;
     height: 100vh;
-    background-image: url("https://res.cloudinary.com/dipiauw0v/image/upload/v1681017217/DATN/login-background_n4dhzx.jpg");
+    background-image: url("https://res.cloudinary.com/dipiauw0v/image/upload/v1682224546/DATN/Login-background_juqlm4.jpg");
     background-size: cover;
     .login-form-container{
-        width: 300px;
+        width: 600px;
         padding: 50px 30px 30px 30px;
-        border: 1px solid rgb(0, 120, 212);
-        border-radius: 8px;
-        background-color: white;
-        .error-message{
-            color: red;
-            min-height: 28px;
-            padding-bottom: 8px;
+    
+        background-color: rgb(255 255 255 / 0.3);
+        backdrop-filter: blur(10px);
+        border: 1px solid #fff;
+        border-radius: $radius;
+
+        display: flex;
+        flex-direction: row;
+        .form-container{
+            justify-content: center;
+            min-width: 240px;
+            input{
+                color: #fff;
+            }            
+            label {
+                color: #fff;
+            }
+            .ms-TextField-fieldGroup{
+                border-radius: $radius;
+                border: 1px solid #fff;
+                background-color: rgb(255 255 255 / 0.3);
+                backdrop-filter: blur(10px);
+
+                &::after{
+                    border: none;
+                }
+                .ms-TextField-reveal{
+                    background-color: transparent;
+                    color: #fff;
+                }
+            }
+            .welcome-text{
+                font-size: 28px;
+            }
+            .error-message{
+                color: #F3BB1B;
+                min-height: 28px;
+                padding-bottom: 8px;
+            }
+            .log-in-btn{
+                border-radius: $radius;
+                border: 1px solid #fff;
+                backdrop-filter: blur(10px);
+                margin-bottom: 4px;
+                
+                background-color: rgb(255 255 255 / 0.3);
+                color: #fff;
+            
+            &:hover{
+                background-color: rgb(255 255 255 / 0.3);                    
+                backdrop-filter: blur(20px);
+                }
+            }
+        }
+        .form-image{
+            height: 300px;
         }
     }
 }

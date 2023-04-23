@@ -10,8 +10,14 @@ import { LoadingDot } from "../loading";
 import { ErrorPage } from "../ErrorPage";
 import { Stack } from "@fluentui/react";
 import { Navigation } from "../Navigation";
-import AccountManagement from "src/app/page/AccountManagement";
-
+import AccountManagement from "src/app/page/Account";
+import Speciality from "src/app/page/Speciality";
+import CureHistory from "src/app/page/CureHistory";
+import Diseases from "src/app/page/Diseases";
+import Profile from "src/app/page/Profile";
+import Pill from "src/app/page/Pills";
+import Pills from "src/app/page/Pills";
+import News from "src/app/page/News";
 interface LayoutOwnProps {
     page: string;
 }
@@ -64,8 +70,26 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_HOME:
                 content = <Home />
                 break;
+            case pageConstant.LAYOUT_PROFILE:
+                content = <Profile />
+                break;
             case pageConstant.LAYOUT_ACCOUNT:
-                content = <AccountManagement/>
+                content = <AccountManagement />
+                break;
+            case pageConstant.LAYOUT_SPECIALITY:
+                content = <Speciality />
+                break;
+            case pageConstant.LAYOUT_CURE_HISTORY:
+                content = <CureHistory />
+                break;
+            case pageConstant.LAYOUT_DISEASES:
+                content = <Diseases />
+                break;
+            case pageConstant.LAYOUT_PILLS:
+                content = <Pills />
+                break;
+            case pageConstant.LAYOUT_NEWS:
+                content = <News />
                 break;
             default:
                 content = <></>
@@ -77,7 +101,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                     <Navigation />
                 </Stack>
                 <Stack className="right-wrapper">
-                    <UniformHeader />
+                    <UniformHeader/>
                     <Stack className="main-content">
                         {content}
                     </Stack>
