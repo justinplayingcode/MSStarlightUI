@@ -9,7 +9,7 @@ const initialState: navigationState = {
 };
 
 export const navigationSlice = createSlice({
-    name: "loading",
+    name: "navigation",
     initialState,
     reducers: {
         updateSelectedMenu: (state, action ) => {

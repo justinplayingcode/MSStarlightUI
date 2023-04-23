@@ -1,5 +1,5 @@
 import { pageConstant } from "./pageContant";
-import { accountRole } from "./role";
+import { accountRole } from "./enum";
 
 export {
     pageConstant,
