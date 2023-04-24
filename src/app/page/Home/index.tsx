@@ -11,6 +11,7 @@ import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { getNavList } from "src/app/common/Navigation/index.type";
 import { getAge } from "utils";
 import { primaryHealthStatus } from "./index.type";
+import authApi from "src/api/auth";
 
 
 const Home = () => {
@@ -38,8 +39,9 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(openLoading());
-        setTimeout(fetchaasa, 3000)
+        // dispatch(openLoading());
+        // setTimeout(fetchaasa, 3000)
+        fetchaasa();
     }, [])
 
     useEffect(() => {
@@ -51,14 +53,17 @@ const Home = () => {
         //catch api here
     }, [items])
 
-    const fetchaasa = () => {
-        console.log('here');
-
-        fetch("https://jsonplaceholder.typicode.com/users")
-            .then(res => res.json())
-            .then(result => {
-                setItems(result);
-            }).catch(() => { }).finally(() => { dispatch(closeLoading()) })
+    const fetchaasa = async () => {
+        dispatch(openLoading());
+        try {
+            const data = await authApi.login();
+            console.log(data)
+            dispatch(closeLoading())
+            // show toast succes
+        } catch (err) {
+            // show toast fail
+            dispatch(closeLoading())
+        }
     }
 
     const assembleMenu = (list: INavListProps[]) => {
