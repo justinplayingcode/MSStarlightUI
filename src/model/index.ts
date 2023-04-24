@@ -1,7 +1,9 @@
 import { pageConstant } from "./pageContant";
-import { accountRole } from "./enum";
+import { ApiStatus, ApiStatusCode, accountRole } from "./enum";
 
 export {
     pageConstant,
-    accountRole
+    accountRole,
+    ApiStatusCode,
+    ApiStatus,
 }
