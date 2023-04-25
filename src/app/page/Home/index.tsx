@@ -4,11 +4,9 @@ import { useDispatch } from "react-redux";
 import { openLoading, closeLoading } from "src/redux/reducers";
 import './index.scss'
 import { IServiceCard, ServiceCard } from "src/app/common/ServiceCard";
-import { INavListProps } from "src/app/common/Navigation";
 import { accountRole } from "model";
 import { Avatar } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
-import { getNavList } from "src/app/common/Navigation/index.type";
 import { getAge } from "utils";
 import { primaryHealthStatus } from "./index.type";
 import authApi from "src/api/auth";
@@ -16,7 +14,7 @@ import authApi from "src/api/auth";
 
 const Home = () => {
     const [items, setItems] = useState([]);    
-    const [role, setRole] = useState<accountRole>(accountRole.Patient);
+    const [role, setRole] = useState<accountRole>(accountRole.Admin);
     const [homeMenu, setHomeMenu] = useState<IServiceCard[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>();
 
@@ -45,7 +43,7 @@ const Home = () => {
     }, [])
 
     useEffect(() => {
-        assembleMenu(getNavList(role, true))
+        // assembleMenu(getNavList(role, true))
     },[])
 
     useEffect(() => {
@@ -59,29 +57,29 @@ const Home = () => {
             const data = await authApi.login();
             console.log(data)
             dispatch(closeLoading())
-            // show toast succes
+            // show toast succes showMessageToast("", type)
         } catch (err) {
             // show toast fail
             dispatch(closeLoading())
         }
     }
 
-    const assembleMenu = (list: INavListProps[]) => {
-        const newHomeMenu : IServiceCard[] = [];
-        list.map((item) => {
-            newHomeMenu.push({
-                name: item.name,
-                iconName: item.icon,
-                description: item.description,
-            })
-        });
-        setHomeMenu(newHomeMenu);
-    }
+    // const assembleMenu = (list: INavListProps[]) => {
+    //     const newHomeMenu : IServiceCard[] = [];
+    //     list.map((item) => {
+    //         newHomeMenu.push({
+    //             name: item.name,
+    //             iconName: item.icon,
+    //             description: item.description,
+    //         })
+    //     });
+    //     setHomeMenu(newHomeMenu);
+    // }
 
-    const assembleHealthStatus = () => {
+    // const assembleHealthStatus = () => {
 
-        return;
-    }
+    //     return;
+    // }
 
     const renderWelcome = () => {
         return(
@@ -106,26 +104,34 @@ const Home = () => {
         )
     }
 
+    const renderHealthCard = (name: string, imageUrl: string, info: string, unit: string, description: string) => {
+        return(
+            <Stack className="status-container">
+                <Stack className="status-info">
+                    <img alt="" src={imageUrl} />
+                    {unit === 'C'
+                        ? <>{info}&#8451;</>
+                        : <>{info}{unit}</>
+                    }
+                </Stack>
+                <Stack className="status-name">{name}</Stack>
+                <Stack className="status-description">{description}</Stack>
+            </Stack>
+        )
+    }
+
     const renderHealthStatus = () => {
         return(
             <>
-            {
-                primaryHealthStatus.map((item,index) => {
-                    return(
-                        <Stack className="status-container">
-                            <Stack className="status-info">
-                                <img alt="" src={item.imageUrl}/>
-                                {item.unit === 'C' 
-                                    ? <>&#8451;</>
-                                    : <>{item.unit}</>
-                                }
-                            </Stack>
-                            <Stack className="status-name">{item.name}</Stack>
-                            <Stack className="status-description">{item.description}</Stack>
-                        </Stack>
-                    )
-                })
-            }
+                <Stack className="basic-status">
+                {renderHealthCard('Nhịp tim', 
+                "https://res.cloudinary.com/dipiauw0v/image/upload/v1682249027/DATN/Menulogo/heartbeat-removebg-preview_pg1ozi.png",
+                profile.heartRate.toString(), 'bpm', 'Nhịp tim của người bệnh'
+                )}
+                </Stack>
+                <Stack className="status-news">
+
+                </Stack>
             </>
         )
     }

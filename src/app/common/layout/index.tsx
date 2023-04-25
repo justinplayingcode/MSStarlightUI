@@ -9,15 +9,15 @@ import { Login } from "src/app/page/Login";
 import { LoadingDot } from "../loading";
 import { ErrorPage } from "../ErrorPage";
 import { Stack } from "@fluentui/react";
-import { Navigation } from "../Navigation";
 import AccountManagement from "src/app/page/Account";
 import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
 import Diseases from "src/app/page/Diseases";
 import Profile from "src/app/page/Profile";
-import Pill from "src/app/page/Pills";
 import Pills from "src/app/page/Pills";
 import News from "src/app/page/News";
+import SideBar from "../SideBar";
+import CureProcess from "src/app/page/CureProcess";
 interface LayoutOwnProps {
     page: string;
 }
@@ -79,6 +79,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_SPECIALITY:
                 content = <Speciality />
                 break;
+            case pageConstant.LAYOUT_CURE_PROCESS:
+                content = <CureProcess/>
+                break;
             case pageConstant.LAYOUT_CURE_HISTORY:
                 content = <CureHistory />
                 break;
@@ -98,7 +101,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         return (
             <div id="layout-wrapper">
                 <Stack className="left-wrapper">
-                    <Navigation />
+                    <SideBar/>
                 </Stack>
                 <Stack className="right-wrapper">
                     <UniformHeader/>

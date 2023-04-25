@@ -1,12 +1,24 @@
 import { accountRole } from "model";
-import { INavListProps } from ".";
+import { AiOutlineHome, AiOutlineClockCircle } from 'react-icons/ai'
+import { FaBacterium, FaPills, FaRegNewspaper} from 'react-icons/fa'
+import { MdManageAccounts, MdAccountTree } from 'react-icons/md'
+import { TbStethoscope} from 'react-icons/tb'
+
+export interface ISideBarProps{
+    name: string;
+    icon: string | JSX.Element;
+    description?: string;
+    url: string;
+    imageUrl?: string;
+    key?: string
+}
 
 export const getNavList = (role: accountRole, isHomePage: boolean) => {
-    const list: INavListProps[] = [];
+    const list: ISideBarProps[] = [];
     if(!isHomePage === true){
         list.push({
             name: 'Trang chủ',
-            icon: 'Home',
+            icon: <AiOutlineHome/>,
             description: '',
             url: '/',
             imageUrl: ''
@@ -16,7 +28,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
     if(role !== accountRole.Patient){
         list.push({
             name: 'Tài khoản',
-            icon: 'AccountManagement',
+            icon: <MdManageAccounts/>,
             description:'Quản lý tài khoản của bác sĩ và bệnh nhân',
             url: '/account',   
             imageUrl: '#'
@@ -26,7 +38,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             list.push(
             {
                 name: 'Khoa, viện',
-                icon: 'ManagerSelfService',
+                icon: <MdAccountTree/>,
                 description: '',
                 url: '/speciality',
                 imageUrl: ''
@@ -35,31 +47,41 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
         }
     };
 
+    if(role === accountRole.Doctor){
+        list.push({
+            name: 'Khám chữa bệnh',
+            icon: <TbStethoscope/>,
+            description: '',
+            url: '/curing-process',
+            imageUrl: ''
+        })
+    }
+
     list.push(
         {
             name: 'Lịch sử khám bệnh',
-            icon: 'Clock',
+            icon: <AiOutlineClockCircle/>,
             description: '',
             url: '/cure-history',
             imageUrl: ''
         },
         {
             name: 'Bệnh',
-            icon: 'Trackers',
+            icon: <FaBacterium/>,
             description:'',
             url: '/diseases',
             imageUrl:''
         },
         {
             name: 'Thuốc',
-            icon: 'Pill',
+            icon: <FaPills/>,
             description:'',
             url: '/pills',
             imageUrl:''
         },
         {
             name: 'Thông tin, tư vấn',
-            icon: 'News',
+            icon: <FaRegNewspaper/>,
             description: '',
             url: '/news',
             imageUrl: ''

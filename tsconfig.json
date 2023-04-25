@@ -25,6 +25,7 @@
       "model": [ "src/model/index"],
       "utils": [ "src/utils/index"],
       "redux": [ "src/redux/index"],
+      "image": [ "src/assets/image"]
     },
     "noFallthroughCasesInSwitch": true,
   },
