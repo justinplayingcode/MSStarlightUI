@@ -18,6 +18,8 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
             
             position: relative;
             .welcome-text{
@@ -45,6 +47,38 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+
+            .basic-status{
+                width: 100%;
+                .status-container{
+                    width: 180px;
+
+                    border-radius: 20px;
+                    background-color: #fff;
+                    box-sizing: border-box;
+                    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+                    padding: 20px;
+                    .status-info{
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+
+                        img{
+                            height: 48px;
+                            width: 48px;
+                        }
+                    }
+                    .status-name{
+                        font-size: 24px;
+                        font-weight: 700;
+                    }
+                    .status-description{}
+                }
+            }
+            .status-news{
+
+            }
         }
     }
     .home-right-section{

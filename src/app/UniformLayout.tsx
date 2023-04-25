@@ -42,6 +42,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/profile" element={<Layout page={pageConstant.LAYOUT_PROFILE}/>} />
                         <Route path="/account" element={<Layout page={pageConstant.LAYOUT_ACCOUNT}/>} />
                         <Route path="/speciality" element={<Layout page={pageConstant.LAYOUT_SPECIALITY}/>} />
+                        <Route path="/curing-process" element={<Layout page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
                         <Route path="/cure-history" element={<Layout page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
                         <Route path="/diseases" element={<Layout page={pageConstant.LAYOUT_DISEASES}/>} />
                         <Route path="/pills" element={<Layout page={pageConstant.LAYOUT_PILLS}/>} />
