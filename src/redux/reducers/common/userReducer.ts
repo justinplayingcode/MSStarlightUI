@@ -3,13 +3,13 @@ import { accountRole } from "model";
 
 interface CurrentUserState {
     role: accountRole | null;
-    username: string;
+    userId: string;
     info: any;
 }
 
 const initialState: CurrentUserState = {
     role: null,
-    username: '',
+    userId: '',
     info: {}
 };
 
@@ -20,8 +20,8 @@ export const userSlice = createSlice({
         setRole: (state, action) => {
             state.role = action.payload
         },
-        setUsername: (state, action) => {
-            state.username = action.payload
+        setUserId: (state, action) => {
+            state.userId = action.payload
         },
         setInfoUser: (state, action) => {
             state.info = action.payload
@@ -29,6 +29,6 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setRole, setUsername, setInfoUser } = userSlice.actions;
+export const { setRole, setUserId, setInfoUser } = userSlice.actions;
 
 export default userSlice.reducer;

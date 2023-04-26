@@ -2,8 +2,7 @@ import axios from "axios";
 import { ApiStatusCode } from "model";
 
 const apiClient = axios.create({
-    // baseURL: "https://datn-benhvien.onrender.com",
-    baseURL: "https://jsonplaceholder.typicode.com",
+    baseURL: "https://datn-benhvien.onrender.com/api",
     headers: {
         "Content-Type": "application/json"
     },
@@ -11,7 +10,7 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('accessToken');
         if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
         }

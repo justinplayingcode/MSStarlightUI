@@ -55,8 +55,12 @@ const Home = () => {
 
     const fetchaasa = async () => {
         dispatch(openLoading());
+        const reqbody = {
+            name: "aa",
+            a: 0
+        }
         try {
-            const data = await authApi.login();
+            const data = await authApi.login(reqbody);
             console.log(data)
             dispatch(closeLoading())
             // show toast succes
