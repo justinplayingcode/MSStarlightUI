@@ -1,29 +1,44 @@
 import * as React from "react";
 import "./index.scss";
 import { Label, PrimaryButton, Stack, TextField } from "@fluentui/react";
-import { Avatar, LabelComponent, TextFieldComponent } from "src/app/common";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AvatarSize } from "src/app/common/Avatar/avatar";
+import { useDispatch } from "react-redux";
+import { openLoading, closeLoading, setRole, setUserId } from "src/redux/reducers";
+import authApi from "src/api/auth";
+import { ApiStatus } from "model";
 
 export const Login: React.FunctionComponent = () => {
     const [userName, setUserName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const clickSave = () => {
+    const dispatch = useDispatch();
+    const history = useNavigate()
+
+    const clickSave = async () => {
         if(!userName || !password){
             setErrorMessage("Please enter username/ password");
             return;
         }
         //wrong pwd or username check with api useEffect
-        // neu login thanh cong, useNagative de chuyen huong sang trang chu
-
+        const reqbody = {
+            username: userName,
+            password: password
+        }
+        dispatch(openLoading());
+        authApi.login(reqbody).then(data => {
+            const {accessToken, refreshToken, role, userId } = data.data.data;
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+            dispatch(setRole(role));
+            dispatch(setUserId(userId));
+            history("/");
+        }).catch(err => {
+            const { message } = err.response.data;
+            setErrorMessage(message)
+        }).finally(() => dispatch(closeLoading()))
     }
-
-    React.useEffect(() => {
-
-    },[])
 
     return (
         <Stack

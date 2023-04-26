@@ -1,8 +1,8 @@
-import apiClient from "../config/axios"
+import axios from "axios";
 
 const authApi = {
-    login: () => {
-        return apiClient.get('/userss');
+    login: (reqbody) => {
+        return axios.post('https://datn-benhvien.onrender.com/api/auth/login', reqbody);
     }
 }
 
