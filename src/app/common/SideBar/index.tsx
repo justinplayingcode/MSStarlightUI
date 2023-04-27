@@ -13,8 +13,8 @@ import Image from "image"
 
 const SideBar = () => {
     const [isOpen, setIsOpen] = React.useState<boolean>(true);
-    const [role, setRole] =React.useState<accountRole>(accountRole.Doctor);
     const [menuItem, setMenuItem] = React.useState<ISideBarProps[]>([]);
+    const { role } = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
         assembleTopNavLinkGroups(getNavList(role, false));

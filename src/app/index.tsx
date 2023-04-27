@@ -3,16 +3,14 @@ import "./index.scss"
 import { Provider } from "react-redux";
 import store from "src/redux/store";
 import UniformLayout from "./UniformLayout";
+import { ToastContainer } from "react-toastify";
 
-class App extends React.Component {
-
-    render() {
+const App: React.FunctionComponent = () => {
         return (
             <Provider store={store}>
-                <UniformLayout/>
+                <UniformLayout/>                
             </Provider>
         )
     }
-}
 
 export default App

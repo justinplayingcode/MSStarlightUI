@@ -4,12 +4,16 @@ import { Breadcrumb, IBreadcrumbItem, Icon, IconButton, Stack, Text } from "@flu
 import { IconComponent } from "../Icon";
 import { Avatar, AvatarSize } from "../Avatar/avatar";
 import { pageConstant } from "model";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 interface UniformHeaderProps {
     page?: number
 }
 
 const UniformHeader = (props: UniformHeaderProps) => {
+    const { avatar, info } = useSelector((state: RootState) => state.user)
+
     const breadcrumItems: IBreadcrumbItem[] =
         props?.page === 1
             ? []
@@ -30,7 +34,7 @@ const UniformHeader = (props: UniformHeaderProps) => {
                     <IconButton className="header-icon" iconProps={{ iconName: 'Ringer' }} />
                     <IconButton className="header-icon" iconProps={{ iconName: 'Help' }} />
                     <Avatar
-                        avatar_scr="https://res.cloudinary.com/dipiauw0v/image/upload/v1681015649/DATN/avatar_dexs0y.png"
+                        avatar_scr={avatar}
                         size={AvatarSize.Large}
                         hasCallout={true}
                     />

@@ -26,15 +26,38 @@ $theme-blue: rgb(0, 120, 212);
 
 }
 
-@media (min-width: 480px) {  }
+@media (max-width: 479px) {
+    //login layout
+    .login-container{
+        justify-content: flex-start;
+        height: auto !important;
+        .login-form-header{
+            display: none;
+        }
+        .login-form-container{
+            width: 100% !important;
+            display: flex;
+            align-items: flex-start;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+    }
+}
+
+@media (min-width: 480px) {
+}
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {  }
+@media (min-width: 768px) { 
+
+ }
     
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) {  }
+@media (min-width: 992px) { 
     .bars{
         display: none;
     }
+ }
 
 // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {  }
+@media (min-width: 1200px) { 
+ }

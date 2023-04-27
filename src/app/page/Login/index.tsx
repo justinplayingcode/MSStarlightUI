@@ -1,12 +1,15 @@
 import * as React from "react";
 import "./index.scss";
-import { Label, PrimaryButton, Stack, TextField } from "@fluentui/react";
+import { IconButton, Label, PrimaryButton, Stack, TextField } from "@fluentui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openLoading, closeLoading, setRole, setUserId } from "src/redux/reducers";
 import authApi from "src/api/auth";
+
+import Image from "image"
 import { ApiStatus } from "model";
+import image from "image";
 
 export const Login: React.FunctionComponent = () => {
     const [userName, setUserName] = useState<string>("");
@@ -46,10 +49,22 @@ export const Login: React.FunctionComponent = () => {
             horizontalAlign="center"
             verticalAlign="center"
         >
+            <Stack className="login-form-header">
+                <Stack className="form-header-content">
+                    <Stack className="img-div">
+                        <img alt='' src={image.logo}/>
+                        <Stack className="header-text">Bệnh viện huyện XXX</Stack>
+                    </Stack>
+                    <IconButton className="header-icon" iconProps={{ iconName: 'Help' }} />
+                </Stack>
+                <Stack className="header-ribbon">
+
+                </Stack>
+            </Stack>
             <Stack className="login-form-container">
                 <Stack className="form-container">
-                    <Stack horizontalAlign="center" >
-                        <Label className="welcome-text">Chào Mừng</Label>
+                    <Stack horizontalAlign="center" className="logo" >
+                        Login
                     </Stack>
                     <TextField
                         label="Tên đăng nhập"
@@ -83,10 +98,9 @@ export const Login: React.FunctionComponent = () => {
                     <PrimaryButton className="log-in-btn" text="Đăng nhập" onClick={clickSave} />
                     <Stack horizontalAlign="end" >
                         {/* display link to forgot password panel */}
-                        <Link to={""} style={{ textDecoration: "none", color: "#fff" }}>Quên mật khẩu?</Link>
+                        <Link to={""} style={{ textDecoration: "none", color: 'rgb(0, 120, 212)'}}>Quên mật khẩu?</Link>
                     </Stack>
                 </Stack>
-                <img className="form-image" alt="" src="https://res.cloudinary.com/dipiauw0v/image/upload/v1682179593/DATN/welcome-logo.png"/>
             </Stack>
         </Stack>
 

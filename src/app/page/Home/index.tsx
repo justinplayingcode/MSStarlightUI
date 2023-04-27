@@ -10,6 +10,9 @@ import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { getAge } from "utils";
 import { primaryHealthStatus } from "./index.type";
 import authApi from "src/api/auth";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import image from "image";
 
 
 const Home = () => {
@@ -19,9 +22,9 @@ const Home = () => {
     const [selectedDate, setSelectedDate] = useState<Date>();
 
     const profile ={
-        name: 'Phạm Duy Thắng',
-        dateOfBirth: new Date(2001, 1, 30),
-        avatarUrl: '',
+        // name: 'Phạm Duy Thắng',
+        // dateOfBirth: new Date(2001, 1, 30),
+        // avatarUrl: '',
         heartRate: 97,
         temperature: 36,
         bloodPressure: '120/80',
@@ -31,14 +34,13 @@ const Home = () => {
     }
 
     const dispatch = useDispatch();
+    const {avatar, info} = useSelector((state:RootState) => state.user);
 
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
       setSelectedDate(date);
     }, []);
 
     useEffect(() => {
-        // dispatch(openLoading());
-        // setTimeout(fetchaasa, 3000)
         fetchaasa();
     }, [])
 
@@ -89,11 +91,10 @@ const Home = () => {
         return(
             <Stack className="welcome-section">
                 <Stack className="welcome-text">
-                    <Stack className="text-header">Xin chào, {profile.name}</Stack>
+                    <Stack className="text-header">Xin chào, {info.name}</Stack>
                     <Text className="text-remind">Chúc một ngày tốt lành và đừng quên chăm sóc sức khỏe bản thân nhé</Text>
                 </Stack>
-                <img alt="" className="welcome-image" src="https://res.cloudinary.com/dipiauw0v/image/upload/v1682179593/DATN/welcome-logo.png"
-                />
+                <img alt="" className="welcome-image" src={image.welcomeLogo}/>
             </Stack>
         )
     }
@@ -144,9 +145,9 @@ const Home = () => {
         return (
             <Stack className="preview-profile">
                 <Stack className="profile-info">
-                    <Avatar size={AvatarSize.SuperLarge} avatar_scr={profile.avatarUrl}/>
-                    <Stack className="info-name">{profile.name}</Stack>
-                    <Stack>{`${getAge(profile.dateOfBirth)} years`}</Stack>
+                    <Avatar size={AvatarSize.SuperLarge} avatar_scr={avatar}/>
+                    <Stack className="info-name">{info.name}</Stack>
+                    <Stack>{`${getAge(info.dateOfBirth)} years`}</Stack>
                 </Stack>
 
                 <Calendar
@@ -173,8 +174,7 @@ const Home = () => {
                         role === accountRole.Patient
                         ? renderHealthStatus()
                         : renderMenu()
-                    }
-                    
+                    }                    
                 </Stack>
             </Stack>
             <Stack className="home-right-section">

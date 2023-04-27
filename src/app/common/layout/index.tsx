@@ -18,6 +18,7 @@ import Pills from "src/app/page/Pills";
 import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
+import { ToastContainer } from "react-toastify";
 interface LayoutOwnProps {
     page: string;
 }

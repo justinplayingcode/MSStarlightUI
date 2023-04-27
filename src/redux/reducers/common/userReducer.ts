@@ -4,15 +4,23 @@ import { accountRole } from "model";
 interface CurrentUserState {
     role: accountRole | null;
     userId: string;
+    avatar: string;
     info: any;
 }
 
+//call api and then change the role depend on the account role
+
 const initialState: CurrentUserState = {
-    role: null,
+    role: accountRole.Admin,
     userId: '',
-    info: {}
+    avatar: 'https://res.cloudinary.com/dipiauw0v/image/upload/v1681015649/DATN/avatar_dexs0y.png',
+    info: {
+        name: 'Phạm Duy Thắng',
+        dateOfBirth: new Date(2001, 1, 30),
+    }
 };
 
+//save infomation of current log in user
 export const userSlice = createSlice({
     name: 'currentuser',
     initialState,

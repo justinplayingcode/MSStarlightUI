@@ -3,41 +3,61 @@ $radius : 20px;
 .login-container{
     width: 100vw;
     height: 100vh;
-    // background-image: url("https://res.cloudinary.com/dipiauw0v/image/upload/v1682224546/DATN/Login-background_juqlm4.jpg");
-    background-image: url("https://img.freepik.com/free-photo/blur-hospital_1203-7957.jpg?w=740&t=st=1682250900~exp=1682251500~hmac=9bcad05638c7e6641a77c368890111187427c39f59429e3fcb004247ebeda057");
-    background-size: cover;
+    background-color: #404B56;
+    .login-form-header{
+        z-index: 10;
+        position: fixed;
+        top: 0;
+
+        background-color: #fff;
+        height: 100px;
+        width: 100%;
+
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;       
+        .form-header-content{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 88px;
+            .img-div{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                .header-text{
+                    font-size: 24px;
+                    color:rgb(0, 120, 212)
+                }
+            }
+            img{
+                height: 100px;
+                width: 100px;
+            }
+        }
+    }
     .login-form-container{
-        width: 600px;
-        padding: 50px 30px 30px 30px;
-    
-        background-color: rgba(27, 20, 20, 0.3);
-        backdrop-filter: blur(10px);
+        width: 300px;
+        padding: 30px 30px 30px 30px;
+
+        background-color: #fff;
         box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        border-radius: $radius;
+        border-radius: 4px;
 
         display: flex;
         flex-direction: row;
+        justify-content: center;
+        align-items: center;
         .form-container{
             justify-content: center;
             min-width: 240px;
-            input{
-                color: #fff;
-            }            
-            label {
-                color: #fff;
+            .logo{
+                font-size: 36px;
+                padding: 20px 0;
             }
             .ms-TextField-fieldGroup{
-                border-radius: $radius;
-                border: 1px solid #fff;
-                background-color: rgb(255 255 255 / 0.3);
-                backdrop-filter: blur(10px);
-
                 &::after{
                     border: none;
-                }
-                .ms-TextField-reveal{
-                    background-color: transparent;
-                    color: #fff;
                 }
             }
             .welcome-text{
@@ -45,21 +65,15 @@ $radius : 20px;
                 font-weight: 700;
             }
             .error-message{
-                color: #F3BB1B;
+                color: #f31b1b;
                 min-height: 28px;
                 padding-bottom: 8px;
             }
             .log-in-btn{
-                border-radius: $radius;
-                border: 1px solid #fff;
-                backdrop-filter: blur(10px);
-                margin-bottom: 4px;
-                
-                background-color: rgb(255 255 255 / 0.3);
-                color: #fff;
-            
+                margin-bottom: 4px;            
             &:hover{
-                background-color: rgb(255 255 255 / 0.3);                    
+                color: rgb(0, 120, 212);
+                background-color: rgb(255 255 255 / 0.2);                    
                 backdrop-filter: blur(20px);
                 }
             }
