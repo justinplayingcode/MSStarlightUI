@@ -22,3 +22,7 @@ export enum ApiStatusCode {
     
     TokenExpiredError = 20230101
 }
+
+export enum DepartmentType{
+    khambenh = 'BV00KKB01',
+}
