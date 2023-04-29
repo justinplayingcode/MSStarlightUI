@@ -5,6 +5,7 @@ import { IconComponent } from "./Icon";
 import { LabelComponent } from "./Label"
 import { ErrorPage } from "./ErrorPage"
 import { ServiceCard } from "./ServiceCard";
+import { Toast} from "./Toast"
 
 export {
     Avatar,
@@ -13,5 +14,6 @@ export {
     LabelComponent,
     TextFieldComponent,
     ServiceCard,
-    ErrorPage
+    ErrorPage,
+    Toast
 }

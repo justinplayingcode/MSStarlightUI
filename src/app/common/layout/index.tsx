@@ -3,12 +3,12 @@ import "./index.scss"
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import UniformHeader from "../header";
-import { pageConstant } from "model";
+import { accountRole, pageConstant } from "model";
 import Home from "src/app/page/Home";
 import { Login } from "src/app/page/Login";
 import { LoadingDot } from "../loading";
 import { ErrorPage } from "../ErrorPage";
-import { Stack } from "@fluentui/react";
+import { DefaultButton, Stack } from "@fluentui/react";
 import AccountManagement from "src/app/page/Account";
 import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
@@ -19,6 +19,8 @@ import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
 import { ToastContainer } from "react-toastify";
+import { IToastProps, Toast } from "../Toast";
+import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components/CreateAccount";
 interface LayoutOwnProps {
     page: string;
 }
@@ -39,16 +41,37 @@ const mapDispatchToProps = {};
 
 type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispatch;
 
+
 interface LayoutState {
     hasLayout: boolean;
+    toastList: IToastProps[]
 }
 
 class Layout extends React.Component<LayoutProps, LayoutState> {
     constructor(props: LayoutProps) {
         super(props);
         this.state = {
-            hasLayout: false
+            hasLayout: false,
+            toastList: []
         }
+    }
+
+    addToast = (toast: IToastProps) => {
+        this.setState(prevState => ({
+            ...prevState,
+            toastList: [toast]
+        }))
+    }
+    
+    
+    handleToast = () => {
+        const toastProperties = {
+            id:1,
+            title: 'Success',
+            description: 'This is a success toast component',
+            backgroundColor: '#5cb85c'
+        }
+        this.addToast(toastProperties);
     }
 
     withoutDefaulLayout() {
@@ -77,6 +100,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_ACCOUNT:
                 content = <AccountManagement />
                 break;
+            case pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR:
+                content = <CreateAccount keyType={CreateAccountKey.Doctor}/>
+                break;
             case pageConstant.LAYOUT_SPECIALITY:
                 content = <Speciality />
                 break;
@@ -99,6 +125,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <></>
                 break;
         }
+
         return (
             <div id="layout-wrapper">
                 <Stack className="left-wrapper">
@@ -115,11 +142,12 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     render() {
-        const { hasLayout } = this.state;
+        const { hasLayout, toastList } = this.state;
         return (
             <>
                 {this.props.isLoading ? <LoadingDot /> : <React.Fragment />}
                 {hasLayout ? this.hasDefaulLayout() : this.withoutDefaulLayout()}
+                <Toast toastList={toastList} />
             </>
         )
     }

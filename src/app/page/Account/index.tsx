@@ -7,70 +7,43 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { DepartmentType } from 'src/model/enum';
 import { RootState } from 'src/redux/store';
+import { CreateAccount } from './components/CreateAccount';
+import './index.scss'
+import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
-    const dispatch = useDispatch();
-    const {role } = useSelector((state: RootState) => state.user)
-    const [selectedMenu, setSelectedmenu] = useState<number>(0);
+    const navigate = useNavigate();
 
-    const renderMenu = (selectedMenu: number) => {
-        switch(selectedMenu){
-            case 1:
-                return<>1</>
-            case 2:
-                return<>2</>
-            case 3:
-                return<>3</>
-            case 4: 
-                return<>4</>
-            default:
-                return<></>
-        }
-    }
+    const renderSection = (isDoctor: boolean) => {
+        return (
+            <Stack className='section-container'>
+                <Stack className='section-header-text'>
+                    {isDoctor
+                        ? <>Bác sĩ</>
+                        : <>Bệnh nhân</>
+                    }
+                </Stack>
+                <Stack className='section-btn'>
+                    {isDoctor
+                        ? <>
+                            <DefaultButton text='Thêm tài khoản bác sĩ' onClick={() => navigate('/account/create-doctor')} />
+                            <DefaultButton text='Quản lí tài khoản bác sĩ' />
+                        </>
+                        : <>
+                            <DefaultButton text='Thêm tài khoản bệnh nhân' />
+                            <DefaultButton text='Quản lí tài khoản bệnh nhân'/>
+                        </>
 
-    const getButton = (role: accountRole) => {
-        const list = [];
-        list.push(
-        {
-            text: 'Thêm tài khoản bệnh nhân',
-            onclick: () => setSelectedmenu(1)
-        },
-        {
-            //tiếp đón bệnh nhân nên có hay không
-            text: 'Quản lí tài khoản bệnh nhân',
-            onclick: () => setSelectedmenu(2)
-        });
-        if(role === accountRole.Admin){
-            list.push(
-            {
-                text: 'Thêm tài khoản bác sĩ',
-                onclick: () => setSelectedmenu(3)
-            },
-            {
-                text: 'Quản lí tài khoản bác sĩ',
-                onclick: () => setSelectedmenu(4)
-            });
-        }
-        return list;
+                    }
+                </Stack>
+            </Stack>
+        )
     }
 
     return (
-        <Stack>Account Management
-            {/* <BaseButton text='Click' onClick={notify}/> */}
-            <Stack>Bsi ở khoa tiếp đón, thì có thể thêm
-
-            {
-                getButton(role).map((item, index) => {
-                    return(
-                        <DefaultButton key={index} text={item.text} onClick={item.onclick}/>
-                    )
-                })
-            }
-            </Stack>
-            <Stack>
-                <DefaultButton text='reset' onClick={() => setSelectedmenu(0)}/>
-                {renderMenu(selectedMenu)}
-            </Stack>
+        <Stack className='account-management'>
+            {renderSection(false)}           
+            {renderSection(true)}
         </Stack>
     )
 }

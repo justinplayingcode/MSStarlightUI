@@ -6,6 +6,7 @@ import { Avatar, AvatarSize } from "../Avatar/avatar";
 import { pageConstant } from "model";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import { Location } from "../layout/location";
 
 interface UniformHeaderProps {
     page?: number
@@ -13,16 +14,6 @@ interface UniformHeaderProps {
 
 const UniformHeader = (props: UniformHeaderProps) => {
     const { avatar, info } = useSelector((state: RootState) => state.user)
-
-    const breadcrumItems: IBreadcrumbItem[] =
-        props?.page === 1
-            ? []
-            : [
-                {
-                    text: 'Home',
-                    key: 'Key0'
-                }
-            ];
 
     return (
         <div id="uniform-header">
@@ -40,21 +31,7 @@ const UniformHeader = (props: UniformHeaderProps) => {
                     />
                 </Stack>
             </Stack>
-            <Breadcrumb
-                items={breadcrumItems}
-                onRenderItemContent={(p, r) => {
-                    if (p.key === 'Key0')
-                        return (
-                            <>
-                                <Icon iconName='Home' />
-                                /
-                            </>
-                        )
-                    return (
-                        <>{r(p)}</>
-                    )
-                }}
-            />
+            <Location/>
         </div>
     );
 }
