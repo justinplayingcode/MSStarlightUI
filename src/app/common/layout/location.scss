@@ -1,0 +1,14 @@
+.breadcrumbs{
+
+    .ms-Breadcrumb-listItem {
+        display: block;
+        height: 32px;
+        &:first-child {
+            .ms-Breadcrumb-item,
+            .ms-Link{
+                margin-left: 0;
+                padding-left: 0;
+            }
+        }
+    }
+}
