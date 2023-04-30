@@ -5,9 +5,7 @@ import { connect } from "react-redux";
 import UniformHeader from "../header";
 import { accountRole, pageConstant } from "model";
 import Home from "src/app/page/Home";
-import { Login } from "src/app/page/Login";
 import { LoadingDot } from "../loading";
-import { ErrorPage } from "../ErrorPage";
 import { DefaultButton, Stack } from "@fluentui/react";
 import AccountManagement from "src/app/page/Account";
 import Speciality from "src/app/page/Speciality";
@@ -21,12 +19,14 @@ import CureProcess from "src/app/page/CureProcess";
 import { ToastContainer } from "react-toastify";
 import { IToastProps, Toast } from "../Toast";
 import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components/CreateAccount";
+import { Navigate } from "react-router-dom";
 interface LayoutOwnProps {
     page: string;
 }
 
 interface LayoutPropsFromState {
     isLoading: boolean;
+    userId: any
 }
 
 interface LayoutPropsFromDispatch {
@@ -35,6 +35,7 @@ interface LayoutPropsFromDispatch {
 
 const mapStateToProps = (state: RootState) => ({
     isLoading: state.loading.isLoading,
+    userId: state.user.userId
 })
 
 const mapDispatchToProps = {};
@@ -43,7 +44,6 @@ type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispat
 
 
 interface LayoutState {
-    hasLayout: boolean;
     toastList: IToastProps[]
 }
 
@@ -51,7 +51,6 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     constructor(props: LayoutProps) {
         super(props);
         this.state = {
-            hasLayout: false,
             toastList: []
         }
     }
@@ -74,20 +73,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         this.addToast(toastProperties);
     }
 
-    withoutDefaulLayout() {
-        const { page } = this.props;
-        switch (page) {
-            case pageConstant.LAYOUT_LOGIN:
-                return <Login />
-            case pageConstant.LAYOUT_ERROR_PAGE:
-                return <ErrorPage />
-            default:
-                this.setState({ hasLayout: true });
-                return;
-        }
-    }
-
-    hasDefaulLayout() {
+    renderContent() {
         const { page } = this.props;
         let content: JSX.Element;
         switch (page) {
@@ -142,11 +128,12 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     render() {
-        const { hasLayout, toastList } = this.state;
+        const { toastList } = this.state;
+        const { userId } = this.props;
         return (
             <>
                 {this.props.isLoading ? <LoadingDot /> : <React.Fragment />}
-                {hasLayout ? this.hasDefaulLayout() : this.withoutDefaulLayout()}
+                {!!userId ? this.renderContent() : <Navigate to="/login" replace/>}
                 <Toast toastList={toastList} />
             </>
         )

@@ -7,7 +7,7 @@ import { IServiceCard, ServiceCard } from "src/app/common/ServiceCard";
 import { accountRole } from "model";
 import { Avatar } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
-import { getAge } from "utils";
+import { Convert } from "utils";
 import { primaryHealthStatus } from "./index.type";
 import authApi from "src/api/auth";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ import image from "image";
 const Home = () => {
     const [items, setItems] = useState([]);    
     const [role, setRole] = useState<accountRole>(accountRole.Admin);
+    // lấy role từ redux ra 
     const [homeMenu, setHomeMenu] = useState<IServiceCard[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>();
 
@@ -147,7 +148,7 @@ const Home = () => {
                 <Stack className="profile-info">
                     <Avatar size={AvatarSize.SuperLarge} avatar_scr={avatar}/>
                     <Stack className="info-name">{info.name}</Stack>
-                    <Stack>{`${getAge(info.dateOfBirth)} years`}</Stack>
+                    <Stack>{`${Convert.getAge(info.dateOfBirth)} years`}</Stack>
                 </Stack>
 
                 <Calendar

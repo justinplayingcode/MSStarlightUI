@@ -1,10 +1,13 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./common/layout";
 import { pageConstant } from "model";
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import { Login } from "./page/Login";
+import { ErrorPage } from "./common";
+
 interface UniformLayoutPropsFromState {
 }
 
@@ -20,6 +23,7 @@ type UniformLayoutProps = UniformLayoutPropsFromState & UniformLayoutPropsFromDi
 
 const mapStateToProps = (state: RootState) => ({
     isLoading: state.loading.isLoading,
+    user: state.user
 })
 
 const mapDispatchToProps = { };
@@ -35,11 +39,8 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
             <div id="uniform-layout-wrapper">
                 <Router>
                     <Routes>
-                        {/* jump to "/" first */}
-                        <Route path="/login" element={<Layout page={pageConstant.LAYOUT_LOGIN}/>} />
-                        <Route path="*" element={<Layout page={pageConstant.LAYOUT_ERROR_PAGE} />} />
+                        <Route path="/login" element={<Login/>} />
                         <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
-                        {/* <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} /> */}
                         <Route path="/profile" element={<Layout page={pageConstant.LAYOUT_PROFILE}/>} />
                         <Route path="/account" element={<Layout page={pageConstant.LAYOUT_ACCOUNT}/>} />
                         <Route path='/account/create-doctor' element={<Layout page={pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR}/>} />
@@ -50,6 +51,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/pills" element={<Layout page={pageConstant.LAYOUT_PILLS}/>} />
                         <Route path="/news" element={<Layout page={pageConstant.LAYOUT_NEWS}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}
+                        <Route path="*" element={<ErrorPage />} />
                     </Routes>
                 </Router>                
             </div>

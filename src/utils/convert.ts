@@ -7,7 +7,8 @@ export default class Convert {
         }
     }
 
-    public static getAge = (dateOfBirth: Date) => {
+    public static getAge = (date: string) => {
+        const dateOfBirth = new Date(date)
         const year = dateOfBirth.getFullYear();
         const current = new Date().getFullYear();
         return (current - year).toString();
