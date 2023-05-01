@@ -1,6 +1,6 @@
 import { Calendar, Icon, Image, Stack, Text } from "@fluentui/react";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openLoading, closeLoading } from "src/redux/reducers";
 import './index.scss'
 import { IServiceCard, ServiceCard } from "src/app/common/ServiceCard";
@@ -10,17 +10,17 @@ import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { Convert } from "utils";
 import { primaryHealthStatus } from "./index.type";
 import authApi from "src/api/auth";
-import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import image from "image";
 
 
 const Home = () => {
     const [items, setItems] = useState([]);    
-    const [role, setRole] = useState<accountRole>(accountRole.Admin);
+    const role = useSelector<RootState>(state => state.user.role)
     // lấy role từ redux ra 
     const [homeMenu, setHomeMenu] = useState<IServiceCard[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>();
+
 
     const profile ={
         // name: 'Phạm Duy Thắng',
@@ -40,14 +40,6 @@ const Home = () => {
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
       setSelectedDate(date);
     }, []);
-
-    useEffect(() => {
-        fetchaasa();
-    }, [])
-
-    useEffect(() => {
-        // assembleMenu(getNavList(role, true))
-    },[])
 
     useEffect(() => {
         console.log('item');
@@ -92,7 +84,7 @@ const Home = () => {
         return(
             <Stack className="welcome-section">
                 <Stack className="welcome-text">
-                    <Stack className="text-header">Xin chào, {info.name}</Stack>
+                    <Stack className="text-header">Xin chào, {info?.name}</Stack>
                     <Text className="text-remind">Chúc một ngày tốt lành và đừng quên chăm sóc sức khỏe bản thân nhé</Text>
                 </Stack>
                 <img alt="" className="welcome-image" src={image.welcomeLogo}/>
@@ -147,8 +139,8 @@ const Home = () => {
             <Stack className="preview-profile">
                 <Stack className="profile-info">
                     <Avatar size={AvatarSize.SuperLarge} avatar_scr={avatar}/>
-                    <Stack className="info-name">{info.name}</Stack>
-                    <Stack>{`${Convert.getAge(info.dateOfBirth)} years`}</Stack>
+                    <Stack className="info-name">{info?.name}</Stack>
+                    <Stack>{`${Convert.getAge(info?.dateOfBirth)} years`}</Stack>
                 </Stack>
 
                 <Calendar

@@ -35,7 +35,11 @@ const processQueue = (error, token = null) => {
 };
 
 apiClient.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        if(response.data) {
+            return response.data;
+        }
+        return response},
     async (error) => {
         const originalRequest = error.config;
 
@@ -56,9 +60,10 @@ apiClient.interceptors.response.use(
             isRefreshing = true;
 
             const refreshToken = localStorage.getItem('refreshToken');
+            const username = localStorage.getItem('username');
             try {
                 try {
-                    const response = await apiClient.post('/refreshToken', { refreshToken });
+                    const response = await apiClient.post('/auth/newtoken', { refreshToken, username });
                     const { accessToken } = response.data;
                     localStorage.setItem('token', accessToken);
                     apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;

@@ -4,7 +4,7 @@ import { IconButton, Label, PrimaryButton, Stack, TextField } from "@fluentui/re
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { openLoading, closeLoading, setRole, setUserId } from "src/redux/reducers";
+import { openLoading, closeLoading, setRole, setUsername } from "src/redux/reducers";
 import authApi from "src/api/auth";
 
 import Image from "image"
@@ -34,11 +34,11 @@ export const Login: React.FunctionComponent = () => {
         }
         dispatch(openLoading());
         authApi.login(reqbody).then(data => {
-            const {accessToken, refreshToken, role, userId } = data.data.data;
+            const {accessToken, refreshToken, role, username } = data.data.data;
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
             dispatch(setRole(role));
-            dispatch(setUserId(userId));
+            dispatch(setUsername(username));
             history("/");
         }).catch(err => {
             const { message } = err.response.data;

@@ -3,10 +3,10 @@ import "./index.scss"
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import UniformHeader from "../header";
-import { accountRole, pageConstant } from "model";
+import {  pageConstant } from "model";
 import Home from "src/app/page/Home";
-import { LoadingDot } from "../loading";
-import { DefaultButton, Stack } from "@fluentui/react";
+import { LoadingCirle, LoadingDot } from "../loading";
+import { Stack } from "@fluentui/react";
 import AccountManagement from "src/app/page/Account";
 import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
@@ -20,38 +20,58 @@ import { ToastContainer } from "react-toastify";
 import { IToastProps, Toast } from "../Toast";
 import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components/CreateAccount";
 import { Navigate } from "react-router-dom";
+import authApi from "src/api/auth";
+import { setRole, setUsername } from "src/redux/reducers";
 interface LayoutOwnProps {
     page: string;
 }
 
 interface LayoutPropsFromState {
     isLoading: boolean;
-    userId: any
+    username: string
 }
 
 interface LayoutPropsFromDispatch {
-
+    setRole: any;
+    setUsername: any
 }
 
 const mapStateToProps = (state: RootState) => ({
     isLoading: state.loading.isLoading,
-    userId: state.user.userId
+    username: state.user.username
 })
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    setRole,
+    setUsername
+};
 
 type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispatch;
 
 
 interface LayoutState {
-    toastList: IToastProps[]
+    toastList: IToastProps[];
+    loading: boolean
 }
 
 class Layout extends React.Component<LayoutProps, LayoutState> {
     constructor(props: LayoutProps) {
         super(props);
         this.state = {
-            toastList: []
+            toastList: [],
+            loading: true
+        }
+    }
+
+    async componentDidMount() {
+        const temp = JSON.parse(localStorage.getItem('accessToken'));
+        if(temp) {
+            const res = await authApi.checkCurrentUser();
+                if(res.data.username && res.data.role) {
+                    this.props.setRole(res.data.role)
+                    this.props.setUsername(res.data.username)
+                    this.setState({loading: false})
+                }
         }
     }
 
@@ -128,15 +148,20 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     render() {
-        const { toastList } = this.state;
-        const { userId } = this.props;
-        return (
-            <>
-                {this.props.isLoading ? <LoadingDot /> : <React.Fragment />}
-                {!!userId ? this.renderContent() : <Navigate to="/login" replace/>}
-                <Toast toastList={toastList} />
-            </>
-        )
+        const { toastList, loading } = this.state;
+        const { username } = this.props;
+        if(loading) {
+            return <LoadingCirle/>
+        } else {
+            return (
+                <>
+                    {this.props.isLoading ? <LoadingDot /> : <React.Fragment />}
+                    {username ? this.renderContent() : <Navigate to="/login" replace/>}
+                    <Toast toastList={toastList} />
+                </>
+            )
+        }
+
     }
 }
 
