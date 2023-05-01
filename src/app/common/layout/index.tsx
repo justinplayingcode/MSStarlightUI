@@ -16,7 +16,6 @@ import Pills from "src/app/page/Pills";
 import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
-import { ToastContainer } from "react-toastify";
 import { IToastProps, Toast } from "../Toast";
 import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components/CreateAccount";
 import { Navigate } from "react-router-dom";
@@ -64,15 +63,15 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     async componentDidMount() {
-        const temp = JSON.parse(localStorage.getItem('accessToken'));
+        const temp = localStorage.getItem('accessToken');
         if(temp) {
             const res = await authApi.checkCurrentUser();
                 if(res.data.username && res.data.role) {
                     this.props.setRole(res.data.role)
                     this.props.setUsername(res.data.username)
-                    this.setState({loading: false})
                 }
-        }
+            }
+        this.setState({loading: false})
     }
 
     addToast = (toast: IToastProps) => {
@@ -161,7 +160,6 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 </>
             )
         }
-
     }
 }
 
