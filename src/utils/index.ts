@@ -1,11 +1,6 @@
-import Common from "./common"
-import { validateUserName, validateEmail, validatePhoneNumber, validateFullName} from "./validate"
-import { getAge } from "./convert"
+import Validate from "./validate"
+import Convert from "./convert"
 export {
-    Common,
-    validateUserName,
-    validateEmail,
-    validatePhoneNumber,
-    validateFullName,
-    getAge
+    Validate,
+    Convert
 }

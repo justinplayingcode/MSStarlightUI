@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import loadingReducer, { openLoading, closeLoading } from './common/loadingReducer';
 import navigationReducer, {updateSelectedMenu} from './common/navigationReducer';
-import userReducer, { setInfoUser, setRole, setUserId } from './common/userReducer';
+import userReducer, { setInfoUser, setRole, setUsername, userLogout } from './common/userReducer';
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 export {
-    setRole, setUserId, setInfoUser,
+    setRole, setUsername, setInfoUser, userLogout,
     openLoading, closeLoading,
     updateSelectedMenu,
 

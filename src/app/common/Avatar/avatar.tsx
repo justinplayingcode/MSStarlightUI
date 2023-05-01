@@ -2,6 +2,8 @@ import * as React from "react";
 import { Callout, DefaultButton, Stack, mergeStyleSets } from "@fluentui/react";
 import './index.scss'
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { userLogout } from "src/redux/reducers";
 interface IAvatarProps {
     avatar_scr: string;
     size?: AvatarSize;
@@ -33,6 +35,8 @@ export const getAvatarSize = (size: AvatarSize | undefined) => {
 export const Avatar = (props: IAvatarProps) => {
     const [isCalloutVisible, setIsCalloutVisible] = React.useState<boolean>(false);
     const [isHover, setIsHover] = useState(false);
+    const dispatch = useDispatch();
+
 
    const handleMouseEnter = () => {
       setIsHover(true);
@@ -53,6 +57,12 @@ export const Avatar = (props: IAvatarProps) => {
         width: avatarStyle,
         height: avatarStyle,
         cursor: isHover && props.hasCallout ? 'pointer': 'auto'
+    }
+
+    const handleLogOut = () => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch(userLogout());
     }
 
     return (
@@ -78,7 +88,7 @@ export const Avatar = (props: IAvatarProps) => {
                 >
                     <DefaultButton text="Thông tin tài khoản" onClick={(e) => alert('Thông tin tài khoản')} />
                     <DefaultButton text="Đổi mật khẩu" onClick={(e) => alert('Đổi mật khẩu')} />
-                    <DefaultButton text="Đăng xuất" onClick={(e) => alert('Đăng xuất')} />
+                    <DefaultButton text="Đăng xuất" onClick={handleLogOut} />
                 </Callout>
             )}
         </Stack>
