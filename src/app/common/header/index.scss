@@ -1,6 +1,8 @@
 #uniform-header {
     width: 100%;
-    height: 100px;
+    height: 180px;
+    box-sizing: border-box;
+    padding: 40px 0;
 
     .header-info {
         display: flex;

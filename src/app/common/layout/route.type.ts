@@ -17,49 +17,49 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         key: 'route-account',
         text: 'Tài khoản',
         url: '/account',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     },
     AccountCreateDoctor: {
         key: 'route-account-create-doctor',
         text: 'Tạo bác sĩ',
         url: '/account/create-doctor',
-        parentKeys:["route-home", "route-account"]
+        parentKeys:["route-account"]
     },
     Speciallity: {
         key: 'route-speciality',
         text: 'Khoa',
         url: '/speciality',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     },
     CuringProcess: {
         key: 'route-curing-process',
         text: 'Khám, chữa bệnh',
         url: '/curing-process',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     },
     CureHistory: {
         key: 'route-cure-history',
         text: 'Lịch sử khám bệnh',
         url: '/cure-history',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     },
     Diseases: {
         key: 'route-diseases',
         text: 'Bệnh',
         url: '/diseases',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     },
     Pills: {
         key: 'route-pills',
         text: 'Thuốc',
         url: '/pills',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     },
     News: {
         key: 'route-news',
         text: 'Thông tin, tư vấn',
         url: '/news',
-        parentKeys:["route-home"]
+        // parentKeys:["route-home"]
     }
 }
 

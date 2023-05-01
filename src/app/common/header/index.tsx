@@ -31,7 +31,9 @@ const UniformHeader = (props: UniformHeaderProps) => {
                     />
                 </Stack>
             </Stack>
-            <Location/>
+            <Stack className="header-breadcrumb">
+                <Location/>
+            </Stack>
         </div>
     );
 }

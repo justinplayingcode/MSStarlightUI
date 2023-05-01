@@ -17,10 +17,12 @@ $theme-blue: rgb(0, 120, 212);
         width: 100%;
         min-height: 100%;
         box-sizing: border-box;
-        padding: 16px 40px;
+        padding: 0 40px;
         background-color: #f6faff;
         .main-content{
-            padding-top: 16px;
+            border-radius: 12px;
+            background-color: #ffffff;
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         }
     }
 
@@ -48,14 +50,13 @@ $theme-blue: rgb(0, 120, 212);
 }
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) { 
-
+    .bars{
+        display: none;
+    }
  }
     
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) { 
-    .bars{
-        display: none;
-    }
  }
 
 // Extra large devices (large desktops, 1200px and up)
