@@ -4,7 +4,6 @@ import Layout from "./common/layout";
 import { pageConstant } from "model";
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
-import { ToastContainer } from "react-toastify";
 import { Login } from "./page/Login";
 import { ErrorPage } from "./common";
 
