@@ -44,7 +44,7 @@ apiClient.interceptors.response.use(
         const originalRequest = error.config;
 
         // if (error.response.status === 401 && !originalRequest._retry) {
-        if (error.response.statusCode === ApiStatusCode.TokenExpiredError && !originalRequest._retry) {
+        if (error.response.status === ApiStatusCode.Forbidden && error.response.data.message === 'TokenExpiredError' && !originalRequest._retry) {
             if (isRefreshing) {
                 try {
                     const res = await new Promise((resolve, reject) => {
