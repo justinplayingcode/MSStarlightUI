@@ -15,6 +15,7 @@ const SideBar = () => {
     const [isOpen, setIsOpen] = React.useState<boolean>(true);
     const [menuItem, setMenuItem] = React.useState<ISideBarProps[]>([]);
     const { role } = useSelector((state: RootState) => state.user);
+    const thisRole = accountRole.Doctor;
 
     useEffect(() => {
         assembleTopNavLinkGroups(getNavList(role, false));

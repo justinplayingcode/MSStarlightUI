@@ -1,5 +1,6 @@
 .home-container{
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     
@@ -9,6 +10,7 @@
 
         .welcome-section{
             width: 100%;
+            height: 200px;
             background-color: #fff;
             border-radius: 25px ;
             box-sizing: border-box;
@@ -21,22 +23,28 @@
 
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
             
-            position: relative;
-            .welcome-text{
+            .welcome-left{
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-
-                max-width: 500px;
-                .text-header{
-                    font-size: 24px;
+                justify-content: space-between;
+                .welcome-text{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    max-width: 500px;
+                    .text-header{
+                        font-size: 24px;
+                        margin-bottom: 20px;
+                    }
+                    .text-remind{
+    
+                    }
                 }
-                .text-remind{
-
+                .curent-date{
+                    font-size: 18px;
                 }
             }
             .welcome-image{
-                position: absolute;
                 height: 150px;    
                 
                 right: 90px;
@@ -83,8 +91,9 @@
     }
     .home-right-section{
         width: 360px;
-        background-color: #2e3192;
+        background-color: #fff;
         border-radius: 25px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
         .preview-profile{
             align-items: center;
@@ -92,9 +101,10 @@
 
             .profile-info{
                 align-items: center;
-                color: #fff;
+                // color: #fff;
+                font-size: 20px;
 
-                padding: 40px;
+                padding-top: 20px;
                 .info-name{
                     margin-top: 10px;
                 }

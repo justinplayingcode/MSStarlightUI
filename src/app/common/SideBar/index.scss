@@ -3,10 +3,11 @@
     background-color: #0e0f38;
     transition: all 0.5s;
     .top-section{
+        display: flex;
+        justify-content: center;
         .logo{
             object-fit: cover;
-            max-width: 220px;
-            height: 180px;
+            height: 120px;
         }
     }
     .menu-section{
@@ -19,7 +20,7 @@
 
             font-size: 18px;
 
-            padding: 16px 0 16px 16px;
+            padding: 18px 0 18px 24px;
 
             &:hover{
                 background-color: #294a7c;

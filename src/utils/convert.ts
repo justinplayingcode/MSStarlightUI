@@ -14,4 +14,9 @@ export default class Convert {
         return (current - year).toString();
     }
 
+    public static getBornYear = (date: string) => {
+        const dateOfBirth = new Date(date);
+        return dateOfBirth.getFullYear();
+    }
+
 }

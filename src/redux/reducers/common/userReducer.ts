@@ -18,6 +18,7 @@ const initialState: CurrentUserState = {
     info: {
         name: 'Phạm Duy Thắng',
         dateOfBirth: '2001, 1, 30',
+        department: 'Khoa khám chữa bệnh'
     },
 };
 

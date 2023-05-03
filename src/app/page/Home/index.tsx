@@ -15,12 +15,17 @@ import image from "image";
 
 
 const Home = () => {
-    const [items, setItems] = useState([]);    
-    const role = useSelector<RootState>(state => state.user.role)
-    // lấy role từ redux ra 
+    const [items, setItems] = useState([]);   
     const [homeMenu, setHomeMenu] = useState<IServiceCard[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>();
 
+    const dispatch = useDispatch();
+    const {avatar, info} = useSelector((state:RootState) => state.user);
+    const role = useSelector<RootState>(state => state.user.role);
+
+    const doctorrole = accountRole.Doctor;
+    const patientrole = accountRole.Patient;
+    // lấy role từ redux ra 
 
     const profile ={
         // name: 'Phạm Duy Thắng',
@@ -34,8 +39,6 @@ const Home = () => {
         height: 165
     }
 
-    const dispatch = useDispatch();
-    const {avatar, info} = useSelector((state:RootState) => state.user);
 
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
       setSelectedDate(date);
@@ -63,29 +66,36 @@ const Home = () => {
         }
     }
 
-    // const assembleMenu = (list: INavListProps[]) => {
-    //     const newHomeMenu : IServiceCard[] = [];
-    //     list.map((item) => {
-    //         newHomeMenu.push({
-    //             name: item.name,
-    //             iconName: item.icon,
-    //             description: item.description,
-    //         })
-    //     });
-    //     setHomeMenu(newHomeMenu);
-    // }
+    const getCurrentDateString = (date?: Date): string => {
+        return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
+      };
 
-    // const assembleHealthStatus = () => {
+    const getAccountRoleName = (role: accountRole) => {
+        switch(role){
+            case accountRole.Admin:
+                return <>Admin</>;
+            case accountRole.Doctor:
+                return <>Bác sĩ</>;
+            case accountRole.Patient:
+                return <>Bệnh nhân</>
+            default:
+                return <></>;
+        }
+    }
 
-    //     return;
-    // }
+    const getPatientStatus = (status : number) => {
+
+    }
 
     const renderWelcome = () => {
         return(
             <Stack className="welcome-section">
-                <Stack className="welcome-text">
-                    <Stack className="text-header">Xin chào, {info?.name}</Stack>
-                    <Text className="text-remind">Chúc một ngày tốt lành và đừng quên chăm sóc sức khỏe bản thân nhé</Text>
+                <Stack className="welcome-left">
+                    <Stack className="welcome-text">
+                        <Stack className="text-header">Xin chào, {info?.name}</Stack>
+                        <Text className="text-remind">Chúc một ngày tốt lành và đừng quên chăm sóc sức khỏe bản thân nhé</Text>
+                    </Stack>
+                    <Stack className="curent-date">Hôm nay là {getCurrentDateString(new Date())}</Stack>
                 </Stack>
                 <img alt="" className="welcome-image" src={image.welcomeLogo}/>
             </Stack>
@@ -134,16 +144,22 @@ const Home = () => {
         )
     }
 
-    const renderPreviewProfile = () => {
+    const renderPreviewProfile = (role: accountRole) => {
         return (
             <Stack className="preview-profile">
-                <Stack className="profile-info">
+                <Stack className="profile-info" tokens={{childrenGap: 16}}>
                     <Avatar size={AvatarSize.SuperLarge} avatar_scr={avatar}/>
-                    <Stack className="info-name">{info?.name}</Stack>
-                    <Stack>{`${Convert.getAge(info?.dateOfBirth)} years`}</Stack>
+                    <Stack>{info?.onboarding ? <>Đang nằm viện</> : <></>} </Stack>
+                    <Stack className="info-name">{info?.name}</Stack>                    
+                    {/* <Stack>{`${Convert.getAge(info?.dateOfBirth)} years`}</Stack> */}
+                    <Stack>Năm sinh: {Convert.getBornYear(info?.dateOfBirth)}</Stack>
+                    <Stack>{getAccountRoleName(role)}</Stack>
+                    <Stack>{role === accountRole.Doctor ? <>{info?.department}</> : <></>}</Stack>
+                    <Stack>{role === accountRole.Patient ? <>Trạng thái: {getPatientStatus(info?.status)}</> : <></>}</Stack>
+                    {/* more info depend on role */}
                 </Stack>
 
-                <Calendar
+                {/* <Calendar
                     className="calendar"
                     showMonthPickerAsOverlay
                     highlightSelectedMonth
@@ -153,7 +169,7 @@ const Home = () => {
                     //Chac de TA thoi nhi
                     // Calendar uses English strings by default. For localized apps, you must override this prop.
                     // strings={defaultCalendarStrings}
-                />
+                /> */}
             </Stack>
         )
     }
@@ -171,7 +187,7 @@ const Home = () => {
                 </Stack>
             </Stack>
             <Stack className="home-right-section">
-                {renderPreviewProfile()}
+                {renderPreviewProfile(doctorrole as accountRole)}
             </Stack>
         </Stack>
     )

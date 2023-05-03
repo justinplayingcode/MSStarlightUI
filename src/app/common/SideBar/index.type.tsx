@@ -25,7 +25,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
         });
     }
 
-    if(role !== accountRole.Patient){
+    if(role !== accountRole.Patient && role !== accountRole.Doctor){
         list.push({
             name: 'Tài khoản',
             icon: <MdManageAccounts/>,
@@ -33,18 +33,16 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             url: '/account',   
             imageUrl: '#'
         });
-
-        if(role !== accountRole.Doctor){
-            list.push(
+        list.push(
             {
                 name: 'Khoa, viện',
-                icon: <MdAccountTree/>,
+                icon: <MdAccountTree />,
                 description: '',
                 url: '/speciality',
                 imageUrl: ''
             }
-            )
-        }
+        );
+    
     };
 
     if(role === accountRole.Doctor){
