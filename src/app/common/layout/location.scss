@@ -3,6 +3,13 @@
     .ms-Breadcrumb-listItem {
         display: block;
         height: 32px;
+        *:hover{
+            background: none;
+        }
+        .ms-TooltipHost{
+            color: #0E0F38;
+            font-size: 24px;
+        }
         &:first-child {
             .ms-Breadcrumb-item,
             .ms-Link{

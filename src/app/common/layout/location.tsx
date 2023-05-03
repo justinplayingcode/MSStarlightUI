@@ -34,10 +34,13 @@ export const Location = () => {
     const assembleBreadItem = React.useCallback(() => {
         const routeItem = getRouteItemByUrl(pathname);        
         const items: IBreadcrumbItem[] = [];
+
         if( routeItem?.parentKeys?.length){
             routeItem.parentKeys.forEach((key) => {
                 items.push(assembleParentItem(key))
             });
+        } else{
+            return items;
         }
         if(routeItem.key !== 'route-home'){
             items.push({
@@ -51,7 +54,9 @@ export const Location = () => {
     return(
         <Stack className='breadcrumbs'>
             <Breadcrumb
-                styles={{ root: { height: 32, margin: 0} }}
+                styles={{ root: { 
+                    height: assembleBreadItem().length === 0 ? 0 : 32, 
+                    margin: 0} }}
                 items={assembleBreadItem()}
             />
         </Stack>

@@ -20,7 +20,7 @@ export enum AvatarSize {
 export const getAvatarSize = (size: AvatarSize | undefined) => {
     switch (size) {
         case AvatarSize.SuperLarge:
-            return "100px"
+            return "150px"
         case AvatarSize.Large:
             return "40px";
         case AvatarSize.Medium:

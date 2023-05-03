@@ -21,6 +21,8 @@ import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components
 import { Navigate } from "react-router-dom";
 import authApi from "src/api/auth";
 import { setRole, setUsername } from "src/redux/reducers";
+import { Tablewrapper } from "../DetailsListTable/tablewrapper";
+import { Location } from "../layout/location";
 interface LayoutOwnProps {
     page: string;
 }
@@ -102,12 +104,23 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_PROFILE:
                 content = <Profile />
                 break;
+
             case pageConstant.LAYOUT_ACCOUNT:
                 content = <AccountManagement />
+                break;
+            case pageConstant.LAYOUT_ACCOUNT_CREATE_PATIENT:
+                content = <CreateAccount keyType={CreateAccountKey.Patient} />
+                break;
+            case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
+                content = <Tablewrapper table={<>Quản lý tài khoản bệnh nhân</>}/>
                 break;
             case pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR:
                 content = <CreateAccount keyType={CreateAccountKey.Doctor}/>
                 break;
+            case pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT:
+                content = <Tablewrapper table={<>Quản lý tài khoản bác sĩ</>}/>
+                break;
+
             case pageConstant.LAYOUT_SPECIALITY:
                 content = <Speciality />
                 break;
@@ -139,6 +152,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 <Stack className="right-wrapper">
                     <UniformHeader/>
                     <Stack className="main-content">
+                    <Stack className="header-breadcrumb">
+                        <Location/>
+                    </Stack>
                         {content}
                     </Stack>
                 </Stack>

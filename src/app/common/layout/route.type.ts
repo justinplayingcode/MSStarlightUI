@@ -13,18 +13,38 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         url: '/',
         iconName: 'fas-house'
     },
+
     Account: {
         key: 'route-account',
         text: 'Tài khoản',
         url: '/account',
         // parentKeys:["route-home"]
     },
+    AccountCreatePatient: {
+        key: 'route-account-create-patient',
+        text: 'Thêm bệnh nhân',
+        url: '/account/create-patient',
+        parentKeys:["route-account"]
+    },
+    AccountPatientManagement: {
+        key: 'route-account-patient-management',
+        text: 'Quản lý bệnh nhân',
+        url: '/account/patient-management',
+        parentKeys:["route-account"]
+    },
     AccountCreateDoctor: {
         key: 'route-account-create-doctor',
-        text: 'Tạo bác sĩ',
+        text: 'Thêm bác sĩ',
         url: '/account/create-doctor',
         parentKeys:["route-account"]
     },
+    AccountDoctorManagement: {
+        key: 'route-account-doctor-management',
+        text: 'Quản lý bác sĩ',
+        url: '/account/doctor-management',
+        parentKeys:["route-account"]
+    },
+
     Speciallity: {
         key: 'route-speciality',
         text: 'Khoa',

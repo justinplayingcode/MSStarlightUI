@@ -9,20 +9,18 @@ $theme-blue: rgb(0, 120, 212);
     flex-direction: row;
 
     .left-wrapper {
-        
-
+        width: 270px;
     }
 
     .right-wrapper {
         width: 100%;
-        min-height: 100%;
         box-sizing: border-box;
-        padding: 0 40px;
+        padding: 0 40px 20px 40px;
         background-color: #f6faff;
         .main-content{
-            border-radius: 12px;
-            background-color: #ffffff;
-            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            flex: 1;
+            // overflow-y: scroll;
+            //how to overflow this one
         }
     }
 

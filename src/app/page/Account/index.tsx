@@ -27,13 +27,12 @@ const Account = () => {
                     {isDoctor
                         ? <>
                             <DefaultButton text='Thêm tài khoản bác sĩ' onClick={() => navigate('/account/create-doctor')} />
-                            <DefaultButton text='Quản lí tài khoản bác sĩ' />
+                            <DefaultButton text='Quản lí tài khoản bác sĩ' onClick={() => navigate('/account/doctor-management')}/>
                         </>
                         : <>
-                            <DefaultButton text='Thêm tài khoản bệnh nhân' />
-                            <DefaultButton text='Quản lí tài khoản bệnh nhân'/>
+                            {/* <DefaultButton text='Thêm tài khoản bệnh nhân' onClick={() => navigate('/account/create-patient')} /> */}
+                            <DefaultButton text='Quản lí tài khoản bệnh nhân' onClick={() => navigate('/account/patient-management')}/>
                         </>
-
                     }
                 </Stack>
             </Stack>
