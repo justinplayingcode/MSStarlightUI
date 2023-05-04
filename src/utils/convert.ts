@@ -19,4 +19,8 @@ export default class Convert {
         return dateOfBirth.getFullYear();
     }
 
+    public static convertZeroNumber = (a: number) => {
+        return a===0 ? ' -- ' : a;
+    }
+
 }

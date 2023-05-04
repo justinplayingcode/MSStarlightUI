@@ -7,7 +7,8 @@ import { userLogout } from "src/redux/reducers";
 interface IAvatarProps {
     avatar_scr: string;
     size?: AvatarSize;
-    hasCallout?: boolean
+    hasCallout?: boolean;
+    isRound?: boolean
 }
 
 export enum AvatarSize {
@@ -53,7 +54,7 @@ export const Avatar = (props: IAvatarProps) => {
 
     const style: React.CSSProperties = {
         backgroundImage: `url(${props.avatar_scr !== '' ? props.avatar_scr : defaultAvatar})`,
-
+        borderRadius: props?.isRound ? '50%' : '0',
         width: avatarStyle,
         height: avatarStyle,
         cursor: isHover && props.hasCallout ? 'pointer': 'auto'

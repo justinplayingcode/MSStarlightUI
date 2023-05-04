@@ -2,23 +2,27 @@ $header-height: 60px;
 $theme-blue: rgb(0, 120, 212);
 
 #layout-wrapper {
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
 
     display: flex;
     flex-direction: row;
 
     .left-wrapper {
-        width: 270px;
+        width: 240px;
+        position: fixed;
+        height: 100%;
     }
 
     .right-wrapper {
-        width: 100%;
+        margin-left: 240px;
+        width: calc(100% - 240px);
         box-sizing: border-box;
-        padding: 0 40px 20px 40px;
         background-color: #f6faff;
         .main-content{
             flex: 1;
+            padding: 0 40px 20px 40px;
+            margin-top: 90px;
             // overflow-y: scroll;
             //how to overflow this one
         }

@@ -20,7 +20,7 @@ import { IToastProps, Toast } from "../Toast";
 import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components/CreateAccount";
 import { Navigate } from "react-router-dom";
 import authApi from "src/api/auth";
-import { setRole, setUsername } from "src/redux/reducers";
+import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { Tablewrapper } from "../DetailsListTable/tablewrapper";
 import { Location } from "../layout/location";
 interface LayoutOwnProps {
@@ -34,7 +34,8 @@ interface LayoutPropsFromState {
 
 interface LayoutPropsFromDispatch {
     setRole: any;
-    setUsername: any
+    setUsername: any;
+    setInfoUser: any;
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -44,7 +45,8 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps = {
     setRole,
-    setUsername
+    setUsername,
+    setInfoUser
 };
 
 type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispatch;
@@ -72,7 +74,11 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                     this.props.setRole(res.data.role)
                     this.props.setUsername(res.data.username)
                 }
-            }
+            // const {data} = await authApi.getInfoCurrentUser();
+            // if(data) {
+            //     this.props.setInfoUser(data)
+            // }   
+        }
         this.setState({loading: false})
     }
 
