@@ -13,7 +13,7 @@ interface UniformHeaderProps {
 }
 
 const UniformHeader = (props: UniformHeaderProps) => {
-    const { avatar, info } = useSelector((state: RootState) => state.user)
+    const { info } = useSelector((state: RootState) => state.user)
 
     return (
         <div id="uniform-header">
@@ -26,7 +26,7 @@ const UniformHeader = (props: UniformHeaderProps) => {
                     <IconButton className="header-icon" iconProps={{ iconName: 'Ringer' }} />
                     <IconButton className="header-icon" iconProps={{ iconName: 'Help' }} />
                     <Avatar
-                        avatar_scr={avatar}
+                        avatar_scr={info?.avatar}
                         size={AvatarSize.Large}
                         hasCallout={true}
                     />

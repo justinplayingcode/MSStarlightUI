@@ -5,8 +5,8 @@ import authApi from "src/api/auth";
 interface CurrentUserState {
     role: accountRole | null;
     username: string | null;
-    avatar: string | null;
     info: any;
+    pending: boolean;
 }
 
 //call api and then change the role depend on the account role
@@ -14,13 +14,23 @@ interface CurrentUserState {
 const initialState: CurrentUserState = {
     role: null,
     username: null,
-    avatar: 'https://res.cloudinary.com/dipiauw0v/image/upload/v1681015649/DATN/avatar_dexs0y.png',
-    info: {
-        name: 'Phạm Duy Thắng',
-        dateOfBirth: '2001, 1, 30',
-        department: 'Khoa khám chữa bệnh'
-    },
+    info: {},
+    pending: false
 };
+
+const getInfoCurrentUser = async () => {
+    const res = await authApi.getInfoCurrentUser();
+
+}
+
+const getInfo = createAsyncThunk(
+    'currentuser/getinfo',
+    async () => {
+        const { data } = await authApi.getInfoCurrentUser();
+        console.log(data)
+        return data;
+    }
+)
 
 //save infomation of current log in user
 export const userSlice = createSlice({
@@ -39,7 +49,6 @@ export const userSlice = createSlice({
         userLogout: (state) => {
             state.role = null,
             state.username = null,
-            state.avatar = null,
             state.info = null
         }
     }

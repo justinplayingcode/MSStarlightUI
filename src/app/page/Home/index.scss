@@ -3,6 +3,8 @@
     height: 100%;
     display: flex;
     flex-direction: row;
+
+    // overflow-y: scroll;
     
     .home-left-section{
         width: 100%;
@@ -58,8 +60,14 @@
 
             .basic-status{
                 width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+
                 .status-container{
-                    width: 180px;
+                    width: 24%;
+                    min-width: 180px;
 
                     border-radius: 20px;
                     background-color: #fff;
@@ -67,25 +75,60 @@
                     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
                     padding: 20px;
+                    margin-bottom: 20px;
                     .status-info{
                         display: flex;
                         flex-direction: row;
                         align-items: center;
 
-                        img{
-                            height: 48px;
-                            width: 48px;
+                        margin-bottom: 8px;
+                        .info-icon{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            padding: 8px;
+                            border-radius: 8px;
+                            img{
+                                height: 32px;
+                                width: 32px;
+                            }
+                        }
+                        .info-text{
+                            margin-left: 16px;
+                            font-size: 20px;
                         }
                     }
-                    .status-name{
-                        font-size: 24px;
-                        font-weight: 700;
+                    .status-detail{
+                        
+                        .status-name{
+                            font-size: 18px;
+                            font-weight: 700;
+                        }
+                        .status-description{
+                            font-size: 14px;
+                            font-style: italic;
+                            font-weight: 300;
+                        }
                     }
-                    .status-description{}
                 }
             }
-            .status-news{
 
+            .status-news{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+
+                min-width: 360px;
+                min-height: 200px;
+
+                border-radius: 20px;
+                background-color: #fff;
+                box-sizing: border-box;
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                
             }
         }
     }
@@ -107,6 +150,19 @@
                 padding-top: 20px;
                 .info-name{
                     margin-top: 10px;
+                }
+                .height-weight-container{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    .status-info{
+                        .info-icon{
+                            img{
+                                height: 32px;
+                                width: 32px;
+                            }
+                        }
+                    }
                 }
             }
             .calendar {
