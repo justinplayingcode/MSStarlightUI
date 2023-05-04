@@ -128,6 +128,11 @@ const Home = () => {
 
     const renderHealthCard = (name: string, imageUrl: string, color: string, bgcolor: string, info: number, unit: string, description: string) => {
         const temp = Convert.convertZeroNumber(info)
+        if(name === "Huyết áp") {
+
+        } else {
+            
+        }
         return(
             <Stack className="status-container">
                 <Stack className="status-info">
@@ -157,7 +162,7 @@ const Home = () => {
                 <Stack className="basic-status">
                 {renderHealthCard('Nhịp tim', image.heartbeat, '#D86369','#FBF0F1', info?.heartRate, 'bpm', 'Nhịp tim là chỉ số quan trọng nhất')}
                 {renderHealthCard('Nhiệt độ', image.temperature,'#6D93E2','#EDF3FC', info?.temperature, 'C', 'Thân nhiệt dưới 35 độ C là biểu hiện sức khỏe nghiêm trọng')}
-                {renderHealthCard('Huyết áp', image.bloodPressure, '#D52B1E','#FBF0F1', info?.bloodPressure, '', 'Huyết áp có thể tăng giảm vài lần trong ngày')}
+                {renderHealthCard('Huyết áp', image.bloodPressure, '#D52B1E','#FBF0F1', info?.bloodPressure, 'mmHg', 'Huyết áp có thể tăng giảm vài lần trong ngày')}
                 {renderHealthCard('Đường huyết', image.glucose, '#FBC216','#FFEEC1', info?.glucose, 'mg/dl', "Chỉ số đường huyết ở mức bình thường là 80-120 mg/dl")}
                 </Stack>
                 <Stack className="status-news">
@@ -200,13 +205,13 @@ const Home = () => {
         <Stack className="home-container">
             <Stack className="home-left-section">
                 {renderWelcome()}
-                <Stack className="menu-section">
+                <div className="menu-section">
                     {
                         role === accountRole.Patient
                         ? renderHealthStatus()
                         : renderMenu()
                     }                    
-                </Stack>
+                </div>
             </Stack>
             <Stack className="home-right-section">
                 {renderPreviewProfile(role as accountRole)}
