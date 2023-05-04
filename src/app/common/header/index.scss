@@ -12,8 +12,11 @@
 
         .header-text {
             width: 70%;
+
             .ms-SearchBox {
                 width: 80%;
+                border: none;
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
             }
             .hospital-name {
                 font-size: 28px;
@@ -21,7 +24,7 @@
                 color: rgb(0, 120, 212);
             }
 
-            .current-user {}
+            // .current-user {}
         }
 
         .header-icon-group {
@@ -35,10 +38,13 @@
             .header-icon {
                 width: 40px;
                 height: 40px;
-
                 margin-right: 16px;
                 border: 1px solid #eee;
                 border-radius: 8px;
+                background-color: #fff;
+                &:hover {
+                    background-color: #fafafa;
+                }
             }
         }
     }

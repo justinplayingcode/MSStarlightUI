@@ -53,7 +53,6 @@ const SideBar = () => {
                                     isActive
                                         ? {
                                             textDecoration: 'none',
-                                            backgroundColor: '#2e3192'
                                         }
                                         : {}
                                 )

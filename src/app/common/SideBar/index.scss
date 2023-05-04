@@ -1,6 +1,7 @@
 .sidebar{
     height: 100%;
-    background-color: #0e0f38;
+    // background-color: #0e0f38;
+    background-color: #111827;
     transition: all 0.5s;
     .top-section{
         display: flex;
@@ -14,16 +15,15 @@
         .link{
             display: flex;
             flex-direction: row;
-
-            color: white;    
+            color: #9CA3AF;    
             text-decoration: none;
-
             font-size: 18px;
-
-            padding: 18px 0 18px 24px;
-
+            padding: 18px 0 18px 16px;
+            border-left: 4px solid transparent;
             &:hover{
-                background-color: #294a7c;
+                // background-color: #294a7c;
+                background: linear-gradient(to right, #111827, #374151);
+                color: #fff;
             }
             .icon{
                 min-width: 30px;
@@ -31,6 +31,13 @@
                 justify-content: center;
                 align-items: center;
             }
+        }
+        .link.active {
+            // background-color: #2e3192;
+            // background-color: #374151;
+            background: linear-gradient(to right, #111827, #374151);
+            color: #fff;
+            border-left: 4px solid #fff;
         }
     }
 }
