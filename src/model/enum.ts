@@ -24,3 +24,10 @@ export enum ApiStatusCode {
 export enum DepartmentType{
     khambenh = 'BV00KKB01',
 }
+
+export enum HealthIndicator {
+    HeartRate = 'Nhịp tim',
+    Temperature = 'Nhiệt độ cơ thể',
+    BloodPressure = 'Huyết áp',
+    Glucose = 'Đường huyết'
+}

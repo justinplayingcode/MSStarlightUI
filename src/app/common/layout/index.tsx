@@ -3,7 +3,7 @@ import "./index.scss"
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import UniformHeader from "../header";
-import {  pageConstant } from "model";
+import {  ApiStatus, pageConstant } from "model";
 import Home from "src/app/page/Home";
 import { LoadingCirle, LoadingDot } from "../loading";
 import { Stack } from "@fluentui/react";
@@ -70,14 +70,11 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         const temp = localStorage.getItem('accessToken');
         if(temp) {
             const res = await authApi.checkCurrentUser();
-                if(res.data.username && res.data.role) {
-                    this.props.setRole(res.data.role)
-                    this.props.setUsername(res.data.username)
-                }
-            // const {data} = await authApi.getInfoCurrentUser();
-            // if(data) {
-            //     this.props.setInfoUser(data)
-            // }   
+                if(res.status === ApiStatus.succes) {
+                    console.log(res.data.username)
+                    this.props.setUsername(res.data.username);
+                    this.props.setRole(res.data.role);
+                } 
         }
         this.setState({loading: false})
     }
@@ -152,10 +149,8 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
 
         return (
             <div id="layout-wrapper">
-                <Stack className="left-wrapper">
-                    <SideBar/>
-                </Stack>
-                <Stack className="right-wrapper">
+                <SideBar/>
+                <Stack className="main-wrapper">
                     <UniformHeader/>
                     <Stack className="main-content">
                     <Stack className="header-breadcrumb">

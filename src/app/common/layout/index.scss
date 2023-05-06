@@ -1,35 +1,6 @@
 $header-height: 60px;
 $theme-blue: rgb(0, 120, 212);
 
-#layout-wrapper {
-    width: 100%;
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: row;
-
-    .left-wrapper {
-        width: 240px;
-        position: fixed;
-        height: 100%;
-    }
-
-    .right-wrapper {
-        margin-left: 240px;
-        width: calc(100% - 240px);
-        box-sizing: border-box;
-        background-color: #f6faff;
-        .main-content{
-            flex: 1;
-            padding: 0 40px 20px 40px;
-            margin-top: 90px;
-            // overflow-y: scroll;
-            //how to overflow this one
-        }
-    }
-
-}
-
 @media (max-width: 479px) {
     //login layout
     .login-container{
@@ -48,19 +19,87 @@ $theme-blue: rgb(0, 120, 212);
     }
 }
 
-@media (min-width: 480px) {
+@media (max-width: 400px) {
+    #uniform-header {
+        .header-info .header-text {
+            width: 40% !important;
+        }
+    }
 }
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) { 
-    .bars{
+
+@media (max-width: 480px) {
+    .menu-section {
+
+        .status-news {
+            min-width: 310px !important;
+        }
+    }
+    .welcome-image {
         display: none;
     }
- }
+}
+// Medium devices (tablets, 768px and up)
+@media (max-width: 768px) { 
+    .bars{
+        display: flex !important;
+    }
+    .main-sidebar {
+        margin-left: -240px;
+    }
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    #uniform-header {
+        padding-left: 80px !important;
+        width: 100% !important;
+    }
+}
     
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) { 
- }
+@media (max-width: 992px) {
+    .home-right-section {
+        display: none;
+    } 
+}
 
 // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) { 
- }
+@media (max-width: 1300px) {
+    .welcome-section {
+
+        .welcome-block {
+            width: 49% !important;
+        }
+        .welcome-left {
+            width: 100% !important;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+// @media (max-width: 1300px) {
+// }
+
+// ===================================
+
+#layout-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    .main-wrapper {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+        box-sizing: border-box;
+        background-color: #f6faff;
+        .main-content{
+            flex: 1;
+            padding: 0 40px 20px 40px;
+            margin-top: 90px;
+        }
+    }
+
+}
+

@@ -1,20 +1,40 @@
 .breadcrumbs{
-
-    .ms-Breadcrumb-listItem {
-        display: block;
-        height: 32px;
-        *:hover{
-            background: none;
+    margin-bottom: 20px;
+    .ms-Breadcrumb-list {
+        .ms-Breadcrumb-listItem:not(:last-child) {
+            display: block;
+            height: 32px;
+            *:hover{
+                background: none;
+            }
+            .ms-TooltipHost{
+                color: #0e0f38;
+                font-size: 24px;
+            }
+            &:first-child {
+                .ms-Breadcrumb-item,
+                .ms-Link{
+                    margin-left: 0;
+                    padding-left: 0;
+                }
+            }
         }
-        .ms-TooltipHost{
-            color: #0E0F38;
-            font-size: 24px;
-        }
-        &:first-child {
-            .ms-Breadcrumb-item,
-            .ms-Link{
-                margin-left: 0;
-                padding-left: 0;
+        .ms-Breadcrumb-listItem:last-child {
+            display: block;
+            height: 36px;
+            *:hover{
+                background: none;
+            }
+            .ms-TooltipHost{
+                color: #008E97;
+                font-size: 28px;
+            }
+            &:first-child {
+                .ms-Breadcrumb-item,
+                .ms-Link{
+                    margin-left: 0;
+                    padding-left: 0;
+                }
             }
         }
     }

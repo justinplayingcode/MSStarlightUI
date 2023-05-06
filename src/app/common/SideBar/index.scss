@@ -1,43 +1,69 @@
-.sidebar{
-    height: 100%;
-    // background-color: #0e0f38;
-    background-color: #111827;
+.main-sidebar {
+    width: 240px;
+    position: fixed;
     transition: all 0.5s;
-    .top-section{
-        display: flex;
+    z-index: 998;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    .bars {
+        display: none;
+        position: absolute;
+        top: 15px;
+        right: -42px;
+        background-color: #fff;
+        height: 42px;
+        width: 42px;
+        align-items: center;
         justify-content: center;
-        .logo{
-            object-fit: cover;
-            height: 90px;
-        }
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
-    .menu-section{
-        .link{
+    .sidebar{
+        height: 100%;
+        position: relative;
+        background-color: #111827;
+        .top-section{
             display: flex;
-            flex-direction: row;
-            color: #9CA3AF;    
-            text-decoration: none;
-            font-size: 18px;
-            padding: 18px 0 18px 16px;
-            border-left: 4px solid transparent;
-            &:hover{
-                // background-color: #294a7c;
+            justify-content: center;
+            .logo{
+                object-fit: cover;
+                height: 90px;
+            }
+        }
+        .menu-section{
+            .link{
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                color: #9CA3AF;    
+                text-decoration: none;
+                font-size: 18px;
+                padding: 18px 0 18px 16px;
+                border-left: 4px solid transparent;
+                &:hover{
+                    background: linear-gradient(to right, #111827, #374151);
+                    color: #fff;
+                }
+                .icon{
+                    min-width: 30px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .link_text {
+                    margin-left: 4px;
+                }
+            }
+            .link.active {
+
                 background: linear-gradient(to right, #111827, #374151);
                 color: #fff;
+                border-left: 4px solid #fff;
             }
-            .icon{
-                min-width: 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-        .link.active {
-            // background-color: #2e3192;
-            // background-color: #374151;
-            background: linear-gradient(to right, #111827, #374151);
-            color: #fff;
-            border-left: 4px solid #fff;
         }
     }
+    &.sidebar-responsive {
+        margin-left: 0px;
+    }
 }
+
