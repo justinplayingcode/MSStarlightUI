@@ -1,15 +1,16 @@
-import * as React from 'react'
 import './tablewrapper.scss'
 import { Stack } from '@fluentui/react'
+import { DetailsListTable } from '.';
 
 interface ITableWrapperProps{
-    table?: JSX.Element;
+    tableType?: string;
 }
 
 export const Tablewrapper = (props: ITableWrapperProps) => {
+
     return(
         <Stack className='table-container'>
-            {props?.table}
+            <DetailsListTable {...props} />
         </Stack>
     )
 }

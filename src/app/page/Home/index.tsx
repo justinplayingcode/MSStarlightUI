@@ -13,6 +13,7 @@ import authApi from "src/api/auth";
 import { RootState } from "src/redux/store";
 import image from "image";
 import { HealthIndicator } from "src/model/enum";
+import { tooltipPlainText } from "src/utils/utils";
 
 
 const Home = () => {
@@ -216,7 +217,9 @@ const Home = () => {
                 </Stack>
                 <Stack className="status-detail">
                     <Stack className="status-name">{name}</Stack>
-                    <Stack className="status-description">{description}</Stack>
+                    <Stack className="status-description">
+                        {tooltipPlainText(description)}
+                    </Stack>
                 </Stack>
             </Stack>
         )

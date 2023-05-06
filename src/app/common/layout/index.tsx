@@ -23,6 +23,7 @@ import authApi from "src/api/auth";
 import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { Tablewrapper } from "../DetailsListTable/tablewrapper";
 import { Location } from "../layout/location";
+import { tableConstant } from "src/model/contant";
 interface LayoutOwnProps {
     page: string;
 }
@@ -115,13 +116,13 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <CreateAccount keyType={CreateAccountKey.Patient} />
                 break;
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
-                content = <Tablewrapper table={<>Quản lý tài khoản bệnh nhân</>}/>
+                content = <Tablewrapper tableType={tableConstant.TABLE_PATIENT_MANAGEMENT}/>
                 break;
             case pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR:
                 content = <CreateAccount keyType={CreateAccountKey.Doctor}/>
                 break;
             case pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT:
-                content = <Tablewrapper table={<>Quản lý tài khoản bác sĩ</>}/>
+                content = <Tablewrapper tableType={tableConstant.TABLE_DOCTOR_MANAGEMENT}/>
                 break;
 
             case pageConstant.LAYOUT_SPECIALITY:
@@ -153,9 +154,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 <Stack className="main-wrapper">
                     <UniformHeader/>
                     <Stack className="main-content">
-                    <Stack className="header-breadcrumb">
-                        <Location/>
-                    </Stack>
+                        <Stack className="header-breadcrumb">
+                            <Location/>
+                        </Stack>
                         {content}
                     </Stack>
                 </Stack>
