@@ -12,6 +12,7 @@ import { primaryHealthStatus } from "./index.type";
 import authApi from "src/api/auth";
 import { RootState } from "src/redux/store";
 import image from "image";
+import { HealthIndicator } from "src/model/enum";
 
 
 const Home = () => {
@@ -30,24 +31,19 @@ const Home = () => {
 
     const getInfoCurrentUser = async () => {
         const { data } = await authApi.getInfoCurrentUser();
-        
         dispatch(setInfoUser(data))
         dispatch(closeLoading());
     }  
 
 
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
-      setSelectedDate(date);
+        setSelectedDate(date);
     }, []);
-
-    const getCurrentDateString = (date?: Date): string => {
-        return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
-      };
 
     const getAccountRoleName = (role: accountRole) => {
         switch(role){
             case accountRole.Admin:
-                return <>Admin</>;
+                return <>Administrator</>;
             case accountRole.Doctor:
                 return <>Bác sĩ</>;
             case accountRole.Patient:
@@ -101,37 +97,110 @@ const Home = () => {
         )
     }
 
-    const renderWelcome = () => {
+    const renderWelcomePatient = () => {
         return(
             <Stack className="welcome-section">
-                <Stack className="welcome-left">
+                <div className="welcome-left welcome-block">
+                    <Stack className="curent-date">{`${Convert.getCurrentDateString()}`}</Stack>
                     <Stack className="welcome-text">
-                        <Stack className="text-header">Xin chào, {info?.name}</Stack>
+                        <Stack className="text-header">Xin chào, {info?.fullname}</Stack>
                         <Text className="text-remind">Chúc một ngày tốt lành và đừng quên chăm sóc sức khỏe bản thân nhé</Text>
                     </Stack>
-                    <Stack className="curent-date">Hôm nay là {getCurrentDateString(new Date())}</Stack>
-                </Stack>
-                <img alt="" className="welcome-image" src={image.welcomeLogo}/>
+                </div>
             </Stack>
         )
     }
 
-    const renderMenu = () => {
+    const renderWelcomeAdmin = () => {
+        return(
+            <Stack className="welcome-section">
+                <div className="welcome-left welcome-block">
+                    <Stack className="curent-date">{`${Convert.getCurrentDateString()}`}</Stack>
+                    <Stack className="welcome-text">
+                        <Stack className="text-header">Xin chào, {info?.fullname}</Stack>
+                        <Text className="text-remind">Chúc một ngày làm việc hiệu quả</Text>
+                    </Stack>
+                    <div className="text-totalnewuser">Số người dùng mới tuần qua: 10</div>
+                    {/* <img alt="" className="welcome-image" src={image.adminlogo}/> */}
+                </div>
+                <div className="welcome-block welcome-block-admin">
+                    <div className="welcome-block-icon"
+                        style={{
+                            backgroundColor: "#66CDAA"
+                        }}
+                    ><img alt="" src={image.userdoctor}/> </div>
+                    <div className="welcome-block-dec">Bác sĩ</div>
+                    <div className="welcome-block-number">100</div>
+                </div>
+                <div className="welcome-block welcome-block-admin">
+                    <div className="welcome-block-icon"
+                        style={{
+                            backgroundColor: "#B9D9EB"
+                        }}
+                    ><img alt="" src={image.userpatient}/></div>
+                    <div className="welcome-block-dec">Bệnh nhân đang điều trị</div>
+                    <div className="welcome-block-number">12000</div>
+                </div>
+            </Stack>
+        )
+    }
+
+    const renderWelcomeDoctor = () => {
+        return(
+            <Stack className="welcome-section">
+                <Stack className="welcome-left welcome-block">
+                    <Stack className="curent-date">{`${Convert.getCurrentDateString()}`}</Stack>
+                        <Stack className="welcome-text">
+                            <Stack className="text-header">Xin chào, {info?.fullname}</Stack>
+                            <Text className="text-remind">Chúc một ngày làm việc hiệu quả</Text>
+                        </Stack>
+                </Stack>
+                <Stack className="welcome-left welcome-block">
+                    tin tuc
+                </Stack>
+            </Stack>
+        )
+    }
+
+    const renderMenuAdmin = () => {
         return (
             <>
-                {homeMenu.map((item, index) =>
-                    <ServiceCard key={index} iconName={item.iconName} name={item.name} description={item.description} />
-                )}
+                <Stack className="status-news chart-container">
+                    <div className="chart-block">
+                        chert 1
+                    </div>
+                    <div className="chart-block">
+                        chart 2
+                    </div>
+                </Stack>
             </>
         )
     }
 
-    const renderHealthCard = (name: string, imageUrl: string, color: string, bgcolor: string, info: number, unit: string, description: string) => {
-        const temp = Convert.convertZeroNumber(info)
-        if(name === "Huyết áp") {
+    const renderMenuDoctor = () => {
+        return (
+            <>
+                <Stack className="status-news chart-container">
+                    <div className="chart-block">
+                        chert 1
+                    </div>
+                    <div className="chart-block">
+                        chart 2
+                    </div>
+                </Stack>
+            </>
+        )
+    }
 
+    const renderHealthCard = (name: string, imageUrl: string, color: string, bgcolor: string, info: any, unit: string, description: string) => {
+        let temp, temp1, temp2, content;
+        if(name === HealthIndicator.BloodPressure) {
+            temp1 = Convert.convertZeroNumber(info?.systolic);
+            temp2 = Convert.convertZeroNumber(info?.diastolic);
+            content = <>{`${temp1} / ${temp2}`} <span className="info-text-unit">{unit}</span></>
         } else {
-            
+            temp = Convert.convertZeroNumber(info);
+            content = unit === 'C' ? <>{`${temp} `}<span className="info-text-unit">&#8451;</span></> : <>{`${temp} `}<span className="info-text-unit">{unit}</span></>;
         }
         return(
             <Stack className="status-container">
@@ -141,12 +210,9 @@ const Home = () => {
                     >
                         <img alt="" src={imageUrl} />
                     </Stack>
-                    <Stack className="info-text" style={{color: color}}>
-                        {unit === 'C'
-                            ? <>{temp}&#8451;</>
-                            : <>{temp}{unit}</>
-                        }
-                    </Stack>
+                    <div className="info-text" style={{color: color}}>
+                        {content}
+                    </div>
                 </Stack>
                 <Stack className="status-detail">
                     <Stack className="status-name">{name}</Stack>
@@ -160,12 +226,12 @@ const Home = () => {
         return(
             <>
                 <Stack className="basic-status">
-                {renderHealthCard('Nhịp tim', image.heartbeat, '#D86369','#FBF0F1', info?.heartRate, 'bpm', 'Nhịp tim là chỉ số quan trọng nhất')}
-                {renderHealthCard('Nhiệt độ', image.temperature,'#6D93E2','#EDF3FC', info?.temperature, 'C', 'Thân nhiệt dưới 35 độ C là biểu hiện sức khỏe nghiêm trọng')}
-                {renderHealthCard('Huyết áp', image.bloodPressure, '#D52B1E','#FBF0F1', info?.bloodPressure, 'mmHg', 'Huyết áp có thể tăng giảm vài lần trong ngày')}
-                {renderHealthCard('Đường huyết', image.glucose, '#FBC216','#FFEEC1', info?.glucose, 'mg/dl', "Chỉ số đường huyết ở mức bình thường là 80-120 mg/dl")}
+                {renderHealthCard(HealthIndicator.HeartRate, image.heartbeat, '#D86369','#FBF0F1', info?.heartRate, 'bpm', 'Nhịp tim là chỉ số quan trọng nhất')}
+                {renderHealthCard(HealthIndicator.Temperature, image.temperature,'#6D93E2','#EDF3FC', info?.temperature, 'C', 'Thân nhiệt dưới 35 độ C là biểu hiện sức khỏe nghiêm trọng')}
+                {renderHealthCard(HealthIndicator.BloodPressure, image.bloodPressure, '#D52B1E','#FBF0F1', info?.bloodPressure, 'mmHg', 'Huyết áp có thể tăng giảm vài lần trong ngày')}
+                {renderHealthCard(HealthIndicator.Glucose, image.glucose, '#FBC216','#FFEEC1', info?.glucose, 'mg/dl', "Chỉ số đường huyết ở mức bình thường là 80-120 mg/dl")}
                 </Stack>
-                <Stack className="status-news">
+                <Stack className="status-news news-container">
                     Tin tức
                 </Stack>
             </>
@@ -185,32 +251,48 @@ const Home = () => {
                     {role === accountRole.Doctor ? <>{info?.department}</> : <></>}
                     {role === accountRole.Patient ? getPatientStatus(info?.status) : <></>}
                 </Stack>
-
-                <Calendar
-                    className="calendar"
-                    showMonthPickerAsOverlay
-                    highlightSelectedMonth
-                    showGoToToday={false}
-                    onSelectDate={onSelectDate}
-                    value={selectedDate}
-                    //Chac de TA thoi nhi
-                    // Calendar uses English strings by default. For localized apps, you must override this prop.
-                    // strings={defaultCalendarStrings}
-                />
             </Stack>
         )
+    }
+
+    const welcomeSection = () => {
+        let content;
+        switch(role) {
+            case accountRole.Admin:
+                content = renderWelcomeAdmin();
+                break;
+            case accountRole.Doctor:
+                content = renderWelcomeDoctor();
+                break;
+            case accountRole.Patient:
+                content = renderWelcomePatient();
+                break;
+        }
+        return content;
+    }
+
+    const menuSection = () => {
+        let content;
+        switch(role) {
+            case accountRole.Admin:
+                content = renderMenuAdmin();
+                break;
+            case accountRole.Doctor:
+                content = renderMenuDoctor();
+                break;
+            case accountRole.Patient:
+                content = renderHealthStatus();
+                break;
+        }
+        return content;
     }
 
     return (
         <Stack className="home-container">
             <Stack className="home-left-section">
-                {renderWelcome()}
+                {welcomeSection()}
                 <div className="menu-section">
-                    {
-                        role === accountRole.Patient
-                        ? renderHealthStatus()
-                        : renderMenu()
-                    }                    
+                    {menuSection()}                    
                 </div>
             </Stack>
             <Stack className="home-right-section">

@@ -1,7 +1,7 @@
-import { Breadcrumb, DefaultButton, IBreadcrumbItem, Stack } from '@fluentui/react';
+import { Breadcrumb, IBreadcrumbItem, Stack } from '@fluentui/react';
 import * as React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { getRouteItemByKey, getRouteItemByUrl, routeMapping } from './route.type';
+import { getRouteItemByKey, getRouteItemByUrl } from './route.type';
 import './location.scss'
 
 export const Location = () => {
