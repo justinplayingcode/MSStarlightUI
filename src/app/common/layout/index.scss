@@ -98,6 +98,10 @@ $theme-blue: rgb(0, 120, 212);
             flex: 1;
             padding: 0 40px 20px 40px;
             margin-top: 90px;
+            height: calc(100% - 90px);
+        }
+        .header-breadcrumb {
+            height: 50px;
         }
     }
 
