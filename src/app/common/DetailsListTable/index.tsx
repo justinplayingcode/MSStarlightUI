@@ -24,53 +24,14 @@ export interface IDetailsListTableState {
     announcedMessage?: string;
 }
 
-export interface IDocument {
-    key: string;
-    name: string;
-    value: string;
-    iconName: string;
-    fileType: string;
-    modifiedBy: string;
-    dateModified: string;
-    dateModifiedValue: number;
-    fileSize: string;
-    fileSizeRaw: number;
-}
 const classNames = mergeStyleSets({
-    fileIconHeaderIcon: {
-      padding: 0,
-      fontSize: '16px',
-    },
-    fileIconCell: {
-      textAlign: 'center',
-      selectors: {
-        '&:before': {
-          content: '.',
-          display: 'inline-block',
-          verticalAlign: 'middle',
-          height: '100%',
-          width: '0px',
-          visibility: 'hidden',
-        },
-      },
-    },
-    fileIconImg: {
-      verticalAlign: 'middle',
-      maxHeight: '16px',
-      maxWidth: '16px',
-    },
     controlWrapper: {
         display: 'flex',
         flexWrap: 'wrap',
         paddingLeft: '20px',
     },
-    exampleToggle: {
-      display: 'inline-block',
-      marginBottom: '10px',
-      marginRight: '30px',
-    },
     selectionDetails: {
-      marginBottom: '20px',
+        marginBottom: '20px',
     },
 });
 const controlStyles = {
@@ -80,33 +41,20 @@ const controlStyles = {
     },
 };
 
-export interface IDetailsListDocumentsExampleState {
+export interface DetailsListTableState {
     columns: IColumn[];
-    items: IDocument[];
+    items: any[];
     selectionDetails: string;
-    // isCompactMode: boolean;
     announcedMessage?: string;
 }
-export interface IDocument {
-    key: string;
-    name: string;
-    value: string;
-    iconName: string;
-    fileType: string;
-    modifiedBy: string;
-    dateModified: string;
-    dateModifiedValue: number;
-    fileSize: string;
-    fileSizeRaw: number;
-}
 
-export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsExampleState> {
+export class DetailsListTable extends React.Component<{}, DetailsListTableState> {
     private _selection: Selection;
-    private _allItems: IDocument[];
+    private _allItems: any[];
 
     constructor(props: {}) {
         super(props);
-        this._allItems = _generateDocuments();
+        this._allItems = _generateDocuments(); // call api get all items in componentDidMount
 
         const columns: IColumn[] = [
             {
@@ -134,7 +82,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
                 isResizable: true,
                 onColumnClick: this._onColumnClick,
                 data: 'number',
-                onRender: (item: IDocument) => {
+                onRender: (item) => {
                     return <span>{item.dateModified}</span>;
                 },
                 isPadded: true,
@@ -149,7 +97,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
                 isCollapsible: true,
                 data: 'string',
                 onColumnClick: this._onColumnClick,
-                onRender: (item: IDocument) => {
+                onRender: (item) => {
                     return <span>{item.modifiedBy}</span>;
                 },
                 isPadded: true,
@@ -164,7 +112,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
                 isCollapsible: true,
                 data: 'number',
                 onColumnClick: this._onColumnClick,
-                onRender: (item: IDocument) => {
+                onRender: (item) => {
                     return <span>{item.fileSize}</span>;
                 },
             },
@@ -179,7 +127,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         });
     
         this.state = {
-            items: this._allItems,
+            items: this._allItems, // call api get all items in componentDidMount
             columns,
             selectionDetails: this._getSelectionDetails(),
             announcedMessage: undefined,
@@ -192,7 +140,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         return (
         <div>
             <div className={classNames.controlWrapper}>
-                <TextField label="Filter by name:" onChange={this._onChangeText} styles={controlStyles} />
+                <TextField label="Search by name:" onChange={this._onChangeText} styles={controlStyles} />
                 <Announced message={`Number of items after filter applied: ${items.length}.`} />
             </div>
             <div>
@@ -215,19 +163,19 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
                         isHeaderVisible={true}
                         selection={this._selection}
                         selectionPreservedOnEmptyClick={true}
-                        onItemInvoked={this._onItemInvoked}
                         enterModalSelectionOnTouch={true}
                     />
                 </MarqueeSelection>
+                
             </div>
         );
     }
 
-    public componentDidUpdate(previousProps: any, previousState: IDetailsListDocumentsExampleState) {
+    // public componentDidUpdate(previousProps: any, previousState: DetailsListTableState) {
         // if (previousState.isModalSelection !== this.state.isModalSelection && !this.state.isModalSelection) {
         //     this._selection.setAllSelected(false);
         // }
-    }
+    // }
 
     private _getKey(item: any, index?: number): string {
         return item.key;
@@ -239,13 +187,8 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         });
     };
 
-    private _onItemInvoked(item: any): void {
-        alert(`Item invoked: ${item.name}`);
-    }
-
     private _getSelectionDetails(): string {
         const selectionCount = this._selection.getSelectedCount();
-    
         switch (selectionCount) {
             case 0:
             return 'No items selected';
@@ -288,7 +231,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
     }
 
     function _generateDocuments() {
-        const items: IDocument[] = [];
+        const items: any[] = [];
         for (let i = 0; i < 500; i++) {
         const randomDate = _randomDate(new Date(2012, 0, 1), new Date());
         const randomFileSize = _randomFileSize();
@@ -314,7 +257,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         });
         }
         return items;
-    }
+    } // func to get lít items from api
     
     function _randomDate(start: Date, end: Date): { value: number; dateFormatted: string } {
         const date: Date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -322,7 +265,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         value: date.valueOf(),
         dateFormatted: date.toLocaleDateString(),
         };
-    }
+    } // no need
     
     const FILE_ICONS: { name: string }[] = [
         { name: 'accdb' },
@@ -354,7 +297,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         { name: 'xlsx' },
         { name: 'xltx' },
         { name: 'xsn' },
-    ];
+    ]; // no need
     
     function _randomFileIcon(): { docType: string; url: string } {
         const docType: string = FILE_ICONS[Math.floor(Math.random() * FILE_ICONS.length)].name;
@@ -362,7 +305,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         docType,
         url: `https://res-1.cdn.office.net/files/fabric-cdn-prod_20221209.001/assets/item-types/16/${docType}.svg`,
         };
-    }
+    } // no need
     
     function _randomFileSize(): { value: string; rawSize: number } {
         const fileSize: number = Math.floor(Math.random() * 100) + 30;
@@ -370,7 +313,7 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         value: `${fileSize} KB`,
         rawSize: fileSize,
         };
-    }
+    } // no need
     
     const LOREM_IPSUM = (
         'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut ' +
@@ -383,5 +326,5 @@ export class DetailsListTable extends React.Component<{}, IDetailsListDocumentsE
         const startIndex = loremIndex + wordCount > LOREM_IPSUM.length ? 0 : loremIndex;
         loremIndex = startIndex + wordCount;
         return LOREM_IPSUM.slice(startIndex, loremIndex).join(' ');
-    }
+    } // no need
     

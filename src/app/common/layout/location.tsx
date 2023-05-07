@@ -56,7 +56,8 @@ export const Location = () => {
             <Breadcrumb
                 styles={{ root: { 
                     height: assembleBreadItem().length === 0 ? 0 : 32, 
-                    margin: 0} }}
+                    marginBottom:  assembleBreadItem().length === 0 ? 0 : 20,
+                } }}
                 items={assembleBreadItem()}
             />
         </Stack>

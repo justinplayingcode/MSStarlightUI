@@ -1,0 +1,28 @@
+.navigateButton {
+  &:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+  }
+
+  min-height: 120px;
+  width: 360px;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border: 2px solid #bbbbbb;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 0 20px 20px 0;
+  .ms-Button-flexContainer {
+    
+    .navigateButton-title{
+      flex: 1;
+      font-size: 20px;
+      font-weight: bold;
+
+    }
+    .navigateButton-icon {
+      height: 60px;
+    }
+  }
+
+}
