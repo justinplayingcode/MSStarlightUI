@@ -1,15 +1,8 @@
-import { BaseButton, DefaultButton, Stack } from '@fluentui/react';
-import { accountRole } from 'model';
-import * as React from 'react'
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import { DepartmentType } from 'src/model/enum';
-import { RootState } from 'src/redux/store';
-import { CreateAccount } from './components/CreateAccount';
+import { DefaultButton, Stack } from '@fluentui/react';
 import './index.scss'
 import { useNavigate } from 'react-router-dom';
+import NavigateButton from 'src/app/common/navigateButton';
+import image from 'image';
 
 const Account = () => {
     const navigate = useNavigate();

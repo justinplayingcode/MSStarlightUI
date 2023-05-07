@@ -83,6 +83,6 @@ export const doctormanagementCommandBar: ICommandBarItemProps[] = [
       key: 'newItem',
       text: 'New',
       iconProps: { iconName: 'Add' },
-      onClick: () => console.log('Add'),
+      onClick: () => alert('Add'),
   },
 ]

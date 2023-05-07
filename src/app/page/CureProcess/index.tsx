@@ -6,6 +6,7 @@ const CureProcess = () => {
         <>Khám chữa bệnh
             <Stack>Danh sách bệnh nhân chờ khám</Stack>
             <Stack>Danh sách bệnh nhân đang điều trị</Stack>
+            
         </>
     )
 }
