@@ -35,13 +35,10 @@ export const Location = () => {
         const routeItem = getRouteItemByUrl(pathname);        
         const items: IBreadcrumbItem[] = [];
 
-        if( routeItem?.parentKeys?.length){
+        if( routeItem?.parentKeys?.length)
             routeItem.parentKeys.forEach((key) => {
                 items.push(assembleParentItem(key))
             });
-        } else{
-            return items;
-        }
         if(routeItem.key !== 'route-home'){
             items.push({
                 key: routeItem.key,
@@ -52,12 +49,15 @@ export const Location = () => {
     },[pathname]);
 
     return(
-        <Stack className='breadcrumbs'>
+        <Stack className='breadcrumbs'
+            styles={{
+                root: {
+                    height: assembleBreadItem().length === 0 ? 0 : 32,
+                    marginBottom: assembleBreadItem().length === 0 ? 0 : 20,
+                }
+            }}
+        >
             <Breadcrumb
-                styles={{ root: { 
-                    height: assembleBreadItem().length === 0 ? 0 : 32, 
-                    marginBottom:  assembleBreadItem().length === 0 ? 0 : 20,
-                } }}
                 items={assembleBreadItem()}
             />
         </Stack>

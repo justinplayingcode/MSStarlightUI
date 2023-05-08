@@ -14,32 +14,34 @@ import Image from "image"
 const SideBar = () => {
     const [isOpen, setIsOpen] = React.useState<boolean>(true);
     const [menuItem, setMenuItem] = React.useState<ISideBarProps[]>([]);
+    const [subnav, setSubnav] = React.useState<boolean>(false)
     const { role } = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
         assembleTopNavLinkGroups(getNavList(role, false));
     },[])
 
-    // const sideRef = React.useRef(null);
-
-    // const clickOutside = (ref) => {
-    //     useEffect(() => {
-    //         setIsOpen(false)
-    //         console.log("as")
-    //     }, [ref])
-    // }
-
-    // clickOutside(sideRef)
-
     const assembleTopNavLinkGroups = (list: ISideBarProps[]) => {
         const groups: ISideBarProps[] = [];
-        list.map((item, index) => {
-            groups.push({
-                name: item.name,
-                icon: item.icon,
-                url: item.url,
-                key: `key${index}`,
-            })
+        list.map((item) => {
+            if (!item.subNav) {
+                groups.push({
+                    title: item.title,
+                    path: item.path,
+                    icon: item.icon,
+                    key: `key${item.title}`,
+                })
+            } else{
+                groups.push({
+                    title: item.title,
+                    path: item.path,
+                    icon: item.icon,
+                    iconClosed: item.iconClosed,
+                    iconOpened: item.iconOpened,
+                    subNav: item.subNav,
+                    key: `key${item.title}`,
+                })
+            }
         });        
         setMenuItem(groups);        
     }
@@ -62,23 +64,55 @@ const SideBar = () => {
                 </div>
                 <div className='menu-section'>
                     {
-                        menuItem.map((item) => (
-                            <NavLink to={item.url} key={item.key} className="link"
-                                style={
-                                    ({ isActive }) => (
-                                        isActive
-                                            ? {
-                                                textDecoration: 'none',
-                                            }
+                        menuItem.map((item) => {
+                            return(
+                                <>                                
+                                <NavLink
+                                    to={!item.subNav && item.path}
+                                    key={item.key}
+                                    className='link'
+                                    // className={(!item.subNav ? 'link' : 'link active')}
+                                    // style={{background: 'none', color: 'none', borderLeft: 'none'}}
+                                    style={({ isActive }) => (
+                                        isActive && item.subNav
+                                            ? {background: 'none', color: 'none', borderLeft: 'none'}
                                             : {}
+                                    )}
+                                    onClick={() => item.subNav && setSubnav(!subnav)}
+                                >
+                                    <div className='link-icon-text'>
+                                        <div className="icon">{item.icon}</div>
+                                        <div className="link_text">{item.title}</div>
+                                    </div>
+                                    <div className='link-arrow'>                                        
+                                        {item.subNav && subnav
+                                            ? item.iconOpened
+                                            : item.subNav
+                                            ? item.iconClosed
+                                            : null
+                                        }
+                                    </div>
+                                </NavLink>
+                                {subnav && item?.subNav?.map((item, index) => {
+                                    return(
+                                        <NavLink to={item.path}
+                                        key={index}
+                                        className="link"
+                                        style={{
+                                            paddingLeft: 40
+                                        }}
+                                        >
+                                            <div className='link-icon-text'>
+                                                <div className="icon">{item.icon}</div>
+                                                <div className="link_text">{item.title}</div>
+                                            </div>
+                                        </NavLink>
                                     )
-                                }
-                                onClick={() => setIsOpen(!isOpen)}
-                            >
-                                <div className="icon">{item.icon}</div>
-                                <div className="link_text">{item.name}</div>
-                            </NavLink>
-                        ))
+                                })}
+                                </>
+                            )
+                        }
+                        )
                     }
                 </div>
             </div>
