@@ -7,7 +7,6 @@ import {  ApiStatus, pageConstant } from "model";
 import Home from "src/app/page/Home";
 import { LoadingCirle, LoadingDot } from "../loading";
 import { Stack } from "@fluentui/react";
-import AccountManagement from "src/app/page/Account";
 import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
 import Diseases from "src/app/page/Diseases";
@@ -109,18 +108,15 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <Profile />
                 break;
 
-            case pageConstant.LAYOUT_ACCOUNT:
-                content = <AccountManagement />
-                break;
-            case pageConstant.LAYOUT_ACCOUNT_CREATE_PATIENT:
-                content = <CreateAccount keyType={CreateAccountKey.Patient} />
-                break;
+            // case pageConstant.LAYOUT_ACCOUNT_CREATE_PATIENT:
+            //     content = <CreateAccount keyType={CreateAccountKey.Patient} />
+            //     break;
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
                 content = <Tablewrapper tableType={tableConstant.TABLE_PATIENT_MANAGEMENT}/>
                 break;
-            case pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR:
-                content = <CreateAccount keyType={CreateAccountKey.Doctor}/>
-                break;
+            // case pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR:
+            //     content = <CreateAccount keyType={CreateAccountKey.Doctor}/>
+            //     break;
             case pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT:
                 content = <Tablewrapper tableType={tableConstant.TABLE_DOCTOR_MANAGEMENT}/>
                 break;
