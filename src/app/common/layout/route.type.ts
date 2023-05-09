@@ -28,7 +28,7 @@ export const routeMapping : { [key: string]: IRouteItem} = {
     },
     AccountPatientManagement: {
         key: 'route-account-patient-management',
-        text: 'Quản lý bệnh nhân',
+        text: 'Bệnh nhân',
         url: '/account/patient-management',
         parentKeys:["route-account"]
     },
@@ -40,7 +40,7 @@ export const routeMapping : { [key: string]: IRouteItem} = {
     },
     AccountDoctorManagement: {
         key: 'route-account-doctor-management',
-        text: 'Quản lý bác sĩ',
+        text: 'Bác sĩ',
         url: '/account/doctor-management',
         parentKeys:["route-account"]
     },

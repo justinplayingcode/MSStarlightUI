@@ -6,6 +6,7 @@ import { LabelComponent } from "./Label"
 import { ErrorPage } from "./ErrorPage"
 import { ServiceCard } from "./ServiceCard";
 import { Toast} from "./Toast"
+import { UniformTable } from "./UniformTable";
 
 export {
     Avatar,
@@ -15,5 +16,6 @@ export {
     TextFieldComponent,
     ServiceCard,
     ErrorPage,
-    Toast
+    Toast,
+    UniformTable,
 }

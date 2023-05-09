@@ -1,88 +1,105 @@
-import { Stack } from '@fluentui/react';
-import image from 'image';
+import { IColumn, Stack } from '@fluentui/react';
 import './index.scss';
-import NavigateButton from 'src/app/common/navigateButton';
+import { useState, useEffect } from 'react';
+import { UniformTable } from 'src/app/common';
 
 interface ISpecialityItem {
-    title: string;
-    link: string;
-    icon: string;
+    
 }
 
 const Speciality = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [items, setItems] = useState<any[]>([])
 
-    const specialityList: ISpecialityItem[] = [
+    useEffect(() => {
+        setItems(listitems)
+    }, [])
+
+    const listitems = [
         {
-            title: 'Bộ Phận Tiếp Đón',
-            link: '/speciality', // sửa lại link
-            icon: image.receptionist
+            name: 'basdsadas',
+            code: 'asdsdasdasdsad3213sa',
         },
         {
-            title: 'Khoa Nội Tổng Hợp',
-            link: '/speciality',
-            icon: image.endocrine
+            name: 'casdsadasd',
+            code: 'asdsda32434234sdsa',
         },
         {
-            title: 'Khoa Ngoại',
-            link: '/speciality',
-            icon: image.surgeon
+            name: 'dasdsadsad',
+            code: 'asds32453243242dasdsa',
         },
         {
-            title: 'Khoa Cận Lâm Sàng',
-            link: '/speciality',
-            icon: image.testdepartment
+            name: 'edgfdsdafsd',
+            code: 'asdsdas324324234dsa',
         },
         {
-            title: 'Khoa Sản',
-            link: '/speciality',
-            icon: image.obstetrics
+            name: 'asdsahdsajkds',
+            code: 'asdsdaasdsadsasdsa',
         },
         {
-            title: 'Khoa Da Liễu',
-            link: '/speciality',
-            icon: image.skin
+            name: 'basdsadas',
+            code: 'asdsdasdasdsad3213sa',
         },
         {
-            title: 'Khoa Đông Y',
-            link: '/speciality',
-            icon: image.oriental
+            name: 'casdsadasd',
+            code: 'asdsda32434234sdsa',
         },
         {
-            title: 'Khoa Truyền Nhiễm',
-            link: '/speciality',
-            icon: image.infetion
+            name: 'dasdsadsad',
+            code: 'asds32453243242dasdsa',
         },
         {
-            title: 'Khoa Dược',
-            link: '/speciality',
-            icon: image.medicine
+            name: 'edgfdsdafsd',
+            code: 'asdsdas324324234dsa',
         },
         {
-            title: 'Khoa Nhi',
-            link: '/speciality',
-            icon: image.pediatrics
+            name: 'asdsahdsajkds',
+            code: 'asdsdaasdsadsasdsa',
         },
         {
-            title: 'Khoa Thận Nhân Tạo',
-            link: '/speciality',
-            icon: image.kidney
+            name: 'basdsadas',
+            code: 'asdsdasdasdsad3213sa',
         },
+
     ]
+
+    const columns: IColumn[] = [
+        {
+            key: 'name',
+            name: 'Name',
+            minWidth: 210,
+            maxWidth: 350,
+            isRowHeader: true,
+            isResizable: true,
+            isSorted: true,
+            isSortedDescending: false,
+            sortAscendingAriaLabel: 'Sorted A to Z',
+            sortDescendingAriaLabel: 'Sorted Z to A',
+            onRender: (item) => {
+                return <span>{item.name}</span>;
+            },
+        },
+        {
+            key: 'code',
+            name: 'Code',
+            minWidth: 70,
+            maxWidth: 90,
+            isResizable: true,
+            onRender: (item) => {
+                return <span>{item.code}</span>;
+            },
+        },
+    ];
 
 
     return(
-        <div className='speciality-wrapper'>
-            {
-                specialityList.map((e) => {
-                    return (
-                        <NavigateButton 
-                            title={e.title}
-                            navigateTo={e.link}
-                            icon={e.icon}
-                        />
-                    )
-                })
-            }
+        <div className='wrapper-content speciality-wrapper'>
+            <UniformTable
+                searchByKeyWord='name'
+                items={listitems}
+                isLoading={isLoading} 
+                columns={columns}            
+            />
         </div>
     )
 }

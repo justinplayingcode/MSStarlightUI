@@ -1,15 +1,16 @@
 .navigateButton {
   &:hover {
-    background-color: #eeeeee;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     cursor: pointer;
+    background-color: #fff;
   }
 
   min-height: 120px;
   width: 360px;
-  border-radius: 20px;
+  border-radius: 12px;
   padding: 20px;
   background-color: #fff;
-  border: 2px solid #bbbbbb;
+  border: none;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin: 0 20px 20px 0;
   .ms-Button-flexContainer {

@@ -21,6 +21,7 @@ import skin from "./logo/skin-regeneration.png"
 import medicine from "./logo/medicine.png"
 import infetion from "./logo/infetion.png"
 import kidney from "./logo/kidney.png"
+import dataNotFound from "./logo/dataNotFound.png"
 
 export default {
     logo,
@@ -44,5 +45,6 @@ export default {
     skin,
     medicine,
     infetion,
-    kidney
+    kidney,
+    dataNotFound
 }

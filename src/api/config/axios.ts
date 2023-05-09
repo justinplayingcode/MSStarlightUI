@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiStatusCode } from "model";
+import { ApiStatus, ApiStatusCode } from "model";
 
 const apiClient = axios.create({
     baseURL: "https://datn-benhvien.onrender.com/api",
@@ -64,6 +64,11 @@ apiClient.interceptors.response.use(
             try {
                 try {
                     const response = await apiClient.post('/auth/newtoken', { refreshToken, username });
+                    console.log(response)
+                    if(response.status === ApiStatus.fail) {
+                        localStorage.clear();
+                        window.location.pathname = "/login";
+                    }
                     const { accessToken } = response.data;
                     localStorage.setItem('token', accessToken);
                     apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -71,13 +76,14 @@ apiClient.interceptors.response.use(
                     return await apiClient(originalRequest);
                 } catch (err_1) {
                     processQueue(err_1, null);
+                    localStorage.clear();
+                    window.location.pathname = "/login";
                     return await Promise.reject(err_1);
                 }
             } finally {
                 isRefreshing = false;
             }
         }
-    
         return Promise.reject(error);
     }
 );
