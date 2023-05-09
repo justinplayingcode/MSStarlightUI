@@ -31,3 +31,8 @@ export enum HealthIndicator {
     BloodPressure = 'Huyết áp',
     Glucose = 'Đường huyết'
 }
+
+export enum BtnType {
+    Default,
+    Primary
+}

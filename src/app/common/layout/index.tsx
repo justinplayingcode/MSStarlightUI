@@ -16,14 +16,12 @@ import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
 import { IToastProps, Toast } from "../Toast";
-import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components/CreateAccount";
 import { Navigate } from "react-router-dom";
 import authApi from "src/api/auth";
 import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
-import { UniformTable } from "../UniformTable";
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
-import { UniformPanel } from "../uniformpanel";
+import { MainPanel } from "../uniformpanel";
 interface LayoutOwnProps {
     page: string;
 }
@@ -150,7 +148,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                         {content}
                     </Stack>
                 </Stack>
-                <UniformPanel/>
+                <MainPanel/>
             </div>
         )
     }

@@ -95,6 +95,7 @@ const Speciality = () => {
     return(
         <div className='wrapper-content speciality-wrapper'>
             <UniformTable
+                commandBarItems={[]}
                 searchByKeyWord='name'
                 items={listitems}
                 isLoading={isLoading} 

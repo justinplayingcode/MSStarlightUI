@@ -1,7 +1,6 @@
 import { DatePicker, DefaultButton, Dropdown, IDropdownOption, PrimaryButton, Stack, TextField, mergeStyleSets } from '@fluentui/react'
 import { accountRole } from 'model'
 import * as React from 'react'
-import './index.scss'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 

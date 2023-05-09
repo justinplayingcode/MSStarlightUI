@@ -21,7 +21,7 @@ export const tableConstant = {
 }
 
 
-export const PanelContentKey = {
+export const panelTypeConstant = {
     PANEL_CREATE_DOCTOR: 'PANEL_CREATE_DOCTOR',
-    PANEL_CREATE_PATIENT: 'PANEL_CREATE_PATIENT'
+    PANEL_CREATE_PATIENT: 'PANEL_CREATE_PATIENT',
 }
