@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { TextField } from '@fluentui/react/lib/TextField';
-import { Toggle } from '@fluentui/react/lib/Toggle';
 import { Announced } from '@fluentui/react/lib/Announced';
-import { DetailsList, DetailsListLayoutMode, Selection, SelectionMode, IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
+import { DetailsListLayoutMode, Selection, SelectionMode, IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { CommandBar, ShimmeredDetailsList, Stack, TooltipHost } from '@fluentui/react';
-import { doctormanagementCommandBar } from 'src/app/page/table/doctormanagertable';
+import { CommandBar, ICommandBarItemProps, ShimmeredDetailsList, Stack } from '@fluentui/react';
 import image from 'image';
 import './index.scss';
 
@@ -20,7 +18,7 @@ export interface IUniformTableProps {
     columns: IColumn[];
     isLoading?: boolean;
     searchByKeyWord: string;
-    // commandBar
+    commandBarItems: ICommandBarItemProps[]
 }
 
 export interface IUniformTableState {
@@ -54,14 +52,14 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
 
     public render() {
         const { selectionDetails, items, columns } = this.state;
-        const { isLoading } = this.props;
+        const { isLoading, commandBarItems } = this.props;
 
         return (
             <Stack className='table-container'>
                 <div className='details-list'>
                     <div>
                         <CommandBar
-                            items={doctormanagementCommandBar}
+                            items={commandBarItems}
                         />
                     </div>
                     <div className='details-list-sub-header'>

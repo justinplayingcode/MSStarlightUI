@@ -18,9 +18,7 @@ const AccountPage = ({...props}: IAccountProps) => {
   }
 
   return (
-    <div className="wrapper-content">
-      {renderContent()}
-    </div>
+    <>{renderContent()}</>
   )
 }
 

@@ -7,6 +7,7 @@ import { ErrorPage } from "./ErrorPage"
 import { ServiceCard } from "./ServiceCard";
 import { Toast} from "./Toast"
 import { UniformTable } from "./UniformTable";
+import UniformPanel from "./uniformpanel/UniformPanel";
 
 export {
     Avatar,
@@ -18,4 +19,5 @@ export {
     ErrorPage,
     Toast,
     UniformTable,
+    UniformPanel
 }

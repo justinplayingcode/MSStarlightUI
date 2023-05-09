@@ -1,0 +1,26 @@
+.main-panel {
+  width: 100%;
+
+  .ms-Panel-main {
+    width: 25%;
+    min-width: 340px;
+
+    .ms-Panel-contentInner {
+      flex: 1;
+
+      .ms-Panel-scrollableContent {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .ms-Panel-content {
+          flex: 1;
+
+          .panel-content {
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}

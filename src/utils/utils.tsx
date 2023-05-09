@@ -16,5 +16,4 @@ export const tooltipPlainText = ( content: string, extraClassName?: string, id?:
     </TooltipHost>
     </div>
   )
-    
 }

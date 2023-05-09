@@ -1,0 +1,23 @@
+.uniform-panel-wrapper {
+  flex: 1;
+
+  .uniform-panel-header {
+    height: 8%;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  .uniform-panel-content {
+    height: 84%;
+    padding: 8px 0;
+  }
+
+  .uniform-panel-footer {
+    height: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
