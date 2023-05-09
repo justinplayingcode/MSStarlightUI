@@ -20,7 +20,7 @@ const UniformHeader = (props: UniformHeaderProps) => {
             <Stack className="header-info">
                 <Stack className="header-text">
                     {/* <Text className="hospital-name">Bệnh viện huyện XXX </Text> */}
-                    <SearchBox placeholder="Search" onSearch={newValue => console.log('value is ' + newValue)} />
+                    {/* <SearchBox placeholder="Search" onSearch={newValue => console.log('value is ' + newValue)} /> */}
                 </Stack>
                 <Stack className="header-icon-group" >
                     <IconButton className="header-icon" iconProps={{ iconName: 'Ringer' }} />

@@ -3,9 +3,11 @@ import * as React from 'react'
 
 const CureHistory = () => {
     return(
-        <>Lịch sử khám chữa bệnh
-            <Stack>Working after</Stack>
-        </>
+        <div className='wrapper-content'>
+            <>Lịch sử khám chữa bệnh
+                <Stack>Working after</Stack>
+            </>
+        </div>
     )
 }
 export default CureHistory;

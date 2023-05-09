@@ -291,7 +291,7 @@ const Home = () => {
     }
 
     return (
-        <Stack className="home-container">
+        <Stack className="wrapper-content home-container">
             <Stack className="home-left-section">
                 {welcomeSection()}
                 <div className="menu-section">

@@ -99,10 +99,15 @@ $theme-blue: rgb(0, 120, 212);
             padding: 0 40px 20px 40px;
             margin-top: 90px;
             height: calc(100% - 90px);
+
+            .wrapper-content {
+                width: 100%;
+                height: 100%;
+            }
         }
-        .header-breadcrumb {
-            // height: 50px;
-        }
+        // .header-breadcrumb {
+        //     // height: 50px;
+        // }
     }
 
 }

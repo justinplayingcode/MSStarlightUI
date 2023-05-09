@@ -20,9 +20,9 @@ import { CreateAccount, CreateAccountKey } from "src/app/page/Account/components
 import { Navigate } from "react-router-dom";
 import authApi from "src/api/auth";
 import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
-import { Tablewrapper } from "../DetailsListTable/tablewrapper";
+import { UniformTable } from "../UniformTable";
 import { Location } from "../layout/location";
-import { tableConstant } from "src/model/contant";
+import AccountPage from "src/app/page/Account";
 import { UniformPanel } from "../uniformpanel";
 interface LayoutOwnProps {
     page: string;
@@ -108,18 +108,11 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_PROFILE:
                 content = <Profile />
                 break;
-
-            // case pageConstant.LAYOUT_ACCOUNT_CREATE_PATIENT:
-            //     content = <CreateAccount keyType={CreateAccountKey.Patient} />
-            //     break;
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
-                content = <Tablewrapper tableType={tableConstant.TABLE_PATIENT_MANAGEMENT}/>
+                content = <AccountPage page={page}/>
                 break;
-            // case pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR:
-            //     content = <CreateAccount keyType={CreateAccountKey.Doctor}/>
-            //     break;
             case pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT:
-                content = <Tablewrapper tableType={tableConstant.TABLE_DOCTOR_MANAGEMENT}/>
+                content = <AccountPage page={page}/>
                 break;
 
             case pageConstant.LAYOUT_SPECIALITY:

@@ -37,6 +37,7 @@ export const Login: React.FunctionComponent = () => {
             const {accessToken, refreshToken, role, username } = data.data.data;
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
+            localStorage.setItem("username", username);
             dispatch(setRole(role));
             dispatch(setUsername(username));
             history("/");
