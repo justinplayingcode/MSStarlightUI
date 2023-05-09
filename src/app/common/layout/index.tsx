@@ -23,6 +23,7 @@ import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { UniformTable } from "../UniformTable";
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
+import { UniformPanel } from "../uniformpanel";
 interface LayoutOwnProps {
     page: string;
 }
@@ -149,6 +150,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                         {content}
                     </Stack>
                 </Stack>
+                <UniformPanel/>
             </div>
         )
     }
