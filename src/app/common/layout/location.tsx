@@ -10,7 +10,7 @@ export const Location = () => {
 
     const assembleParentItem = (key: string) => {
         const routeItem = getRouteItemByKey(key);
-        console.log(routeItem);
+        // console.log(routeItem);
         
         const item: IBreadcrumbItem = {
             text:'',

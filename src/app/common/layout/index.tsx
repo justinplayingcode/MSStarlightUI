@@ -23,6 +23,7 @@ import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { Tablewrapper } from "../DetailsListTable/tablewrapper";
 import { Location } from "../layout/location";
 import { tableConstant } from "src/model/contant";
+import { UniformPanel } from "../uniformpanel";
 interface LayoutOwnProps {
     page: string;
 }
@@ -156,6 +157,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                         {content}
                     </Stack>
                 </Stack>
+                <UniformPanel/>
             </div>
         )
     }
