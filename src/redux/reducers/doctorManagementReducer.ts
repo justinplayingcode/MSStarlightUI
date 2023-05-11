@@ -10,12 +10,14 @@ export enum ApiLoadingStatus{
 
 interface DoctorMangementState {
   doctorList: any[];
-  loadDoctorStatus: ApiLoadingStatus
+  loadDoctorStatus: ApiLoadingStatus;
+  isDataLoaded: boolean;
 }
 
 const initialState: DoctorMangementState = {
   doctorList: [],
-  loadDoctorStatus: ApiLoadingStatus.None
+  loadDoctorStatus: ApiLoadingStatus.None,
+  isDataLoaded: undefined
 }
 
 export const getAllDoctors = createAsyncThunk(
@@ -40,14 +42,17 @@ export const doctorMangementSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllDoctors.pending, (state, action) => {
-        state.loadDoctorStatus = ApiLoadingStatus.Loading;
+        state.loadDoctorStatus = ApiLoadingStatus.Loading;,
+        state.isDataLoaded = false
       })
       .addCase(getAllDoctors.fulfilled, (state, action) => {
         state.loadDoctorStatus = ApiLoadingStatus.Success,
-        state.doctorList = action.payload
+        state.doctorList = action.payload,
+        state.isDataLoaded = true
       })
       .addCase(getAllDoctors.rejected, (state, action) => {
-        state.loadDoctorStatus = ApiLoadingStatus.Failed
+        state.loadDoctorStatus = ApiLoadingStatus.Failed,
+        state.isDataLoaded = true
       })
   }
 });

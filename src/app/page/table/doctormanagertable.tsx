@@ -10,7 +10,6 @@ export const doctormanagementColumns: IColumn[] = [
       isSorted: true,
       isSortedDescending: false,
       onRender: (item) => {
-        console.log("dfdf " + item)
           return <Stack>{item?.fullname}</Stack>;
       },
   },
