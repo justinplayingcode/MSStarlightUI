@@ -1,23 +1,26 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import loadingReducer, { openLoading, closeLoading } from './common/loadingReducer';
 import navigationReducer, {updateSelectedMenu} from './common/navigationReducer';
-import userReducer, { setInfoUser, setRole, setUsername, userLogout } from './userReducer';
 import panelReducer, { closePanel, closePanelLoading, openPanel, openPanelLoading } from './common/panelReducer';
 
+import userReducer, { setInfoUser, setRole, setUsername, userLogout } from './userReducer';
+import doctorManagementReducer, {getAllDoctors, setDoctorList} from './doctorManagementReducer';
 const rootReducer = combineReducers({
-    user: userReducer,
     loading: loadingReducer,
     navigation: navigationReducer,
     panel: panelReducer,
+
+    user: userReducer,
+    doctorManagement: doctorManagementReducer,
 });
 
 export default rootReducer;
 
 export {
-    setRole, setUsername, setInfoUser, userLogout,
     openLoading, closeLoading,
     updateSelectedMenu,
     openPanel, closePanel, openPanelLoading, closePanelLoading,
     
-
+    setRole, setUsername, setInfoUser, userLogout,
+    setDoctorList, getAllDoctors
 }

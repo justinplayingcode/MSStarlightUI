@@ -5,7 +5,11 @@ import apiClient from "../config/axios";
 const api = {
     login: `${baseURL}/auth/login`,
     checkcurrentuser: `/auth`,
-    getInfoCurrentUser: '/auth/infocurrentuser'
+    getInfoCurrentUser: '/auth/infocurrentuser',
+    getAllDoctor: '/account/getalldoctor',
+    createDoctor: '/auth/registerdoctor',
+    createPatient: '/auth/registerpatient'
+
 }
 
 const authApi = {
@@ -14,7 +18,16 @@ const authApi = {
     },
     //
     checkCurrentUser: () => apiClient.get(api.checkcurrentuser),
-    getInfoCurrentUser: () => apiClient.get(api.getInfoCurrentUser)
+    getInfoCurrentUser: () => apiClient.get(api.getInfoCurrentUser),
+
+    //
+    getAllDoctor: () => apiClient.get(api.getAllDoctor),
+    createDoctor: (reqbody) => {
+        return axios.post(api.createDoctor, reqbody)
+    },
+    createPatient: (reqbody) => {
+        return axios.post(api.createPatient, reqbody)
+    }
 }
 
 export default authApi;

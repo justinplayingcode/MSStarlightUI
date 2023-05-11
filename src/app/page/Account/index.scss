@@ -36,8 +36,8 @@
             font-weight: 700;
         }
         .form-input{
-            width: 500px;
-            padding: 0 80px;
+            // width: 500px;
+            // padding: 0 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -50,4 +50,8 @@
         margin-top: 20px;
         margin-right: 80px;
     }
+}
+
+.form-input{
+    
 }

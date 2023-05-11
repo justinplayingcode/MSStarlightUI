@@ -1,19 +1,37 @@
 import { IColumn, ICommandBarItemProps } from "@fluentui/react"
 import { useEffect, useState } from "react"
 import { UniformTable } from "src/app/common"
-import { doctormanagementColumns } from "../table/doctormanagertable"
-import { useDispatch } from "react-redux";
-import { openPanel } from "src/redux/reducers";
+// import { doctormanagementColumns } from "../table/doctormanagertable"
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDoctors, openPanel, setDoctorList } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
+import authApi from "src/api/auth";
+import { AppDispatch, RootState } from "src/redux/store";
 
 function DoctorAcount() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadings, setIsLoading] = useState<boolean>(false);
   const [items, setItems] = useState<any[]>([]);
-  const dispatch = useDispatch();
 
-    useEffect(() => {
-        setItems(listitems)
-    }, [])
+  const dispatch = useDispatch<AppDispatch>();
+  const {doctorList, isLoading} = useSelector((state: RootState) => state.doctorManagement)
+
+
+  useEffect(() => {
+    // setIsLoading(true);
+    dispatch(getAllDoctors());   
+  }, [])
+
+  useEffect(() => {
+    setIsLoading(isLoading);
+    setItems(doctorList);
+    console.log(doctorList)
+  }, [doctorList, isLoading])
+
+
+//   useEffect(()=> {
+//     setItems(doctorList)
+//   }, [doctorList])
+
 
     const listitems = [
         {
@@ -72,12 +90,38 @@ function DoctorAcount() {
       },
     ]
 
+    const doctormanagementColumns: IColumn[] = [
+        {
+            key: 'fullname',
+            name: 'Họ và tên',
+            minWidth: 210,
+            maxWidth: 350,
+            isResizable: true,
+            isSorted: true,
+            isSortedDescending: false,
+            onRender: (item) => {
+              console.log("dfdf " + item)
+                return <div>{item?.fullname}</div>;
+            },
+        },
+        {
+            key: 'gender',
+            name: 'Giới tính',
+            minWidth: 70,
+            maxWidth: 90,
+            isResizable: true,
+            onRender: (item) => {
+                return <span>{item?.gender}</span>;
+            },
+        },
+      ];
+
     return(
         <div className='wrapper-content speciality-wrapper'>
             <UniformTable
                 searchByKeyWord='name'
-                items={listitems}
-                isLoading={isLoading} 
+                items={items}
+                isLoading={isLoadings} 
                 columns={doctormanagementColumns}  
                 commandBarItems={doctormanagementCommandBar}          
             />

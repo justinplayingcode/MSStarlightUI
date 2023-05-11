@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { panelTypeConstant } from 'src/model/contant';
 import { RootState } from 'src/redux/store';
 import CreatDoctorPanel from 'src/app/page/Account/panel/CreateDoctorPanel';
+import CreatePatientPanel from 'src/app/page/Account/panel/CreatePatientPanel';
 
 export const MainPanel = () => {
 
@@ -13,6 +14,8 @@ export const MainPanel = () => {
         switch(panelType){
             case panelTypeConstant.PANEL_CREATE_DOCTOR:
                 return <CreatDoctorPanel/>;
+            case panelTypeConstant.PANEL_CREATE_PATIENT:
+                return <CreatePatientPanel/>;
             default:
                 return <></>
         }
