@@ -7,25 +7,38 @@ import { getAllDoctors, openPanel, setDoctorList } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
 import authApi from "src/api/auth";
 import { AppDispatch, RootState } from "src/redux/store";
+import { ApiLoadingStatus, resetLoadDoctorStatus } from "src/redux/reducers/doctorManagementReducer";
 
 function DoctorAcount() {
   const [isLoadings, setIsLoading] = useState<boolean>(false);
   const [items, setItems] = useState<any[]>([]);
 
   const dispatch = useDispatch<AppDispatch>();
-  const {doctorList, isLoading} = useSelector((state: RootState) => state.doctorManagement)
+  const {doctorList, loadDoctorStatus} = useSelector((state: RootState) => state.doctorManagement)
 
 
   useEffect(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     dispatch(getAllDoctors());   
   }, [])
 
   useEffect(() => {
-    setIsLoading(isLoading);
-    setItems(doctorList);
-    console.log(doctorList)
-  }, [doctorList, isLoading])
+      if(loadDoctorStatus === ApiLoadingStatus.Success){
+        // console.log('status')
+        dispatch(resetLoadDoctorStatus());
+        setItems(doctorList);
+        setIsLoading(false);
+    }
+  }, [loadDoctorStatus, doctorList])
+
+  useEffect(() => {
+    console.log(items)
+  })
+//   useEffect(() => {
+//     setIsLoading(isLoading);
+//     setItems(doctorList);
+//     console.log(doctorList)
+//   }, [doctorList, isLoading])
 
 
 //   useEffect(()=> {

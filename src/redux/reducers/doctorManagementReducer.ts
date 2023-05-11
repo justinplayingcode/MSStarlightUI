@@ -1,14 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authApi from "src/api/auth";
 
+export enum ApiLoadingStatus{
+  None,
+  Loading,
+  Success,
+  Failed
+}
+
 interface DoctorMangementState {
   doctorList: any[];
-  isLoading: boolean
+  loadDoctorStatus: ApiLoadingStatus
 }
 
 const initialState: DoctorMangementState = {
   doctorList: [],
-  isLoading: undefined
+  loadDoctorStatus: ApiLoadingStatus.None
 }
 
 export const getAllDoctors = createAsyncThunk(
@@ -25,23 +32,26 @@ export const doctorMangementSlice = createSlice({
   reducers: {
     setDoctorList: (state, action) => {
       state.doctorList = action.payload
+    },
+    resetLoadDoctorStatus: (state) => {
+      state.loadDoctorStatus = ApiLoadingStatus.None;
     }
   },
   extraReducers(builder) {
     builder
       .addCase(getAllDoctors.pending, (state, action) => {
-        state.isLoading = true
+        state.loadDoctorStatus = ApiLoadingStatus.Loading;
       })
       .addCase(getAllDoctors.fulfilled, (state, action) => {
-        state.isLoading = false,
+        state.loadDoctorStatus = ApiLoadingStatus.Success,
         state.doctorList = action.payload
       })
       .addCase(getAllDoctors.rejected, (state, action) => {
-        state.isLoading = false
+        state.loadDoctorStatus = ApiLoadingStatus.Failed
       })
   }
 });
 
-export const { setDoctorList } = doctorMangementSlice.actions;
+export const { setDoctorList, resetLoadDoctorStatus } = doctorMangementSlice.actions;
 
 export default doctorMangementSlice.reducer;
