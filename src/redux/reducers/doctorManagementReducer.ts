@@ -3,12 +3,14 @@ import authApi from "src/api/auth";
 
 interface DoctorMangementState {
   doctorList: any[];
-  isLoading: boolean
+  isLoading: boolean;
+  isDataLoaded: boolean;
 }
 
 const initialState: DoctorMangementState = {
   doctorList: [],
-  isLoading: undefined
+  isLoading: undefined,
+  isDataLoaded: undefined
 }
 
 export const getAllDoctors = createAsyncThunk(
@@ -30,14 +32,17 @@ export const doctorMangementSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllDoctors.pending, (state, action) => {
-        state.isLoading = true
+        state.isLoading = true,
+        state.isDataLoaded = false
       })
       .addCase(getAllDoctors.fulfilled, (state, action) => {
         state.isLoading = false,
-        state.doctorList = action.payload
+        state.doctorList = action.payload,
+        state.isDataLoaded = true
       })
       .addCase(getAllDoctors.rejected, (state, action) => {
-        state.isLoading = false
+        state.isLoading = false,
+        state.isDataLoaded = true
       })
   }
 });
