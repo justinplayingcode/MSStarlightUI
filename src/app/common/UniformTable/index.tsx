@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextField } from '@fluentui/react/lib/TextField';
 import { Announced } from '@fluentui/react/lib/Announced';
-import { DetailsListLayoutMode, Selection, SelectionMode, IColumn, ConstrainMode } from '@fluentui/react/lib/DetailsList';
+import { DetailsListLayoutMode, Selection, SelectionMode, IColumn, ConstrainMode, DetailsList } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { CommandBar, ICommandBarItemProps, ShimmeredDetailsList, Stack } from '@fluentui/react';
@@ -17,6 +17,7 @@ export interface IUniformTableProps {
     items: any[];
     columns: IColumn[];
     isLoading?: boolean;
+    isDataLoaded?: boolean;
     searchByKeyWord: string;
     commandBarItems: ICommandBarItemProps[]
 }
@@ -74,7 +75,14 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                     </div>
                     <div className='details-list-wrapper'>
                         <MarqueeSelection selection={this._selection}>
+                            {isLoading ? 
                             <ShimmeredDetailsList
+                                columns={columns}
+                                isHeaderVisible
+                                enableShimmer
+                                items={[]}
+                            /> : 
+                            <DetailsList
                                 items={items}
                                 columns={columns}
                                 selectionMode={SelectionMode.multiple}
@@ -90,9 +98,27 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                                     {renderedWindowsAhead: 0,
                                     renderedWindowsBehind: 0}
                                 }
-                                enableShimmer={isLoading || false}
                                 onColumnHeaderClick={this._onColumnClick}
-                            />
+                            />}
+                            {/* <ShimmeredDetailsList
+                                items={items}
+                                columns={columns}
+                                selectionMode={SelectionMode.multiple}
+                                getKey={this._getKey}
+                                setKey="multiple"
+                                layoutMode={DetailsListLayoutMode.justified}
+                                constrainMode={ConstrainMode.unconstrained}
+                                isHeaderVisible={true}
+                                selection={this._selection}
+                                selectionPreservedOnEmptyClick={true}
+                                enterModalSelectionOnTouch={true}
+                                listProps={
+                                    {renderedWindowsAhead: 0,
+                                    renderedWindowsBehind: 0}
+                                }
+                                enableShimmer={isLoading}
+                                onColumnHeaderClick={this._onColumnClick}
+                            /> */}
                         </MarqueeSelection>
                         {items.length === 0 && !isLoading &&
                             <div className='details-list-no-content'>
