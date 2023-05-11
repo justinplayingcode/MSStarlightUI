@@ -46,13 +46,20 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
     
         this.state = {
             selectionDetails: this._getSelectionDetails(),
-            items: this.props.items || [],
+            items: this.props.items,
             columns: this.props.columns
         };
     }
 
+    componentDidMount(): void {
+        this.setState({
+            items: this.props.items, 
+        })
+    }
+
     public render() {
         const { selectionDetails, items, columns } = this.state;
+        console.log(items)
         const { isLoading, commandBarItems } = this.props;
 
         return (
