@@ -11,13 +11,12 @@ export enum CreateAccountKey{
     Pills
 }
 export interface ICreateAccountProps{
-    keyType?: CreateAccountKey,
+    keyType: CreateAccountKey,
     onClickSave?: () => void,
     onClickCancel?: () => void,
 }
 
 export const CreateAccount = (props: ICreateAccountProps) => {
-    const navigate = useNavigate();
     const [fullname, setFullname] = useState<string>();
     const [phoneNumber, setPhoneNumber] = useState<string>();
     const [address, setAddress] = useState<string>();
@@ -48,15 +47,15 @@ export const CreateAccount = (props: ICreateAccountProps) => {
 
     const onFormatDate = (date?: Date): string => {
         return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
-      };
+    };
 
-      const styles = mergeStyleSets({
+    const styles = mergeStyleSets({
         root: { selectors: { '> *': { marginBottom: 15 } } },
-        fullName: {marginBottom: 20},
-        genDate: {marginBottom: 20},
-        phoneNumber: { maxWidth: 150, marginBottom: 20},
-        email: { marginBottom: 20},
-      });
+        fullName: { marginBottom: 20 },
+        genDate: { marginBottom: 20 },
+        phoneNumber: { maxWidth: 150, marginBottom: 20 },
+        email: { marginBottom: 20 },
+    });
       
     const doctorForm = () => {
         return(
@@ -188,6 +187,8 @@ export const CreateAccount = (props: ICreateAccountProps) => {
             return;
         }
     }
+
+    //remove later maybe
     const renderFormName =(type: CreateAccountKey) => {
         switch(type){
             case CreateAccountKey.Doctor:
@@ -203,40 +204,20 @@ export const CreateAccount = (props: ICreateAccountProps) => {
         }
     }
 
-    const renderFooter = () => {
-        return(
-            <Stack className='footer-container'>
-            <DefaultButton text='Hủy'
-                onClick={() => {
-                    navigate(-1)
-                    props.onClickCancel?.()
-                }}
-            />
-            <PrimaryButton text='Lưu'
-                onClick={() => {
-                    navigate(-1);
-                    clickSave(props.keyType)
-                    props.onClickSave?.()
-                }}
-            />
-            </Stack>
-        )
-    }
     return(
         <Stack className='create-container'>
-            <Stack className='form-header'
+            {/* <Stack className='form-header'
                 onClick={() => navigate(-1)}>
                     <Stack className='header-text'>&larr; Trở lại trang trước</Stack>
-            </Stack>
+            </Stack> */}
             <Stack className='form-container'>
-                <Stack className='form-name'>
+                {/* <Stack className='form-name'>
                     {renderFormName(props.keyType)}
-                </Stack>
+                </Stack> */}
                 <Stack className='form-input'>
                     {renderInputField(props.keyType)}
                 </Stack>
             </Stack>
-            {renderFooter()}
         </Stack>
     )
 }

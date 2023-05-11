@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
 import { Validate } from "utils";
 
-function CreatDoctorPanel() {
+function CreatPatientPanel() {
   const [fullname, setFullname] = useState<string>();
   const [selectedGender, setSelectedtGender] = useState<string>();
   const [dateOfBirth, setDateOfBirth] = useState<Date>();
@@ -15,6 +15,7 @@ function CreatDoctorPanel() {
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [identifyNumber, setIdentifyNumber] = useState<string>();
+  const [insuranceNumber, setInsuranceNumber] = useState<string>();
   const [selectedDepartment, setSelectedDepartment] = useState<string>();
 
   const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
@@ -94,13 +95,20 @@ function CreatDoctorPanel() {
       return;
     }    
 
+    if(!insuranceNumber?.length){
+        setErrorMessage({insuranceNumber: 'Hãy điền số bảo hiểm'});
+        return;
+    }
+
+    if(!Validate.insurance(insuranceNumber)){
+        setErrorMessage({insuranceNumber: 'Số bảo hiểm không hợp lệ'});
+        return;
+    }
+
     if(!selectedDepartment?.length){
       setErrorMessage({department: 'Hãy chọn khoa'});
       return;
     }
-
-
-
 
     alert('done')
   }
@@ -177,6 +185,15 @@ function CreatDoctorPanel() {
           }}
           errorMessage={errorMessage?.identifyNumber}
         />
+        <TextField
+            required
+            label="Bảo hiểm y tế"
+            onChange={(e, val) => {
+                setErrorMessage(undefined)
+                setInsuranceNumber(val)
+            }}
+            errorMessage={errorMessage?.insuranceNumber}
+        />
         <Dropdown
           required
           label='Khoa'
@@ -194,7 +211,7 @@ function CreatDoctorPanel() {
 
   return (
     <UniformPanel
-      panelTitle='Tạo tài khoản bác sĩ'
+      panelTitle='Tạo tài khoản bệnh nhân'
       renderFooter={buttonFooter}
     >
       {/* content here */}
@@ -205,4 +222,4 @@ function CreatDoctorPanel() {
   );
 }
 
-export default CreatDoctorPanel;
+export default CreatPatientPanel;
