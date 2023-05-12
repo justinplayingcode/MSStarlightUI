@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { UniformTable } from 'src/app/common';
+import { StartProcessDialog } from './dialog';
 
 const NonBoardingTab = () => {
     const [items, setItems] = React.useState<any[]>([]);
+    const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)
     const [isLoading, setIsLoading] =React.useState<boolean>(false);
 
 
@@ -13,7 +15,7 @@ const NonBoardingTab = () => {
             key: 'newItem',
             text: 'Thêm',
             iconProps: { iconName: 'Add' },
-            onClick: () => { alert('hehe') },
+            onClick: () => { setDialogClosed(false) },
         },
     ]
 
@@ -25,6 +27,12 @@ const NonBoardingTab = () => {
                 isLoading={isLoading} 
                 columns={nonBoardingPatientColumns}  
                 commandBarItems={nonBoardingPatientCommanBar}          
+            />
+            <StartProcessDialog 
+                isDialogClosed={isDialogClosed} 
+                closeDialog={() => {
+                    setDialogClosed(true);
+                }}             
             />
         </div>
     )

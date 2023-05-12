@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import authApi from "src/api/auth";
+import Api from "src/api/auth";
 
 export enum ApiLoadingStatus{
   None,
@@ -23,7 +23,7 @@ const initialState: DoctorMangementState = {
 export const getAllDoctors = createAsyncThunk(
   'doctorMangement/getall',
   async () => {
-    const { data } = await authApi.getAllDoctor();
+    const { data } = await Api.accountApi.getAllDoctor();
     return data;
   }
 )
@@ -42,7 +42,7 @@ export const doctorMangementSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllDoctors.pending, (state, action) => {
-        state.loadDoctorStatus = ApiLoadingStatus.Loading;,
+        state.loadDoctorStatus = ApiLoadingStatus.Loading,
         state.isDataLoaded = false
       })
       .addCase(getAllDoctors.fulfilled, (state, action) => {

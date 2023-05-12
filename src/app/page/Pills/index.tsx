@@ -3,8 +3,8 @@ import { accountRole } from 'model';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { UniformTable } from 'src/app/common';
-import { SelfTooltipHost } from 'src/app/common/SelfToolTipHost';
 import { RootState } from 'src/redux/store';
+import { tooltipPlainText } from 'src/utils/utils';
 
 const Pills = () => {
     const [items, setItems] = React.useState<any[]>([]);
@@ -59,7 +59,10 @@ const Pills = () => {
             maxWidth: 400,
             isResizable: true,
             onRender: (item) => {
-                return <SelfTooltipHost text={item?.usage} />;
+                // return <SelfTooltipHost text={item?.usage} />;
+                return(
+                    tooltipPlainText(item?.usage)
+                )
             },
         },
         {
