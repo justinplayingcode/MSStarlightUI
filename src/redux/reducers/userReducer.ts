@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ApiStatus, accountRole } from "model";
-import authApi from "src/api/auth";
+import authApi from "src/api";
 
 interface CurrentUserState {
     role: accountRole | null;

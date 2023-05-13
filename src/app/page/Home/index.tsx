@@ -9,7 +9,7 @@ import { Avatar } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { Convert } from "utils";
 import { primaryHealthStatus } from "./index.type";
-import Api from "src/api/auth";
+import Api from "src/api";
 import { RootState } from "src/redux/store";
 import image from "image";
 import { HealthIndicator } from "src/model/enum";

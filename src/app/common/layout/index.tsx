@@ -17,7 +17,7 @@ import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
 import { IToastProps, Toast } from "../Toast";
 import { Navigate } from "react-router-dom";
-import Api from "src/api/auth";
+import Api from "src/api";
 import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";

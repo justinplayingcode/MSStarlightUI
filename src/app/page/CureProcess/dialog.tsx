@@ -7,7 +7,7 @@ import { useBoolean } from '@fluentui/react-hooks';
 import { Label, SearchBox, Stack } from '@fluentui/react';
 import './index.scss'
 import { Validate } from 'utils';
-import Api from 'src/api/auth';
+import Api from 'src/api';
 
 interface IStartProcessProps{
   isDialogClosed: boolean;
