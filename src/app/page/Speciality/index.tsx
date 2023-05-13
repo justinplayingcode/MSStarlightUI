@@ -93,7 +93,7 @@ const Speciality = () => {
 
 
     return(
-        <div className='wrapper-content speciality-wrapper'>
+        <div className='wrapper-table-content speciality-wrapper'>
             <UniformTable
                 commandBarItems={[]}
                 searchByKeyWord='name'

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 const Profile = () => {
     return(
-        <div className='wrapper-content'>
+        <div className='wrapper-table-content'>
             <>Hồ sơ người dùng</>
 
         </div>

@@ -20,7 +20,7 @@ const NonBoardingTab = () => {
     ]
 
     return(
-         <div className='wrapper-content speciality-wrapper'>
+         <div className='wrapper-table-content speciality-wrapper'>
             <UniformTable
                 searchByKeyWord='name'
                 items={items}

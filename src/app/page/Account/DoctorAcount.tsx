@@ -103,7 +103,7 @@ function DoctorAcount() {
     ]
 
     return(
-        <div className='wrapper-content speciality-wrapper'>
+        <div className='wrapper-table-content speciality-wrapper'>
             {/* {isLoading ? <>loading</> :              */}
                 <UniformTable
                     searchByKeyWord='fullname'

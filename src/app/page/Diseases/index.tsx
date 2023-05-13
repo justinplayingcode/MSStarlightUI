@@ -118,7 +118,7 @@ const Diseases = () => {
         return commadBarButton;
     } 
     return(
-        <div className='wrapper-content'>
+        <div className='wrapper-table-content'>
             {/* <>Quản lí bệnh
                 <Stack>Xem danh sách</Stack>
                 <Stack> thêm sửa xóa thuốc - admin</Stack>
