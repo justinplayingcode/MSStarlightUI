@@ -59,15 +59,15 @@ apiClient.interceptors.response.use(
             originalRequest._retry = true;
             isRefreshing = true;
 
-            const refreshToken = localStorage.getItem('refreshToken');
-            const username = localStorage.getItem('username');
             try {
                 try {
+                    const refreshToken = localStorage.getItem('refreshToken');
+                    const username = localStorage.getItem('username');
                     const response = await apiClient.post('/auth/newtoken', { refreshToken, username });
                     console.log(response)
                     if(response.status === ApiStatus.fail) {
-                        localStorage.clear();
-                        window.location.pathname = "/login";
+                        // localStorage.clear();
+                        // window.location.pathname = "/login";
                     }
                     const { accessToken } = response.data;
                     localStorage.setItem('token', accessToken);
@@ -76,8 +76,8 @@ apiClient.interceptors.response.use(
                     return await apiClient(originalRequest);
                 } catch (err_1) {
                     processQueue(err_1, null);
-                    localStorage.clear();
-                    window.location.pathname = "/login";
+                    // localStorage.clear();
+                    // window.location.pathname = "/login";
                     return await Promise.reject(err_1);
                 }
             } finally {

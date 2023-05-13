@@ -18,7 +18,7 @@ import CureProcess from "src/app/page/CureProcess";
 import { IToastProps, Toast } from "../Toast";
 import { Navigate } from "react-router-dom";
 import Api from "src/api/auth";
-import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
+import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
@@ -35,17 +35,20 @@ interface LayoutPropsFromDispatch {
     setRole: any;
     setUsername: any;
     setInfoUser: any;
+    closeLoading: any;
+    openLoading: any;
 }
 
 const mapStateToProps = (state: RootState) => ({
     isLoading: state.loading.isLoading,
-    username: state.user.username
+    username: state.user.username,
 })
 
 const mapDispatchToProps = {
     setRole,
     setUsername,
-    setInfoUser
+    setInfoUser,
+    closeLoading, openLoading
 };
 
 type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispatch;
@@ -66,17 +69,36 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     async componentDidMount() {
+        const result  = await Promise.all([this.checkCurrentUser(), this.getInfoCurrentUser()])
+        if(result[0] === ApiStatus.succes && result[1] === ApiStatus.succes) {
+            this.setState({loading: false})
+        } else {
+            window.location.pathname = "/error/notfound";
+        }
+    }
+
+    checkCurrentUser = async () => {
         const temp = localStorage.getItem('accessToken');
         if(temp) {
             const res = await Api.authApi.checkCurrentUser();
                 if(res.status === ApiStatus.succes) {
-                    console.log(res.data.username)
                     this.props.setUsername(res.data.username);
                     this.props.setRole(res.data.role);
-                } 
+                }
+            return res.status;
+        } else {
+            return ApiStatus.fail
         }
-        this.setState({loading: false})
     }
+
+    getInfoCurrentUser = async () => {
+        const res = await Api.authApi.getInfoCurrentUser();
+        if(res.status === ApiStatus.succes) {
+            this.props.setInfoUser(res.data);
+        } 
+        return res.status
+    }
+
 
     addToast = (toast: IToastProps) => {
         this.setState(prevState => ({

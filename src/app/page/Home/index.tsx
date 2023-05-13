@@ -25,18 +25,6 @@ const Home = () => {
     const {info} = useSelector((state:RootState) => state.user);
     const role = useSelector<RootState>(state => state.user.role);
 
-    useEffect(() => {
-        dispatch(openLoading());
-        getInfoCurrentUser();
-    }, [])
-
-    const getInfoCurrentUser = async () => {
-        const { data } = await Api.authApi.getInfoCurrentUser();
-        dispatch(setInfoUser(data))
-        dispatch(closeLoading());
-    }  
-
-
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
         setSelectedDate(date);
     }, []);
