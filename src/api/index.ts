@@ -31,7 +31,6 @@ const authApi = {
     //
     checkCurrentUser: () => apiClient.get(api.checkcurrentuser),
     getInfoCurrentUser: () => apiClient.get(api.getInfoCurrentUser),
-
 }
 
 const accountApi = {

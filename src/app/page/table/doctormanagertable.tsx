@@ -24,16 +24,6 @@ export const doctormanagementColumns: IColumn[] = [
     },
   },
   {
-    key: 'gender',
-    name: 'Giới tính',
-    minWidth: 70,
-    maxWidth: 90,
-    isResizable: true,
-    onRender: (item) => {
-      return <span>{item?.gender}</span>;
-    },
-  },
-  {
     key: 'phonenumber',
     name: 'Số điện thoại',
     minWidth: 200,

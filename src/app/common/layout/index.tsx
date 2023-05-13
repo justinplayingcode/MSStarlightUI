@@ -70,6 +70,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
 
     async componentDidMount() {
         const result  = await Promise.all([this.checkCurrentUser(), this.getInfoCurrentUser()])
+        console.log(result)
         if(result[0] === ApiStatus.succes && result[1] === ApiStatus.succes) {
             this.setState({loading: false})
         } else {
@@ -85,6 +86,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                     this.props.setUsername(res.data.username);
                     this.props.setRole(res.data.role);
                 }
+            console.log(res)
             return res.status;
         } else {
             return ApiStatus.fail
@@ -95,7 +97,8 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         const res = await Api.authApi.getInfoCurrentUser();
         if(res.status === ApiStatus.succes) {
             this.props.setInfoUser(res.data);
-        } 
+        }
+        console.log(res)
         return res.status
     }
 
