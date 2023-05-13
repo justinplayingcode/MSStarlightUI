@@ -46,8 +46,8 @@ function DoctorAcount() {
                 searchByKeyWord='fullname'
                 items={items}
                 isLoading={isLoadings}
-                columns={doctormanagementColumns}  
-                commandBarItems={doctormanagementCommandBar}          
+                columns={doctormanagementColumns}
+                commandBarItems={doctormanagementCommandBar}         
             />
         </div>
     )

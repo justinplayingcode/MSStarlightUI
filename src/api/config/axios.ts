@@ -29,10 +29,23 @@ const processQueue = (error, token = null) => {
         if (error) {
             prom.reject(error);
         } else {
-            prom.resolve((await apiClient(token)).request(prom.config));
+            // prom.resolve((await apiClient(token)).request(prom.config));
+          // prom.config.headers['Authorization'] = `Bearer ${token}`;
+          // prom.resolve(axios.request(prom.config));
+          const updatedConfig = { ...prom.config };
+          updatedConfig.headers.Authorization = `Bearer ${token}`;
+          try {
+            const res = await apiClient.request(updatedConfig);
+            // if(res.data) {
+            //   prom.resolve(res.data);
+            // } else {
+              prom.resolve(res);
+            // }
+          } catch (error) {
+            prom.reject(error);
+          }
         }
     });
-
     failedQueue = [];
 };
 
@@ -44,8 +57,6 @@ apiClient.interceptors.response.use(
         return response},
     async (error) => {
         const originalRequest = error.config;
-
-        // if (error.response.status === 401 && !originalRequest._retry) {
         if (error.response.status === ApiStatusCode.Forbidden && error.response.data.message === 'TokenExpiredError' && !originalRequest._retry) {
             if (isRefreshing) {
                 try {
@@ -57,20 +68,13 @@ apiClient.interceptors.response.use(
                     return await Promise.reject(err);
                 }
             }
-
             originalRequest._retry = true;
             isRefreshing = true;
-
             try {
                 try {
                     const refreshToken = localStorage.getItem('refreshToken');
                     const username = localStorage.getItem('username');
                     const response = await apiClient.post('/auth/newtoken', { refreshToken, username });
-                    console.log(response.data)
-                    if(response.status === ApiStatus.fail) {
-                        // localStorage.clear();
-                        // window.location.pathname = "/login";
-                    }
                     localStorage.setItem('accessToken', response.data.accessToken);
                     apiClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
                     processQueue(null, response.data.accessToken);
