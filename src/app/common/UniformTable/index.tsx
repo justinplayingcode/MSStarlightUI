@@ -51,63 +51,47 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
         };
     }
 
-    componentDidMount(): void {
-        this.setState({
-            items: this.props.items, 
-        })
+    // componentDidMount(): void {
+    //     this.setState({
+    //         items: this.props.items, 
+    //     })
+    //     this._allItems = this.props.items;
+    // }
+
+    componentDidUpdate(prevProps: Readonly<IUniformTableProps>, prevState: Readonly<IUniformTableState>, snapshot?: any): void {
+        if(this.props.items !== prevProps.items) {
+            this.setState({
+                items: this.props.items
+            })
+            this._allItems = this.props.items;
+        }
     }
 
     public render() {
-        const { selectionDetails, items, columns } = this.state;
-        console.log(items)
+        const { items, columns } = this.state;
         const { isLoading, commandBarItems } = this.props;
 
         return (
             <Stack className='table-container'>
                 <div className='details-list'>
-                    <div>
-                        <CommandBar
-                            items={commandBarItems}
-                        />
-                    </div>
                     <div className='details-list-sub-header'>
-                        <div>
+                        <div className='details-list-sub-header-item'>
+                            <CommandBar
+                                items={commandBarItems}
+                            />
+                        </div>
+                        {/* <div>
                             <div className={classNames.selectionDetails}>{selectionDetails}</div>
                             <Announced message={selectionDetails} />
-                        </div>
-                        <div className={classNames.controlWrapper}>
+                        </div> */}
+                        <div className={`${classNames.controlWrapper} details-list-sub-header-item`}>
                             <TextField label="Search by name:" onChange={this._onChangeText} styles={controlStyles} />
                             <Announced message={`Number of items after filter applied: ${items.length}.`} />
                         </div>
                     </div>
                     <div className='details-list-wrapper'>
                         <MarqueeSelection selection={this._selection}>
-                            {isLoading ? 
                             <ShimmeredDetailsList
-                                columns={columns}
-                                isHeaderVisible
-                                enableShimmer
-                                items={[]}
-                            /> : 
-                            <DetailsList
-                                items={items}
-                                columns={columns}
-                                selectionMode={SelectionMode.multiple}
-                                getKey={this._getKey}
-                                setKey="multiple"
-                                layoutMode={DetailsListLayoutMode.justified}
-                                constrainMode={ConstrainMode.unconstrained}
-                                isHeaderVisible={true}
-                                selection={this._selection}
-                                selectionPreservedOnEmptyClick={true}
-                                enterModalSelectionOnTouch={true}
-                                listProps={
-                                    {renderedWindowsAhead: 0,
-                                    renderedWindowsBehind: 0}
-                                }
-                                onColumnHeaderClick={this._onColumnClick}
-                            />}
-                            {/* <ShimmeredDetailsList
                                 items={items}
                                 columns={columns}
                                 selectionMode={SelectionMode.multiple}
@@ -125,11 +109,11 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                                 }
                                 enableShimmer={isLoading}
                                 onColumnHeaderClick={this._onColumnClick}
-                            /> */}
+                            />
                         </MarqueeSelection>
                         {items.length === 0 && !isLoading &&
                             <div className='details-list-no-content'>
-                                <img alt='' src={image.dataNotFound}/>
+                                {/* <img alt='' src={image.dataNotFound}/> */}
                                 <p>Không có dữ liệu...</p>
                             </div>
                         }

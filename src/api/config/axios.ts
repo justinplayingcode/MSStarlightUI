@@ -1,10 +1,12 @@
 import axios from "axios";
 import { ApiStatus, ApiStatusCode } from "model";
 
+export const baseURL = 'https://datn-benhvien.onrender.com/api';
+
 const apiClient = axios.create({
-    baseURL: "https://datn-benhvien.onrender.com/api",
+    baseURL: baseURL,
     headers: {
-        "Content-Type": "application/json"
+      "Content-Type": "application/json"
     },
 });
 
@@ -59,25 +61,24 @@ apiClient.interceptors.response.use(
             originalRequest._retry = true;
             isRefreshing = true;
 
-            const refreshToken = localStorage.getItem('refreshToken');
-            const username = localStorage.getItem('username');
             try {
                 try {
+                    const refreshToken = localStorage.getItem('refreshToken');
+                    const username = localStorage.getItem('username');
                     const response = await apiClient.post('/auth/newtoken', { refreshToken, username });
-                    console.log(response)
+                    console.log(response.data)
                     if(response.status === ApiStatus.fail) {
-                        localStorage.clear();
-                        window.location.pathname = "/login";
+                        // localStorage.clear();
+                        // window.location.pathname = "/login";
                     }
-                    const { accessToken } = response.data;
-                    localStorage.setItem('token', accessToken);
-                    apiClient.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-                    processQueue(null, accessToken);
+                    localStorage.setItem('accessToken', response.data.accessToken);
+                    apiClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
+                    processQueue(null, response.data.accessToken);
                     return await apiClient(originalRequest);
                 } catch (err_1) {
                     processQueue(err_1, null);
-                    localStorage.clear();
-                    window.location.pathname = "/login";
+                    // localStorage.clear();
+                    // window.location.pathname = "/login";
                     return await Promise.reject(err_1);
                 }
             } finally {

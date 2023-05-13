@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openLoading, closeLoading, setRole, setUsername } from "src/redux/reducers";
-import Api from "src/api/auth";
+import Api from "src/api";
 
 import Image from "image"
 import { ApiStatus } from "model";

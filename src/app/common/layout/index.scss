@@ -100,9 +100,10 @@ $theme-blue: rgb(0, 120, 212);
             margin-top: 90px;
             height: calc(100% - 90px);
 
-            .wrapper-content {
+            .wrapper-table-content {
                 width: 100%;
                 height: 100%;
+                display: flex;
             }
         }
         // .header-breadcrumb {

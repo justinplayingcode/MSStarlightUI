@@ -9,7 +9,7 @@ import { Avatar } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { Convert } from "utils";
 import { primaryHealthStatus } from "./index.type";
-import Api from "src/api/auth";
+import Api from "src/api";
 import { RootState } from "src/redux/store";
 import image from "image";
 import { HealthIndicator } from "src/model/enum";
@@ -24,18 +24,6 @@ const Home = () => {
     const dispatch = useDispatch();
     const {info} = useSelector((state:RootState) => state.user);
     const role = useSelector<RootState>(state => state.user.role);
-
-    useEffect(() => {
-        dispatch(openLoading());
-        getInfoCurrentUser();
-    }, [])
-
-    const getInfoCurrentUser = async () => {
-        const { data } = await Api.authApi.getInfoCurrentUser();
-        dispatch(setInfoUser(data))
-        dispatch(closeLoading());
-    }  
-
 
     const onSelectDate = useCallback((date: Date, dateRangeArray: Date[]): void => {
         setSelectedDate(date);

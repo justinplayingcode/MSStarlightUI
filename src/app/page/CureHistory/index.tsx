@@ -20,7 +20,7 @@ const CureHistory = () => {
     ]
 
     return(
-        <div className='wrapper-content'>
+        <div className='wrapper-table-content'>
             {/* <>Lịch sử khám chữa bệnh
                 <Stack>Working after</Stack>
             </> */}

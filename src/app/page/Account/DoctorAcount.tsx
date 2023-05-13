@@ -1,97 +1,35 @@
 import { ICommandBarItemProps } from "@fluentui/react"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { UniformTable } from "src/app/common"
 import { doctormanagementColumns } from "../table/doctormanagertable"
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDoctors, openPanel } from "src/redux/reducers";
+import { openPanel, setDoctorList } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
-import { AppDispatch, RootState } from "src/redux/store";
-import { ApiLoadingStatus, resetLoadDoctorStatus } from "src/redux/reducers/doctorManagementReducer";
+import Api from "src/api";
+import { AppDispatch } from "src/redux/store";
+import { ApiStatus } from "model";
 
 function DoctorAcount() {
-  const [isLoadings, setIsLoading] = useState<boolean>(false);
-  const [items, setItems] = useState<any[]>([]);
+    const [isLoadings, setIsLoading] = useState<boolean>(false);
+    const [items, setItems] = useState<any[]>([]);
 
-  const dispatch = useDispatch<AppDispatch>();
-  const {doctorList, loadDoctorStatus} = useSelector((state: RootState) => state.doctorManagement)
+    const dispatch = useDispatch<AppDispatch>();
 
+    useEffect(() => {
+        getAllDoctor();
+    }, [])
 
-  useEffect(() => {
-    setIsLoading(true);
-    dispatch(getAllDoctors());   
-  }, [])
-
-  useEffect(() => {
-      if(loadDoctorStatus === ApiLoadingStatus.Success){
-        // console.log('status')
-        dispatch(resetLoadDoctorStatus());
-        setItems(doctorList);
-        setIsLoading(false);
+    const getAllDoctor = async () => {
+        setIsLoading(true);
+        const res = await Api.accountApi.getAllDoctor();
+        if(res.status === ApiStatus.succes) {
+            setIsLoading(false);
+            setItems(res.data);
+            dispatch(setDoctorList(res.data))
+        } else {
+            setIsLoading(false);
+        }
     }
-  }, [loadDoctorStatus, doctorList])
-
-  useEffect(() => {
-    console.log(items)
-  })
-//   useEffect(() => {
-//     setIsLoading(isLoading);
-//     setItems(doctorList);
-//     console.log(doctorList)
-//   }, [doctorList, isLoading])
-
-
-//   useEffect(()=> {
-//     setItems(doctorList)
-//   }, [doctorList])
-
-
-    const listitems = [
-        {
-            name: 'basdsadas',
-            code: 'asdsdasdasdsad3213sa',
-        },
-        {
-            name: 'casdsadasd',
-            code: 'asdsda32434234sdsa',
-        },
-        {
-            name: 'dasdsadsad',
-            code: 'asds32453243242dasdsa',
-        },
-        {
-            name: 'edgfdsdafsd',
-            code: 'asdsdas324324234dsa',
-        },
-        {
-            name: 'asdsahdsajkds',
-            code: 'asdsdaasdsadsasdsa',
-        },
-        {
-            name: 'basdsadas',
-            code: 'asdsdasdasdsad3213sa',
-        },
-        {
-            name: 'casdsadasd',
-            code: 'asdsda32434234sdsa',
-        },
-        {
-            name: 'dasdsadsad',
-            code: 'asds32453243242dasdsa',
-        },
-        {
-            name: 'edgfdsdafsd',
-            code: 'asdsdas324324234dsa',
-        },
-        {
-            name: 'asdsahdsajkds',
-            code: 'asdsdaasdsadsasdsa',
-        },
-        {
-            name: 'basdsadas',
-            code: 'asdsdasdasdsad3213sa',
-        },
-
-    ]
 
     const doctormanagementCommandBar: ICommandBarItemProps[] = [
         {
@@ -103,16 +41,14 @@ function DoctorAcount() {
     ]
 
     return(
-        <div className='wrapper-content speciality-wrapper'>
-            {/* {isLoading ? <>loading</> :              */}
-                <UniformTable
-                    searchByKeyWord='fullname'
-                    items={doctorList}
-                    isLoading={isLoadings}
-                    columns={doctormanagementColumns}  
-                    commandBarItems={doctormanagementCommandBar}          
-                />
-            {/* } */}
+        <div className='wrapper-table-content speciality-wrapper'>
+            <UniformTable
+                searchByKeyWord='fullname'
+                items={items}
+                isLoading={isLoadings}
+                columns={doctormanagementColumns}  
+                commandBarItems={doctormanagementCommandBar}          
+            />
         </div>
     )
 }

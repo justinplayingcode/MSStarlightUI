@@ -18,9 +18,15 @@
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
-            padding-left: 40px;
             height: 60px;
-
+            .details-list-sub-header-item:first-child {
+                height: 100%;
+            }
+            .details-list-sub-header-item {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
         }
 
         .details-list-wrapper {
@@ -41,11 +47,19 @@
 
                 p {
                     font-style: italic;
-                    color: #333;
+                    color: #8f8f8f;
                     font-size: 18px;
                     font-weight: 500;
                     margin-top: 8px;
                 }
+            }
+
+            .ms-DetailsHeader-cellName {
+                font-size: 16px;
+            }
+
+            .ms-DetailsRow-cell {
+                font-size: 16px;
             }
         }
     }
