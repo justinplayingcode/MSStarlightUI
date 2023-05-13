@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiStatus, ApiStatusCode } from "model";
+import { ApiStatusCode } from "model";
 
 export const baseURL = 'https://datn-benhvien.onrender.com/api';
 
@@ -29,18 +29,11 @@ const processQueue = (error, token = null) => {
         if (error) {
             prom.reject(error);
         } else {
-            // prom.resolve((await apiClient(token)).request(prom.config));
-          // prom.config.headers['Authorization'] = `Bearer ${token}`;
-          // prom.resolve(axios.request(prom.config));
           const updatedConfig = { ...prom.config };
           updatedConfig.headers.Authorization = `Bearer ${token}`;
           try {
             const res = await apiClient.request(updatedConfig);
-            // if(res.data) {
-            //   prom.resolve(res.data);
-            // } else {
               prom.resolve(res);
-            // }
           } catch (error) {
             prom.reject(error);
           }
@@ -81,8 +74,8 @@ apiClient.interceptors.response.use(
                     return await apiClient(originalRequest);
                 } catch (err_1) {
                     processQueue(err_1, null);
-                    // localStorage.clear();
-                    // window.location.pathname = "/login";
+                    localStorage.clear();
+                    window.location.pathname = "/login";
                     return await Promise.reject(err_1);
                 }
             } finally {
