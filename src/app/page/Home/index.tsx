@@ -9,7 +9,7 @@ import { Avatar } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { Convert } from "utils";
 import { primaryHealthStatus } from "./index.type";
-import authApi from "src/api/auth";
+import Api from "src/api/auth";
 import { RootState } from "src/redux/store";
 import image from "image";
 import { HealthIndicator } from "src/model/enum";
@@ -31,7 +31,7 @@ const Home = () => {
     }, [])
 
     const getInfoCurrentUser = async () => {
-        const { data } = await authApi.getInfoCurrentUser();
+        const { data } = await Api.authApi.getInfoCurrentUser();
         dispatch(setInfoUser(data))
         dispatch(closeLoading());
     }  

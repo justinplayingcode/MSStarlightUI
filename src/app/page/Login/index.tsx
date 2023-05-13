@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openLoading, closeLoading, setRole, setUsername } from "src/redux/reducers";
-import authApi from "src/api/auth";
+import Api from "src/api/auth";
 
 import Image from "image"
 import { ApiStatus } from "model";
@@ -33,7 +33,7 @@ export const Login: React.FunctionComponent = () => {
             password: password
         }
         dispatch(openLoading());
-        authApi.login(reqbody).then(data => {
+        Api.authApi.login(reqbody).then(data => {
             const {accessToken, refreshToken, role, username } = data.data.data;
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);

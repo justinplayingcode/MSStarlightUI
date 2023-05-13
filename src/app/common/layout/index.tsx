@@ -17,7 +17,7 @@ import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
 import { IToastProps, Toast } from "../Toast";
 import { Navigate } from "react-router-dom";
-import authApi from "src/api/auth";
+import Api from "src/api/auth";
 import { setInfoUser, setRole, setUsername } from "src/redux/reducers";
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
@@ -68,7 +68,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     async componentDidMount() {
         const temp = localStorage.getItem('accessToken');
         if(temp) {
-            const res = await authApi.checkCurrentUser();
+            const res = await Api.authApi.checkCurrentUser();
                 if(res.status === ApiStatus.succes) {
                     console.log(res.data.username)
                     this.props.setUsername(res.data.username);
