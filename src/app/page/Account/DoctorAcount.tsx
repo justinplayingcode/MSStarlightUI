@@ -17,43 +17,23 @@ function DoctorAcount() {
     const { isOpen } = useSelector((state: RootState) => state.panel)
 
     useEffect(() => {
-        setIsLoading(true);
         getAllDoctor();
     }, [])   
 
-    useEffect(()=> {
-        if(isOpen === false){
-            setIsLoading(true)
-            getAllDoctor();
-        }
-    }, [isOpen])
-    
-    // const getAllDoctor = async () => {
-    //     setIsLoading(true);
-    //     const res = await Api.accountApi.getAllDoctor();
-    //     if(res.status === ApiStatus.succes) {
-    //         setIsLoading(false);
-    //         setItems(res.data);
-    //         dispatch(setDoctorList(res.data))
-    //     } else {
-    //         setIsLoading(false);
-    //     }
-    // }
-
     const getAllDoctor = () => {
         setIsLoading(true);
+        setItems([]);
         Api.accountApi.getAllDoctor().then((data) => {
             if (data.status === ApiStatus.succes) {
-                // setIsLoading(false);
                 setItems(data.data);
-                // dispatch(setDoctorList(res.data))
             } else {
                 setIsLoading(false);
             }
-        }).catch(err => {
-          const { message } = err.response.data;
-          // setErrorMessage(message)
-      }).finally(() => setIsLoading(false))
+        }).catch().finally(() => setIsLoading(false))
+    }
+
+    const refreshData = () => {
+      getAllDoctor()
     }
 
     const doctormanagementCommandBar: ICommandBarItemProps[] = [
@@ -63,6 +43,12 @@ function DoctorAcount() {
             iconProps: { iconName: 'Add' },
             onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_DOCTOR)) },
         },
+        {
+          key: 'refresh',
+          text: 'Refresh',
+          iconProps: { iconName: 'Refresh' },
+          onClick: refreshData,
+      },
     ]
 
     return(

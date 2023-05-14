@@ -18,7 +18,6 @@ export interface IUniformTableProps {
     items: any[];
     columns: IColumn[];
     isLoading?: boolean;
-    isDataLoaded?: boolean;
     searchByKeyWord: string;
     commandBarItems: ICommandBarItemProps[]
 }
@@ -58,6 +57,8 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                 items: this.props.items
             })
             this._allItems = this.props.items;
+        } else if (this.props.isLoading !== prevProps.isLoading) {
+          this.forceUpdate()
         }
     }
 
@@ -88,9 +89,9 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                             <ShimmeredDetailsList
                                 items={items}
                                 columns={columns}
-                                selectionMode={SelectionMode.multiple}
+                                selectionMode={SelectionMode.single}
                                 getKey={this._getKey}
-                                setKey="multiple"
+                                setKey="single"
                                 layoutMode={DetailsListLayoutMode.justified}
                                 constrainMode={ConstrainMode.unconstrained}
                                 isHeaderVisible={true}

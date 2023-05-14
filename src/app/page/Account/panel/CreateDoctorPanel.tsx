@@ -52,54 +52,6 @@ function CreatDoctorPanel() {
     }
   ]
 
-  // const department: IDropdownOption[] = [
-  //   {
-  //     key: `${DepartmentType.khambenh}`,
-  //     text: 'Khoa Khám chữa bệnh'
-  //   },
-  //   {
-  //     key: `${DepartmentType.noiTongHop}`,
-  //     text: 'Khoa Nội Tổng Hợp'
-  //   },
-  //   {
-  //     key: `${DepartmentType.ngoai}`,
-  //     text: 'Khoa Ngoại'
-  //   },
-  //   {
-  //     key: `${DepartmentType.canLamSang}`,
-  //     text: 'Khoa Cận Lâm Sàng'
-  //   },
-  //   {
-  //     key: `${DepartmentType.san}`,
-  //     text: 'Khoa Sản'
-  //   },
-  //   {
-  //     key: `${DepartmentType.daLieu}`,
-  //     text: 'Khoa Da Liễu'
-  //   },
-  //   {
-  //     key: `${DepartmentType.dongY}`,
-  //     text: 'Khoa Đông Y'
-  //   },
-  //   {
-  //     key: `${DepartmentType.truyenNhiem}`,
-  //     text: 'Khoa Truyền Nhiễm'
-  //   },
-  //   {
-  //     key: `${DepartmentType.duoc}`,
-  //     text: 'Khoa Dược'
-  //   },
-  //   {
-  //     key: `${DepartmentType.nhi}`,
-  //     text: 'Khoa Nhi'
-  //   },
-  //   {
-  //     key: `${DepartmentType.thanNhanTao}`,
-  //     text: 'Khoa Thận Nhân Tạo'
-  //   },
-
-  // ]
-
   const doctorRank: IDropdownOption[] = [
     {
       key: `${DoctorRank.thacSi}`,
@@ -258,7 +210,6 @@ function CreatDoctorPanel() {
     Api.accountApi.createDoctor(reqbody).then(data => {
       if(!data.status){
         //show dialog
-      console.log(data)
         setNewAccount({
           fullname: data.data.fullname,
           username: data.data.username,
