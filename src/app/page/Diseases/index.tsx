@@ -123,13 +123,13 @@ const Diseases = () => {
                 <Stack>Xem danh sách</Stack>
                 <Stack> thêm sửa xóa thuốc - admin</Stack>
             </> */}
-            <UniformTable
+            {/* <UniformTable
                 searchByKeyWord='name'
                 items={DiseasesList}
                 isLoading={isLoading} 
                 columns={diseasesColumns}  
                 commandBarItems={getDiseasesCommanBar()}          
-            />
+            /> */}
         </div>
     )
 }

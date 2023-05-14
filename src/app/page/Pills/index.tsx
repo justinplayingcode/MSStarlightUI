@@ -111,13 +111,13 @@ const Pills = () => {
                 <Stack>Xem danh sách</Stack>
                 <Stack> thêm sửa xóa thuốc - admin</Stack>
             </> */}
-            <UniformTable
+            {/* <UniformTable
                 searchByKeyWord='name'
                 items={pillsList}
                 isLoading={isLoading} 
                 columns={PillsColumns}  
                 commandBarItems={getPillsCommanBar()}          
-            />
+            /> */}
         </div>
     )
 }

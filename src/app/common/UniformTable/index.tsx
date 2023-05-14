@@ -1,31 +1,36 @@
 import * as React from 'react';
 import { TextField } from '@fluentui/react/lib/TextField';
-import { Announced } from '@fluentui/react/lib/Announced';
 import { DetailsListLayoutMode, Selection, SelectionMode, IColumn, ConstrainMode, DetailsList } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { CommandBar, ICommandBarItemProps, ShimmeredDetailsList, Stack } from '@fluentui/react';
-import image from 'image';
 import './index.scss';
 import { Convert } from 'utils';
+import { ApiStatus } from 'model';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
 
 // ================
 
-export interface IUniformTableProps {
-    items: any[];
+export interface IUniformTableOwnProps {
     columns: IColumn[];
-    isLoading?: boolean;
     searchByKeyWord: string;
-    commandBarItems: ICommandBarItemProps[]
+    commandBarItems: ICommandBarItemProps[];
+    integrateItems: () => Promise<any>
 }
+
+export interface IUniformTablePropsFromDispatch {
+
+}
+
+type IUniformTableProps = IUniformTableOwnProps & IUniformTablePropsFromDispatch;
 
 export interface IUniformTableState {
     items: any[];
-    selectionDetails?: string;
+    selectionDetails: string;
     columns: IColumn[];
+    isLoading: boolean;
 }
 
 export class UniformTable extends React.Component<IUniformTableProps, IUniformTableState> {
@@ -34,8 +39,7 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
 
     constructor(props: IUniformTableProps) {
         super(props);
-        this._allItems = this.props.items;
-    
+        this._allItems = [];
         this._selection = new Selection({
             onSelectionChanged: () => {
             this.setState({
@@ -43,28 +47,57 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
             });
             },
         });
-    
         this.state = {
             selectionDetails: this._getSelectionDetails(),
-            items: this.props.items,
-            columns: this.props.columns
+            items: [],
+            isLoading: true,
+            columns: this.props.columns,
         };
     }
 
-    componentDidUpdate(prevProps: Readonly<IUniformTableProps>, prevState: Readonly<IUniformTableState>, snapshot?: any): void {
-        if(this.props.items !== prevProps.items) {
-            this.setState({
-                items: this.props.items
-            })
-            this._allItems = this.props.items;
-        } else if (this.props.isLoading !== prevProps.isLoading) {
-          this.forceUpdate()
+    componentDidMount(): void {
+      this.getData();
+    }
+
+    private getData() {
+      this.props.integrateItems().then((data) => {
+        if (data.status === ApiStatus.succes) {
+          this.setState({
+            items: data.data,
+          })
+          this._allItems = data.data
         }
+      }).catch(() => {
+        this.setState({
+          items: [],
+        })
+        this._allItems = []
+      }
+      ).finally(() => {
+        this.setState({ isLoading: false })
+      })
+    }
+
+    private OnRefresh() {
+      this.setState({
+        items: [],
+        isLoading: true,
+      });
+      this._allItems = []
+      this.getData();
     }
 
     public render() {
-        const { items, columns } = this.state;
-        const { isLoading, commandBarItems } = this.props;
+        const { items, columns, isLoading } = this.state;
+        const commandBar: ICommandBarItemProps[] = [
+          ...this.props.commandBarItems,
+          {
+            key: 'refresh',
+            text: 'Refresh',
+            iconProps: { iconName: 'Refresh' },
+            onClick: this.OnRefresh.bind(this),
+          }
+        ]
 
         return (
             <Stack className='table-container'>
@@ -72,39 +105,45 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                     <div className='details-list-sub-header'>
                         <div className='details-list-sub-header-item'>
                             <CommandBar
-                                items={commandBarItems}
+                                items={commandBar}
                             />
                         </div>
                         {/* <div>
                             <div className={classNames.selectionDetails}>{selectionDetails}</div>
-                            <Announced message={selectionDetails} />
                         </div> */}
                         <div className={`${classNames.controlWrapper} details-list-sub-header-item`}>
-                            <TextField label="Search by name:" onChange={this._onChangeText} styles={controlStyles} />
-                            <Announced message={`Number of items after filter applied: ${items.length}.`} />
+                            <TextField placeholder='Tìm kiếm' onChange={this._onChangeText} styles={controlStyles} iconProps={{iconName: 'search'}} />
                         </div>
                     </div>
                     <div className='details-list-wrapper'>
-                        <MarqueeSelection selection={this._selection}>
-                            <ShimmeredDetailsList
+                        <MarqueeSelection selection={this._selection}>\
+                          {
+                            isLoading ? 
+                              <ShimmeredDetailsList
                                 items={items}
                                 columns={columns}
-                                selectionMode={SelectionMode.single}
-                                getKey={this._getKey}
-                                setKey="single"
-                                layoutMode={DetailsListLayoutMode.justified}
-                                constrainMode={ConstrainMode.unconstrained}
-                                isHeaderVisible={true}
-                                selection={this._selection}
-                                selectionPreservedOnEmptyClick={true}
-                                enterModalSelectionOnTouch={true}
-                                listProps={
-                                    {renderedWindowsAhead: 0,
-                                    renderedWindowsBehind: 0}
-                                }
-                                enableShimmer={isLoading}
-                                onColumnHeaderClick={this._onColumnClick}
+                                enableShimmer={true}
+                              />
+                            :
+                            <DetailsList
+                              items={items}
+                              columns={columns}
+                              selectionMode={SelectionMode.single}
+                              getKey={this._getKey}
+                              setKey="single"
+                              layoutMode={DetailsListLayoutMode.justified}
+                              constrainMode={ConstrainMode.unconstrained}
+                              isHeaderVisible={true}
+                              selection={this._selection}
+                              selectionPreservedOnEmptyClick={true}
+                              enterModalSelectionOnTouch={true}
+                              listProps={
+                                  {renderedWindowsAhead: 0,
+                                  renderedWindowsBehind: 0}
+                              }
+                              onColumnHeaderClick={this._onColumnClick}
                             />
+                          }
                         </MarqueeSelection>
                         {items.length === 0 && !isLoading &&
                             <div className='details-list-no-content'>
