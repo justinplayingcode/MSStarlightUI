@@ -5,6 +5,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { accountRole } from 'model';
 
+import Api from 'src/api'
+import { useEffect } from 'react';
+import { nonBoardingPatientColumns } from '../table/nonboardingtabletab';
+
 const NonBoardingTab = () => {
     const [items, setItems] = React.useState<any[]>([]);
     const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)
@@ -12,8 +16,25 @@ const NonBoardingTab = () => {
     
     const { info, role } = useSelector((state: RootState) => state.user)
 
+    const getWaitPatient = () => {
+        console.log('render')
+        const reqbody = {
+            boarding: false,
+            department: info?.departmentId
+        }
+        setIsLoading(true)
+        Api.cureProcessApi.getWaitPatient(reqbody).then((data) => {
+            setItems(data.data)
+            console.log(data)
+        }).catch(err => {
+        const { message } = err.response.data;
+        // setErrorMessage(message)
+    }).finally(() => setIsLoading(false))
+    }
 
-    const nonBoardingPatientColumns =[];
+    useEffect(() => {
+        getWaitPatient();
+    },[])
 
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];

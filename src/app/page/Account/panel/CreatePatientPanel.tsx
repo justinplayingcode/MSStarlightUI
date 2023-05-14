@@ -1,11 +1,12 @@
 import { UniformPanel } from "src/app/common";
-import { BtnType } from "src/model/enum";
+import { BtnType, Gender } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
 import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Stack, TextField, mergeStyleSets } from "@fluentui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
 import { Validate } from "utils";
+import Api from 'src/api'
 
 function CreatPatientPanel() {
   const [fullname, setFullname] = useState<string>();
@@ -17,8 +18,12 @@ function CreatPatientPanel() {
   const [identifyNumber, setIdentifyNumber] = useState<string>();
   const [insuranceNumber, setInsuranceNumber] = useState<string>();
   const [selectedDepartment, setSelectedDepartment] = useState<string>();
+  const [userId, setUserId] = useState<string>();
 
   const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
+
+  const [isLoading, setIsLoading] = useState<boolean>();
+  const [departmentList, setDepartmentList] = useState<any[]>();
 
   const styles = mergeStyleSets({
     root: { selectors: { '> *': { marginBottom: 15 } } },
@@ -30,21 +35,35 @@ function CreatPatientPanel() {
 
   const gender: IDropdownOption[] = [
     {
-      key: 'male',
+      key: `${Gender.male}`,
       text: 'Nam'
     },
     {
-      key: 'female',
+      key: `${Gender.female}`,
       text: 'Nữ'
     }
   ]
 
-  const department: IDropdownOption[] = [
-    {
-      key: 'BV00KKB01',
-      text: 'Khoa Khám chữa bệnh'
-    }
-  ]
+  const getDepartment = () => {
+    Api.departmentApi.getAllDepartment().then(data => {
+      const list: IDropdownOption[] = [];
+      data.data.map((item) => {
+        list.push({
+          key: item._id,
+          text: item.name,
+        })
+      })
+      setDepartmentList(list);
+    }).catch(err => {
+        const { message } = err.response.data;
+        // setErrorMessage(message)
+    }).finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    getDepartment();
+  },[])
 
   const onFormatDate = (date?: Date): string => {
     return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
@@ -110,7 +129,25 @@ function CreatPatientPanel() {
       return;
     }
 
-    alert('done')
+    const reqbody ={
+      fullname: fullname,
+      address: address || '',
+      gender: selectedGender || '',
+      dateOfBirth: dateOfBirth.toString(),
+      phonenumber: phoneNumber || '',
+      department: selectedDepartment,
+      email: email ||'',
+      identification: identifyNumber || '',
+      insurance: insuranceNumber || '',
+      userId: userId || ''
+    }
+
+    Api.accountApi.createPatient(reqbody).then((data) => {
+      console.log(data)
+    }).catch(err => {
+      const { message } = err.response.data;
+      // setErrorMessage(message)
+  }).finally(() => setIsLoading(false))
   }
 
   const renderInputField = () => {
@@ -196,8 +233,8 @@ function CreatPatientPanel() {
         />
         <Dropdown
           required
-          label='Khoa'
-          options={department}
+          label='Khoa chỉ định'
+          options={departmentList}
           selectedKey={selectedDepartment}
           onChange={(ev, option) => {
             setErrorMessage(undefined)
