@@ -1,23 +1,37 @@
 import { UniformPanel } from "src/app/common";
-import { BtnType } from "src/model/enum";
+import { BtnType, DepartmentType, DoctorRank, Gender, DoctorPosition } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
 import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
-import { DatePicker, Dropdown, IDropdownOption, Label, Stack, TextField, mergeStyleSets } from "@fluentui/react";
-import { useState } from "react";
+import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
+import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
 import { Validate } from "utils";
+import Api from '../../../../api'
+import SuccessDialog from "./Dialog";
+import { useDispatch } from "react-redux";
+import { closePanel } from "src/redux/reducers";
 
 function CreatDoctorPanel() {
   const [fullname, setFullname] = useState<string>();
-  const [selectedGender, setSelectedtGender] = useState<string>();
+  const [selectedGender, setSelectedGender] = useState<string>();
   const [dateOfBirth, setDateOfBirth] = useState<Date>();
   const [address, setAddress] = useState<string>();
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [identifyNumber, setIdentifyNumber] = useState<string>();
   const [selectedDepartment, setSelectedDepartment] = useState<string>();
+  const [rank, setRank] = useState<string>();
+  const [position, setPosition] = useState<string>();
 
   const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
+
+  const [isLoading, setIsLoading] = useState<boolean>();
+  const [departmentList, setDepartmentList] = useState<any[]>();
+
+  const [isDialogClosed, setIsDialogClosed] = useState<boolean>(true);
+  const [newAccount, setNewAccount] = useState<any>();
+
+  const dispatch = useDispatch();
 
   const styles = mergeStyleSets({
     root: { selectors: { '> *': { marginBottom: 15 } } },
@@ -29,25 +43,129 @@ function CreatDoctorPanel() {
 
   const gender: IDropdownOption[] = [
     {
-      key: 'male',
+      key: `${Gender.male}`,
       text: 'Nam'
     },
     {
-      key: 'female',
+      key: `${Gender.female}`,
       text: 'Nữ'
     }
   ]
 
-  const department: IDropdownOption[] = [
+  // const department: IDropdownOption[] = [
+  //   {
+  //     key: `${DepartmentType.khambenh}`,
+  //     text: 'Khoa Khám chữa bệnh'
+  //   },
+  //   {
+  //     key: `${DepartmentType.noiTongHop}`,
+  //     text: 'Khoa Nội Tổng Hợp'
+  //   },
+  //   {
+  //     key: `${DepartmentType.ngoai}`,
+  //     text: 'Khoa Ngoại'
+  //   },
+  //   {
+  //     key: `${DepartmentType.canLamSang}`,
+  //     text: 'Khoa Cận Lâm Sàng'
+  //   },
+  //   {
+  //     key: `${DepartmentType.san}`,
+  //     text: 'Khoa Sản'
+  //   },
+  //   {
+  //     key: `${DepartmentType.daLieu}`,
+  //     text: 'Khoa Da Liễu'
+  //   },
+  //   {
+  //     key: `${DepartmentType.dongY}`,
+  //     text: 'Khoa Đông Y'
+  //   },
+  //   {
+  //     key: `${DepartmentType.truyenNhiem}`,
+  //     text: 'Khoa Truyền Nhiễm'
+  //   },
+  //   {
+  //     key: `${DepartmentType.duoc}`,
+  //     text: 'Khoa Dược'
+  //   },
+  //   {
+  //     key: `${DepartmentType.nhi}`,
+  //     text: 'Khoa Nhi'
+  //   },
+  //   {
+  //     key: `${DepartmentType.thanNhanTao}`,
+  //     text: 'Khoa Thận Nhân Tạo'
+  //   },
+
+  // ]
+
+  const doctorRank: IDropdownOption[] = [
     {
-      key: 'BV00KKB01',
-      text: 'Khoa Khám chữa bệnh'
-    }
+      key: `${DoctorRank.thacSi}`,
+      text: 'Thạc sĩ'
+    },
+    {
+      key: `${DoctorRank.tienSi}`,
+      text: 'Tiến sĩ'
+    },
+    {
+      key: `${DoctorRank.PGSTS}`,
+      text: 'Phó Giáo sư, Tiến sĩ'
+    },
+    {
+      key: `${DoctorRank.GSTS}`,
+      text: 'Giáo sư, Tiến sĩ'
+    },
+    {
+      key: `${DoctorRank.none}`,
+      text: 'Không'
+    },
+  ]
+
+  const doctorPosition: IDropdownOption[] = [
+    {
+      key: `${DoctorPosition.dean}`,
+      text: 'Trưởng Khoa'
+    },
+    {
+      key: `${DoctorPosition.viceDean}`,
+      text: 'Phó Khoa'
+    },
+    {
+      key: `${DoctorPosition.none}`,
+      text: 'Không'
+    },
   ]
 
   const onFormatDate = (date?: Date): string => {
     return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
   };
+
+  const getDepartment = () => {
+    Api.departmentApi.getAllDepartment().then(data => {
+      const list: IDropdownOption[] = [];
+      data.data.map((item) => {
+        list.push({
+          key: item._id,
+          text: item.name,
+        })
+      })
+      setDepartmentList(list);
+    }).catch(err => {
+        const { message } = err.response.data;
+        // setErrorMessage(message)
+    }).finally(() => setIsLoading(false))
+  }
+
+  useEffect(() => {
+    setIsLoading(true)
+    getDepartment();
+  },[])
+
+  // useEffect(() => {
+
+  // },[departmentList])
 
   const buttonFooter: IFooterPanel[] = [
     {
@@ -57,6 +175,20 @@ function CreatDoctorPanel() {
       onClick: () => clickSave() // sau se truyen ham post api create
     }
   ];
+
+  const resetField = () => {
+    setFullname('');
+    setSelectedGender('');
+    setDateOfBirth(undefined);
+    setAddress('');
+    setEmail('');
+    setIdentifyNumber('');
+    setSelectedDepartment('')
+    setRank('')
+    setPosition('')
+
+    setErrorMessage(undefined)
+  }
 
   const clickSave = () => {
     setErrorMessage(undefined);
@@ -99,10 +231,57 @@ function CreatDoctorPanel() {
       return;
     }
 
+    if(!position?.length){
+      setErrorMessage({doctorPosition: 'Hãy chọn chức vụ'});
+      return;
+    }
+
+    if(!rank?.length){
+      setErrorMessage({doctorRank: 'Hãy chọn học vấn'});
+      return;
+    }
+
+    const reqbody = {
+      fullname: fullname,
+      gender: selectedGender,
+      dateOfBirth: dateOfBirth.toString(),
+      address: address || '',
+      phonenumber: phoneNumber,
+      email: email,
+      identification: identifyNumber || '',
+      department: selectedDepartment || '',
+      position: position,
+      rank: rank,
+    }
+    
+    setIsLoading(true);
+    Api.accountApi.createDoctor(reqbody).then(data => {
+      if(!data.status){
+        //show dialog
+      console.log(data)
+        setNewAccount({
+          fullname: data.data.fullname,
+          username: data.data.username,
+          password: data.data.password
+        });
+        setIsDialogClosed(false);
+        resetField();
+        //close panel
+        // dispatch(closePanel())
+      } else
+      {
+        alert('failed')
+        //toast failed
+        //dont close panel
+      }
+    }).catch(err => {
+        const { message } = err.response.data;
+        // setErrorMessage(message)
+        //toast failed
+        // dont close
+    }).finally(() => setIsLoading(false))
 
 
-
-    alert('done')
   }
 
   const renderInputField = () => {
@@ -127,7 +306,7 @@ function CreatDoctorPanel() {
             selectedKey={selectedGender}
             onChange={(e, option) => {
               setErrorMessage(undefined)
-              setSelectedtGender(option.key as string)
+              setSelectedGender(option.key as string)
             }} 
             errorMessage={errorMessage?.gender}
             />
@@ -163,6 +342,7 @@ function CreatDoctorPanel() {
           errorMessage={errorMessage?.phoneNumber}
         />
         <TextField
+          required
           label='Email'
           onChange={(e, val) => {
             setEmail(val);
@@ -180,7 +360,7 @@ function CreatDoctorPanel() {
         <Dropdown
           required
           label='Khoa'
-          options={department}
+          options={departmentList}
           selectedKey={selectedDepartment}
           onChange={(ev, option) => {
             setErrorMessage(undefined)
@@ -188,20 +368,55 @@ function CreatDoctorPanel() {
           }}
           errorMessage={errorMessage?.department}
         />
+        <Dropdown
+          required
+          label='Chức vụ'
+          options={doctorPosition}
+          selectedKey={position}
+          onChange={(ev, option) => {
+            setErrorMessage(undefined)
+            setPosition(option.key as string)
+          }}
+          errorMessage={errorMessage?.doctorPosition}
+        />
+        <Dropdown
+          required
+          label='Học vấn'
+          options={doctorRank}
+          selectedKey={rank}
+          onChange={(ev, option) => {
+            setErrorMessage(undefined)
+            setRank(option.key as string)
+          }}
+          errorMessage={errorMessage?.doctorRank}
+        />
       </>
     )
   }
 
   return (
+    <>
     <UniformPanel
       panelTitle='Tạo tài khoản bác sĩ'
       renderFooter={buttonFooter}
     >
       {/* content here */}
-      <Stack className='form-input'>
-        {renderInputField()}
-      </Stack>
+      {
+        isLoading ? <Spinner size={SpinnerSize.large} />
+          : <Stack className='form-input'>
+            {renderInputField()}
+          </Stack>
+      }
     </UniformPanel>
+    <SuccessDialog 
+      isDialogClosed={isDialogClosed} 
+      account={newAccount}
+      closeDialog={() => {
+        setIsDialogClosed(true);
+        dispatch(closePanel());
+      }}
+    />
+    </>
   );
 }
 

@@ -33,7 +33,6 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
       //   setErrorMessage('Số bảo hiểm không hợp lệ');
       //   return;
       // }
-      console.log(insurance);
       
       const reqbody = {
         insurance: insurance
@@ -46,14 +45,7 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
         } else{
           console.log('no result')
         }
-          // const {accessToken, refreshToken, role, username } = data.data.data;
-          // localStorage.setItem("accessToken", accessToken);
-          // localStorage.setItem("refreshToken", refreshToken);
-          // localStorage.setItem("username", username);
-          // dispatch(setRole(role));
-          // dispatch(setUsername(username));
-          // history("/");
-          console.log(data)
+        console.log(data)
       }).catch(err => {
           const { message } = err.response.data;
           // setErrorMessage(message)
