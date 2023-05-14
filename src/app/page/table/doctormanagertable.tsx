@@ -1,10 +1,11 @@
 import { IColumn, Stack } from "@fluentui/react"
+import { Convert, Validate } from "utils";
 
 export const doctormanagementColumns: IColumn[] = [
   {
     key: 'fullname',
     name: 'Họ và tên',
-    minWidth: 210,
+    minWidth: 150,
     maxWidth: 350,
     isResizable: true,
     isSorted: true,
@@ -22,6 +23,15 @@ export const doctormanagementColumns: IColumn[] = [
     onRender: (item) => {
       return <span>{item?.department}</span>;
     },
+  },
+  {
+    key: 'position',
+    name:'Chức vụ',
+    minWidth: 50,
+    isResizable: true,
+    onRender: (item) => {
+      return <span>{Convert.convertGender(item?.gender)}</span>
+    }
   },
   {
     key: 'phonenumber',

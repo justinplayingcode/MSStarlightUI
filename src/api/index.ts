@@ -51,4 +51,13 @@ const cureProcessApi = {
     }
 }
 
-export default {authApi, accountApi, cureProcessApi};
+const departmentApi = {
+    getAllDepartment: () => apiClient.get(api.getAllDepartment),
+}
+
+export default {
+    authApi, 
+    accountApi, 
+    cureProcessApi,
+    departmentApi
+};

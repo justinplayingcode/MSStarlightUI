@@ -33,4 +33,8 @@ export default class Convert {
         const year = date.getFullYear();
         return `${dayOfWeek}, ngày ${dayOfMonth} ${month} năm ${year}`;
     }
+
+    public static convertGender = (gender: number) =>{
+       return gender ? 'Nữ' : 'Nam'
+    }
 }

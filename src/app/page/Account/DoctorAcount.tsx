@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openPanel, setDoctorList } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
 import Api from "src/api";
-import { AppDispatch } from "src/redux/store";
+import { AppDispatch, RootState } from "src/redux/store";
 import { ApiStatus } from "model";
 
 function DoctorAcount() {
@@ -14,21 +14,46 @@ function DoctorAcount() {
     const [items, setItems] = useState<any[]>([]);
 
     const dispatch = useDispatch<AppDispatch>();
+    const { isOpen } = useSelector((state: RootState) => state.panel)
 
     useEffect(() => {
-        getAllDoctor();
-    }, [])
-
-    const getAllDoctor = async () => {
         setIsLoading(true);
-        const res = await Api.accountApi.getAllDoctor();
-        if(res.status === ApiStatus.succes) {
-            setIsLoading(false);
-            setItems(res.data);
-            dispatch(setDoctorList(res.data))
-        } else {
-            setIsLoading(false);
+        getAllDoctor();
+    }, [])   
+
+    useEffect(()=> {
+        if(isOpen === false){
+            setIsLoading(true)
+            getAllDoctor();
         }
+    }, [isOpen])
+    
+    // const getAllDoctor = async () => {
+    //     setIsLoading(true);
+    //     const res = await Api.accountApi.getAllDoctor();
+    //     if(res.status === ApiStatus.succes) {
+    //         setIsLoading(false);
+    //         setItems(res.data);
+    //         dispatch(setDoctorList(res.data))
+    //     } else {
+    //         setIsLoading(false);
+    //     }
+    // }
+
+    const getAllDoctor = () => {
+        setIsLoading(true);
+        Api.accountApi.getAllDoctor().then((data) => {
+            if (data.status === ApiStatus.succes) {
+                // setIsLoading(false);
+                setItems(data.data);
+                // dispatch(setDoctorList(res.data))
+            } else {
+                setIsLoading(false);
+            }
+        }).catch(err => {
+          const { message } = err.response.data;
+          // setErrorMessage(message)
+      }).finally(() => setIsLoading(false))
     }
 
     const doctormanagementCommandBar: ICommandBarItemProps[] = [
