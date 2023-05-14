@@ -24,13 +24,13 @@ const CureHistory = () => {
             {/* <>Lịch sử khám chữa bệnh
                 <Stack>Working after</Stack>
             </> */}
-            <UniformTable
+            {/* <UniformTable
                 searchByKeyWord='name'
                 items={items}
                 isLoading={isLoading} 
                 columns={cureHistoryColumns}  
                 commandBarItems={cureHistoryCommanBar}          
-            />
+            /> */}
         </div>
     )
 }
