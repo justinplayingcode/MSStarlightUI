@@ -35,6 +35,10 @@ export default class Convert {
     }
 
     public static convertGender = (gender: number) =>{
-       return gender ? 'Nữ' : 'Nam'
+        return gender ? 'Nữ' : 'Nam'
+    }
+
+    public static removeDiacritics = (item: String) => {
+      return item.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 }

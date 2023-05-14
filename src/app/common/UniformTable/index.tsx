@@ -7,6 +7,7 @@ import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { CommandBar, ICommandBarItemProps, ShimmeredDetailsList, Stack } from '@fluentui/react';
 import image from 'image';
 import './index.scss';
+import { Convert } from 'utils';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -50,13 +51,6 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
             columns: this.props.columns
         };
     }
-
-    // componentDidMount(): void {
-    //     this.setState({
-    //         items: this.props.items, 
-    //     })
-    //     this._allItems = this.props.items;
-    // }
 
     componentDidUpdate(prevProps: Readonly<IUniformTableProps>, prevState: Readonly<IUniformTableState>, snapshot?: any): void {
         if(this.props.items !== prevProps.items) {
@@ -132,8 +126,9 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
 
     private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
         const { searchByKeyWord } = this.props
+        const removeDiacritics = Convert.removeDiacritics(text);
         this.setState({
-            items: text ? this._allItems.filter(i => i[searchByKeyWord].toLowerCase().indexOf(text) > -1) : this._allItems,
+            items: removeDiacritics ? this._allItems.filter(i => Convert.removeDiacritics(i[searchByKeyWord]).toLowerCase().indexOf(removeDiacritics) > -1) : this._allItems,
         });
     };
 
@@ -153,9 +148,15 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
         const { columns, items } = this.state;
         const newColumns: IColumn[] = columns.slice();
         const currColumn: IColumn = newColumns.filter(currCol => column.key === currCol.key)[0];
+        const diacritics = (item) => {
+          if(typeof item === 'string') {
+            return item.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          }
+          return item
+        }
         function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
             const key = columnKey as keyof T;
-            return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1));
+            return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? diacritics(a[key]) < diacritics(b[key]) : diacritics(a[key]) > diacritics(b[key])) ? 1 : -1));
         }
         newColumns.forEach((newCol: IColumn) => {
             if (newCol === currColumn) {
@@ -166,7 +167,7 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                 newCol.isSortedDescending = true;
             }
         });
-        const newItems = _copyAndSort(items, currColumn.fieldName!, currColumn.isSortedDescending);
+        const newItems = _copyAndSort(items, currColumn.key!, currColumn.isSortedDescending);
         this.setState({
             columns: newColumns,
             items: newItems,
