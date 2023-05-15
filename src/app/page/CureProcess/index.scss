@@ -2,5 +2,14 @@
 
 
 .dialog-content{
+    .search-section{}
+    .result-section{
+        padding: 20px 0;
+        .patient-preview{
+            width: 100%;
 
+            border: 1px solid;
+            padding: 8px;
+        }
+    }
 }

@@ -4,28 +4,64 @@ import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { ContextualMenu } from '@fluentui/react/lib/ContextualMenu';
 import { Toggle } from '@fluentui/react/lib/Toggle';
 import { useBoolean } from '@fluentui/react-hooks';
-import { Label, SearchBox, Stack } from '@fluentui/react';
+import { Label, SearchBox, Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import './index.scss'
-import { Validate } from 'utils';
+import { Convert, Validate } from 'utils';
 import Api from 'src/api';
+import { useDispatch } from 'react-redux';
+import { openPanel, setCurentId } from 'src/redux/reducers';
+import { panelTypeConstant } from 'src/model/contant';
+import { ApiStatus } from 'model';
 
 interface IStartProcessProps{
   isDialogClosed: boolean;
   closeDialog: () => void;
-  clickSubmit?: () => void;
 }
 
 export const StartProcessDialog = (props: IStartProcessProps) => {
   const [insurance, setInsurance] = React.useState<string>();
   const [isLoading, setLoading] = React.useState<boolean>(false)
+
   const [errorMessage, setErrorMessage] = React.useState<string>();
-  const [item, setItem] = React.useState<any[]>();
-  // const [is]
+  const [item, setItem] = React.useState<{_id, fullname, gender, dateOfBirth, address}>(
+    // {fullname:'Thắng Tay bé', gender: 0, dateOfBirth: '31/01/2001', address: 'Hà Nội'}
+    );
+  const [available, setAvailable] = React.useState<boolean>();
+
+  const dispatch = useDispatch();  
+
+  const resetDialog = () => {
+    setErrorMessage(undefined);
+    setAvailable(undefined);
+    setItem(undefined);
+  }
 
   const renderSearchResult = () => {
-    return (
-      <></>
-    )
+    if(available){
+      if (!!item) {
+        return (
+          <Stack className='patient-preview'
+            onClick={() => {
+              resetDialog();
+              props.closeDialog();
+            }}
+          >
+            <Stack horizontal horizontalAlign='space-between'>
+              <Stack>Họ và tên: {item?.fullname}</Stack>
+              <Stack>Giới tính: {Convert.convertGender(item?.gender)}</Stack>
+            </Stack>
+            <Stack>Ngày sinh: {item?.dateOfBirth}</Stack>
+            <Stack>Địa chỉ: {item?.address}</Stack>
+          </Stack>
+        )
+      } 
+      else {
+        return (
+          <Stack>Không tìm thấy bệnh nhân</Stack>
+        )
+      }
+    }
+    return <></>;
   }
 
   const handleOnSearch = (insurance: string) => {
@@ -39,13 +75,13 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
       }
       setLoading(true)
       Api.cureProcessApi.getPatientByInsurance(reqbody).then(data => {
-        if(data.data.length){
-          console.log('result has lenght');
-          
+        if(data.status === ApiStatus.succes){        
+          setItem(data.data[0]);
+          setAvailable(true);
         } else{
-          console.log('no result')
+          setAvailable(false)
         }
-        console.log(data)
+        // console.log(data)
       }).catch(err => {
           const { message } = err.response.data;
           // setErrorMessage(message)
@@ -53,40 +89,59 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
   }
 
   return (
-      <Dialog
-        hidden={props.isDialogClosed}
-        onDismiss={props.closeDialog}
-        dialogContentProps={{title: 'Đăng kí khám'}}
-        maxWidth={'480px'}
-        minWidth={'480px'}
-        modalProps={{isBlocking: true}}
-      >
-        <Stack className='dialog-content'>
-          <Stack className='search-section'>
-            <Label>Nhập số bảo hiểm</Label>
-            <SearchBox
-              value={insurance}
-              onSearch={(newVal) => {
-                handleOnSearch(newVal);
-              }}              
-            />
-            <Stack>{errorMessage}</Stack>
-          </Stack>
-          <Stack className='result-section'>
-          {isLoading 
-            ? <>Loading Result</>
+    <Dialog
+      hidden={props.isDialogClosed}
+      onDismiss={() => {
+        props.closeDialog?.();
+        resetDialog();
+      }}
+      dialogContentProps={{ title: 'Đăng kí khám' }}
+      maxWidth={'480px'}
+      minWidth={'480px'}
+      modalProps={{ isBlocking: true }}
+    >
+      <Stack className='dialog-content'>
+        <Stack className='search-section'>
+          <Label>Nhập số bảo hiểm</Label>
+          <SearchBox
+            value={insurance}
+            onSearch={(newVal) => {
+              handleOnSearch(newVal);
+            }}
+          />
+          <Stack>{errorMessage}</Stack>
+        </Stack>
+        <Stack className='result-section'>
+          {isLoading
+            ? <Spinner size={SpinnerSize.large} label='Loading ...' labelPosition="right" />
             : renderSearchResult()
           }
-          </Stack>
         </Stack>
-        {/* <DialogFooter>
-          <PrimaryButton onClick={props.closeDialog} text="Send" />
-          <DefaultButton onClick={() => {
+      </Stack>
+      <DialogFooter>
+        <DefaultButton onClick={() => {
+          props.closeDialog?.()
+          resetDialog();
+        }}
+          text="Hủy"
+        />
+        {available && (!!item
+          ? <PrimaryButton onClick={() => {
+              dispatch(setCurentId(item._id));
+              dispatch(openPanel(panelTypeConstant.PANEL_EDIT_PATIENT))
+              resetDialog();
               props.closeDialog();
-              props.clickSubmit?.();  
-            }
-          } text="Don't send" />
-        </DialogFooter> */}
-      </Dialog>
+          }
+          } text="Tiếp tục" />
+          : <PrimaryButton onClick={() => {
+              resetDialog();
+              dispatch(openPanel(panelTypeConstant.PANEL_CREATE_PATIENT))
+              props.closeDialog();
+          }
+          } text="Tạo mới" />
+        )
+        }
+      </DialogFooter>
+    </Dialog>
   );
 };

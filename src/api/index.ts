@@ -16,6 +16,8 @@ const api = {
     
     //healthcare
     createPatient: '/healthcare/registerpatient',
+    getWaitPatient: '/healthcare/getallpatient',
+    getPatientById: '/healthcare/getinfobyuserid',
 
 
     //department
@@ -39,6 +41,8 @@ const accountApi = {
     createDoctor: (reqbody) => {
         return apiClient.post(api.createDoctor, reqbody)
     },
+
+    getAllPatient: () => apiClient.get(api.getAllPatient),
     createPatient: (reqbody) => {
         return apiClient.post(api.createPatient, reqbody)
     },
@@ -48,6 +52,12 @@ const cureProcessApi = {
 
     getPatientByInsurance: (reqbody) => {
         return apiClient.post(api.getPatientByInsurance, reqbody);
+    },
+    getWaitPatient: (reqbody) => {
+        return apiClient.post(api.getWaitPatient, reqbody);
+    },
+    getPatientById: (reqbody) => {
+        return apiClient.post(api.getPatientById, reqbody);
     }
 }
 

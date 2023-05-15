@@ -24,4 +24,5 @@ export const tableConstant = {
 export const panelTypeConstant = {
     PANEL_CREATE_DOCTOR: 'PANEL_CREATE_DOCTOR',
     PANEL_CREATE_PATIENT: 'PANEL_CREATE_PATIENT',
+    PANEL_EDIT_PATIENT: 'PANEL_EDIT_PATIENT'
 }

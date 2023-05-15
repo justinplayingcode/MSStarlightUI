@@ -5,16 +5,14 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { accountRole } from 'model';
 
+import Api from 'src/api'
+import { useEffect } from 'react';
+import { nonBoardingPatientColumns } from '../table/nonboardingtabletab';
+
 const NonBoardingTab = () => {
-    const [items, setItems] = React.useState<any[]>([]);
-    const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)
-    const [isLoading, setIsLoading] =React.useState<boolean>(false);
+    const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)    
+    const { info, role } = useSelector((state: RootState) => state.user);
     
-    const { info, role } = useSelector((state: RootState) => state.user)
-
-
-    const nonBoardingPatientColumns =[];
-
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
         if (info?.department === 'Khoa Tiếp Đón' && role === accountRole.Doctor) {
@@ -30,13 +28,15 @@ const NonBoardingTab = () => {
 
     return(
          <div className='wrapper-table-content speciality-wrapper'>
-            {/* <UniformTable
+            <UniformTable
                 searchByKeyWord='name'
-                items={items}
-                isLoading={isLoading} 
-                columns={nonBoardingPatientColumns}  
-                commandBarItems={getNonBoardingPatientCommandBar()}          
-            /> */}
+                integrateItems={() =>Api.cureProcessApi.getWaitPatient({
+                    boarding: false,
+                    department: info?.departmentId
+                })}
+                columns={nonBoardingPatientColumns}
+                commandBarItems={getNonBoardingPatientCommandBar()} 
+                />
             <StartProcessDialog 
                 isDialogClosed={isDialogClosed} 
                 closeDialog={() => {

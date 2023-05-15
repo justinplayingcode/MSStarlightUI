@@ -114,11 +114,7 @@ function CreatDoctorPanel() {
     setIsLoading(true)
     getDepartment();
   },[])
-
-  // useEffect(() => {
-
-  // },[departmentList])
-
+  
   const buttonFooter: IFooterPanel[] = [
     {
       text: 'Lưu',

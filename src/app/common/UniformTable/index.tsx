@@ -116,7 +116,7 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
                         </div>
                     </div>
                     <div className='details-list-wrapper'>
-                        <MarqueeSelection selection={this._selection}>\
+                        <MarqueeSelection selection={this._selection}>
                           {
                             isLoading ? 
                               <ShimmeredDetailsList

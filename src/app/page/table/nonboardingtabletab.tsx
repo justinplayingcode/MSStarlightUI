@@ -1,7 +1,7 @@
-import { IColumn, ICommandBarItemProps, TooltipHost } from "@fluentui/react"
+import { IColumn } from "@fluentui/react"
 import { Convert } from "utils";
 
-export const patientmanagementColumns: IColumn[] = [
+export const nonBoardingPatientColumns: IColumn[] = [
     {
         key: 'fullname',
         name: 'Họ và tên',
