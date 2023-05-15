@@ -19,13 +19,11 @@
             align-items: flex-end;
             justify-content: space-between;
             height: 60px;
-            .details-list-sub-header-item:first-child {
-                height: 100%;
-            }
             .details-list-sub-header-item {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              height: 100%;
             }
         }
 

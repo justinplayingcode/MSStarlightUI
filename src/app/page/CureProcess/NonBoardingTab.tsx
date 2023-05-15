@@ -51,13 +51,13 @@ const NonBoardingTab = () => {
 
     return(
          <div className='wrapper-table-content speciality-wrapper'>
-            <UniformTable
+            {/* <UniformTable
                 searchByKeyWord='name'
                 items={items}
                 isLoading={isLoading} 
                 columns={nonBoardingPatientColumns}  
                 commandBarItems={getNonBoardingPatientCommandBar()}          
-            />
+            /> */}
             <StartProcessDialog 
                 isDialogClosed={isDialogClosed} 
                 closeDialog={() => {

@@ -51,13 +51,13 @@ function PatientAccount() {
 
   return (
     <div className='wrapper-table-content speciality-wrapper'>
-      <UniformTable
+      {/* <UniformTable
         searchByKeyWord='name'
         items={items}
         isLoading={isLoading}
         columns={patientmanagementColumns}
-        commandBarItems={getPatientmanagementCommandBar()}
-      />
+        commandBarItems={patientmanagementCommandBar}
+      /> */}
     </div>
   );
 }
