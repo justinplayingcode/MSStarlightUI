@@ -11,25 +11,8 @@ import { RootState } from "src/redux/store";
 import { accountRole } from "model";
 
 function PatientAccount() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [items, setItems] = useState<any[]>([]);
-
   const dispatch = useDispatch();
   const {role, info} = useSelector((state: RootState) => state.user);
-
-  const getAllPatient = () => {
-    setIsLoading(true);
-    Api.accountApi.getAllPatient().then((data) => {
-      setItems(data.data);
-    }).catch(err => {
-      const { message } = err.response.data;
-      // setErrorMessage(message)
-  }).finally(() => setIsLoading(false))
-  }
-
-  useEffect(() => {
-    getAllPatient();
-  }, [])
 
   const getPatientmanagementCommandBar = () => {
 
@@ -51,13 +34,12 @@ function PatientAccount() {
 
   return (
     <div className='wrapper-table-content speciality-wrapper'>
-      {/* <UniformTable
+      <UniformTable
         searchByKeyWord='name'
-        items={items}
-        isLoading={isLoading}
+        integrateItems={Api.accountApi.getAllPatient}      
         columns={patientmanagementColumns}
-        commandBarItems={patientmanagementCommandBar}
-      /> */}
+        commandBarItems={getPatientmanagementCommandBar()} 
+        />
     </div>
   );
 }

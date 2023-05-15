@@ -10,32 +10,9 @@ import { useEffect } from 'react';
 import { nonBoardingPatientColumns } from '../table/nonboardingtabletab';
 
 const NonBoardingTab = () => {
-    const [items, setItems] = React.useState<any[]>([]);
-    const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)
-    const [isLoading, setIsLoading] =React.useState<boolean>(false);
+    const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)    
+    const { info, role } = useSelector((state: RootState) => state.user);
     
-    const { info, role } = useSelector((state: RootState) => state.user)
-
-    const getWaitPatient = () => {
-        console.log('render')
-        const reqbody = {
-            boarding: false,
-            department: info?.departmentId
-        }
-        setIsLoading(true)
-        Api.cureProcessApi.getWaitPatient(reqbody).then((data) => {
-            setItems(data.data)
-            console.log(data)
-        }).catch(err => {
-        const { message } = err.response.data;
-        // setErrorMessage(message)
-    }).finally(() => setIsLoading(false))
-    }
-
-    useEffect(() => {
-        getWaitPatient();
-    },[])
-
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
         if (info?.department === 'Khoa Tiếp Đón' && role === accountRole.Doctor) {
@@ -51,13 +28,15 @@ const NonBoardingTab = () => {
 
     return(
          <div className='wrapper-table-content speciality-wrapper'>
-            {/* <UniformTable
+            <UniformTable
                 searchByKeyWord='name'
-                items={items}
-                isLoading={isLoading} 
-                columns={nonBoardingPatientColumns}  
-                commandBarItems={getNonBoardingPatientCommandBar()}          
-            /> */}
+                integrateItems={() =>Api.cureProcessApi.getWaitPatient({
+                    boarding: false,
+                    department: info?.departmentId
+                })}
+                columns={nonBoardingPatientColumns}
+                commandBarItems={getNonBoardingPatientCommandBar()} 
+                />
             <StartProcessDialog 
                 isDialogClosed={isDialogClosed} 
                 closeDialog={() => {

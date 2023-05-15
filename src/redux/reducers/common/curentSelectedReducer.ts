@@ -22,6 +22,6 @@ export const curentSelectedSlice = createSlice({
   }
 });
 
-export const { } = curentSelectedSlice.actions;
+export const {setCurentId } = curentSelectedSlice.actions;
 
 export default curentSelectedSlice.reducer;

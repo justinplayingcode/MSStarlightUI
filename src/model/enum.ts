@@ -65,3 +65,10 @@ export enum DoctorPosition{
     viceDean,
     none
 }
+
+export enum PanelType{
+    Create,
+    Edit,
+    View,
+    None
+}

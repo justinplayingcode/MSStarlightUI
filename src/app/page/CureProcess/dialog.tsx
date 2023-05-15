@@ -9,14 +9,13 @@ import './index.scss'
 import { Convert, Validate } from 'utils';
 import Api from 'src/api';
 import { useDispatch } from 'react-redux';
-import { openPanel } from 'src/redux/reducers';
+import { openPanel, setCurentId } from 'src/redux/reducers';
 import { panelTypeConstant } from 'src/model/contant';
 import { ApiStatus } from 'model';
 
 interface IStartProcessProps{
   isDialogClosed: boolean;
   closeDialog: () => void;
-  clickSubmit?: () => void;
 }
 
 export const StartProcessDialog = (props: IStartProcessProps) => {
@@ -24,13 +23,12 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
   const [isLoading, setLoading] = React.useState<boolean>(false)
 
   const [errorMessage, setErrorMessage] = React.useState<string>();
-  const [item, setItem] = React.useState<{fullname, gender, dateOfBirth, address}>(
-    {fullname:'Thắng Tay bé', gender: 0, dateOfBirth: '31/01/2001', address: 'Hà Nội'}
+  const [item, setItem] = React.useState<{_id, fullname, gender, dateOfBirth, address}>(
+    // {fullname:'Thắng Tay bé', gender: 0, dateOfBirth: '31/01/2001', address: 'Hà Nội'}
     );
   const [available, setAvailable] = React.useState<boolean>();
 
-  const dispatch = useDispatch();
-  
+  const dispatch = useDispatch();  
 
   const resetDialog = () => {
     setErrorMessage(undefined);
@@ -39,15 +37,13 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
   }
 
   const renderSearchResult = () => {
-    // if(available){
-    if(true){
+    if(available){
       if (!!item) {
         return (
           <Stack className='patient-preview'
             onClick={() => {
               resetDialog();
               props.closeDialog();
-              props.clickSubmit?.();
             }}
           >
             <Stack horizontal horizontalAlign='space-between'>
@@ -85,7 +81,7 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
         } else{
           setAvailable(false)
         }
-        console.log(data)
+        // console.log(data)
       }).catch(err => {
           const { message } = err.response.data;
           // setErrorMessage(message)
@@ -131,16 +127,16 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
         />
         {available && (!!item
           ? <PrimaryButton onClick={() => {
-            resetDialog();
-            props.closeDialog();
-            props.clickSubmit?.();
+              dispatch(setCurentId(item._id));
+              dispatch(openPanel(panelTypeConstant.PANEL_EDIT_PATIENT))
+              resetDialog();
+              props.closeDialog();
           }
           } text="Tiếp tục" />
           : <PrimaryButton onClick={() => {
-            resetDialog();
-            dispatch(openPanel(panelTypeConstant.PANEL_CREATE_PATIENT))
-            props.closeDialog();
-            props.clickSubmit?.();
+              resetDialog();
+              dispatch(openPanel(panelTypeConstant.PANEL_CREATE_PATIENT))
+              props.closeDialog();
           }
           } text="Tạo mới" />
         )

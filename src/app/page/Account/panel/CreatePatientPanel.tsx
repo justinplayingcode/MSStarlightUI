@@ -1,14 +1,21 @@
 import { UniformPanel } from "src/app/common";
-import { BtnType, Gender } from "src/model/enum";
+import { BtnType, Gender, PanelType } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
 import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
-import { DatePicker, Dropdown, IDropdownOption, Label, Stack, TextField, mergeStyleSets } from "@fluentui/react";
+import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
 import { Validate } from "utils";
 import Api from 'src/api'
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
-function CreatPatientPanel() {
+interface ICreatePatientPanel{
+    panelType?: PanelType
+}
+
+function CreatPatientPanel(props: ICreatePatientPanel) {
+
   const [fullname, setFullname] = useState<string>();
   const [selectedGender, setSelectedtGender] = useState<string>();
   const [dateOfBirth, setDateOfBirth] = useState<Date>();
@@ -24,6 +31,10 @@ function CreatPatientPanel() {
 
   const [isLoading, setIsLoading] = useState<boolean>();
   const [departmentList, setDepartmentList] = useState<any[]>();
+
+  const dispatch = useDispatch();
+  const {currentId } = useSelector((state: RootState) => state.currentSelected);
+  const [isDisable, setDisable] = useState<boolean>(false);
 
   const styles = mergeStyleSets({
     root: { selectors: { '> *': { marginBottom: 15 } } },
@@ -45,6 +56,7 @@ function CreatPatientPanel() {
   ]
 
   const getDepartment = () => {
+    setIsLoading(true)
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
@@ -60,8 +72,37 @@ function CreatPatientPanel() {
     }).finally(() => setIsLoading(false))
   }
 
+  const getPatientById = (id: string) => {
+    setIsLoading(true);
+    Api.cureProcessApi.getPatientById({userId: id}).then((data) =>{
+      console.log(data.data)
+      setFullname(data.data.fullName);
+      setSelectedtGender(data.data.gender);
+      setDateOfBirth(new Date(data.data.dateOfBirth))
+      setAddress(data.data.address)
+      setPhoneNumber(data.data.phonenumber);
+      setEmail(data.data.email)
+      setInsuranceNumber(data.data)
+      setUserId(currentId)
+      // setIdentifyNumber()
+      // setSelectedDepartment
+    }).catch(err => {
+      const { message } = err.response.data;
+      // setErrorMessage(message)
+  }).finally(() => {
+    // setDisable(true)
+    setIsLoading(false)
+  }
+  
+  )
+  }
+
   useEffect(() => {
-    setIsLoading(true)
+    if(props.panelType === PanelType.Edit){
+      // console.log('edit type');
+      // setUserId(currentId);
+      getPatientById(currentId);     
+    }
     getDepartment();
   },[])
 
@@ -154,8 +195,10 @@ function CreatPatientPanel() {
     return (
       <>
         <TextField
+          disabled={isDisable}
           required
           label='Họ và tên'
+          value={fullname}
           onChange={(e, val) => {
             setErrorMessage(undefined);
             setFullname(val);
@@ -165,6 +208,7 @@ function CreatPatientPanel() {
         />
         <Stack horizontal horizontalAlign='space-between' className={styles.genDate}>
           <Dropdown
+            disabled={isDisable}
             required
             style={{width: 98}}
             label='Giới tính'
@@ -179,6 +223,7 @@ function CreatPatientPanel() {
           <Stack>
             <Label required>Ngày tháng năm sinh</Label>
             <DatePicker
+              disabled={isDisable}
               placeholder='Chọn ngày sinh'
               allowTextInput={false}
               formatDate={onFormatDate}
@@ -192,12 +237,14 @@ function CreatPatientPanel() {
           </Stack>
         </Stack>
         <TextField
+          disabled={isDisable}
           label='Địa chỉ'
           onChange={(ev, val) => {
             setAddress(val)
           }}
         />
         <TextField
+          disabled={isDisable}
           required
           label='Số điện thoại'
           onChange={(e, val) => {
@@ -208,6 +255,7 @@ function CreatPatientPanel() {
           errorMessage={errorMessage?.phoneNumber}
         />
         <TextField
+          disabled={isDisable}
           label='Email'
           onChange={(e, val) => {
             setEmail(val);
@@ -215,6 +263,7 @@ function CreatPatientPanel() {
           className={styles.email}
         />
         <TextField
+          disabled={isDisable}
           label="Căn cước công dân"
           onChange={(e, val) => {
             setErrorMessage(undefined)
@@ -223,6 +272,7 @@ function CreatPatientPanel() {
           errorMessage={errorMessage?.identifyNumber}
         />
         <TextField
+            disabled={isDisable}
             required
             label="Bảo hiểm y tế"
             onChange={(e, val) => {
@@ -252,9 +302,13 @@ function CreatPatientPanel() {
       renderFooter={buttonFooter}
     >
       {/* content here */}
+      {
+        isLoading ? <Spinner size={SpinnerSize.large} />
+        :
       <Stack className='form-input'>
         {renderInputField()}
       </Stack>
+      }
     </UniformPanel>
   );
 }
