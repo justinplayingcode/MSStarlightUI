@@ -20,7 +20,7 @@ const SidebarItem = ({ item }: Props) => {
             <NavLink to={item.path}
                 className="link"
                 style={{
-                    paddingLeft: 40,
+                    paddingLeft: 30,
                     backgroundColor: currentSidebar === item.state ? 'linear-gradient(to right, #111827, #374151)' : 'unset',
                     color: currentSidebar === item.state ? '#fff' : '#9CA3AF',
                     borderLeft: currentSidebar === item.state ? '4px solid #fff' : '4px solid transparent'

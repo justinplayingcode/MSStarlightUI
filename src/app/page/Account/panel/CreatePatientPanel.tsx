@@ -65,11 +65,13 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
-        list.push({
-          key: item._id,
-          text: item.name,
-        })
-      })
+        if(item.name !== 'Khoa Tiếp Đón' && item.name !== 'Khoa Cận Lâm Sàng'){
+          list.push({
+            key: item._id,
+            text: item.name,
+          })
+        }
+      }) 
       setDepartmentList(list);
     }).catch(err => {
         const { message } = err.response.data;
