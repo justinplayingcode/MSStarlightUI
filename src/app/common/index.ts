@@ -6,7 +6,7 @@ import { LabelComponent } from "./Label"
 import { ErrorPage } from "./ErrorPage"
 import { ServiceCard } from "./ServiceCard";
 import { Toast} from "./Toast"
-import { UniformTable } from "./UniformTable";
+import UniformTable from "./UniformTable";
 import UniformPanel from "./uniformpanel/UniformPanel";
 
 export {

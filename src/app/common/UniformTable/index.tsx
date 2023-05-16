@@ -7,6 +7,8 @@ import { CommandBar, ICommandBarItemProps, ShimmeredDetailsList, Stack } from '@
 import './index.scss';
 import { Convert } from 'utils';
 import { ApiStatus } from 'model';
+import { connect } from 'react-redux';
+import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -21,7 +23,8 @@ export interface IUniformTableOwnProps {
 }
 
 export interface IUniformTablePropsFromDispatch {
-
+  setTableSelectedCount: any;
+  setTableSelectedItem: any;
 }
 
 type IUniformTableProps = IUniformTableOwnProps & IUniformTablePropsFromDispatch;
@@ -33,7 +36,12 @@ export interface IUniformTableState {
     isLoading: boolean;
 }
 
-export class UniformTable extends React.Component<IUniformTableProps, IUniformTableState> {
+const mapDispatchToProps = {
+  setTableSelectedCount,
+  setTableSelectedItem
+}
+
+class UniformTable extends React.Component<IUniformTableProps, IUniformTableState> {
     private _selection: Selection;
     private _allItems: any[];
 
@@ -42,9 +50,11 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
         this._allItems = [];
         this._selection = new Selection({
             onSelectionChanged: () => {
-            this.setState({
+              this.props.setTableSelectedCount(this._selection.getSelectedCount());
+              this.props.setTableSelectedItem(this._selection.getSelection());
+              this.setState({
                 selectionDetails: this._getSelectionDetails(),
-            });
+              });
             },
         });
         this.state = {
@@ -57,6 +67,8 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
 
     componentDidMount(): void {
       this.getData();
+      this.props.setTableSelectedCount(0);
+      this.props.setTableSelectedItem([   ]);
     }
 
     private getData() {
@@ -214,4 +226,4 @@ export class UniformTable extends React.Component<IUniformTableProps, IUniformTa
         });
     };
 }
-    
+export default connect(null, mapDispatchToProps)(UniformTable)

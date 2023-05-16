@@ -2,14 +2,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface currentSelectedState {
     currentId: string;
-    selectedCount: number;
-    selectedItem : any
+    tableSelectedCount: Number;
+    tableSelectedItem : any[];
+    
+    currentSidebar: string;
 }
 
 const initialState: currentSelectedState = {
     currentId: '',
-    selectedCount: 0,
-    selectedItem: undefined
+    tableSelectedCount: 0,
+    tableSelectedItem: [],
+
+    currentSidebar:''
 }
 
 export const curentSelectedSlice = createSlice({
@@ -18,10 +22,23 @@ export const curentSelectedSlice = createSlice({
   reducers: {
     setCurentId: (state, action) => {
         state.currentId = action.payload
-    }
+    },
+
+    setCurrentSidebar: (state, action) => {
+      console.log(action.payload);      
+      state.currentSidebar = action.payload;
+    },
+
+    setTableSelectedCount: (state, action) => {
+      state.tableSelectedCount = action.payload;
+    },
+
+    setTableSelectedItem: (state, action) => {
+      state.tableSelectedItem = action.payload;
+    },
   }
 });
 
-export const {setCurentId } = curentSelectedSlice.actions;
+export const {setCurentId, setCurrentSidebar, setTableSelectedCount, setTableSelectedItem } = curentSelectedSlice.actions;
 
 export default curentSelectedSlice.reducer;

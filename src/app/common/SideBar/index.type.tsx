@@ -4,57 +4,65 @@ import { FaBacterium, FaPills, FaRegNewspaper} from 'react-icons/fa'
 import { MdOutlineArrowRightAlt, MdManageAccounts, MdAccountTree } from 'react-icons/md'
 import { TbStethoscope} from 'react-icons/tb'
 import { RiArrowDownSFill, RiArrowUpSFill} from 'react-icons/ri'
+import { ReactNode } from "react";
 
-export interface ISubNavProps{
-    title: string,
-    path: string,
-    icon: JSX.Element
-}
-export interface ISideBarProps{
-    title: string;
-    path: string;
-    icon: string | JSX.Element;
-    iconClosed?: JSX.Element;
-    iconOpened?: JSX.Element;
-    subNav?: ISubNavProps[]
-    key?: string
-}
+export type RouteType = {
+    index?: boolean,
+    path?: string,
+    element?: ReactNode,
+    state: string,
+    sidebarProps?: {
+      displayText: string,
+      icon?: ReactNode;
+    };
+    child?: RouteType[],
+  };
 
 export const getNavList = (role: accountRole, isHomePage: boolean) => {
-    const list: ISideBarProps[] = [];
-    if(!isHomePage === true){
-        list.push({
-            title: 'Trang chủ',
-            path: '/',
-            icon: <AiOutlineHome/>,
-        });
-    }
+    const list: RouteType[] = [];
+    list.push({
+        path: '/',
+        state:'',
+        sidebarProps: {
+            displayText: 'Trang chủ',
+            icon: <AiOutlineHome/>
+        }
+    });
 
     if(role === accountRole.Admin){
         list.push({
-            title: 'Tài khoản',
-            path: '/account',  
-            icon: <MdManageAccounts/>,
-            iconClosed: <RiArrowDownSFill/>,
-            iconOpened: <RiArrowUpSFill/>,
-            subNav:[
+            state: '/account',
+            sidebarProps:{
+                displayText: 'Tài khoản',
+                icon: <MdManageAccounts/>,
+            },
+            child:[
                 {
-                    title: 'Bác sĩ',
                     path: '/account/doctor-management',
-                    icon: <MdOutlineArrowRightAlt/>
+                    state: '/account/doctor-management',
+                    sidebarProps:{
+                        displayText: 'Bác sĩ',
+                        icon: <MdOutlineArrowRightAlt/>
+                    },  
                 },
                 {
-                    title: 'Bệnh nhân',
                     path: '/account/patient-management',
-                    icon: <MdOutlineArrowRightAlt/>
+                    state: '/account/patient-management',
+                    sidebarProps:{
+                        displayText: 'Bệnh nhân',
+                        icon: <MdOutlineArrowRightAlt/>
+                    }
                 }
             ]
         });
         list.push(
             {
-                title: 'Khoa, viện',
                 path: '/speciality',
-                icon: <MdAccountTree />,
+                state: '/speciality',
+                sidebarProps:{
+                    displayText: 'Khoa, viện',
+                    icon: <MdAccountTree />,
+                }
             }
         );
     
@@ -62,36 +70,51 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
 
     if(role === accountRole.Doctor){
         list.push({
-            title: 'Khám chữa bệnh',
             path: '/curing-process',
-            icon: <TbStethoscope/>,
+            state: '/curing-process',
+            sidebarProps:{
+                displayText: 'Khám chữa bệnh',
+                icon: <TbStethoscope/>,
+            }
         })
     }
 
     if(role === accountRole.Doctor || role === accountRole.Patient){
         list.push({
-            title: 'Lịch sử khám bệnh',
             path: '/cure-history',
-            icon: <AiOutlineClockCircle/>,
+            state: '/cure-history',
+            sidebarProps:{
+                displayText: 'Lịch sử khám bệnh',
+                icon: <AiOutlineClockCircle/>,
+            }
         },)
     }
 
     list.push(
         {
-            title: 'Bệnh',
             path: '/diseases',
-            icon: <FaBacterium/>,
+            state: '/diseases',
+            sidebarProps:{
+                displayText: 'Bệnh',
+                icon: <FaBacterium/>,
+            }
         },
         {
-            title: 'Thuốc',
             path: '/pills',
-            icon: <FaPills/>,
+            state: '/pills',
+            sidebarProps:{
+                displayText: 'Thuốc',
+                icon: <FaPills/>,
+            }
         },
         {
-            title: 'Thông tin, tư vấn',
             path: '/news',
-            icon: <FaRegNewspaper/>,
+            state: '/news',
+            sidebarProps:{
+                displayText: 'Thông tin, tư vấn',
+                icon: <FaRegNewspaper/>,
+            }
         }
     );
     return list;
-}
+}   
