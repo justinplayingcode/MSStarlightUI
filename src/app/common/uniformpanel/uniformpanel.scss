@@ -1,5 +1,5 @@
 .uniform-panel-wrapper {
-  flex: 1;
+  height: 100%;
 
   .uniform-panel-header {
     height: 8%;
@@ -11,9 +11,10 @@
 
   .uniform-panel-content {
     height: 84%;
-    padding: 8px 0;
+    padding: 0 28px 0 8px;
 
-    overflow-y: scroll;
+    // overflow-y: scroll;
+    overflow: auto;
   }
 
   .uniform-panel-footer {
@@ -21,5 +22,6 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    padding-right: 32px;
   }
 }
