@@ -82,6 +82,10 @@ apiClient.interceptors.response.use(
                 isRefreshing = false;
             }
         }
+        if (error.response.data.message === 'No token provided!' && error.response.status === ApiStatusCode.Forbidden) {
+          localStorage.clear();
+          window.location.pathname = "/login";
+        }
         return Promise.reject(error);
     }
 );
