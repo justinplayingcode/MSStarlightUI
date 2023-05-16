@@ -62,10 +62,10 @@
                     padding-right: 20px;
                 }
             }
-            .link.active {
-                background: linear-gradient(to right, #111827, #374151);
-                color: #fff;
-                border-left: 4px solid #fff;
+            .route-child{
+                .link-icon-text{
+                    padding-left: 20px;
+                }
             }
         }
     }

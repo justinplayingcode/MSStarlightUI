@@ -42,6 +42,8 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
         return (
           <Stack className='patient-preview'
             onClick={() => {
+              dispatch(setCurentId(item._id));
+              dispatch(openPanel(panelTypeConstant.PANEL_EDIT_PATIENT))
               resetDialog();
               props.closeDialog();
             }}

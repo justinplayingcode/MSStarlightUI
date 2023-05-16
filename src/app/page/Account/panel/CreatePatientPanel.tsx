@@ -5,10 +5,12 @@ import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
-import { Validate } from "utils";
+import { Convert, Validate } from "utils";
 import Api from 'src/api'
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import SuccessDialog from "./Dialog";
+import { closePanel } from "src/redux/reducers";
 
 interface ICreatePatientPanel{
     panelType?: PanelType
@@ -35,6 +37,9 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   const dispatch = useDispatch();
   const {currentId } = useSelector((state: RootState) => state.currentSelected);
   const [isDisable, setDisable] = useState<boolean>(false);
+
+  const [isDialogClosed, setIsDialogClosed] = useState<boolean>(true);
+  const [newAccount, setNewAccount] = useState<any>();
 
   const styles = mergeStyleSets({
     root: { selectors: { '> *': { marginBottom: 15 } } },
@@ -75,32 +80,27 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   const getPatientById = (id: string) => {
     setIsLoading(true);
     Api.cureProcessApi.getPatientById({userId: id}).then((data) =>{
-      console.log(data.data)
-      setFullname(data.data.fullName);
-      setSelectedtGender(data.data.gender);
-      setDateOfBirth(new Date(data.data.dateOfBirth))
+      setFullname(data.data.fullname);      
+      setSelectedtGender(data.data.gender.toString());
+      setDateOfBirth(Convert.dmystringtoDate(data.data.dateOfBirth))
       setAddress(data.data.address)
       setPhoneNumber(data.data.phonenumber);
       setEmail(data.data.email)
-      setInsuranceNumber(data.data)
+      setInsuranceNumber(data.data.insurance)
       setUserId(currentId)
-      // setIdentifyNumber()
+      setIdentifyNumber(data.data?.identification)
       // setSelectedDepartment
     }).catch(err => {
       const { message } = err.response.data;
       // setErrorMessage(message)
   }).finally(() => {
-    // setDisable(true)
+    setDisable(true)
     setIsLoading(false)
-  }
-  
-  )
+  })
   }
 
   useEffect(() => {
     if(props.panelType === PanelType.Edit){
-      // console.log('edit type');
-      // setUserId(currentId);
       getPatientById(currentId);     
     }
     getDepartment();
@@ -184,7 +184,23 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
     }
 
     Api.accountApi.createPatient(reqbody).then((data) => {
-      console.log(data)
+      if(!data.status){
+        //show dialog
+        setNewAccount({
+          fullname: data.data.fullname,
+          username: data.data.username,
+          password: data.data.password
+        });
+        setIsDialogClosed(false);
+        // resetField();
+        //close panel
+        // dispatch(closePanel())
+      } else
+      {
+        alert('failed')
+        //toast failed
+        //dont close panel
+      }
     }).catch(err => {
       const { message } = err.response.data;
       // setErrorMessage(message)
@@ -239,6 +255,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         <TextField
           disabled={isDisable}
           label='Địa chỉ'
+          value={address}
           onChange={(ev, val) => {
             setAddress(val)
           }}
@@ -247,6 +264,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
           disabled={isDisable}
           required
           label='Số điện thoại'
+          value={phoneNumber}
           onChange={(e, val) => {
             setErrorMessage(undefined);
             setPhoneNumber(val);
@@ -257,6 +275,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         <TextField
           disabled={isDisable}
           label='Email'
+          value={email}
           onChange={(e, val) => {
             setEmail(val);
           }}
@@ -265,6 +284,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         <TextField
           disabled={isDisable}
           label="Căn cước công dân"
+          value={identifyNumber}
           onChange={(e, val) => {
             setErrorMessage(undefined)
             setIdentifyNumber(val)
@@ -275,6 +295,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
             disabled={isDisable}
             required
             label="Bảo hiểm y tế"
+            value={insuranceNumber}
             onChange={(e, val) => {
                 setErrorMessage(undefined)
                 setInsuranceNumber(val)
@@ -297,6 +318,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   }
 
   return (
+    <>
     <UniformPanel
       panelTitle='Tạo tài khoản bệnh nhân'
       renderFooter={buttonFooter}
@@ -310,6 +332,15 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
       </Stack>
       }
     </UniformPanel>
+    <SuccessDialog 
+    isDialogClosed={isDialogClosed} 
+    account={newAccount}
+    closeDialog={() => {
+      setIsDialogClosed(true);
+      dispatch(closePanel());
+    }}
+  />
+    </>
   );
 }
 

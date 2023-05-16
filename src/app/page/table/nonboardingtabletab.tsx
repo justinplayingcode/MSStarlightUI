@@ -8,8 +8,6 @@ export const nonBoardingPatientColumns: IColumn[] = [
         minWidth: 210,
         maxWidth: 350,
         isResizable: true,
-        isSorted: true,
-        isSortedDescending: false,
         onRender: (item) => {
             return <span>{item.fullname}</span>;
         },

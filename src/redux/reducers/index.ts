@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import currentSelectedReducer, { setCurentId} from './common/curentSelectedReducer'
+import currentSelectedReducer, { setCurentId, setCurrentSidebar, setTableSelectedCount, setTableSelectedItem} from './common/curentSelectedReducer'
 import loadingReducer, { openLoading, closeLoading } from './common/loadingReducer';
 import navigationReducer, {updateSelectedMenu} from './common/navigationReducer';
 import panelReducer, { closePanel, closePanelLoading, openPanel, openPanelLoading } from './common/panelReducer';
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
 export default rootReducer;
 
 export {
-    setCurentId,
+    setCurentId, setCurrentSidebar, setTableSelectedCount, setTableSelectedItem,
     openLoading, closeLoading,
     updateSelectedMenu,
     openPanel, closePanel, openPanelLoading, closePanelLoading,

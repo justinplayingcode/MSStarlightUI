@@ -41,4 +41,9 @@ export default class Convert {
     public static removeDiacritics = (item: String) => {
       return item.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
+
+    public static dmystringtoDate = (dateString: string) => {
+        var newData = dateString.replace(/(\d+[/])(\d+[/])/, '$2$1');
+        return new Date(newData)
+    }
 }
