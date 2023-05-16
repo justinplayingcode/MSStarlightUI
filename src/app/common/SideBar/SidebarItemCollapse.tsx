@@ -31,7 +31,7 @@ const SidebarItemCollapse = ({ item }: Props) => {
                     to={''}
                     className='link'
                     style={{
-                        paddingLeft: 40,
+                        paddingLeft: 30,
                     }}
                     onClick={() => {
                         setOpen(!open);
