@@ -13,13 +13,15 @@ import { accountRole } from "model";
 function PatientAccount() {
   const dispatch = useDispatch();
   const {role, info} = useSelector((state: RootState) => state.user);
+  const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
+
 
   const getPatientmanagementCommandBar = () => {
 
     //remove add button
-    const commadBar = [];
+    const commandBar = [];
     if(role === accountRole.Doctor && info?.department === 'Khoa Tiếp Đón'){
-      commadBar.push(
+      commandBar.push(
         {
           key: 'newItem',
           text: 'Thêm',
@@ -27,8 +29,16 @@ function PatientAccount() {
           onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_PATIENT)) },
         },
       )
-    }
-    return commadBar;
+    };
+    if(tableSelectedCount === 1){
+      commandBar.push({
+          key: 'edit',
+          text: 'Sửa',
+          iconProps: { iconName: 'PageHeaderEdit' },
+          onClick: () => { alert('edit') },
+      })
+  };
+    return commandBar;
   
   } 
 

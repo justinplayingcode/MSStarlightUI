@@ -22,6 +22,9 @@ const SidebarItemCollapse = ({ item }: Props) => {
         if (currentSidebar.includes(item.state)) {
             setOpen(true);
         }
+        else {
+            setOpen(false)
+        }
     }, [currentSidebar, item]);
 
     return (
@@ -32,6 +35,9 @@ const SidebarItemCollapse = ({ item }: Props) => {
                     className='link'
                     style={{
                         paddingLeft: 30,
+                        color: open ? "#fff" : "#9CA3AF",
+                        background: 'unset',
+                        borderLeft: '4px solid transparent',
                     }}
                     onClick={() => {
                         setOpen(!open);
