@@ -43,7 +43,6 @@
                 padding: 18px 0 18px 16px;
                 border-left: 4px solid transparent;
                 &:hover{
-                    background: linear-gradient(to right, #111827, #374151);
                     color: #fff;
                 }
                 .link-icon-text{
@@ -61,6 +60,10 @@
                 .link-arrow{
                     padding-right: 20px;
                 }
+            }
+            .link.active {
+                color: #fff;
+                background: linear-gradient(to right, #111827, #374151);
             }
             .route-child{
                 .link-icon-text{

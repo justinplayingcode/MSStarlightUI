@@ -2,9 +2,9 @@
     flex: 1;
     max-height: 80vh;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 8px;
     background-color: #ffffff;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     // overflow: scroll;
     padding-top: 20px;
     
@@ -30,7 +30,7 @@
         .details-list-wrapper {
             width: 100%;
             height: 100%;
-            overflow: scroll;
+            overflow: auto;
 
             .details-list-no-content {
                 width: 100%;

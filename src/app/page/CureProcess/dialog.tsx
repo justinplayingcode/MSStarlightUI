@@ -23,10 +23,9 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
   const [isLoading, setLoading] = React.useState<boolean>(false)
 
   const [errorMessage, setErrorMessage] = React.useState<string>();
-  const [item, setItem] = React.useState<{_id, fullname, gender, dateOfBirth, address}>(
-    // {fullname:'Thắng Tay bé', gender: 0, dateOfBirth: '31/01/2001', address: 'Hà Nội'}
-    );
+  const [item, setItem] = React.useState<{_id, fullname, gender, dateOfBirth, address}>();
   const [available, setAvailable] = React.useState<boolean>();
+  const [searchText, setSearchText] = React.useState<string>();
 
   const dispatch = useDispatch();  
 
@@ -105,12 +104,22 @@ export const StartProcessDialog = (props: IStartProcessProps) => {
       <Stack className='dialog-content'>
         <Stack className='search-section'>
           <Label>Nhập số bảo hiểm</Label>
-          <SearchBox
-            value={insurance}
-            onSearch={(newVal) => {
-              handleOnSearch(newVal);
-            }}
-          />
+          <Stack horizontal >
+            <SearchBox
+              showIcon={false}
+              styles={{root: {flex: 1}}}
+              value={insurance}
+              onChange={(e, val) => {
+                setSearchText(val);
+              }}
+              onSearch={(newVal) => {
+                handleOnSearch(newVal);
+              }}
+            />
+            <PrimaryButton text={'Tìm kiếm'} 
+              onClick={() => handleOnSearch(searchText)}
+            />
+          </Stack>
           <Stack>{errorMessage}</Stack>
         </Stack>
         <Stack className='result-section'>

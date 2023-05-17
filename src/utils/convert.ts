@@ -46,4 +46,8 @@ export default class Convert {
         var newData = dateString.replace(/(\d+[/])(\d+[/])/, '$2$1');
         return new Date(newData)
     }
+
+    public static datetommddyyyy = (dateString: Date) => {
+        return (dateString.getMonth() + 1) + '/' + dateString.getDate() + '/' +  dateString.getFullYear();
+    }
 }

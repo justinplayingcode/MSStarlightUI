@@ -5,7 +5,7 @@ import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
-import { Validate } from "utils";
+import { Convert, Validate } from "utils";
 import Api from '../../../../api'
 import SuccessDialog from "./Dialog";
 import { useDispatch } from "react-redux";
@@ -192,7 +192,7 @@ function CreatDoctorPanel() {
     const reqbody = {
       fullname: fullname,
       gender: selectedGender,
-      dateOfBirth: dateOfBirth.toString(),
+      dateOfBirth: Convert.datetommddyyyy(dateOfBirth),
       address: address || '',
       phonenumber: phoneNumber,
       email: email,

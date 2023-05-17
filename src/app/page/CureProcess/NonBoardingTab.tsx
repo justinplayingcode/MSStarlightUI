@@ -12,6 +12,8 @@ import { nonBoardingPatientColumns } from '../table/nonboardingtabletab';
 const NonBoardingTab = () => {
     const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)    
     const { info, role } = useSelector((state: RootState) => state.user);
+
+    const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
     
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
@@ -21,6 +23,14 @@ const NonBoardingTab = () => {
                 text: 'Thêm',
                 iconProps: { iconName: 'Add' },
                 onClick: () => { setDialogClosed(false) },
+            })
+        };
+        if(tableSelectedCount === 1){
+            commandBar.push({
+                key: 'edit',
+                text: 'Sửa',
+                iconProps: { iconName: 'PageHeaderEdit' },
+                onClick: () => { alert('edit') },
             })
         };
         return commandBar;

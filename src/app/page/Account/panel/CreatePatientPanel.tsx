@@ -176,7 +176,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
       fullname: fullname,
       address: address || '',
       gender: selectedGender || '',
-      dateOfBirth: dateOfBirth.toString(),
+      dateOfBirth:  Convert.datetommddyyyy(dateOfBirth),
       phonenumber: phoneNumber || '',
       department: selectedDepartment,
       email: email ||'',

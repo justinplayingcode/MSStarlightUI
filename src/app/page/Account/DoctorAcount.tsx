@@ -9,16 +9,28 @@ import { AppDispatch, RootState } from "src/redux/store";
 
 function DoctorAcount() {
     const dispatch = useDispatch<AppDispatch>();
-    const { isOpen } = useSelector((state: RootState) => state.panel) 
+    const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
 
-    const doctormanagementCommandBar: ICommandBarItemProps[] = [
-        {
+    const getDoctorManagmentCommandBar = () => {
+        const command: ICommandBarItemProps[] = [];
+        command.push({
             key: 'newItem',
             text: 'Thêm',
             iconProps: { iconName: 'Add' },
             onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_DOCTOR)) },
-        },
-    ]
+        },);
+
+        if(tableSelectedCount === 1){
+            command.push({
+                key: 'edit',
+                text: 'Sửa',
+                iconProps: { iconName: 'PageHeaderEdit' },
+                onClick: () => { alert('edit') },
+            })
+        };
+
+        return command;
+    }
 
     return(
         <div className='wrapper-table-content speciality-wrapper'>
@@ -26,7 +38,7 @@ function DoctorAcount() {
                 integrateItems={Api.accountApi.getAllDoctor}
                 searchByKeyWord='fullname'
                 columns={doctormanagementColumns}
-                commandBarItems={doctormanagementCommandBar}         
+                commandBarItems={getDoctorManagmentCommandBar()}         
             />
         </div>
     )
