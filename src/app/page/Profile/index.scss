@@ -1,0 +1,27 @@
+.wrapper-table-content{
+    .user-profile{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        padding: 20px 40px;
+        margin-top: 10px;
+        .profile-header{
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .profile-info{
+            display: flex;
+            flex-direction: row;
+            .profile-basic-info{
+                align-items: center;
+            }
+            .profile-detail-info{
+                padding-left: 10px;
+            }
+        }
+    }
+}

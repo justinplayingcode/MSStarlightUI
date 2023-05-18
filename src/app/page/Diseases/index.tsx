@@ -7,43 +7,7 @@ import { RootState } from 'src/redux/store';
 import { tooltipPlainText } from 'src/utils/utils';
 
 const Diseases = () => {
-    const [items, setItems] = React.useState<any[]>([]);
-    const [isLoading, setIsLoading] =React.useState<boolean>(false);
-
     const { role } = useSelector((state: RootState) => state.user);
-
-    const DiseasesList = [
-        {
-            code:'ABCXY123',
-            name:'Bệnh ABCDE',
-            description:'Đây là bệnh bla bla',
-            departmentId: '1'
-        },
-        {
-            code:'ABCXY123',
-            name:'Bệnh ABCDE',
-            description:'Đây là bệnh bla bla',
-            departmentId: '1'
-        },
-        {
-            code:'ABCXY123',
-            name:'Bệnh ABCDE',
-            description:'Đây là bệnh bla bla',
-            departmentId: '1'
-        },
-        {
-            code:'ABCXY123',
-            name:'Bệnh ABCDE',
-            description:'Đây là bệnh bla bla',
-            departmentId: '1'
-        },
-        {
-            code:'ABCXY123',
-            name:'Bệnh ABCDE',
-            description:'Đây là bệnh bla bla',
-            departmentId: '1'
-        },
-    ]
 
     const diseasesColumns =[
         {

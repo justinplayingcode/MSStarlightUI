@@ -5,39 +5,10 @@ import { useSelector } from 'react-redux';
 import { UniformTable } from 'src/app/common';
 import { RootState } from 'src/redux/store';
 import { tooltipPlainText } from 'src/utils/utils';
+import Api from 'src/api/index'
 
 const Pills = () => {
-    const [items, setItems] = React.useState<any[]>([]);
-    const [isLoading, setIsLoading] =React.useState<boolean>(false);
-
     const { role } = useSelector((state: RootState) => state.user);
-
-    const pillsList = [
-        {
-            name: 'Peniciline',
-            usage: 'một kháng sinh nhóm penicillin có tác dụng diệt khuẩn nhờ cơ chế ức chế sự tổng hợp thành tế bào vi khuẩn.',
-            price: '10.000'
-        },
-        {
-            name: 'Peniciline',
-            usage: 'một kháng sinh nhóm penicillin có tác dụng diệt khuẩn nhờ cơ chế ức chế sự tổng hợp thành tế bào vi khuẩn.',
-            price: '10.000'
-        },
-        {
-            name: 'Peniciline',
-            usage: 'một kháng sinh nhóm penicillin có tác dụng diệt khuẩn nhờ cơ chế ức chế sự tổng hợp thành tế bào vi khuẩn.',
-            price: '10.000'
-        },
-        {
-            name: 'Peniciline',
-            usage: 'một kháng sinh nhóm penicillin có tác dụng diệt khuẩn nhờ cơ chế ức chế sự tổng hợp thành tế bào vi khuẩn.',
-            price: '10.000'
-        },
-    ];
-
-    React.useEffect(() => {
-        setItems(pillsList)
-    },[])
 
     const PillsColumns =[
         {
@@ -113,10 +84,9 @@ const Pills = () => {
             </> */}
             {/* <UniformTable
                 searchByKeyWord='name'
-                items={pillsList}
-                isLoading={isLoading} 
                 columns={PillsColumns}  
-                commandBarItems={getPillsCommanBar()}          
+                commandBarItems={getPillsCommanBar()}  
+                integrateItems={Api.}        
             /> */}
         </div>
     )

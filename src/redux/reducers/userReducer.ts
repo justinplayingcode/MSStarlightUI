@@ -18,19 +18,19 @@ const initialState: CurrentUserState = {
     pending: false
 };
 
-const getInfoCurrentUser = async () => {
-    const res = await authApi.getInfoCurrentUser();
+// const getInfoCurrentUser = async () => {
+//     const res = await authApi.getInfoCurrentUser();
 
-}
+// }
 
-const getInfo = createAsyncThunk(
-    'currentuser/getinfo',
-    async () => {
-        const { data } = await authApi.getInfoCurrentUser();
-        console.log(data)
-        return data;
-    }
-)
+// const getInfo = createAsyncThunk(
+//     'currentuser/getinfo',
+//     async () => {
+//         const { data } = await authApi.getInfoCurrentUser();
+//         console.log(data)
+//         return data;
+//     }
+// )
 
 //save infomation of current log in user
 export const userSlice = createSlice({

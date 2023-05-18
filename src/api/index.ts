@@ -10,11 +10,11 @@ const api = {
 
     // account
     createDoctor: '/account/registerdoctor',
-    getPatientByInsurance: '/account/searchinsurance', // change
     getAllDoctor: '/account/getalldoctor',
     getAllPatient: '/account/getallpatient',
     
     //healthcare
+    getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
     getWaitPatient: '/healthcare/getallpatient',
     getPatientById: '/healthcare/getinfobyuserid',
