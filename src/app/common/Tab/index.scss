@@ -1,19 +1,9 @@
-.App {
-    font-family: sans-serif;
-    text-align: center;
-    width: 70vw;
-    margin: 0 auto;
-  }
-  
-  h3 {
-    margin-top: 0;
-  }
-  
   .tabs-component [role="tablist"] {
     display: flex;
     flex-wrap: wrap;
-    border-bottom: 1px solid #dee2e6;
     position: relative;
+    background-color: #fff;
+    // border-bottom: 1px solid #dee2e6;
   }
   
   .tabs-component [role="tablist"] button {
@@ -35,19 +25,26 @@
   .tabs-component [role="tablist"] button:focus,
   .tabs-component [role="tablist"] button:hover {
     border-width: 1px;
-    border-color: #e9ecef #e9ecef #b41c1c;
+    border-color: transparent transparent rgb(17,24,39);
   }
   
   .tabs-component [role="tablist"] button.active {
-    color: #495057;
-    background-color: #f8f8f8;
+    font-weight: 700;
+    // color: #495057;
+    // background-color: #f8f8f8;
   }
   
   .tabs-component [role="tabpanel"] {
     text-align: left;
-    padding: 1rem;
     background-color: #f8f8f8;
-    box-shadow: 1px 1px 2px rgb(204 204 204 / 75%);
+    
+    // padding: 1rem;
+    // box-shadow: 1px 1px 2px rgb(204 204 204 / 75%);
+    .wrapper-table-content{
+      .table-container{
+        border-radius: 0;
+      }
+    }
   }
   
   .tabs-component.vertical {
