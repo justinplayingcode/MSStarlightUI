@@ -42,13 +42,14 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/" element={<Layout page={pageConstant.LAYOUT_HOME}/>} />
                         <Route path="/profile" element={<Layout page={pageConstant.LAYOUT_PROFILE}/>} />
 
-                        {/* <Route path="/account/create-patient" element={<Layout page={pageConstant.LAYOUT_ACCOUNT_CREATE_PATIENT}/>}/> */}
                         <Route path="/account/patient-management" element={<Layout page={pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT}/>}/>
-                        {/* <Route path='/account/create-doctor' element={<Layout page={pageConstant.LAYOUT_ACCOUNT_CREATE_DOCTOR}/>} /> */}
                         <Route path="/account/doctor-management" element={<Layout page={pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT}/>}/>
                         
                         <Route path="/speciality" element={<Layout page={pageConstant.LAYOUT_SPECIALITY}/>} />
+
                         <Route path="/curing-process" element={<Layout page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
+                        <Route path="/curing-proces/cure-progress" element={<Layout page={pageConstant.LAYOUT_CURE_PROGRESS}/>}/>
+
                         <Route path="/cure-history" element={<Layout page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
                         <Route path="/diseases" element={<Layout page={pageConstant.LAYOUT_DISEASES}/>} />
                         <Route path="/pills" element={<Layout page={pageConstant.LAYOUT_PILLS}/>} />

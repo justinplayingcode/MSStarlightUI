@@ -1,13 +1,19 @@
 import { ICommandBarItemProps, Stack } from '@fluentui/react';
-import { accountRole } from 'model';
+import { accountRole, pageConstant } from 'model';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { UniformTable } from 'src/app/common';
 import { RootState } from 'src/redux/store';
 import { tooltipPlainText } from 'src/utils/utils';
+import Api from 'src/api/index'
+import { useDispatch } from 'react-redux';
+import { openPanel } from 'src/redux/reducers';
+import { panelTypeConstant } from 'src/model/contant';
 
 const Diseases = () => {
+    const dispatch = useDispatch();
     const { role } = useSelector((state: RootState) => state.user);
+    const { tableSelectedCount } = useSelector((state: RootState) => state.currentSelected)
 
     const diseasesColumns =[
         {
@@ -33,13 +39,23 @@ const Diseases = () => {
             },
         },
         {
-            key: 'description',
-            name: 'Mô tả',
+            key: 'symptom',
+            name: 'Triệu chứng',
             minWidth: 230,
             maxWidth: 350,
             isResizable: true,
             onRender: (item) => {
-                return (tooltipPlainText(item?.description));
+                return (tooltipPlainText(item?.symptom));
+            },
+        },
+        {
+            key: 'prevention',
+            name: 'Cách phòng tránh',
+            minWidth: 230,
+            maxWidth: 350,
+            isResizable: true,
+            onRender: (item) => {
+                return (tooltipPlainText(item?.prevention));
             },
         },
         {
@@ -49,7 +65,7 @@ const Diseases = () => {
             maxWidth: 350,
             isResizable: true,
             onRender: (item) => {
-                return <span>{item?.departmentId}</span>;
+                return <span>{item?.department}</span>;
             },
         },
 
@@ -63,37 +79,35 @@ const Diseases = () => {
                 key: 'newItem',
                 text: 'Thêm',
                 iconProps: { iconName: 'Add' },
-                onClick: () => { alert('thêm') },
-            },
-            {
-                key: 'editItem',
-                text: 'Sửa',
-                iconProps: { iconName: 'Edit' },
-                onClick: () => { alert('Sửa') },
-            },
-            {
-                key: 'deleteItem',
-                text: 'Xóa',
-                iconProps: { iconName: 'Delete' },
-                onClick: () => { alert('Xóa') },
-            },
-            )
+                onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_DISEASES)) },
+            });
+            if (tableSelectedCount === 1){
+                commadBarButton.push(
+                    {
+                        key: 'editItem',
+                        text: 'Sửa',
+                        iconProps: { iconName: 'Edit' },
+                        onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_EDIT_DISEASES)) },
+                    },
+                    {
+                        key: 'deleteItem',
+                        text: 'Xóa',
+                        iconProps: { iconName: 'Delete' },
+                        onClick: () => { alert('Xóa') },
+                    }
+                )
+            }
         }
         return commadBarButton;
     } 
     return(
         <div className='wrapper-table-content'>
-            {/* <>Quản lí bệnh
-                <Stack>Xem danh sách</Stack>
-                <Stack> thêm sửa xóa thuốc - admin</Stack>
-            </> */}
-            {/* <UniformTable
+            <UniformTable
                 searchByKeyWord='name'
-                items={DiseasesList}
-                isLoading={isLoading} 
                 columns={diseasesColumns}  
-                commandBarItems={getDiseasesCommanBar()}          
-            /> */}
+                commandBarItems={getDiseasesCommanBar()}     
+                integrateItems={Api.diseasesApi.getAllDiseases}     
+            />
         </div>
     )
 }

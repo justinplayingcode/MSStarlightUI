@@ -26,7 +26,7 @@ const Profile = () => {
                         <Stack className="info-name">Họ và tên: {info?.fullname}</Stack>
                         {info?.onboarding && <>Trạng thái: Đang nằm viện</>}
                         <Stack>Ngày sinh: {info?.dateOfBirth}</Stack>
-                        {role === accountRole.Doctor ? <>{info?.department}</> : <></>}
+                        {role === accountRole.Doctor && <>{info?.department}</>}
                         {/* {role === accountRole.Patient && getHeiWeightInfo(info?.height, info?.weight)} */}
                         {/* {role === accountRole.Patient ? getPatientStatus(info?.status) : <></>} */}
                     </Stack>

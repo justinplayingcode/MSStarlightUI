@@ -11,7 +11,7 @@ import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
 import Diseases from "src/app/page/Diseases";
 import Profile from "src/app/page/Profile";
-import Pills from "src/app/page/Pills";
+import Pills from "src/app/page/Medication";
 import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
@@ -22,6 +22,7 @@ import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "sr
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
+import CureProgress from "src/app/page/CureProcess/component/CureProgress";
 interface LayoutOwnProps {
     page: string;
 }
@@ -128,6 +129,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_PROFILE:
                 content = <Profile />
                 break;
+
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
                 content = <AccountPage page={page}/>
                 break;
@@ -138,9 +140,14 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_SPECIALITY:
                 content = <Speciality />
                 break;
+
             case pageConstant.LAYOUT_CURE_PROCESS:
                 content = <CureProcess/>
                 break;
+            case pageConstant.LAYOUT_CURE_PROGRESS:
+                content = <CureProgress/>
+                break;
+
             case pageConstant.LAYOUT_CURE_HISTORY:
                 content = <CureHistory />
                 break;

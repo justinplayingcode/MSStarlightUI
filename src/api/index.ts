@@ -23,6 +23,16 @@ const api = {
     //department
     getAllDepartment: '/department/getall',
 
+    //diseases
+    getAllDiseases:'/diseases/getalldiseases',
+    createDiseases: '/diseases/creatediseases',
+    editDiseases: '/diseases/editdiseases',
+    
+    //pills
+    getAllMedication: '/medication/getallmedications',
+    createMedication: '/medication/createmedication',
+    editMedication: '/medication/editmedication'
+
 }
 
 const authApi = {
@@ -65,9 +75,31 @@ const departmentApi = {
     getAllDepartment: () => apiClient.get(api.getAllDepartment),
 }
 
+const diseasesApi = {
+    getAllDiseases: () => apiClient.get(api.getAllDiseases),
+    createDiseases: (reqbody) => {
+        return apiClient.post(api.createDiseases,reqbody)
+    },
+    editDiseases: (reqbody) => {
+        return apiClient.post(api.editDiseases,reqbody)
+    }
+}
+
+const medicationApi = {
+    getAllMedication: () => apiClient.get(api.getAllMedication),
+    createMedication: (reqbody) => {
+        return apiClient.post(api.createMedication, reqbody)
+    },
+    editMedication: (reqbody) => {
+        return apiClient.post(api.editMedication, reqbody)
+    }
+}
+
 export default {
     authApi, 
     accountApi, 
     cureProcessApi,
-    departmentApi
+    departmentApi,
+    diseasesApi,
+    medicationApi
 };

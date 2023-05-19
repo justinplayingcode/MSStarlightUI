@@ -6,9 +6,14 @@ import { UniformTable } from 'src/app/common';
 import { RootState } from 'src/redux/store';
 import { tooltipPlainText } from 'src/utils/utils';
 import Api from 'src/api/index'
+import { useDispatch } from 'react-redux';
+import { openPanel } from 'src/redux/reducers';
+import { panelTypeConstant } from 'src/model/contant';
 
-const Pills = () => {
+const Medication = () => {
+    const dispatch = useDispatch();
     const { role } = useSelector((state: RootState) => state.user);
+    const { tableSelectedCount} = useSelector((state: RootState) => state.currentSelected)
 
     const PillsColumns =[
         {
@@ -30,7 +35,6 @@ const Pills = () => {
             maxWidth: 400,
             isResizable: true,
             onRender: (item) => {
-                // return <SelfTooltipHost text={item?.usage} />;
                 return(
                     tooltipPlainText(item?.usage)
                 )
@@ -57,21 +61,24 @@ const Pills = () => {
                 key: 'newItem',
                 text: 'Thêm',
                 iconProps: { iconName: 'Add' },
-                onClick: () => { alert('thêm') },
-            },
-            {
-                key: 'editItem',
-                text: 'Sửa',
-                iconProps: { iconName: 'Edit' },
-                onClick: () => { alert('Sửa') },
-            },
-            {
-                key: 'deleteItem',
-                text: 'Xóa',
-                iconProps: { iconName: 'Delete' },
-                onClick: () => { alert('Xóa') },
-            },
-            )
+                onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_MEDICATION)) },
+            })
+            if(tableSelectedCount === 1){
+                commadBarButton.push(
+                    {
+                        key: 'editItem',
+                        text: 'Sửa',
+                        iconProps: { iconName: 'Edit' },
+                        onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_MEDICATION)) },
+                    },
+                    {
+                        key: 'deleteItem',
+                        text: 'Xóa',
+                        iconProps: { iconName: 'Delete' },
+                        onClick: () => { alert('Xóa') },
+                    },
+                )
+            }
         }
         return commadBarButton;
     } 
@@ -82,13 +89,13 @@ const Pills = () => {
                 <Stack>Xem danh sách</Stack>
                 <Stack> thêm sửa xóa thuốc - admin</Stack>
             </> */}
-            {/* <UniformTable
+            <UniformTable
                 searchByKeyWord='name'
                 columns={PillsColumns}  
                 commandBarItems={getPillsCommanBar()}  
-                integrateItems={Api.}        
-            /> */}
+                integrateItems={Api.medicationApi.getAllMedication}        
+            />
         </div>
     )
 }
-export default Pills;
+export default Medication;
