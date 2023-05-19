@@ -60,7 +60,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
                 path: '/speciality',
                 state: '/speciality',
                 sidebarProps:{
-                    displayText: 'Khoa, viện',
+                    displayText: 'Khoa',
                     icon: <MdAccountTree />,
                 }
             }
@@ -100,8 +100,8 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             }
         },
         {
-            path: '/pills',
-            state: '/pills',
+            path: '/medication',
+            state: '/medication',
             sidebarProps:{
                 displayText: 'Thuốc',
                 icon: <FaPills/>,

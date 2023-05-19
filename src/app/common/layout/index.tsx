@@ -11,7 +11,6 @@ import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
 import Diseases from "src/app/page/Diseases";
 import Profile from "src/app/page/Profile";
-import Pills from "src/app/page/Pills";
 import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
@@ -22,6 +21,7 @@ import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "sr
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
+import Medication from "src/app/page/Medication";
 interface LayoutOwnProps {
     page: string;
 }
@@ -147,8 +147,8 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_DISEASES:
                 content = <Diseases />
                 break;
-            case pageConstant.LAYOUT_PILLS:
-                content = <Pills />
+            case pageConstant.LAYOUT_MEDICATION:
+                content = <Medication />
                 break;
             case pageConstant.LAYOUT_NEWS:
                 content = <News />

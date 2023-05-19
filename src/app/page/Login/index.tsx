@@ -1,14 +1,11 @@
 import * as React from "react";
 import "./index.scss";
-import { IconButton, Label, PrimaryButton, Stack, TextField } from "@fluentui/react";
+import { DefaultButton, IconButton, PrimaryButton, Stack, TextField } from "@fluentui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openLoading, closeLoading, setRole, setUsername } from "src/redux/reducers";
 import Api from "src/api";
-
-import Image from "image"
-import { ApiStatus } from "model";
 import image from "image";
 import { LoadingCirle } from "src/app/common/loading";
 import { useSelector } from "react-redux";
@@ -19,13 +16,13 @@ export const Login: React.FunctionComponent = () => {
     const [password, setPassword] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
     const loading = useSelector<RootState>(state => state.loading.isLoading)
-
+    const buttonRef = React.useRef(null);
     const dispatch = useDispatch();
     const history = useNavigate()
 
     const clickSave = async () => {
         if(!userName || !password){
-            setErrorMessage("Please enter username/ password");
+            setErrorMessage("Hãy nhập tên đăng nhập/mật khẩu");
             return;
         }
         const reqbody = {
@@ -47,6 +44,12 @@ export const Login: React.FunctionComponent = () => {
         }).finally(() => dispatch(closeLoading()))
     }
 
+    const handleKeyDown = (e) => {
+      if(e.key === 'Enter') {
+        buttonRef.current.click();
+      }
+    }
+
     return (
         <>
             {loading ? <LoadingCirle /> : <React.Fragment />}
@@ -54,8 +57,9 @@ export const Login: React.FunctionComponent = () => {
                 className="login-container"
                 horizontalAlign="center"
                 verticalAlign="center"
+                onKeyDown={handleKeyDown}
             >
-                <Stack className="login-form-header">
+                {/* <Stack className="login-form-header">
                     <Stack className="form-header-content">
                         <Stack className="img-div">
                             <img alt='' src={image.logo}/>
@@ -66,11 +70,12 @@ export const Login: React.FunctionComponent = () => {
                     <Stack className="header-ribbon">
 
                     </Stack>
-                </Stack>
+                </Stack> */}
                 <Stack className="login-form-container">
                     <Stack className="form-container">
+                        {/* <img alt='' src={image.logo}/> */}
                         <Stack horizontalAlign="center" className="logo" >
-                            Login
+                            Đăng nhập
                         </Stack>
                         <TextField
                             label="Tên đăng nhập"
@@ -101,10 +106,8 @@ export const Login: React.FunctionComponent = () => {
                             }}
                         />
                         <Stack className="error-message">{errorMessage}</Stack>
-                        <PrimaryButton className="log-in-btn" text="Đăng nhập" onClick={clickSave} />
+                        <button className="log-in-btn" onClick={clickSave} ref={buttonRef}>Đăng nhập</button>
                         <Stack horizontalAlign="end" >
-                            {/* display link to forgot password panel */}
-                            <Link to={""} style={{ textDecoration: "none", color: 'rgb(0, 120, 212)'}}>Quên mật khẩu?</Link>
                         </Stack>
                     </Stack>
                 </Stack>
