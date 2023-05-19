@@ -69,9 +69,9 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         // parentKeys:["route-home"]
     },
     Pills: {
-        key: 'route-pills',
+        key: 'route-medication',
         text: 'Thuốc',
-        url: '/pills',
+        url: '/medication',
         // parentKeys:["route-home"]
     },
     News: {

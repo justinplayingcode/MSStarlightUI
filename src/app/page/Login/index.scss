@@ -1,9 +1,10 @@
 $radius : 20px;
 
 .login-container{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100vw;
     height: 100vh;
-    background-color: #404B56;
+    background: linear-gradient(35deg, rgba(205,218,116,1) 0%, rgba(33,101,207,1) 100%);
     .login-form-header{
         z-index: 10;
         position: fixed;
@@ -37,12 +38,12 @@ $radius : 20px;
         }
     }
     .login-form-container{
-        width: 300px;
-        padding: 30px 30px 30px 30px;
+        min-width: 360px;
+        padding: 30px;
+        border-radius: 30px;
 
-        background-color: #fff;
+        background-color: #f6f6f6;
         box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        border-radius: 4px;
 
         display: flex;
         flex-direction: row;
@@ -50,32 +51,53 @@ $radius : 20px;
         align-items: center;
         .form-container{
             justify-content: center;
-            min-width: 240px;
-            .logo{
+            width: 100%;
+            .logo {
                 font-size: 36px;
                 padding: 20px 0;
             }
+            .ms-TextField {
+              margin-bottom: 8px;
+            }
             .ms-TextField-fieldGroup{
+              border: none;
+              border-radius: 20px;
+              height: 40px;
                 &::after{
                     border: none;
                 }
-            }
-            .welcome-text{
-                font-size: 28px;
-                font-weight: 700;
+
+              .ms-TextField-field {
+                padding: 8px;
+                font-size: 16px;
+              }
+              .ms-TextField-reveal {
+                height: 40px;
+                border-radius: 20px;
+                color: #333;
+              }
             }
             .error-message{
                 color: #f31b1b;
                 min-height: 28px;
                 padding-bottom: 8px;
+                font-size: 14px;
             }
             .log-in-btn{
-                margin-bottom: 4px;            
-            &:hover{
-                color: rgb(0, 120, 212);
-                background-color: rgb(255 255 255 / 0.2);                    
-                backdrop-filter: blur(20px);
-                }
+              background-color: #ccc;
+              margin-bottom: 4px;
+              border-radius: 20px;
+              height: 40px;   
+              border: none; 
+              box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+              &:hover{
+                  color: #7d7d7d;
+                  background-color: #d5d5d5;
+              }
+              .ms-Button-label {
+                font-size: 18px;
+              }
             }
         }
         .form-image{

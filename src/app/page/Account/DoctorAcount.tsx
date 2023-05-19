@@ -1,6 +1,6 @@
 import { ICommandBarItemProps } from "@fluentui/react"
 import { UniformTable } from "src/app/common"
-import { doctormanagementColumns } from "../table/doctormanagertable"
+import { doctormanagementColumns } from "../table/doctormanagercolumn"
 import { useDispatch, useSelector } from "react-redux";
 import { openPanel } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
@@ -24,7 +24,7 @@ function DoctorAcount() {
             command.push({
                 key: 'edit',
                 text: 'Sửa',
-                iconProps: { iconName: 'PageHeaderEdit' },
+                iconProps: { iconName: 'Edit' },
                 onClick: () => { alert('edit') },
             })
         };

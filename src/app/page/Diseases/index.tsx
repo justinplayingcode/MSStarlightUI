@@ -1,14 +1,16 @@
 import { ICommandBarItemProps, Stack } from '@fluentui/react';
+
 import { accountRole, pageConstant } from 'model';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { UniformTable } from 'src/app/common';
 import { RootState } from 'src/redux/store';
 import { tooltipPlainText } from 'src/utils/utils';
-import Api from 'src/api/index'
 import { useDispatch } from 'react-redux';
 import { openPanel } from 'src/redux/reducers';
 import { panelTypeConstant } from 'src/model/contant';
+import { diseasesColumns } from '../table/diseasescolumn';
+import Api from 'api';
 
 const Diseases = () => {
     const dispatch = useDispatch();

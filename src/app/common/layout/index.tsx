@@ -23,6 +23,7 @@ import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
 import CureProgress from "src/app/page/CureProcess/component/CureProgress";
+import Medication from "src/app/page/Medication";
 interface LayoutOwnProps {
     page: string;
 }
@@ -154,8 +155,8 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_DISEASES:
                 content = <Diseases />
                 break;
-            case pageConstant.LAYOUT_PILLS:
-                content = <Pills />
+            case pageConstant.LAYOUT_MEDICATION:
+                content = <Medication />
                 break;
             case pageConstant.LAYOUT_NEWS:
                 content = <News />

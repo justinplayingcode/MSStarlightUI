@@ -7,7 +7,7 @@ import { accountRole } from 'model';
 
 import Api from 'src/api'
 import { useEffect } from 'react';
-import { nonBoardingPatientColumns } from '../table/nonboardingtabletab';
+import { nonBoardingPatientColumns } from '../table/nonboardingcolumn';
 import { useNavigate } from 'react-router-dom';
 
 const NonBoardingTab = () => {

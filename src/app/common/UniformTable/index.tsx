@@ -120,9 +120,6 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                                 items={commandBar}
                             />
                         </div>
-                        {/* <div>
-                            <div className={classNames.selectionDetails}>{selectionDetails}</div>
-                        </div> */}
                         <div className={`${classNames.controlWrapper} details-list-sub-header-item`}>
                             <TextField placeholder='Tìm kiếm' onChange={this._onChangeText} styles={controlStyles} iconProps={{iconName: 'search'}} />
                         </div>
@@ -153,7 +150,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                                   {renderedWindowsAhead: 0,
                                   renderedWindowsBehind: 0}
                               }
-                              onColumnHeaderClick={this._onColumnClick}
+                              // onColumnHeaderClick={this._onColumnClick}
                             />
                           }
                         </MarqueeSelection>

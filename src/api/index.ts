@@ -95,11 +95,12 @@ const medicationApi = {
     }
 }
 
-export default {
+const Api = {
     authApi, 
     accountApi, 
     cureProcessApi,
     departmentApi,
     diseasesApi,
     medicationApi
-};
+  };
+export default Api;
