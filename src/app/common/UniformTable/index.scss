@@ -6,7 +6,7 @@
     background-color: #ffffff;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     // overflow: scroll;
-    padding-top: 20px;
+    padding-top: 12px;
     
     .details-list {
         width: 100%;
@@ -15,6 +15,7 @@
         flex-direction: column;
 
         .details-list-sub-header {
+            padding-bottom: 4px;
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
@@ -24,7 +25,33 @@
               align-items: center;
               justify-content: flex-start;
               height: 100%;
+              width: 70%;
+              & > * {
+                width: 100%;
+              }
+
+              .ms-Button-flexContainer {
+                font-size: 16px;
+                margin-right: 12px;
+                color: #333;
+                .ms-Button-icon {
+                  color: #333;
+                  font-weight: bold;
+                }
+              }
             }
+            .details-list-sub-header-item:last-child {
+              width: 30%;
+              justify-content: flex-end;
+              & > * {
+                width: 80%;
+                max-width: 200px;
+              }
+              .ms-TextField {
+                margin: 0 20px 0 0;
+              }
+            }
+
         }
 
         .details-list-wrapper {
@@ -51,9 +78,18 @@
                     margin-top: 8px;
                 }
             }
+            .ms-DetailsHeader {
+              padding: 6px 0;
+              background-color: #e3e3e3;
+            }
+
+            .ms-DetailsHeader-cell:hover {
+              background-color: #e3e3e3;
+              cursor: pointer;
+            }
 
             .ms-DetailsHeader-cellName {
-                font-size: 16px;
+                font-size: 18px;
             }
 
             .ms-DetailsRow-cell {

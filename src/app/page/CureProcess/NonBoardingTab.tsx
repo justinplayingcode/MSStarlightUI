@@ -7,7 +7,7 @@ import { accountRole } from 'model';
 
 import Api from 'src/api'
 import { useEffect } from 'react';
-import { nonBoardingPatientColumns } from '../table/nonboardingtabletab';
+import { nonBoardingPatientColumns } from '../table/nonboardingcolumn';
 
 const NonBoardingTab = () => {
     const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true)    

@@ -1,17 +1,18 @@
 import { ICommandBarItemProps, Stack } from '@fluentui/react';
-import Api from 'api';
 import { accountRole } from 'model';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { UniformTable } from 'src/app/common';
 import { RootState } from 'src/redux/store';
 import { tooltipPlainText } from 'src/utils/utils';
-import { diseasesColumns } from '../table/diseasescolumn';
+import { medicationColumns } from '../table/medicastioncolumn';
+import Api from 'api';
 
-const Diseases = () => {
+const Medication = () => {
+
     const { role } = useSelector((state: RootState) => state.user);
 
-    const getDiseasesCommanBar = () => {
+    const getPillsCommanBar = () => {
         const commadBarButton: ICommandBarItemProps[] =[];
         if(role === accountRole.Admin){
             commadBarButton.push(
@@ -37,15 +38,16 @@ const Diseases = () => {
         }
         return commadBarButton;
     } 
+
     return(
         <div className='wrapper-table-content'>
             <UniformTable
-                integrateItems={Api.diseasesApi.getAllDiseases}
+              integrateItems={Api.medicationApi.getAllMedication}
                 searchByKeyWord='name'
-                columns={diseasesColumns}  
-                commandBarItems={getDiseasesCommanBar()}          
+                columns={medicationColumns}  
+                commandBarItems={getPillsCommanBar()}          
             />
         </div>
     )
 }
-export default Diseases;
+export default Medication;

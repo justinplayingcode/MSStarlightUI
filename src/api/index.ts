@@ -23,6 +23,13 @@ const api = {
     //department
     getAllDepartment: '/department/getall',
 
+    //diseases
+    getAllDiseases: '/diseases/getalldiseases',
+
+    //medication
+    getAllMedication: '/medication/getallmedications',
+
+
 }
 
 const authApi = {
@@ -65,9 +72,21 @@ const departmentApi = {
     getAllDepartment: () => apiClient.get(api.getAllDepartment),
 }
 
-export default {
-    authApi, 
-    accountApi, 
-    cureProcessApi,
-    departmentApi
+const diseasesApi = {
+  getAllDiseases: () => apiClient.get(api.getAllDiseases)
+}
+
+const medicationApi = {
+  getAllMedication: () => apiClient.get(api.getAllMedication)
+}
+
+
+const Api = {
+  authApi, 
+  accountApi, 
+  cureProcessApi,
+  departmentApi,
+  diseasesApi,
+  medicationApi
 };
+export default Api;

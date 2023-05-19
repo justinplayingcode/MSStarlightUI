@@ -1,7 +1,6 @@
 import { UniformPanel } from "src/app/common";
-import { BtnType, DepartmentType, DoctorRank, Gender, DoctorPosition } from "src/model/enum";
+import { BtnType, DoctorRank, Gender, DoctorPosition } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
-import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
