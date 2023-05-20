@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Tabs, { ITabProps, TabsProps } from 'src/app/common/Tab';
 import NonBoardingTab from './NonBoardingTab';
 import OnBoardingTab from './OnBoardingTab';
+import TestingTab from './TestingTab';
 
 const CureProcess = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -15,10 +16,15 @@ const CureProcess = () => {
           Component: <NonBoardingTab/>
         },
         {
-          label: "Nằm viện",
+          label: "Chờ xét nghiệm",
           index: 1,
+          Component: <TestingTab/>
+        },
+        {
+          label: "Nằm viện",
+          index: 2,
           Component: <OnBoardingTab/>
-        }
+        },
       ];
 
 

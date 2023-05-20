@@ -10,7 +10,8 @@ import Api from 'src/api'
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import SuccessDialog from "./Dialog";
-import { closePanel } from "src/redux/reducers";
+import { closePanel, tableRefresh } from "src/redux/reducers";
+import { gender } from "src/model/userModel";
 
 interface ICreatePatientPanel{
     panelType?: PanelType
@@ -48,17 +49,6 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
     phoneNumber: { maxWidth: 150, marginBottom: 20 },
     email: { marginBottom: 20 },
   });
-
-  const gender: IDropdownOption[] = [
-    {
-      key: `${Gender.male}`,
-      text: 'Nam'
-    },
-    {
-      key: `${Gender.female}`,
-      text: 'Nữ'
-    }
-  ]
 
   const getDepartment = () => {
     setIsLoading(true)
@@ -197,6 +187,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         // resetField();
         //close panel
         // dispatch(closePanel())
+        dispatch(tableRefresh())
       } else
       {
         alert('failed')

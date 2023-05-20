@@ -1,4 +1,5 @@
 import { accountRole } from "model";
+import { DoctorPosition, DoctorRank } from "src/model/enum";
 
 export default class Convert {
     public static shortenString = (t: string, n: number):string => {
@@ -63,6 +64,32 @@ export default class Convert {
                 return 'Bệnh nhân';
             default:
                 return '';
+        }
+    }
+
+    public static getDoctorRank = (rank: DoctorRank) => {
+        switch(rank){
+            case DoctorRank.thacSi:
+                return 'Thạc sĩ';
+            case DoctorRank.tienSi:
+                return 'Tiến sĩ';
+            case DoctorRank.PGSTS:
+                return 'Ph.Giáo sư, Tiến sĩ';
+            case DoctorRank.GSTS: 
+                return 'Giáo sư, Tiến sĩ'
+            default:
+                return 'Không';
+        }
+    }
+
+    public static getDoctorPosition = (pos: DoctorPosition) => {
+        switch(pos){
+            case DoctorPosition.viceDean:
+                return 'Phó khoa';
+            case DoctorPosition.dean:
+                return 'Trưởng khoa'
+            default:
+                return 'Không';
         }
     }
 }

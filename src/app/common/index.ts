@@ -6,6 +6,7 @@ import { LabelComponent } from "./Label"
 import { ErrorPage } from "./ErrorPage"
 import { ServiceCard } from "./ServiceCard";
 import { Toast} from "./Toast"
+import {InfomationGridComponent} from './InfomationGrid'
 import UniformTable from "./UniformTable";
 import UniformPanel from "./uniformpanel/UniformPanel";
 
@@ -18,6 +19,7 @@ export {
     ServiceCard,
     ErrorPage,
     Toast,
+    InfomationGridComponent,
     UniformTable,
     UniformPanel
 }

@@ -9,10 +9,10 @@ const CureProgress = () => {
 
     return(
         <div className='wrapper-table-content'>
-            <Stack className='form-header'
+            {/* <Stack className='form-header'
                 onClick={() => navigate(-1)}>
                     <Stack className='header-text'>&larr; Trở lại trang trước</Stack>
-            </Stack>
+            </Stack> */}
             <Stack>
 
             Bắt đầu khám
