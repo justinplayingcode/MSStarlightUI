@@ -8,7 +8,7 @@ import { Convert, Validate } from "utils";
 import Api from '../../../../api'
 import SuccessDialog from "./Dialog";
 import { useDispatch } from "react-redux";
-import { closePanel } from "src/redux/reducers";
+import { closePanel, tableRefresh } from "src/redux/reducers";
 import { gender } from "src/model/userModel";
 import { doctorPosition, doctorRank } from "src/model/doctorModel";
 
@@ -167,6 +167,7 @@ function CreatDoctorPanel() {
         resetField();
         //close panel
         // dispatch(closePanel())
+        dispatch(tableRefresh())
       } else
       {
         alert('failed')

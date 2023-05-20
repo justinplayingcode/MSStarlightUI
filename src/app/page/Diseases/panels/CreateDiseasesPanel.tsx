@@ -6,7 +6,7 @@ import { IFooterPanel } from "src/model/interface";
 import Api from 'src/api/index'
 import { Dictionary } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { closePanel } from "src/redux/reducers";
+import { closePanel, tableRefresh } from "src/redux/reducers";
 import { RootState } from "src/redux/store";
 
 interface ICreateDiseasesProps{
@@ -168,7 +168,8 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                     console.log(data)
                     alert("Success")
                     //if success, close panel
-                    dispatch(closePanel())
+                    dispatch(closePanel());
+                    dispatch(tableRefresh())
                 }
             }).catch(err => {
                 const { message } = err.response.data;
