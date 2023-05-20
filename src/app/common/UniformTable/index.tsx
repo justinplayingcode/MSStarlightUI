@@ -9,6 +9,7 @@ import { Convert } from 'utils';
 import { ApiStatus } from 'model';
 import { connect } from 'react-redux';
 import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
+import { RootState } from 'src/redux/store';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -22,12 +23,16 @@ export interface IUniformTableOwnProps {
     integrateItems: () => Promise<any>
 }
 
+export interface  IUniformTablePropsFromState {
+  refresh: boolean;
+}
+
 export interface IUniformTablePropsFromDispatch {
   setTableSelectedCount: any;
   setTableSelectedItem: any;
 }
 
-type IUniformTableProps = IUniformTableOwnProps & IUniformTablePropsFromDispatch;
+type IUniformTableProps = IUniformTableOwnProps & IUniformTablePropsFromDispatch & IUniformTablePropsFromState;
 
 export interface IUniformTableState {
     items: any[];
@@ -40,6 +45,10 @@ const mapDispatchToProps = {
   setTableSelectedCount,
   setTableSelectedItem
 }
+
+const mapStateToProps = (state: RootState) => ({
+  refresh: state.table.refresh
+})
 
 class UniformTable extends React.Component<IUniformTableProps, IUniformTableState> {
     private _selection: Selection;
@@ -69,6 +78,12 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
       this.getData();
       this.props.setTableSelectedCount(0);
       this.props.setTableSelectedItem([   ]);
+    }
+
+    componentDidUpdate(prevProps: Readonly<IUniformTableProps>, prevState: Readonly<IUniformTableState>, snapshot?: any): void {
+      if(this.props.refresh !== prevProps.refresh) {
+        this.OnRefresh();
+      }
     }
 
     private getData() {
@@ -223,4 +238,4 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
         });
     };
 }
-export default connect(null, mapDispatchToProps)(UniformTable)
+export default connect(mapStateToProps, mapDispatchToProps)(UniformTable)

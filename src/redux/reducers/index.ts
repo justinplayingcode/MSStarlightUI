@@ -6,12 +6,13 @@ import panelReducer, { closePanel, closePanelLoading, openPanel, openPanelLoadin
 
 import userReducer, { setInfoUser, setRole, setUsername, userLogout } from './userReducer';
 import doctorManagementReducer, { setDoctorList } from './doctorManagementReducer';
+import tableReducer, { tableRefresh } from './common/tableReducer';
 const rootReducer = combineReducers({
     currentSelected: currentSelectedReducer,
     loading: loadingReducer,
     navigation: navigationReducer,
     panel: panelReducer,
-
+    table: tableReducer,
     user: userReducer,
     doctorManagement: doctorManagementReducer,
 });
@@ -24,5 +25,6 @@ export {
     updateSelectedMenu,
     openPanel, closePanel, openPanelLoading, closePanelLoading,
     setRole, setUsername, setInfoUser, userLogout,
-    setDoctorList
+    setDoctorList,
+    tableRefresh
 }
