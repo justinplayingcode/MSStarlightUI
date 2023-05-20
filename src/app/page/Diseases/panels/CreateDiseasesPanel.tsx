@@ -5,8 +5,9 @@ import { BtnType, PanelType } from "src/model/enum"
 import { IFooterPanel } from "src/model/interface";
 import Api from 'src/api/index'
 import { Dictionary } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closePanel } from "src/redux/reducers";
+import { RootState } from "src/redux/store";
 
 interface ICreateDiseasesProps{
     panelType?: PanelType
@@ -15,6 +16,7 @@ interface ICreateDiseasesProps{
 
 const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     const dispatch = useDispatch();
+    const {tableSelectedItem} = useSelector((state: RootState) => state.currentSelected)
     
     const [isLoading, setIsLoading] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
@@ -45,9 +47,12 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     
       useEffect(() => {
         if(props.panelType === PanelType.Edit){
-            
-        }
-        
+            setName(tableSelectedItem[0]?.name);
+            setCode(tableSelectedItem[0]?.code);
+            setSymptom(tableSelectedItem[0]?.symptom);
+            setPrevention(tableSelectedItem[0]?.prevention);
+            setSelectedDepartment(tableSelectedItem[0]?.department)
+        }        
         getDepartment();
       },[])
 
@@ -71,6 +76,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                         setErrorMessage(undefined)
                         setName(val)
                     }}
+                    errorMessage={errorMessage?.name}
                 />
                 <TextField
                     required
@@ -80,6 +86,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                         setErrorMessage(undefined)
                         setCode(val)
                     }}
+                    errorMessage={errorMessage?.code}
                 />
                 <TextField 
                     required
@@ -91,6 +98,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                         setErrorMessage(undefined)
                         setSymptom(val)
                     }}
+                    errorMessage={errorMessage?.symptom}
                 />
                 <TextField 
                     required
@@ -102,6 +110,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                         setErrorMessage(undefined)
                         setPrevention(val)
                     }}
+                    errorMessage={errorMessage?.prevention}
                 />
                 <Dropdown
                     required
@@ -112,13 +121,34 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                         setErrorMessage(undefined)
                         setSelectedDepartment(option.key as string)
                     }} 
-                    errorMessage={errorMessage?.gender}
+                    errorMessage={errorMessage?.department}
                 />
             </>
         )
     }
 
     const clickSave = () => {
+        //validate
+        if(!name){
+            setErrorMessage({name: 'Hãy điền tên bệnh'});
+            return;
+        }
+        if(!code){
+            setErrorMessage({code: 'Hãy điền mã bệnh'});
+            return;
+        }
+        if(!symptom){
+            setErrorMessage({symptom: 'Hãy điền triệu chứng bệnh'});
+            return;
+        }
+        if(!prevention){
+            setErrorMessage({name: 'Hãy điền cách phòng bệnh'});
+            return;
+        }
+        if(!selectedDepartment){
+            setErrorMessage({department: 'Hãy chọn khoa quản lý'});
+            return;
+        }
 
         const reqbody = {
             name: name,
@@ -147,7 +177,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             Api.diseasesApi.editDiseases(reqbody).then((data) => {
                 if(data.status === 0){
                     console.log(data)
-                    alert("Success")
+                    alert("Success edit")
                     //if success, close panel
                     dispatch(closePanel())
                 }

@@ -29,6 +29,18 @@ const Medication = () => {
             },
         },
         {
+            key: 'designation',
+            name: 'Chỉ định',
+            minWidth: 280,
+            maxWidth: 400,
+            isResizable: true,
+            onRender: (item) => {
+                return(
+                    tooltipPlainText(item?.designation)
+                )
+            },
+        },
+        {
             key: 'usage',
             name: 'Công dụng',
             minWidth: 280,
