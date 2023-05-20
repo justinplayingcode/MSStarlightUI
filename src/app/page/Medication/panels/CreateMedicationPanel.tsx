@@ -20,6 +20,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
     const [isLoading, setIsLoading] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
 
+    const [id, setId] = useState<string>();
     const [name, setName] = useState<string>();
     const [designation, setDesignation] = useState<string>();
     const [usage, setUsage] = useState<string>();
@@ -28,6 +29,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
     
       useEffect(() => {
         if(props.panelType === PanelType.Edit){
+            setId(tableSelectedItem[0]?._id)
             setName(tableSelectedItem[0]?.name);
             setDesignation(tableSelectedItem[0]?.designation);
             setUsage(tableSelectedItem[0]?.usage);
@@ -114,6 +116,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
         }
 
         const reqbody = {
+            ...(props.panelType === PanelType.Edit) && {id: id},
             name: name,
             designation: designation,
             usage: usage,

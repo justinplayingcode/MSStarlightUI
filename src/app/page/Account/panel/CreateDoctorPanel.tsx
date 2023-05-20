@@ -9,6 +9,8 @@ import Api from '../../../../api'
 import SuccessDialog from "./Dialog";
 import { useDispatch } from "react-redux";
 import { closePanel } from "src/redux/reducers";
+import { gender } from "src/model/userModel";
+import { doctorPosition, doctorRank } from "src/model/doctorModel";
 
 function CreatDoctorPanel() {
   const [fullname, setFullname] = useState<string>();
@@ -38,56 +40,7 @@ function CreatDoctorPanel() {
     genDate: { marginBottom: 20 },
     phoneNumber: { maxWidth: 150, marginBottom: 20 },
     email: { marginBottom: 20 },
-  });
-
-  const gender: IDropdownOption[] = [
-    {
-      key: `${Gender.male}`,
-      text: 'Nam'
-    },
-    {
-      key: `${Gender.female}`,
-      text: 'Nữ'
-    }
-  ]
-
-  const doctorRank: IDropdownOption[] = [
-    {
-      key: `${DoctorRank.thacSi}`,
-      text: 'Thạc sĩ'
-    },
-    {
-      key: `${DoctorRank.tienSi}`,
-      text: 'Tiến sĩ'
-    },
-    {
-      key: `${DoctorRank.PGSTS}`,
-      text: 'Phó Giáo sư, Tiến sĩ'
-    },
-    {
-      key: `${DoctorRank.GSTS}`,
-      text: 'Giáo sư, Tiến sĩ'
-    },
-    {
-      key: `${DoctorRank.none}`,
-      text: 'Không'
-    },
-  ]
-
-  const doctorPosition: IDropdownOption[] = [
-    {
-      key: `${DoctorPosition.dean}`,
-      text: 'Trưởng Khoa'
-    },
-    {
-      key: `${DoctorPosition.viceDean}`,
-      text: 'Phó Khoa'
-    },
-    {
-      key: `${DoctorPosition.none}`,
-      text: 'Không'
-    },
-  ]
+  });  
 
   const onFormatDate = (date?: Date): string => {
     return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
