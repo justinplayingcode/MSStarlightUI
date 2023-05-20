@@ -6,6 +6,8 @@ import { RootState } from 'src/redux/store';
 import CreatDoctorPanel from 'src/app/page/Account/panel/CreateDoctorPanel';
 import CreatePatientPanel from 'src/app/page/Account/panel/CreatePatientPanel';
 import { PanelType } from 'src/model/enum';
+import CreateDiseasesPanel from 'src/app/page/Diseases/panels/CreateDiseasesPanel';
+import CreateMedicationPanel from 'src/app/page/Medication/panels/CreateMedicationPanel';
 
 export const MainPanel = () => {
 
@@ -18,7 +20,18 @@ export const MainPanel = () => {
             case panelTypeConstant.PANEL_CREATE_PATIENT:
                 return <CreatePatientPanel panelType={PanelType.Create}/>;
             case panelTypeConstant.PANEL_EDIT_PATIENT:
-                return <CreatePatientPanel panelType={PanelType.Edit}/>
+                return <CreatePatientPanel panelType={PanelType.Edit}/>;
+
+            case panelTypeConstant.PANEL_CREATE_DISEASES:
+                return <CreateDiseasesPanel panelType={PanelType.Create}/>;
+            case panelTypeConstant.PANEL_EDIT_DISEASES:
+                return <CreateDiseasesPanel panelType={PanelType.Edit}/>;
+
+            case panelTypeConstant.PANEL_CREATE_MEDICATION:
+                return <CreateMedicationPanel panelType={PanelType.Create}/>;
+            case panelTypeConstant.PANEL_EDIT_MEDICATION:
+                return <CreateMedicationPanel panelType={PanelType.Edit}/>;
+
             default:
                 return <></>
         }

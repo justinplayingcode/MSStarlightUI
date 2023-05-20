@@ -10,11 +10,11 @@ const api = {
 
     // account
     createDoctor: '/account/registerdoctor',
-    getPatientByInsurance: '/account/searchinsurance', // change
     getAllDoctor: '/account/getalldoctor',
     getAllPatient: '/account/getallpatient',
     
     //healthcare
+    getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
     getWaitPatient: '/healthcare/getallpatient',
     getPatientById: '/healthcare/getinfobyuserid',
@@ -24,11 +24,14 @@ const api = {
     getAllDepartment: '/department/getall',
 
     //diseases
-    getAllDiseases: '/diseases/getalldiseases',
-
-    //medication
+    getAllDiseases:'/diseases/getalldiseases',
+    createDiseases: '/diseases/creatediseases',
+    editDiseases: '/diseases/editdiseases',
+    
+    //pills
     getAllMedication: '/medication/getallmedications',
-
+    createMedication: '/medication/createmedication',
+    editMedication: '/medication/editmedication'
 
 }
 
@@ -73,20 +76,31 @@ const departmentApi = {
 }
 
 const diseasesApi = {
-  getAllDiseases: () => apiClient.get(api.getAllDiseases)
+    getAllDiseases: () => apiClient.get(api.getAllDiseases),
+    createDiseases: (reqbody) => {
+        return apiClient.post(api.createDiseases,reqbody)
+    },
+    editDiseases: (reqbody) => {
+        return apiClient.post(api.editDiseases,reqbody)
+    }
 }
 
 const medicationApi = {
-  getAllMedication: () => apiClient.get(api.getAllMedication)
+    getAllMedication: () => apiClient.get(api.getAllMedication),
+    createMedication: (reqbody) => {
+        return apiClient.post(api.createMedication, reqbody)
+    },
+    editMedication: (reqbody) => {
+        return apiClient.post(api.editMedication, reqbody)
+    }
 }
 
-
 const Api = {
-  authApi, 
-  accountApi, 
-  cureProcessApi,
-  departmentApi,
-  diseasesApi,
-  medicationApi
-};
+    authApi, 
+    accountApi, 
+    cureProcessApi,
+    departmentApi,
+    diseasesApi,
+    medicationApi
+  };
 export default Api;

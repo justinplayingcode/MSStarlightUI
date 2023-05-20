@@ -4,6 +4,7 @@ import './index.scss'
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { userLogout } from "src/redux/reducers";
+import { useNavigate } from "react-router-dom";
 interface IAvatarProps {
     avatar_scr: string;
     size?: AvatarSize;
@@ -36,7 +37,9 @@ export const getAvatarSize = (size: AvatarSize | undefined) => {
 export const Avatar = (props: IAvatarProps) => {
     const [isCalloutVisible, setIsCalloutVisible] = React.useState<boolean>(false);
     const [isHover, setIsHover] = useState(false);
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
 
    const handleMouseEnter = () => {
@@ -87,7 +90,10 @@ export const Avatar = (props: IAvatarProps) => {
                     target={`#callout-button`}
                     onDismiss={() => setIsCalloutVisible(!isCalloutVisible)}
                 >
-                    <DefaultButton text="Thông tin tài khoản" onClick={(e) => alert('Thông tin tài khoản')} />
+                    <DefaultButton text="Thông tin tài khoản" onClick={(e) => {
+                        setIsCalloutVisible(false)
+                        navigate('/profile')
+                    }} />
                     <DefaultButton text="Đổi mật khẩu" onClick={(e) => alert('Đổi mật khẩu')} />
                     <DefaultButton text="Đăng xuất" onClick={handleLogOut} />
                 </Callout>

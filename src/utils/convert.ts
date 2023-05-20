@@ -1,3 +1,5 @@
+import { accountRole } from "model";
+
 export default class Convert {
     public static shortenString = (t: string, n: number):string => {
             if(t.length > n) {
@@ -49,5 +51,18 @@ export default class Convert {
 
     public static datetommddyyyy = (dateString: Date) => {
         return (dateString.getMonth() + 1) + '/' + dateString.getDate() + '/' +  dateString.getFullYear();
+    }
+
+    public static getAccountRoleName = (role: accountRole) => {
+        switch(role){
+            case accountRole.Admin:
+                return 'Administrator';
+            case accountRole.Doctor:
+                return 'Bác sĩ';
+            case accountRole.Patient:
+                return 'Bệnh nhân';
+            default:
+                return '';
+        }
     }
 }

@@ -17,8 +17,7 @@ export const routeMapping : { [key: string]: IRouteItem} = {
     Account: {
         key: 'route-account',
         text: 'Tài khoản',
-        url: '/account',
-        // parentKeys:["route-home"]
+        url: '',
     },
     AccountCreatePatient: {
         key: 'route-account-create-patient',
