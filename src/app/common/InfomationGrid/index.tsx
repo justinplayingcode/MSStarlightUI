@@ -40,7 +40,7 @@ export const InfomationGridComponent = (props: IProps) => {
                 key={`infomation-grid-item-${index}`}
             >
                 <Stack.Item
-                    style={{ width: props.customLabelWidth || '210px'}}
+                    style={{ width: props.customLabelWidth || '160px'}}
                     className={css("label-section", { 'has-background': props.isDataLoaded})}
                     disableShrink
                     grow={0}
