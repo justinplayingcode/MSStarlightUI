@@ -9,7 +9,7 @@ import Api from '../../../../api'
 import SuccessDialog from "./Dialog";
 import { useDispatch } from "react-redux";
 import { closePanel, closePanelLoading, openPanelLoading, tableRefresh } from "src/redux/reducers";
-import { gender } from "src/model/userModel";
+import { gender, onFormatDate } from "src/model/userModel";
 import { doctorPosition, doctorRank } from "src/model/doctorModel";
 
 function CreatDoctorPanel() {
@@ -42,10 +42,6 @@ function CreatDoctorPanel() {
     email: { marginBottom: 20 },
   });  
 
-  const onFormatDate = (date?: Date): string => {
-    return !date ? '' : date.getDate() + '/' + (date.getMonth() + 1) + '/' + (date.getFullYear());
-  };
-
   const getDepartment = () => {
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
@@ -63,9 +59,7 @@ function CreatDoctorPanel() {
   }
 
   useEffect(() => {
-    // setIsLoading(true)
-
-    getDepartment();
+      getDepartment();
   },[])
   
   const buttonFooter: IFooterPanel[] = [

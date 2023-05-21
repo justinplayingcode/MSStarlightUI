@@ -7,6 +7,7 @@ const api = {
     login: `${baseURL}/auth/login`,
     checkcurrentuser: `/auth`,
     getInfoCurrentUser: '/auth/infocurrentuser',
+    editPersonalInfo : '/auth/edit',
 
     // account
     createDoctor: '/account/registerdoctor',
@@ -43,6 +44,9 @@ const authApi = {
     //
     checkCurrentUser: () => apiClient.get(api.checkcurrentuser),
     getInfoCurrentUser: () => apiClient.get(api.getInfoCurrentUser),
+    editPersonalInfo: (reqbody) => {
+        return apiClient.post(api.editPersonalInfo, reqbody)
+    }
 }
 
 const accountApi = {

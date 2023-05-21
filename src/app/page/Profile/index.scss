@@ -12,16 +12,46 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 20px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
         .profile-info{
             display: flex;
             flex-direction: row;
             .profile-basic-info{
+                width: 25%;
+                min-width: 170px;
                 align-items: center;
                 padding-right: 20px;
             }
             .profile-detail-info{
+                flex: 1;
                 padding-left: 10px;
+                
+                .detail-info-content{
+                    overflow: auto;
+
+                    .ms-Label{
+                        min-width: 160px;
+                    }
+                    .top-detail-info{
+                        margin-bottom: 20px;
+                        padding: 8px;
+    
+                        border: 1px solid #eee;
+                    }
+                    .bottom-detail-info{
+                        padding: 8px;
+    
+                        border: 1px solid #eee;
+                    }
+                }
+                .footer-button{
+                    display: flex;
+                    justify-content: flex-end;
+                }
             }
         }
     }
