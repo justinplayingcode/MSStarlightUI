@@ -11,11 +11,10 @@ import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
 import Diseases from "src/app/page/Diseases";
 import Profile from "src/app/page/Profile";
-import Pills from "src/app/page/Medication";
 import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
-import { IToastProps, Toast } from "../Toast";
+import { Toast } from "../Toast";
 import { Navigate } from "react-router-dom";
 import Api from "src/api";
 import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "src/redux/reducers";
@@ -30,7 +29,8 @@ interface LayoutOwnProps {
 
 interface LayoutPropsFromState {
     isLoading: boolean;
-    username: string
+    username: string;
+    showToast: boolean;
 }
 
 interface LayoutPropsFromDispatch {
@@ -44,6 +44,7 @@ interface LayoutPropsFromDispatch {
 const mapStateToProps = (state: RootState) => ({
     isLoading: state.loading.isLoading,
     username: state.user.username,
+    showToast: state.toast.isShow,
 })
 
 const mapDispatchToProps = {
@@ -57,7 +58,6 @@ type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispat
 
 
 interface LayoutState {
-    toastList: IToastProps[];
     loading: boolean
 }
 
@@ -65,7 +65,6 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     constructor(props: LayoutProps) {
         super(props);
         this.state = {
-            toastList: [],
             loading: true
         }
     }
@@ -99,25 +98,6 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             this.props.setInfoUser(res.data);
         }
         return res.status
-    }
-
-
-    addToast = (toast: IToastProps) => {
-        this.setState(prevState => ({
-            ...prevState,
-            toastList: [toast]
-        }))
-    }
-    
-    
-    handleToast = () => {
-        const toastProperties = {
-            id:1,
-            title: 'Success',
-            description: 'This is a success toast component',
-            backgroundColor: '#5cb85c'
-        }
-        this.addToast(toastProperties);
     }
 
     renderContent() {
@@ -184,16 +164,16 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     render() {
-        const { toastList, loading } = this.state;
-        const { username } = this.props;
+        const { loading } = this.state;
+        const { username, showToast, isLoading } = this.props;
         if(loading) {
             return <LoadingCirle/>
         } else {
             return (
                 <>
-                    {this.props.isLoading ? <LoadingDot /> : <React.Fragment />}
+                    {isLoading ? <LoadingDot /> : <React.Fragment />}
                     {username ? this.renderContent() : <Navigate to="/login" replace/>}
-                    <Toast toastList={toastList} />
+                    {showToast && <Toast />}
                 </>
             )
         }

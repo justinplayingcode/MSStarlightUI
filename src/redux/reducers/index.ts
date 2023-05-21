@@ -7,6 +7,7 @@ import panelReducer, { closePanel, closePanelLoading, openPanel, openPanelLoadin
 import userReducer, { setInfoUser, setRole, setUsername, userLogout } from './userReducer';
 import doctorManagementReducer, { setDoctorList } from './doctorManagementReducer';
 import tableReducer, { tableRefresh } from './common/tableReducer';
+import toastReducer, { showToastMessage, closeToastMessage } from './common/toastReducer';
 const rootReducer = combineReducers({
     currentSelected: currentSelectedReducer,
     loading: loadingReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     table: tableReducer,
     user: userReducer,
     doctorManagement: doctorManagementReducer,
+    toast: toastReducer,
 });
 
 export default rootReducer;
@@ -26,5 +28,6 @@ export {
     openPanel, closePanel, openPanelLoading, closePanelLoading,
     setRole, setUsername, setInfoUser, userLogout,
     setDoctorList,
-    tableRefresh
+    tableRefresh,
+    showToastMessage, closeToastMessage
 }

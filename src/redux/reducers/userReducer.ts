@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ApiStatus, accountRole } from "model";
-import authApi from "src/api";
+import { createSlice } from "@reduxjs/toolkit";
+import { accountRole } from "model";
 
 interface CurrentUserState {
     role: accountRole | null;
@@ -9,8 +8,6 @@ interface CurrentUserState {
     pending: boolean;
 }
 
-//call api and then change the role depend on the account role
-
 const initialState: CurrentUserState = {
     role: null,
     username: null,
@@ -18,21 +15,6 @@ const initialState: CurrentUserState = {
     pending: false
 };
 
-// const getInfoCurrentUser = async () => {
-//     const res = await authApi.getInfoCurrentUser();
-
-// }
-
-// const getInfo = createAsyncThunk(
-//     'currentuser/getinfo',
-//     async () => {
-//         const { data } = await authApi.getInfoCurrentUser();
-//         console.log(data)
-//         return data;
-//     }
-// )
-
-//save infomation of current log in user
 export const userSlice = createSlice({
     name: 'currentuser',
     initialState,
