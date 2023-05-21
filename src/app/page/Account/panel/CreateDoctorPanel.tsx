@@ -8,7 +8,7 @@ import { Convert, Validate } from "utils";
 import Api from '../../../../api'
 import SuccessDialog from "./Dialog";
 import { useDispatch } from "react-redux";
-import { closePanel, tableRefresh } from "src/redux/reducers";
+import { closePanel, closePanelLoading, openPanelLoading, tableRefresh } from "src/redux/reducers";
 import { gender } from "src/model/userModel";
 import { doctorPosition, doctorRank } from "src/model/doctorModel";
 
@@ -26,7 +26,7 @@ function CreatDoctorPanel() {
 
   const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
 
-  const [isLoading, setIsLoading] = useState<boolean>();
+  // const [isLoading, setIsLoading] = useState<boolean>();
   const [departmentList, setDepartmentList] = useState<any[]>();
 
   const [isDialogClosed, setIsDialogClosed] = useState<boolean>(true);
@@ -59,11 +59,12 @@ function CreatDoctorPanel() {
     }).catch(err => {
         const { message } = err.response.data;
         // setErrorMessage(message)
-    }).finally(() => setIsLoading(false))
+    }).finally(() => dispatch(closePanelLoading()))
   }
 
   useEffect(() => {
-    setIsLoading(true)
+    // setIsLoading(true)
+
     getDepartment();
   },[])
   
@@ -154,7 +155,7 @@ function CreatDoctorPanel() {
       rank: rank,
     }
     
-    setIsLoading(true);
+    dispatch(openPanelLoading())
     Api.accountApi.createDoctor(reqbody).then(data => {
       if(!data.status){
         //show dialog
@@ -179,7 +180,7 @@ function CreatDoctorPanel() {
         // setErrorMessage(message)
         //toast failed
         // dont close
-    }).finally(() => setIsLoading(false))
+    }).finally(() => dispatch(closePanelLoading()))
 
 
   }
@@ -302,8 +303,9 @@ function CreatDoctorPanel() {
     >
       {/* content here */}
       {
-        isLoading ? <Spinner size={SpinnerSize.large} />
-          : <Stack className='form-input'>
+        // isLoading ? <Spinner size={SpinnerSize.large} />
+        //   : 
+          <Stack className='form-input'>
             {renderInputField()}
           </Stack>
       }

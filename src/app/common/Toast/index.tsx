@@ -1,31 +1,18 @@
-import * as React from 'react'
+import { IToastProps, Toast } from "./ToastItem";
 
-export interface IToastProps{
-    id: number;
-    title: string;
-    description: string;
-    backgroundColor: string;
+interface IToastsContainerProps {
+  toasts: IToastProps[]
 }
 
-interface ToastProps{
-    toastList: IToastProps[]
-}
 
-export const Toast = (props: ToastProps) => {
-    return(
-        <>
-            {props.toastList.map((toast, index) => {
-                <div
-                    key={index}
-                    style={{backgroundColor: toast.backgroundColor}}
-                >
-                    <button>X</button>
-                    <div>
-                        <p>{toast.title}</p>
-                        <p>{toast.description}</p>
-                    </div>
-                </div>
-            })}
-        </>
-    )
-}
+const ToastsContainer = ({ toasts }: IToastsContainerProps) => {
+  return (
+    <div className="toasts-container">
+      {toasts.map((toast) => (
+        <Toast key={toast.id} {...toast} />
+      ))}
+    </div>
+  );
+};
+
+export default ToastsContainer;

@@ -8,6 +8,7 @@ import CreatePatientPanel from 'src/app/page/Account/panel/CreatePatientPanel';
 import { PanelType } from 'src/model/enum';
 import CreateDiseasesPanel from 'src/app/page/Diseases/panels/CreateDiseasesPanel';
 import CreateMedicationPanel from 'src/app/page/Medication/panels/CreateMedicationPanel';
+import LoadingPanel from './loadingPanel';
 
 export const MainPanel = () => {
 
@@ -43,7 +44,7 @@ export const MainPanel = () => {
             isOpen={isOpen}
             hasCloseButton={false}
         >
-            {isLoading ? 'loading' : 
+            {isLoading ? <LoadingPanel/> : 
                 <Stack className='panel-content'>
                     {renderPanelContent()}
                 </Stack>

@@ -1,31 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
+// import { IToastProps } from "src/app/common/Toast/ToastItem";
 
-interface toastState {
-    selectedMenu: string;
-    isShow: boolean;
-}
+// interface toastState {
+//   toasts: IToastProps[]
+// }
 
-const initialState: toastState = {
-    selectedMenu: '',
-    isShow: false
-};
+// const initialState: toastState = {
+//   toasts: []
+// };
 
-export const toastSlice = createSlice({
-    name: "toast",
-    initialState,
-    reducers: {
-        showMessagerBar: (state, action ) => {
-            state.isShow = true
-            state.selectedMenu = action.payload;
+// export const toastSlice = createSlice({
+//     name: "toast",
+//     initialState,
+//     reducers: {
+//         showMessagerBar: (state, action ) => {
+//           let oldToast = [...state.toasts]
+//           state.toasts = [ oldToast]
+//         },
+//         closeMessagerBar: (state) => {
+//             state.isShow = false,
+//             state.selectedMenu = ""
+//         }
+//     },
+// });
 
-        },
-        closeMessagerBar: (state) => {
-            state.isShow = false,
-            state.selectedMenu = ""
-        }
-    },
-});
+// export const { showMessagerBar, closeMessagerBar  } = toastSlice.actions;
 
-export const { showMessagerBar, closeMessagerBar  } = toastSlice.actions;
-
-export default toastSlice.reducer;
+// export default toastSlice.reducer;
