@@ -6,7 +6,7 @@ import { IFooterPanel } from "src/model/interface";
 import Api from 'src/api/index'
 import { Dictionary } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { closePanel } from "src/redux/reducers";
+import { closePanel, tableRefresh } from "src/redux/reducers";
 import { RootState } from "src/redux/store";
 
 interface ICreateDiseasesProps{
@@ -22,6 +22,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
     const [departmentList, setDepartmentList] = useState<any[]>();
 
+    const [id, setId] = useState<string>();
     const [name, setName] = useState<string>();
     const [code, setCode] = useState<string>();
     const [symptom, setSymptom] = useState<string>();
@@ -47,6 +48,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     
       useEffect(() => {
         if(props.panelType === PanelType.Edit){
+            setId(tableSelectedItem[0]?._id)
             setName(tableSelectedItem[0]?.name);
             setCode(tableSelectedItem[0]?.code);
             setSymptom(tableSelectedItem[0]?.symptom);
@@ -151,6 +153,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
         }
 
         const reqbody = {
+            ...(props.panelType === PanelType.Edit) && {id: id},
             name: name,
             code: code,
             symptom: symptom,
@@ -165,7 +168,8 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                     console.log(data)
                     alert("Success")
                     //if success, close panel
-                    dispatch(closePanel())
+                    dispatch(closePanel());
+                    dispatch(tableRefresh())
                 }
             }).catch(err => {
                 const { message } = err.response.data;
