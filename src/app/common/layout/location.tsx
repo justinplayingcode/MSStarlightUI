@@ -3,23 +3,24 @@ import * as React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getRouteItemByKey, getRouteItemByUrl } from './route.type';
 import './location.scss'
+import { RootState } from 'src/redux/store';
+import { useSelector } from 'react-redux';
 
 export const Location = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
+    const { fullname } = useSelector((state:RootState) => state.user.info);
 
     const assembleParentItem = (key: string) => {
         const routeItem = getRouteItemByKey(key);
-        // console.log(routeItem);
-        
         const item: IBreadcrumbItem = {
             text:'',
             key:''
         };
-        if (routeItem.key !== 'route-home'){
-            item.key = routeItem.key;
-            item.text = routeItem.text
-        };
+        // if (routeItem.key !== 'route-home'){
+        //     item.key = routeItem.key;
+        //     item.text = routeItem.text
+        // };
         
         if (routeItem.url){
             item.onClick = () => {
@@ -39,11 +40,16 @@ export const Location = () => {
             routeItem.parentKeys.forEach((key) => {
                 items.push(assembleParentItem(key))
             });
-        if(routeItem.key !== 'route-home'){
-            items.push({
-                key: routeItem.key,
-                text: routeItem.text
-            });
+        if(routeItem.key === 'route-home'){
+          items.push({
+            key: routeItem.key,
+            text: `Xin chào ${fullname}`
+          });
+        } else {
+          items.push({
+            key: routeItem.key,
+            text: routeItem.text
+          });
         }
         return items;
     },[pathname]);
@@ -52,8 +58,8 @@ export const Location = () => {
         <Stack className='breadcrumbs'
             styles={{
                 root: {
-                    height: assembleBreadItem().length === 0 ? 0 : 32,
-                    marginBottom: assembleBreadItem().length === 0 ? 0 : 20,
+                    height: 32,
+                    marginBottom: 20,
                 }
             }}
         >
