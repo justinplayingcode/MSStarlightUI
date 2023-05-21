@@ -72,3 +72,10 @@ export enum PanelType{
     View,
     None
 }
+
+export enum toastType {
+  succes,
+  error,
+  info,
+  warning
+}

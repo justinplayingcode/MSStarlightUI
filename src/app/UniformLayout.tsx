@@ -35,7 +35,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
 
     render() {
         return (
-            <div id="uniform-layout-wrapper">
+            <div>
                 <Router>
                     <Routes>
                         <Route path="/login" element={<Login/>} />
