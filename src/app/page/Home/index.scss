@@ -1,238 +1,279 @@
-.home-container{
+// .home-container{
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: row;
+
+//     // overflow-y: scroll;
+    
+//     .home-left-section{
+//         width: 100%;
+
+//         .welcome-section {
+//             width: 100%;
+//             min-height: 180px;
+//             margin-bottom: 20px;
+//             display: flex;
+//             flex-direction: row;
+//             flex-wrap: wrap;
+//             justify-content: space-between;
+//             .welcome-block {
+//                 border-radius: 20px;
+//                 background-color: #fff;
+//                 width: 23.5%;
+//                 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//             }
+//             .welcome-block-admin {
+//                 position: relative;
+//                 display: flex;
+//                 flex-direction: column;
+//                 align-items: end;
+//                 padding: 32px;
+//                 .welcome-block-icon {
+//                     position: absolute;
+//                     height: 70px;
+//                     width: 70px;
+//                     top: -16px;
+//                     left: 20px;
+//                     border-radius: 20px;
+//                     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//                     display: flex;
+//                     justify-content: center;
+//                     align-items: center;
+//                     img {
+//                         height: 40px;
+//                     }
+//                 }
+//                 .welcome-block-dec {
+//                     font-size: 14px;
+//                     font-style: italic;
+//                     margin: 16px 0 4px 0;
+//                     padding-left: 80px;
+//                 }
+//                 .welcome-block-number {
+//                     font-size: 40px;
+//                     font-weight: bold;
+//                     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+//                 }
+//             }
+//             .welcome-left{
+//                 padding: 24px;
+//                 width: 49%;
+//                 display: flex;
+//                 justify-content: flex-start;
+//                 flex-direction: column;
+//                 background: linear-gradient(to left, #fafafa, #fbfeff);
+//                 .welcome-text{
+//                     display: flex;
+//                     flex-direction: column;
+//                     justify-content: flex-start;
+//                     max-width: 500px;
+//                     .text-header{
+//                         font-size: 20px;
+//                         margin-bottom: 4px;
+//                         color: #002147;
+//                         font-weight: bold;
+
+//                     }
+//                     .text-remind{
+//                         height: 32px;
+//                         font-size: 16px;
+//                     }
+//                 }
+//                 .text-totalnewuser {
+//                     display: flex;
+//                     flex: 1;
+//                     align-items: end;
+//                     justify-content: end;
+//                 }
+//                 .curent-date{
+//                     font-size: 18px;
+//                     margin-bottom: 12px;
+//                     font-style: italic;
+//                     color: #111827;
+//                 }
+//                 .welcome-image{
+//                     height: 140px;    
+//                 }
+//             }
+//         }
+//         .menu-section{
+//             flex: 1;
+//             display: flex;
+//             flex-direction: column;
+
+//             .basic-status{
+//                 width: 100%;
+//                 display: flex;
+//                 flex-direction: row;
+//                 flex-wrap: wrap;
+//                 justify-content: space-between;
+
+//                 .status-container{
+//                     width: 24%;
+//                     max-height: 164px;
+//                     min-width: 164px;
+//                     border-radius: 20px;
+//                     background-color: #fff;
+//                     box-sizing: border-box;
+//                     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//                     padding: 20px;
+//                     margin-bottom: 20px;
+//                     &:hover {
+//                         background-color: #fafafa;
+//                     }
+//                     .status-info{
+//                         display: flex;
+//                         flex-direction: row;
+//                         align-items: center;
+
+//                         margin-bottom: 8px;
+//                         .info-icon{
+//                             display: flex;
+//                             justify-content: center;
+//                             align-items: center;
+
+//                             padding: 8px;
+//                             border-radius: 8px;
+//                             img{
+//                                 height: 32px;
+//                                 width: 32px;
+//                             }
+//                         }
+//                         .info-text{
+//                             margin-left: 16px;
+//                             font-size: 20px;
+//                             .info-text-unit {
+//                                 font-size: 16px;
+//                                 font-weight: bold
+//                             }
+//                         }
+//                     }
+//                     .status-detail{
+                        
+//                         .status-name{
+//                             font-size: 18px;
+//                             font-weight: 700;
+//                         }
+//                         .status-description{
+//                             font-size: 14px;
+//                             font-style: italic;
+//                             font-weight: 300;
+//                             margin-top: 4px;
+//                             width: 100%;
+//                         }
+//                     }
+//                 }
+//             }
+
+//             .status-news{
+//                 width: 100%;
+//                 display: flex;
+//                 flex-direction: row;
+//                 flex-wrap: wrap;
+//                 justify-content: space-between;
+//                 min-width: 360px;
+//                 min-height: 200px;
+//                 flex: 1;
+
+//                 // border-radius: 20px;
+//                 // background-color: #fff;
+//                 box-sizing: border-box;
+//                 // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//             }
+//             .chart-container {
+//                 .chart-block {
+//                     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//                     background-color: #fff;
+//                     border-radius: 20px;
+//                     width: 49%;
+//                 }
+//             }
+//             .news-container {
+//                 box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//                 background-color: #fff;
+//             }
+//         }
+//     }
+//     .home-right-section{
+//         width: 360px;
+//         background-color: #fff;
+//         border-radius: 25px;
+//         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+//         margin-left: 40px;
+
+//         .preview-profile{
+//             align-items: center;
+//             padding-bottom: 80px;
+
+//             .profile-info{
+//                 align-items: center;
+//                 // color: #fff;
+//                 font-size: 20px;
+
+//                 padding-top: 20px;
+//                 .info-name{
+//                     margin-top: 10px;
+//                 }
+//                 .height-weight-container{
+//                     display: flex;
+//                     flex-direction: row;
+//                     justify-content: space-around;
+//                     .status-info{
+//                         .info-icon{
+//                             img{
+//                                 height: 32px;
+//                                 width: 32px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//             .calendar {
+//                 background: #fff;
+//                 border-radius: 25px;
+//             }
+//         }
+//     }
+// }
+
+.home-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    height: 52px;
     width: 100%;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px 0;
+  }
+
+  .content {
     height: 100%;
     display: flex;
-    flex-direction: row;
+    padding-top: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 
-    // overflow-y: scroll;
-    
-    .home-left-section{
-        width: 100%;
-
-        .welcome-section {
-            width: 100%;
-            min-height: 180px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            .welcome-block {
-                border-radius: 20px;
-                background-color: #fff;
-                width: 23.5%;
-                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-            }
-            .welcome-block-admin {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                align-items: end;
-                padding: 32px;
-                .welcome-block-icon {
-                    position: absolute;
-                    height: 70px;
-                    width: 70px;
-                    top: -16px;
-                    left: 20px;
-                    border-radius: 20px;
-                    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    img {
-                        height: 40px;
-                    }
-                }
-                .welcome-block-dec {
-                    font-size: 14px;
-                    font-style: italic;
-                    margin: 16px 0 4px 0;
-                    padding-left: 80px;
-                }
-                .welcome-block-number {
-                    font-size: 40px;
-                    font-weight: bold;
-                    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
-                }
-            }
-            .welcome-left{
-                padding: 24px;
-                width: 49%;
-                display: flex;
-                justify-content: flex-start;
-                flex-direction: column;
-                background: linear-gradient(to left, #fafafa, #fbfeff);
-                .welcome-text{
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    max-width: 500px;
-                    .text-header{
-                        font-size: 20px;
-                        margin-bottom: 4px;
-                        color: #002147;
-                        font-weight: bold;
-
-                    }
-                    .text-remind{
-                        height: 32px;
-                        font-size: 16px;
-                    }
-                }
-                .text-totalnewuser {
-                    display: flex;
-                    flex: 1;
-                    align-items: end;
-                    justify-content: end;
-                }
-                .curent-date{
-                    font-size: 18px;
-                    margin-bottom: 12px;
-                    font-style: italic;
-                    color: #111827;
-                }
-                .welcome-image{
-                    height: 140px;    
-                }
-            }
-        }
-        .menu-section{
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-
-            .basic-status{
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-
-                .status-container{
-                    width: 24%;
-                    max-height: 164px;
-                    min-width: 164px;
-                    border-radius: 20px;
-                    background-color: #fff;
-                    box-sizing: border-box;
-                    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-                    padding: 20px;
-                    margin-bottom: 20px;
-                    &:hover {
-                        background-color: #fafafa;
-                    }
-                    .status-info{
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-
-                        margin-bottom: 8px;
-                        .info-icon{
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-
-                            padding: 8px;
-                            border-radius: 8px;
-                            img{
-                                height: 32px;
-                                width: 32px;
-                            }
-                        }
-                        .info-text{
-                            margin-left: 16px;
-                            font-size: 20px;
-                            .info-text-unit {
-                                font-size: 16px;
-                                font-weight: bold
-                            }
-                        }
-                    }
-                    .status-detail{
-                        
-                        .status-name{
-                            font-size: 18px;
-                            font-weight: 700;
-                        }
-                        .status-description{
-                            font-size: 14px;
-                            font-style: italic;
-                            font-weight: 300;
-                            margin-top: 4px;
-                            width: 100%;
-                        }
-                    }
-                }
-            }
-
-            .status-news{
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                min-width: 360px;
-                min-height: 200px;
-                flex: 1;
-
-                // border-radius: 20px;
-                // background-color: #fff;
-                box-sizing: border-box;
-                // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-            }
-            .chart-container {
-                .chart-block {
-                    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-                    background-color: #fff;
-                    border-radius: 20px;
-                    width: 49%;
-                }
-            }
-            .news-container {
-                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-                background-color: #fff;
-            }
-        }
+    & > div {
+      background-color: #fff;
+      border: 1px solid #ccc;
     }
-    .home-right-section{
-        width: 360px;
-        background-color: #fff;
-        border-radius: 25px;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-        margin-left: 40px;
 
-        .preview-profile{
-            align-items: center;
-            padding-bottom: 80px;
-
-            .profile-info{
-                align-items: center;
-                // color: #fff;
-                font-size: 20px;
-
-                padding-top: 20px;
-                .info-name{
-                    margin-top: 10px;
-                }
-                .height-weight-container{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-                    .status-info{
-                        .info-icon{
-                            img{
-                                height: 32px;
-                                width: 32px;
-                            }
-                        }
-                    }
-                }
-            }
-            .calendar {
-                background: #fff;
-                border-radius: 25px;
-            }
-        }
+    .width50per {
+      width: 50%;
     }
+    .height70per {
+      height: 70%;
+    }
+    .height30per {
+      height: 30%;
+    }
+  }
 }
