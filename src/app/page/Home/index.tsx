@@ -303,10 +303,10 @@ const Home = () => {
   const onRenderAdmin = (): JSX.Element => {
     return (
       <>
-      <div className="width50per height30per"></div>
-      <div className="width50per height30per">tin tuc</div>
-      <div className="width50per height70per"></div>
-      <div className="width50per height70per"></div>
+      <div className="width50per height40per"></div>
+      <div className="width50per height40per">tin tuc</div>
+      <div className="width50per height60per"></div>
+      <div className="width50per height60per"></div>
       </>
     )
   }
