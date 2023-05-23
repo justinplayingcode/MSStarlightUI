@@ -3,7 +3,7 @@ import "./index.scss"
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import UniformHeader from "../header";
-import {  ApiStatus, pageConstant } from "model";
+import {  ApiStatus, accountRole, pageConstant } from "model";
 import Home from "src/app/page/Home";
 import { LoadingCirle, LoadingDot } from "../loading";
 import { Stack } from "@fluentui/react";
@@ -25,12 +25,14 @@ import CureProgress from "src/app/page/CureProcess/component/CureProgress";
 import Medication from "src/app/page/Medication";
 interface LayoutOwnProps {
     page: string;
+    permission: number[];
 }
 
 interface LayoutPropsFromState {
     isLoading: boolean;
     username: string;
     showToast: boolean;
+    role: accountRole;
 }
 
 interface LayoutPropsFromDispatch {
@@ -45,6 +47,7 @@ const mapStateToProps = (state: RootState) => ({
     isLoading: state.loading.isLoading,
     username: state.user.username,
     showToast: state.toast.isShow,
+    role: state.user.role
 })
 
 const mapDispatchToProps = {
@@ -101,8 +104,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
     }
 
     renderContent() {
-        const { page } = this.props;
+        const { page, permission, role } = this.props;
         let content: JSX.Element;
+
         switch (page) {
             case pageConstant.LAYOUT_HOME:
                 content = <Home />
@@ -146,6 +150,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 break;
         }
 
+        if(!permission.includes(role)) {
+          return <Navigate to="/error/nopermission" replace/>
+        };
         return (
             <div id="layout-wrapper">
                 <SideBar/>
