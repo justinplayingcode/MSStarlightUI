@@ -1,13 +1,16 @@
 .wrapper-table-content{
+    
     .user-profile{
         flex: 1;
         display: flex;
         flex-direction: column;
+        background-color: #fff;
 
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
-        padding: 20px 40px;
+        padding: 20px;
         margin-top: 10px;
+
         .profile-header{
             font-size: 24px;
             font-weight: 700;
@@ -55,4 +58,15 @@
             }
         }
     }
+}
+
+
+//660
+@media (max-width: 660px) {
+    // .user-profile{
+    .wrapper-table-content .user-profile .profile-info{
+        flex-direction: column ;
+        align-items: center;
+    }
+// }
 }

@@ -81,7 +81,7 @@ const Medication = () => {
                         key: 'editItem',
                         text: 'Sửa',
                         iconProps: { iconName: 'Edit' },
-                        onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_MEDICATION)) },
+                        onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_EDIT_MEDICATION)) },
                     },
                     {
                         key: 'deleteItem',

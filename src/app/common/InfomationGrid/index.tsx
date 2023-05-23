@@ -1,12 +1,26 @@
-import { Alignment, Stack, css } from "@fluentui/react";
+import { Alignment, DatePicker, Dropdown, IDropdownOption, Stack, TextField, css } from "@fluentui/react";
 import './index.scss'
+import { onFormatDate } from "src/model/userModel";
+import { Convert } from "utils";
+import { Dictionary } from "@reduxjs/toolkit";
 
+export enum InputType{
+    DisText,
+    Text,
+    Dropdown,
+    Date
+}
 export interface IInfomationGridItem{
     label: string | JSX.Element;
-    value: string | JSX.Element
+    onChange?: (newValue?: string | IDropdownOption | Date) => void;
+    value: string;
+    type: InputType;
+    option? : IDropdownOption[];
+    errorMessage? : string
 }
 
 interface IProps {
+    isEdit?: boolean;
     //list data to show
     items: IInfomationGridItem[];
 
@@ -30,6 +44,55 @@ export const InfomationGridComponent = (props: IProps) => {
         )
     }
 
+    const renderInput = (item: IInfomationGridItem) => {
+        switch(item.type){
+            case InputType.DisText:
+                return(
+                    <TextField
+                        disabled
+                        value={item.value}
+                    />
+                )
+            case InputType.Text:
+                return(
+                    <TextField
+                        value={item.value}
+                        onChange={(e, val) =>{
+                            item.onChange?.(val)
+                        }}
+                        errorMessage={item?.errorMessage}
+                    />
+                )
+            case InputType.Dropdown:
+                return(
+                    <Dropdown
+                        options={item?.option || []}
+                        selectedKey={item.value}
+                        onChange={(e, option) => {
+                            item.onChange?.(option)
+                        }} 
+                        errorMessage={item?.errorMessage}
+                    />
+                )
+            case InputType.Date:
+                return(
+                    <>
+                    <DatePicker
+                        allowTextInput={false}
+                        formatDate={onFormatDate}
+                        value={Convert.dmystringtoDate(item?.value)}
+                        onSelectDate={(date) => {
+                            item.onChange(date)                            
+                        }}
+                    />
+                    <Stack style={{color: 'red'}}>{item?.errorMessage}</Stack>
+                    </>
+                )
+            default:
+                return <></>
+        }
+    }
+
     const renderItem = (item: IInfomationGridItem, index: number) => {
         const opacity = props.isDataLoaded ? 1 : 1 - index * 0.15;
         return(
@@ -40,7 +103,7 @@ export const InfomationGridComponent = (props: IProps) => {
                 key={`infomation-grid-item-${index}`}
             >
                 <Stack.Item
-                    style={{ width: props.customLabelWidth || '160px'}}
+                    style={{ width: props.customLabelWidth || '130px'}}
                     className={css("label-section", { 'has-background': props.isDataLoaded})}
                     disableShrink
                     grow={0}
@@ -52,7 +115,12 @@ export const InfomationGridComponent = (props: IProps) => {
                     className="value-section"
                     grow={1}
                 >
-                    {renderText(item?.value)}
+                    {
+                    !props?.isEdit
+                        ? renderText(item?.value)
+                        : renderInput(item)
+                    }
+                    
                 </Stack.Item>
             </Stack>
         )

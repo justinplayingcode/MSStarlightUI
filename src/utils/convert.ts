@@ -50,8 +50,21 @@ export default class Convert {
         return new Date(newData)
     }
 
+    public static datetoddmmyyy = (date: Date) => {
+        let month = '' + (date.getMonth() + 1),
+        day = '' + date.getDate(),
+        year = date.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+
+        return [day, month, year].join('/');
+    }
+
     public static datetommddyyyy = (dateString: Date) => {
-        return (dateString.getMonth() + 1) + '/' + dateString.getDate() + '/' +  dateString.getFullYear();
+        return ((dateString.getMonth() > 8) ? (dateString.getMonth() + 1) : ('0' + (dateString.getMonth() + 1))) + '/' + ((dateString.getDate() > 9) ? dateString.getDate() : ('0' + dateString.getDate())) + '/' + dateString.getFullYear()
     }
 
     public static getAccountRoleName = (role: accountRole) => {

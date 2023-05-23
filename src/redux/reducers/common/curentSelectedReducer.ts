@@ -25,7 +25,6 @@ export const curentSelectedSlice = createSlice({
     },
 
     setCurrentSidebar: (state, action) => {
-      console.log(action.payload);      
       state.currentSidebar = action.payload;
     },
 

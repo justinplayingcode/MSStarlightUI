@@ -35,6 +35,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
             setUsage(tableSelectedItem[0]?.usage);
             setPrice(tableSelectedItem[0]?.price);
         }        
+        console.log('run');        
       },[])
 
     const buttonFooter: IFooterPanel[] = [
@@ -156,7 +157,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
     return (
         <>
             <UniformPanel
-                panelTitle='Tạo tài khoản bác sĩ'
+                panelTitle='Tạo thuốc mới'
                 renderFooter={buttonFooter}
             >
                 {/* content here */}
