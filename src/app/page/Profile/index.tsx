@@ -15,9 +15,11 @@ import { useDispatch } from 'react-redux';
 import Api from 'api';
 import { showToastMessage } from 'src/redux/reducers';
 import { toastType } from 'src/model/enum';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { role, username, info} = useSelector((state: RootState) => state.user);
     const [editmode, setEditmode] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] =useState<Dictionary<string>>();
@@ -50,7 +52,8 @@ const Profile = () => {
             onChange: (val: string) => {
                 setErrorMessage(undefined);
                 setName(val)
-            }
+            },
+            errorMessage: errorMessage?.name
         },
         {
             label: 'Vai trò',
@@ -75,16 +78,18 @@ const Profile = () => {
                 onChange: (option: IDropdownOption) => {
                     setErrorMessage(undefined)
                     setSelectedGender(option.key as string)
-                }
+                },
+                errorMessage: errorMessage?.gender
             },
             {
                 label: 'Ngày sinh',
-                value: Convert.datetommddyyyy(dateOfBirth),
+                value: Convert.datetoddmmyyy(dateOfBirth),
                 type: InputType.Date,
                 onChange: (date: Date) => {
                     setErrorMessage(undefined)
                     setDateOfBirth(date);
-                }
+                },
+                errorMessage: errorMessage?.dateOfBirth
             },
             {
                 label:'Số điện thoại',
@@ -93,7 +98,8 @@ const Profile = () => {
                 onChange: (val: string) => {
                     setErrorMessage(undefined);
                     setPhonenumber(val)
-                }
+                },
+                errorMessage: errorMessage?.phonenumber
             },
             {
                 label: 'Địa chỉ',
@@ -102,7 +108,8 @@ const Profile = () => {
                 onChange: (val: string) => {
                     setErrorMessage(undefined);
                     setAddress(val)
-                }
+                },
+                errorMessage: errorMessage?.address
             },
             {
                 label: 'Email',
@@ -111,7 +118,8 @@ const Profile = () => {
                 onChange: (val: string) => {
                     setErrorMessage(undefined);
                     setEmail(val)
-                }
+                },
+                errorMessage: errorMessage?.email
             },
             {
                 label: 'Căn cước công dân',
@@ -120,7 +128,8 @@ const Profile = () => {
                 onChange: (val: string) => {
                     setErrorMessage(undefined);
                     setIdentification(val)
-                }
+                },
+                errorMessage: errorMessage?.identification
             },
             
         )
@@ -223,6 +232,8 @@ const Profile = () => {
         }
         Api.authApi.editPersonalInfo(reqbody).then(data => {
             if (!data.status) {
+                //need loading and reload instead of navigate
+                location.reload();
                 dispatch(showToastMessage({ message: 'Sửa thông tin thành công', type: toastType.succes }))
             } else {
                 dispatch(showToastMessage({ message: 'Sửa thông tin không thành công', type: toastType.error }))
@@ -253,103 +264,6 @@ const Profile = () => {
                         isEdit={editmode}
                         isDataLoaded={true}
                         items={getBottomInfomationItems()}
-                    />
-                </Stack>
-            </>
-        )
-    }
-
-    const renderEditInfo = () => {
-        return(
-            <>
-                <Stack className='bottom-detail-info'>    
-                    <Stack horizontal>
-                        <Dropdown
-                            required
-                            style={{width: 98}}
-                            label='Giới tính'
-                            options={gender}
-                            selectedKey={selectedGender}
-                            onChange={(e, option) => {
-                                setErrorMessage(undefined)
-                                setSelectedGender(option.key as string)
-                                }} 
-                            errorMessage={errorMessage?.gender}
-                        />
-                        <Stack>
-                            <Label>Ngày sinh</Label>
-                            <DatePicker
-                                placeholder='Chọn ngày sinh'
-                                allowTextInput={false}
-                                formatDate={onFormatDate}
-                                value={dateOfBirth}
-                                onSelectDate={(date) => {
-                                    setErrorMessage(undefined)
-                                    setDateOfBirth(date);
-                                }}
-                            />
-                            <Stack style={{color: 'red'}}>{errorMessage?.dateOfBirth}</Stack>
-                        </Stack>                    
-                    </Stack>            
-                    <TextField
-                        required
-                        underlined 
-                        label="Số điện thoại:" 
-                        value={phonenumber}
-                        onChange={(e, val) => {
-                            setErrorMessage(undefined);
-                            setPhonenumber(val)
-                        }}
-                        errorMessage={errorMessage?.phonenumber}
-                    />
-                    <TextField 
-                        underlined 
-                        label="Địa chỉ:"
-                        value={address} 
-                        onChange={(e, val) => {
-                            setErrorMessage(undefined);
-                            setAddress(val)
-                        }}
-                        errorMessage={errorMessage?.address}
-                    />
-                    <TextField 
-                        underlined
-                        label="Email:"
-                        value={email}
-                        onChange={(e, val) => {
-                            setErrorMessage(undefined)
-                            setEmail(val)
-                        }} 
-                        errorMessage={errorMessage?.email}
-                    />
-                    <TextField 
-                        required
-                        underlined 
-                        label="Căn cước công dân:" 
-                        value={identification}
-                        onChange={(e, val) => {
-                            setErrorMessage(undefined);
-                            setIdentification(val)
-                        }}
-                        errorMessage={errorMessage?.identification}
-                    />
-                    <TextField
-                        underlined
-                        disabled
-                        label="Khoa:" 
-                        value={info?.department}
-                    />
-                    <TextField 
-                        underlined 
-                        disabled
-                        label="Học vấn:" 
-                        value={Convert.getDoctorRank(info?.rank)}
-                    />
-                    <TextField 
-                        underlined 
-                        disabled
-                        label="Chức vụ:" 
-                        value={Convert.getDoctorPosition(info?.position)}
                     />
                 </Stack>
             </>
@@ -390,7 +304,8 @@ const Profile = () => {
                                 }}
                                 />
                                 <DefaultButton text='Hủy' onClick={() => {
-                                    setEditmode(false)
+                                    setEditmode(false);
+                                    location.reload();
                                 }}
                                 />
                             </Stack>                    

@@ -2,6 +2,7 @@ import { Alignment, DatePicker, Dropdown, IDropdownOption, Stack, TextField, css
 import './index.scss'
 import { onFormatDate } from "src/model/userModel";
 import { Convert } from "utils";
+import { Dictionary } from "@reduxjs/toolkit";
 
 export enum InputType{
     DisText,
@@ -14,7 +15,8 @@ export interface IInfomationGridItem{
     onChange?: (newValue?: string | IDropdownOption | Date) => void;
     value: string;
     type: InputType;
-    option? : IDropdownOption[]
+    option? : IDropdownOption[];
+    errorMessage? : string
 }
 
 interface IProps {
@@ -58,6 +60,7 @@ export const InfomationGridComponent = (props: IProps) => {
                         onChange={(e, val) =>{
                             item.onChange?.(val)
                         }}
+                        errorMessage={item?.errorMessage}
                     />
                 )
             case InputType.Dropdown:
@@ -68,18 +71,22 @@ export const InfomationGridComponent = (props: IProps) => {
                         onChange={(e, option) => {
                             item.onChange?.(option)
                         }} 
+                        errorMessage={item?.errorMessage}
                     />
                 )
             case InputType.Date:
                 return(
+                    <>
                     <DatePicker
                         allowTextInput={false}
                         formatDate={onFormatDate}
-                        value={new Date(item?.value)}
+                        value={Convert.dmystringtoDate(item?.value)}
                         onSelectDate={(date) => {
                             item.onChange(date)                            
                         }}
                     />
+                    <Stack style={{color: 'red'}}>{item?.errorMessage}</Stack>
+                    </>
                 )
             default:
                 return <></>
