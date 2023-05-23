@@ -51,7 +51,7 @@ export default class Convert {
     }
 
     public static datetommddyyyy = (dateString: Date) => {
-        return (dateString.getMonth() + 1) + '/' + dateString.getDate() + '/' +  dateString.getFullYear();
+        return ((dateString.getMonth() > 8) ? (dateString.getMonth() + 1) : ('0' + (dateString.getMonth() + 1))) + '/' + ((dateString.getDate() > 9) ? dateString.getDate() : ('0' + dateString.getDate())) + '/' + dateString.getFullYear()
     }
 
     public static getAccountRoleName = (role: accountRole) => {

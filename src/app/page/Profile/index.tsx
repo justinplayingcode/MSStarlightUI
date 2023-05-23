@@ -1,4 +1,4 @@
-import { DatePicker, DefaultButton, Dropdown, Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
+import { DatePicker, DefaultButton, Dropdown, IDropdownOption, Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
@@ -7,7 +7,7 @@ import { Avatar } from 'src/app/common';
 import { AvatarSize } from 'src/app/common/Avatar/avatar';
 import { Convert, Validate } from 'utils';
 import { accountRole } from 'model';
-import { IInfomationGridItem, InfomationGridComponent } from 'src/app/common/InfomationGrid';
+import { IInfomationGridItem, InfomationGridComponent, InputType } from 'src/app/common/InfomationGrid';
 import { useEffect, useState } from 'react';
 import { Dictionary } from '@reduxjs/toolkit';
 import { gender, onFormatDate } from 'src/model/userModel';
@@ -19,16 +19,16 @@ import { toastType } from 'src/model/enum';
 const Profile = () => {
     const dispatch = useDispatch();
     const { role, username, info} = useSelector((state: RootState) => state.user);
-    const [editmode, setEditmode] = useState<Boolean>(false);
+    const [editmode, setEditmode] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] =useState<Dictionary<string>>();
     
-    const [name, setName] = React.useState<string>();
-    const [selectedGender, setSelectedGender] = useState<string>();    
-    const [dateOfBirth, setDateOfBirth] = useState<Date>();
-    const [phonenumber, setPhonenumber] = useState<string>();
-    const [address, setAddress] = useState<string>();
-    const [email, setEmail] = useState<string>();
-    const [identification, setIdentification] = useState<string>();
+    const [name, setName] = React.useState<string>(info?.fullname);
+    const [selectedGender, setSelectedGender] = useState<string>(info?.gender?.toString());    
+    const [dateOfBirth, setDateOfBirth] = useState<Date>(Convert.dmystringtoDate(info?.dateOfBirth));
+    const [phonenumber, setPhonenumber] = useState<string>(info?.phonenumber);
+    const [address, setAddress] = useState<string>(info?.address);
+    const [email, setEmail] = useState<string>(info?.email);
+    const [identification, setIdentification] = useState<string>(info?.identification);
 
     useEffect(() => {
         if(editmode){
@@ -45,15 +45,22 @@ const Profile = () => {
     const topInfomation: IInfomationGridItem[] = [
         {
             label: 'Họ và tên',
-            value: info?.fullname
+            value: name,
+            type: InputType.Text,
+            onChange: (val: string) => {
+                setErrorMessage(undefined);
+                setName(val)
+            }
         },
         {
             label: 'Vai trò',
-            value: info?.department
+            value: info?.department,
+            type: InputType.DisText
         },
         {
             label: 'Tên đăng nhập',
             value: username,
+            type: InputType.DisText
         }
     ]
 
@@ -62,27 +69,58 @@ const Profile = () => {
         items.push(            
             {
                 label: 'Giới tính',
-                value: Convert.convertGender(info?.gender)
+                value: editmode ? selectedGender : Convert.convertGender(info?.gender),
+                type: InputType.Dropdown,
+                option: gender,
+                onChange: (option: IDropdownOption) => {
+                    setErrorMessage(undefined)
+                    setSelectedGender(option.key as string)
+                }
             },
             {
                 label: 'Ngày sinh',
-                value: info?.dateOfBirth,
+                value: Convert.datetommddyyyy(dateOfBirth),
+                type: InputType.Date,
+                onChange: (date: Date) => {
+                    setErrorMessage(undefined)
+                    setDateOfBirth(date);
+                }
             },
             {
                 label:'Số điện thoại',
-                value: info?.phonenumber
+                value: phonenumber,
+                type: InputType.Text,
+                onChange: (val: string) => {
+                    setErrorMessage(undefined);
+                    setPhonenumber(val)
+                }
             },
             {
                 label: 'Địa chỉ',
-                value: info?.address
+                value: address,
+                type: InputType.Text,
+                onChange: (val: string) => {
+                    setErrorMessage(undefined);
+                    setAddress(val)
+                }
             },
             {
                 label: 'Email',
-                value: info?.email
+                value: email,
+                type: InputType.Text,
+                onChange: (val: string) => {
+                    setErrorMessage(undefined);
+                    setEmail(val)
+                }
             },
             {
                 label: 'Căn cước công dân',
-                value: info?.identification
+                value: identification,
+                type: InputType.Text,
+                onChange: (val: string) => {
+                    setErrorMessage(undefined);
+                    setIdentification(val)
+                }
             },
             
         )
@@ -91,11 +129,13 @@ const Profile = () => {
             items.push(
                 {
                     label: 'Bảo hiểm y tế',
-                    value: info?.insurance
+                    value: info?.insurance,
+                    type: InputType.DisText
                 },
                 {
                     label: 'Trạng thái',
-                    value: 'Đang nằm viện'
+                    value: 'Đang nằm viện',
+                    type: InputType.DisText
                 },
             )
         };
@@ -104,15 +144,18 @@ const Profile = () => {
             items.push(
                 {
                     label: 'Khoa',
-                    value: info?.department
+                    value: info?.department,
+                    type: InputType.DisText
                 },
                 {
                     label: 'Học vấn',
-                    value: Convert.getDoctorRank(info?.rank)
+                    value: Convert.getDoctorRank(info?.rank),
+                    type: InputType.DisText
                 },
                 {
                     label: 'Chức vụ',
-                    value: Convert.getDoctorPosition(info?.position)
+                    value: Convert.getDoctorPosition(info?.position),
+                    type: InputType.DisText
                 }
             )
         }
@@ -199,6 +242,7 @@ const Profile = () => {
             <>
                 <Stack className='top-detail-info'>
                     <InfomationGridComponent
+                        isEdit={editmode}
                         isDataLoaded={true}
                         items={topInfomation}
                     />
@@ -206,6 +250,7 @@ const Profile = () => {
                 <Stack className='bottom-detail-info'>
                     <Stack style={{ marginBottom: 10, fontWeight: 600 }}>Thông tin chi tiết</Stack>
                     <InfomationGridComponent
+                        isEdit={editmode}
                         isDataLoaded={true}
                         items={getBottomInfomationItems()}
                     />
@@ -217,21 +262,6 @@ const Profile = () => {
     const renderEditInfo = () => {
         return(
             <>
-                <Stack className='top-detail-info'>
-                    <TextField 
-                        required
-                        underlined
-                        label="Họ và tên:"
-                        value={name}
-                        onChange={(e, val) => {
-                            setErrorMessage(undefined);
-                            setName(val)
-                        }} 
-                        errorMessage={errorMessage?.name}
-                    />
-                    <TextField label="Vai trò:" value={Convert.getAccountRoleName(role)} underlined disabled/>
-                    <TextField label='Tên đăng nhập:' value={username} underlined disabled/>
-                </Stack>
                 <Stack className='bottom-detail-info'>    
                     <Stack horizontal>
                         <Dropdown
@@ -348,9 +378,8 @@ const Profile = () => {
                     </Stack>
                     <Stack className='profile-detail-info'>
                         <Stack className='detail-info-content'>
-                            {!editmode
-                                ? renderViewInfo()
-                                : renderEditInfo()
+                            {
+                                renderViewInfo()
                             }
                         </Stack>
                         {

@@ -1,6 +1,10 @@
 .infomation-grid-wrapper{
+    display: flex;
+    flex-flow: row wrap;
     .grid-row{
         min-height: 32px;
+        min-width: 300px;
+        width: 50%;
 
         .label-section,
         .value-section{
