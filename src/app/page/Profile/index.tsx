@@ -13,7 +13,7 @@ import { Dictionary } from '@reduxjs/toolkit';
 import { gender, onFormatDate } from 'src/model/userModel';
 import { useDispatch } from 'react-redux';
 import Api from 'api';
-import { showToastMessage } from 'src/redux/reducers';
+import { closeLoading, openLoading, setInfoUser, showToastMessage } from 'src/redux/reducers';
 import { toastType } from 'src/model/enum';
 import { useNavigate } from 'react-router-dom';
 
@@ -230,10 +230,13 @@ const Profile = () => {
             dateOfBirth: Convert.datetommddyyyy(dateOfBirth),
             identification: identification
         }
+        dispatch(openLoading())
         Api.authApi.editPersonalInfo(reqbody).then(data => {
             if (!data.status) {
                 //need loading and reload instead of navigate
-                location.reload();
+                // location.reload();
+                dispatch(setInfoUser(data.data))
+
                 dispatch(showToastMessage({ message: 'Sửa thông tin thành công', type: toastType.succes }))
             } else {
                 dispatch(showToastMessage({ message: 'Sửa thông tin không thành công', type: toastType.error }))
@@ -241,7 +244,10 @@ const Profile = () => {
         }).catch(err => {
             const { message } = err.response.data;
             dispatch(showToastMessage({ message: message, type: toastType.error }))
-        }).finally(() => setEditmode(false))
+        }).finally(() => {
+          setEditmode(false);
+          dispatch(closeLoading())
+        })
     }
 
     const handleChangeAvatar = () => {

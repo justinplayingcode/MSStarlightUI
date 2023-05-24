@@ -15,6 +15,9 @@ import image from "image";
 import { HealthIndicator } from "src/model/enum";
 import { tooltipPlainText } from "src/utils/utils";
 import React from "react";
+import DoctorManagementChart from "./components/adminChart/doctormanagement";
+import OnBoardingChart from "./components/adminChart/onboardingperday";
+import PatientManagementChart from "./components/adminChart/patientmanagement";
 
 
 // const Home = () => {
@@ -303,10 +306,16 @@ const Home = () => {
   const onRenderAdmin = (): JSX.Element => {
     return (
       <>
-      <div className="width50per height40per"></div>
       <div className="width50per height40per">tin tuc</div>
-      <div className="width50per height60per"></div>
-      <div className="width50per height60per"></div>
+      <div className="width50per height40per chart-container">
+        <OnBoardingChart/>
+      </div>
+      <div className="width50per height60per chart-container">
+        <DoctorManagementChart/>
+      </div>
+      <div className="width50per height60per chart-container">
+        <PatientManagementChart/>
+      </div>
       </>
     )
   }
