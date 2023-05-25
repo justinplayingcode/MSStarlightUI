@@ -322,13 +322,13 @@ const Home = () => {
 
   const onRenderDoctor = (): JSX.Element => {
     return (
-      <>doctor</>
+      <>doctor, sẽ chia layout gồm 2-3 cái biểu đồ, có 1 ô để hiển thị các bệnh nhân đang hẹn lịch khám, dối với bác sĩ ở khoa tiếp đón thì sẽ không có. </>
     )
   }
 
   const onRenderPatient = (): JSX.Element => {
     return (
-      <>patient</>
+      <>patient, hiển thị lịch hẹn khám bệnh nếu có, hiển thị các thông số sức khỏe cơ bản</>
     )
   }
 

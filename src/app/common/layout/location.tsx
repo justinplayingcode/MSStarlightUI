@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 export const Location = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
-    const { fullname } = useSelector((state:RootState) => state.user.info);
+    // const { fullname } = useSelector((state:RootState) => state.user.info);
 
     const assembleParentItem = (key: string) => {
         const routeItem = getRouteItemByKey(key);
@@ -43,7 +43,7 @@ export const Location = () => {
         if(routeItem.key === 'route-home'){
           items.push({
             key: routeItem.key,
-            text: `Xin chào ${fullname}`
+            text: `Xin chào`
           });
         } else {
           items.push({

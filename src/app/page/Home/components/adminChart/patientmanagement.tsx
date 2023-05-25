@@ -20,7 +20,7 @@ function PatientManagementChart() {
       <DoughnutChart
         label={'# of Votes'}
         labels={labels} 
-        titleChart='Số lượng bệnh nhân nằm viện' 
+        titleChart='Số lượng bệnh nhân đang điều trị tại bệnh viện' 
         values={values}
         legend='Khoa viện'
         textCenter={`${total()} bệnh nhân`} // khong hieu sao khong tinh duoc total =)))
