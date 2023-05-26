@@ -29,7 +29,7 @@ function DoctorManagementChart() {
       <DoughnutChart
         label={'# of Votes'}
         labels={labels} 
-        titleChart='Số lượng bác sĩ đang làm việc' 
+        titleChart='Số lượng bác sĩ đang công tác tại bệnh viện' 
         values={values} 
         legend='Khoa viện'
         textCenter={`${sum} bác sĩ`}

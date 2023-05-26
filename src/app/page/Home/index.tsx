@@ -5,7 +5,7 @@ import { openLoading, closeLoading, setInfoUser } from "src/redux/reducers";
 import './index.scss'
 import { IServiceCard, ServiceCard } from "src/app/common/ServiceCard";
 import { accountRole } from "model";
-import { Avatar } from "src/app/common";
+import { Avatar, IconComponent } from "src/app/common";
 import { AvatarSize } from "src/app/common/Avatar/avatar";
 import { Convert } from "utils";
 import { primaryHealthStatus } from "./index.type";
@@ -16,8 +16,11 @@ import { HealthIndicator } from "src/model/enum";
 import { tooltipPlainText } from "src/utils/utils";
 import React from "react";
 import DoctorManagementChart from "./components/adminChart/doctormanagement";
-import OnBoardingChart from "./components/adminChart/onboardingperday";
+import OnBoardingChart from "./components/adminChart/onboardingpermonth";
 import PatientManagementChart from "./components/adminChart/patientmanagement";
+import PatientExaminedChart from "./components/adminChart/patientexaminedperday";
+import { LinkButton } from "src/app/common/Link";
+import { useNavigate } from "react-router-dom";
 
 
 // const Home = () => {
@@ -301,19 +304,22 @@ import PatientManagementChart from "./components/adminChart/patientmanagement";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const { info, role } = useSelector((state:RootState) => state.user);
   
   const onRenderAdmin = (): JSX.Element => {
     return (
       <>
-      <div className="width50per height40per">tin tuc</div>
-      <div className="width50per height40per chart-container">
+      <div className="chart-container-wrapper chart-container">
+        <PatientExaminedChart/>
+      </div>
+      <div className="chart-container-wrapper chart-container">
         <OnBoardingChart/>
       </div>
-      <div className="width50per height60per chart-container">
+      <div className="chart-container-wrapper chart-container">
         <DoctorManagementChart/>
       </div>
-      <div className="width50per height60per chart-container">
+      <div className="chart-container-wrapper chart-container">
         <PatientManagementChart/>
       </div>
       </>
@@ -322,13 +328,46 @@ const Home = () => {
 
   const onRenderDoctor = (): JSX.Element => {
     return (
-      <>doctor</>
+      <>
+        <div className="doctor-section-container container1">
+          <div className="doctor-section">
+            <div className="date">{Convert.getCurrentDateString()}</div>
+            <hr/>
+            <div className="infomation">{info?.department}</div>
+            <div className="infomation">{Convert.getDoctorPosition(info?.position)}: {info?.fullname}</div>
+            <LinkButton className="details" onClick={() => navigate('/profile')}>Thông tin cá nhân</LinkButton>
+          </div>
+          <div className="doctor-section">
+            <div className="title">Số lịch hẹn khám hôm nay:</div>
+            <div className="total">2</div>
+            <LinkButton className="details" onClick={() => alert('navigate to /henlichkham')}>Chi tiết</LinkButton>
+          </div>
+          <div className="doctor-section">
+            <div className="title">Bệnh nhân đang điều trị tại khoa:</div>
+            <div className="total">20</div>
+            <LinkButton className="details" onClick={() => alert('navigate to /tablebenhnhannamvien')}>Chi tiết</LinkButton>
+          </div>
+
+          <div className="doctor-section">
+            <div className="title">Bệnh nhân khám tại khoa trong ngày:</div>
+            <div className="total">40</div>
+            <LinkButton className="details" onClick={() => alert('navigate to /lichsukham')}>Chi tiết</LinkButton>
+          </div>
+        </div>
+        {/*  */}
+        <div className="chart-container-wrapper chart-container">
+          <DoctorManagementChart/> {/* thay đôi sau */}
+        </div>
+        <div className="chart-container-wrapper chart-container">
+          <PatientManagementChart/> {/* thay đôi sau */}
+        </div>
+      </>
     )
   }
 
   const onRenderPatient = (): JSX.Element => {
     return (
-      <>patient</>
+      <>patient, hiển thị lịch hẹn khám bệnh nếu có, hiển thị các thông số sức khỏe cơ bản</>
     )
   }
 

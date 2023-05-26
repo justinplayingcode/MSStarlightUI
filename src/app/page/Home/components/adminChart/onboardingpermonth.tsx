@@ -14,9 +14,9 @@ function OnBoardingChart() {
   return ( 
       <AreaChart 
         labels={labels} 
-        titleChart='Onborading Patient Per Month' 
+        titleChart='Bệnh nhân nhập viện mỗi tháng' 
         values={values} 
-        legend='Patient Total'
+        legend='Bệnh nhân'
       />  
   );
 }
