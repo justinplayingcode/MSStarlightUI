@@ -54,13 +54,19 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         
                         <Route path="/speciality" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_SPECIALITY}/>} />
 
-                        <Route path="/curing-process" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
+                        <Route path="/cure/cure-process" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
+                        <Route path="/cure/onBoarding" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_ON_BOARDING}/>} />
                         <Route path="/curing-proces/cure-progress" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROGRESS}/>}/>
 
                         <Route path="/cure-history" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
+                        <Route path="/make-appointment" element={<Layout permission={this.Auth.patient} page={pageConstant.LAYOUT_APPOINTMENT} />} />
                         <Route path="/diseases" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_DISEASES}/>} />
                         <Route path="/medication" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_MEDICATION}/>} />
+
                         <Route path="/news" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS}/>} />
+                        <Route path="/news/news-post" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_POST}/>} />
+                        <Route path="/news/news-create" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_CREATE}/>} />
+                        <Route path="/news/news-review" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_REVIEW}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}
                         <Route path="/error/nopermission" element={<NoPermission />} />
                         <Route path="/error/not" element={<ErrorPage />} />

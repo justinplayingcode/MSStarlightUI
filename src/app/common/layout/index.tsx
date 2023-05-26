@@ -23,6 +23,11 @@ import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
 import CureProgress from "src/app/page/CureProcess/component/CureProgress";
 import Medication from "src/app/page/Medication";
+import OnBoardingManagement from "src/app/page/CureProcess/OnBoardingManagement";
+import Appointment from "src/app/page/Appointment";
+import NewsPost from "src/app/page/News/SubMenu/NewsPost";
+import NewsCreate from "src/app/page/News/SubMenu/NewsCreate";
+import NewsReview from "src/app/page/News/SubMenu/NewsReview";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -129,6 +134,10 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_CURE_PROCESS:
                 content = <CureProcess/>
                 break;
+            case pageConstant.LAYOUT_ON_BOARDING:
+                content = <OnBoardingManagement/>;
+                break;                
+            
             case pageConstant.LAYOUT_CURE_PROGRESS:
                 content = <CureProgress/>
                 break;
@@ -136,15 +145,31 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_CURE_HISTORY:
                 content = <CureHistory />
                 break;
+
+            case pageConstant.LAYOUT_APPOINTMENT:
+                content = <Appointment/>
+                break;
+
             case pageConstant.LAYOUT_DISEASES:
                 content = <Diseases />
                 break;
             case pageConstant.LAYOUT_MEDICATION:
                 content = <Medication />
                 break;
+
             case pageConstant.LAYOUT_NEWS:
                 content = <News />
                 break;
+            case pageConstant.LAYOUT_NEWS_POST:
+                content = <NewsPost/>
+                break;
+            case pageConstant.LAYOUT_NEWS_CREATE:
+                content = <NewsCreate/>
+                break;
+            case pageConstant.LAYOUT_NEWS_REVIEW:
+                content = <NewsReview/>
+                break;
+
             default:
                 content = <></>
                 break;

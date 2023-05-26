@@ -1,5 +1,5 @@
-import { UniformPanel } from "src/app/common";
-import { BtnType, DoctorRank, Gender, DoctorPosition } from "src/model/enum";
+import { Toast, UniformPanel } from "src/app/common";
+import { BtnType, DoctorRank, Gender, DoctorPosition, toastType } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { Convert, Validate } from "utils";
 import Api from '../../../../api'
 import SuccessDialog from "./Dialog";
 import { useDispatch } from "react-redux";
-import { closePanel, closePanelLoading, openPanelLoading, tableRefresh } from "src/redux/reducers";
+import { closePanel, closePanelLoading, openPanelLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import { gender, onFormatDate } from "src/model/userModel";
 import { doctorPosition, doctorRank } from "src/model/doctorModel";
 
@@ -26,7 +26,6 @@ function CreatDoctorPanel() {
 
   const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
 
-  // const [isLoading, setIsLoading] = useState<boolean>();
   const [departmentList, setDepartmentList] = useState<any[]>();
 
   const [isDialogClosed, setIsDialogClosed] = useState<boolean>(true);
@@ -70,20 +69,6 @@ function CreatDoctorPanel() {
       onClick: () => clickSave() // sau se truyen ham post api create
     }
   ];
-
-  const resetField = () => {
-    setFullname('');
-    setSelectedGender('');
-    setDateOfBirth(undefined);
-    setAddress('');
-    setEmail('');
-    setIdentifyNumber('');
-    setSelectedDepartment('')
-    setRank('')
-    setPosition('')
-
-    setErrorMessage(undefined)
-  }
 
   const clickSave = () => {
     setErrorMessage(undefined);
@@ -159,24 +144,16 @@ function CreatDoctorPanel() {
           password: data.data.password
         });
         setIsDialogClosed(false);
-        resetField();
-        //close panel
-        // dispatch(closePanel())
-        dispatch(tableRefresh())
       } else
       {
-        alert('failed')
-        //toast failed
-        //dont close panel
+        dispatch(closePanelLoading());
+        dispatch(showToastMessage({message: 'Tạo không thành công', type: toastType.error}));
       }
     }).catch(err => {
         const { message } = err.response.data;
-        // setErrorMessage(message)
-        //toast failed
-        // dont close
-    }).finally(() => dispatch(closePanelLoading()))
-
-
+        dispatch(closePanelLoading());
+        dispatch(showToastMessage({message: message, type: toastType.error}))
+    })
   }
 
   const renderInputField = () => {
@@ -310,6 +287,7 @@ function CreatDoctorPanel() {
       closeDialog={() => {
         setIsDialogClosed(true);
         dispatch(closePanel());
+        dispatch(tableRefresh());
       }}
     />
     </>

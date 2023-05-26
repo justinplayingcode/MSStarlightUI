@@ -1,5 +1,5 @@
 import { accountRole } from "model";
-import { AiOutlineHome, AiOutlineClockCircle } from 'react-icons/ai'
+import { AiOutlineClockCircle, AiOutlineFund, AiOutlineSchedule } from 'react-icons/ai'
 import { FaBacterium, FaPills, FaRegNewspaper} from 'react-icons/fa'
 import { MdOutlineArrowRightAlt, MdManageAccounts, MdAccountTree } from 'react-icons/md'
 import { TbStethoscope} from 'react-icons/tb'
@@ -24,8 +24,8 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
         path: '/',
         state:'',
         sidebarProps: {
-            displayText: 'Trang chủ',
-            icon: <AiOutlineHome/>
+            displayText: 'Tổng quát',
+            icon: <AiOutlineFund/>
         }
     });
 
@@ -70,12 +70,29 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
 
     if(role === accountRole.Doctor){
         list.push({
-            path: '/curing-process',
-            state: '/curing-process',
+            state: '/cure',
             sidebarProps:{
                 displayText: 'Khám chữa bệnh',
                 icon: <TbStethoscope/>,
-            }
+            },
+            child:[
+                {
+                    path: '/cure/cure-process',
+                    state: '/cure/cure-process',
+                    sidebarProps:{
+                        displayText: 'Khám bệnh',
+                        icon: <MdOutlineArrowRightAlt/>
+                    },  
+                },
+                {
+                    path: '/cure/onBoarding',
+                    state: '/cure/onBoarding',
+                    sidebarProps:{
+                        displayText: 'Nằm viện',
+                        icon: <MdOutlineArrowRightAlt/>
+                    }
+                }
+            ]
         })
     }
 
@@ -88,6 +105,17 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
                 icon: <AiOutlineClockCircle/>,
             }
         },)
+    }
+
+    if(role === accountRole.Patient){
+        list.push({
+            path:'/make-appointment',
+            state:'/make-appointment',
+            sidebarProps:{
+                displayText: 'Đặt lịch khám',
+                icon: <AiOutlineSchedule/>
+            }
+        })
     }
 
     list.push(
@@ -107,14 +135,52 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
                 icon: <FaPills/>,
             }
         },
-        {
-            path: '/news',
-            state: '/news',
-            sidebarProps:{
-                displayText: 'Thông tin, tư vấn',
-                icon: <FaRegNewspaper/>,
-            }
-        }
     );
+
+    const newsItems = {
+        ...(role === accountRole.Patient) && {path: '/news'},
+        state: '/news',
+        sidebarProps: {
+            displayText: 'Thông tin, tư vấn',
+            icon: <FaRegNewspaper />,
+        },
+        child:[]
+    };
+
+    if (role !== accountRole.Patient) {
+        newsItems.child.push(
+            {
+                path: '/news/news-post',
+                state: '/news/news-post',
+                sidebarProps: {
+                    displayText: 'Các bài đăng',
+                    icon: <MdOutlineArrowRightAlt />
+                }
+            },
+            {
+                path: '/news/news-create',
+                state: '/news/news-create',
+                sidebarProps:{
+                    displayText: 'Tạo bài đăng',
+                    icon: <MdOutlineArrowRightAlt/>
+                }
+            }
+        );
+        if(role === accountRole.Admin){
+            newsItems.child.push(
+                {
+                    path: '/news/news-review',
+                    state: '/news/news-review',
+                    sidebarProps:{
+                        displayText: 'Duyệt bài đăng',
+                        icon: <MdOutlineArrowRightAlt/>
+                    }
+                }
+            )
+        }
+    }
+
+    list.push(newsItems);
+
     return list;
 }   

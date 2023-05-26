@@ -1,3 +1,4 @@
+
 export interface IRouteItem {
     key: string;
     text: string;
@@ -9,7 +10,7 @@ export interface IRouteItem {
 export const routeMapping : { [key: string]: IRouteItem} = {
     Home: {
         key: "route-home",
-        text: 'Trang chủ',
+        text: 'Tổng quát',
         url: '/',
         iconName: 'fas-house'
     },
@@ -19,22 +20,10 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         text: 'Tài khoản',
         url: '',
     },
-    AccountCreatePatient: {
-        key: 'route-account-create-patient',
-        text: 'Thêm bệnh nhân',
-        url: '/account/create-patient',
-        parentKeys:["route-account"]
-    },
     AccountPatientManagement: {
         key: 'route-account-patient-management',
         text: 'Bệnh nhân',
         url: '/account/patient-management',
-        parentKeys:["route-account"]
-    },
-    AccountCreateDoctor: {
-        key: 'route-account-create-doctor',
-        text: 'Thêm bác sĩ',
-        url: '/account/create-doctor',
         parentKeys:["route-account"]
     },
     AccountDoctorManagement: {
@@ -50,18 +39,39 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         url: '/speciality',
         // parentKeys:["route-home"]
     },
-    CuringProcess: {
-        key: 'route-curing-process',
+
+    TotalCureProcess: {
+        key: 'route-total-cure-process',
         text: 'Khám, chữa bệnh',
-        url: '/curing-process',
-        // parentKeys:["route-home"]
+        url: '',
     },
+    CureProcess: {
+        key: 'route-cure-process',
+        text: 'Khám bệnh',
+        url: '/cure/cure-process',
+        parentKeys:["route-total-cure-process"]
+    },
+    OnBoarding:{
+        key: 'route-onboarding',
+        text: 'Đang nằm viện',
+        url: '/cure/onBoarding',
+        parentKeys:["route-total-cure-process"]
+    },
+
+
     CureHistory: {
         key: 'route-cure-history',
         text: 'Lịch sử khám bệnh',
         url: '/cure-history',
         // parentKeys:["route-home"]
     },
+
+    Appointment:{
+        key: 'route-make-appointment',
+        text: 'Đặt lịch khám',
+        url: '/make-appointment',
+    },
+
     Diseases: {
         key: 'route-diseases',
         text: 'Bệnh',
@@ -74,12 +84,32 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         url: '/medication',
         // parentKeys:["route-home"]
     },
+
     News: {
         key: 'route-news',
         text: 'Thông tin, tư vấn',
-        url: '/news',
-        // parentKeys:["route-home"]
+        // url: '/news',
+    },
+    NewsPost: {
+        key: 'route-news-post',
+        text: 'Các bài đăng',
+        url: '/news/news-post',
+        parentKeys:["route-news"]
+    },
+    NewsCreate:{
+        key: 'route-news-create',
+        text: 'Tạo bài đăng',
+        url: '/news/news-create',
+        parentKeys:["route-news"]
+    },
+    NewsReview:{
+        key: 'route-news-review',
+        text: 'Duyệt bài đăng',
+        url: '/news/news-review',
+        parentKeys:["route-news"]
     }
+
+
 }
 
 export const getRouteItemByKey = (routeKey: string) => {
