@@ -1,6 +1,7 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import "./index.scss"
+import { Convert } from 'utils';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -23,7 +24,8 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
     }
     return color;
   }
-  const colors = Array.from({ length: props.values.length }, () => getRandomColor());
+  // const colorss = Array.from({ length: props.values.length }, () => getRandomColor());
+  const coiors = Convert.colorDonutChart.slice(0, props.values.length);
 
   const data = {
     labels: props.labels,
@@ -31,8 +33,8 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
       {
         label: props.label,
         data: props.values,
-        backgroundColor: colors,
-        borderColor: colors,
+        backgroundColor: coiors,
+        borderColor: coiors,
         borderWidth: 1,
       },
     ]

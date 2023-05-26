@@ -17,29 +17,83 @@
   .content {
     height: 100%;
     display: flex;
-    padding-top: 20px;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     flex-wrap: wrap;
 
-    & > div {
-      background-color: #fff;
-      border: 1px solid #ccc;
-    }
-
-    .width50per {
-      width: 50%;
-    }
-    .height60per {
-      height: 60%;
-    }
-    .height40per {
-      height: 40%;
+    .chart-container-wrapper {
+      width: calc(50% - 10px);
+      height: 50%;
     }
     .chart-container {
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: #fff;
+      box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+      border-radius: 15px;
     }
+
+    .doctor-section-container {
+      width: 100%;
+      height: calc(40% - 20px);
+      padding-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+
+      .doctor-section {
+
+        hr {
+          color: #ccc;
+          margin: 0 32px;
+          height: 4px;
+        }
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24%;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+        border-radius: 15px;
+        padding: 28px;
+
+        .date {
+          font-style: italic;
+          font-size: 16px;
+          font-weight: 600;
+          text-align: center;
+        }
+
+        .information {
+          font-size: 16px;
+        }
+
+        .department {
+          font-style: italic;
+        }
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .total {
+          padding-left: 20px;
+          font-size: 90px;
+        }
+        .details {
+          text-align: end;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1080px) {
+  .chart-container-wrapper {
+    width: 100% !important;
+    max-height: 360px;
   }
 }

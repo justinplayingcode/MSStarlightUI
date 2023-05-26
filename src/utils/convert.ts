@@ -89,9 +89,9 @@ export default class Convert {
             case DoctorRank.PGSTS:
                 return 'Ph.Giáo sư, Tiến sĩ';
             case DoctorRank.GSTS: 
-                return 'Giáo sư, Tiến sĩ'
+                return 'Giáo sư, Tiến sĩ';
             default:
-                return 'Không';
+                return 'Bác sĩ';
         }
     }
 
@@ -102,7 +102,24 @@ export default class Convert {
             case DoctorPosition.dean:
                 return 'Trưởng khoa'
             default:
-                return 'Không';
+                return 'Bác sĩ';
         }
     }
+
+    public static colorDonutChart = [
+      '#7CB9E8',
+      '#002D62',
+      '#CCCCFF',
+      '#5F9EA0',
+      '#B2FFFF',
+      '#0CAFFF',
+      '#002244',
+      '#00BFFF',
+      '#B9D9EB',
+      '#99FFFF',
+      '#4C516D',
+      '#00416A',
+      '#B0C4DE',
+      '#004792',
+    ]
 }
