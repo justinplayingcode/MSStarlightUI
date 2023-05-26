@@ -22,7 +22,8 @@ export const panelSlice = createSlice({
     },
     closePanel: (state) => {
       state.isOpen = false,
-      state.panelType = ''
+      state.panelType = '',
+      state.isLoading = false
     },
     openPanelLoading: (state) => {
       state.isLoading = true

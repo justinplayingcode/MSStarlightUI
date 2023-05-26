@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { UniformTable } from 'src/app/common';
-import { StartProcessDialog } from './dialog';
+import { StartProcessDialog } from './dialog/dialog';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { accountRole } from 'model';
@@ -30,7 +30,7 @@ const NonBoardingTab = () => {
         if(tableSelectedCount === 1){
             commandBar.push({
                 key: 'edit',
-                text: 'Sửa',
+                text: 'Bắt đầu',
                 iconProps: { iconName: 'PageHeaderEdit' },
                 onClick: () => { navigate('/curing-proces/cure-progress') },
             })

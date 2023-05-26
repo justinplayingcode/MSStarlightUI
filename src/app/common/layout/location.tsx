@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 export const Location = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
-    // const { fullname } = useSelector((state:RootState) => state.user.info);
 
     const assembleParentItem = (key: string) => {
         const routeItem = getRouteItemByKey(key);
@@ -17,10 +16,10 @@ export const Location = () => {
             text:'',
             key:''
         };
-        // if (routeItem.key !== 'route-home'){
-        //     item.key = routeItem.key;
-        //     item.text = routeItem.text
-        // };
+        if (routeItem.key !== 'route-home'){
+            item.key = routeItem.key;
+            item.text = routeItem.text
+        };
         
         if (routeItem.url){
             item.onClick = () => {
@@ -40,17 +39,10 @@ export const Location = () => {
             routeItem.parentKeys.forEach((key) => {
                 items.push(assembleParentItem(key))
             });
-        if(routeItem.key === 'route-home'){
-          items.push({
-            key: routeItem.key,
-            text: `Xin chào`
-          });
-        } else {
-          items.push({
-            key: routeItem.key,
-            text: routeItem.text
-          });
-        }
+        items.push({
+        key: routeItem.key,
+        text: routeItem.text
+        });
         return items;
     },[pathname]);
 
