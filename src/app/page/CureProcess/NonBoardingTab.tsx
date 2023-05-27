@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { nonBoardingPatientColumns } from '../table/nonboardingcolumn';
 import { useNavigate } from 'react-router-dom';
 import ConfirmDialog from './dialog/confirmDialog';
+import CureProgress from './component/CureProgress';
 
 const NonBoardingTab = () => {
     const navigate = useNavigate();
@@ -17,7 +18,8 @@ const NonBoardingTab = () => {
     const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
 
     const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true);
-    const [isConfirmClosed, setConfirmClosed] = React.useState<boolean>(true)
+    const [isConfirmClosed, setConfirmClosed] = React.useState<boolean>(true);
+    const [isModalClosed, setModalClosed] = React.useState<boolean>(true);
     
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
@@ -70,9 +72,19 @@ const NonBoardingTab = () => {
                     setConfirmClosed(true)
                 }}
                 confirm={() => {
-
+                    setConfirmClosed(true)
+                    setModalClosed(false)
                 }}
             />
+
+            {/* Progress cure modal */}
+            <CureProgress 
+                isOpen={!isModalClosed} 
+                onDismiss={() => {
+                    setModalClosed(true)
+                }}
+            />
+
         </div>
     )
 }

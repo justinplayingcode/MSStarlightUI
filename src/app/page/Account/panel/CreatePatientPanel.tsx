@@ -51,7 +51,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   });
 
   const getDepartment = () => {
-    // dispatch(openPanelLoading())
+    dispatch(openPanelLoading())
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
@@ -71,7 +71,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   }
 
   const getPatientById = (id: string) => {
-    // dispatch(openPanelLoading())
+    dispatch(openPanelLoading())
     Api.cureProcessApi.getPatientById({userId: id}).then((data) =>{
       setFullname(data.data.fullname);      
       setSelectedtGender(data.data.gender.toString());

@@ -42,7 +42,7 @@ function CreatDoctorPanel() {
   });  
 
   const getDepartment = () => {
-    // dispatch(openPanelLoading())
+    dispatch(openPanelLoading())
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
