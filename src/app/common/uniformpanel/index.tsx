@@ -44,11 +44,12 @@ export const MainPanel = () => {
             isOpen={isOpen}
             hasCloseButton={false}
         >
-            {isLoading ? <LoadingPanel/> : 
+            {/* {isLoading ? <LoadingPanel/> :  */}
                 <Stack className='panel-content'>
                     {renderPanelContent()}
+                    {isLoading && <LoadingPanel/>}
                 </Stack>
-            }
+            {/* } */}
         </Panel>
     )
 }
