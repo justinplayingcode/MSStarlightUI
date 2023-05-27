@@ -1,0 +1,33 @@
+.modal-container{
+    .ms-Dialog-main{
+        width: 80%;
+        .modal-content{
+            display: flex;
+            align-items: center;
+            padding: 12px 12px 14px 24px;
+
+            width: 100%;
+            .modal-header{
+                width: 100%;
+
+                display: flex;
+                justify-content: space-between;
+                .modal-text{
+
+                }
+            }
+            .modal-main-content{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+            .modal-footer{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+
+                width: 100%;
+            }
+        }
+    }
+}

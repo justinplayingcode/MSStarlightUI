@@ -57,7 +57,7 @@ const Profile = () => {
         },
         {
             label: 'Vai trò',
-            value: info?.department,
+            value: Convert.getAccountRoleName(role),
             type: InputType.DisText
         },
         {
@@ -298,9 +298,7 @@ const Profile = () => {
                     </Stack>
                     <Stack className='profile-detail-info'>
                         <Stack className='detail-info-content'>
-                            {
-                                renderViewInfo()
-                            }
+                            {renderViewInfo()}
                         </Stack>
                         {
                         editmode && 

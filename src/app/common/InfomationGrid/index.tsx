@@ -14,7 +14,7 @@ export interface IInfomationGridItem{
     label: string | JSX.Element;
     onChange?: (newValue?: string | IDropdownOption | Date) => void;
     value: string;
-    type: InputType;
+    type?: InputType;
     option? : IDropdownOption[];
     errorMessage? : string
 }
