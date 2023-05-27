@@ -25,6 +25,7 @@
 
           .panel-content {
             height: 100%;
+            position: relative;
           }
         }
       }
@@ -33,6 +34,7 @@
 }
 
 #loadingDotPanel {
+  position: absolute;
   top: 0;
   z-index: 999;
   display: flex;
