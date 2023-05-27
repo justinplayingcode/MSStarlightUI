@@ -88,6 +88,89 @@
         }
       }
     }
+
+    .patient-section-container {
+      border: 1px solid #ccc;
+      width: 100%;
+      &.section1 {
+        height: 30%;
+      }
+      &.section2 {
+        height: 70%;
+        padding-top: 12px;
+      }
+
+      .patient-section {
+        // background-color: #fff;
+        // box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+        // border-radius: 15px;
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+
+        .patient-section-header {
+          display: flex;
+          justify-content: space-between;
+          padding-bottom: 12px;
+
+          .title {
+            color: RGBA( 25, 25, 112, 1 );
+            font-style: italic;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 2px solid RGBA( 25, 25, 112, 1 );
+          }
+        }
+        .patient-section-content {
+          padding: 20px;
+
+          .text {
+            padding-bottom: 12px;
+            font-style: italic;
+          }
+          .health {
+            padding-top: 20px;
+            .title {
+              width: fit-content;
+              font-style: italic;
+              font-weight: bold;
+            }
+            .heath-items {
+              width: 100%;
+              display: flex;
+              justify-content: space-evenly;
+              flex-wrap: wrap;
+              padding-top: 20px;
+
+              .health-item {
+                width: calc(25% - 30px);
+                background-color: #fff;
+                box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+                border-radius: 15px;
+                padding: 20px;
+                min-height: 160px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .health-content-text {
+                  text-align: end;
+                }
+
+                .health-content {
+                  display: flex;
+                  justify-content: space-between;
+
+                  span {
+                    padding-left: 4px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 

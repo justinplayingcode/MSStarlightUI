@@ -43,8 +43,8 @@ export const MainPanel = () => {
             className='main-panel'
             isOpen={isOpen}
             hasCloseButton={false}
+            style={{ zIndex: '998'}}
         >
-            {/* {isLoading ? <LoadingPanel/> :  */}
                 <Stack className='panel-content'>
                     {renderPanelContent()}
                     {isLoading && <LoadingPanel/>}

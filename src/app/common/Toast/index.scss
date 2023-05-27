@@ -1,19 +1,19 @@
 .toast {
   position: fixed;
-  z-index: 9999;
+  z-index: 10000000;
   top: 20px;
   right: 20px;
-  min-width: 300px;
-  min-height: 48px;
-  border-radius: 12px;
+  min-width: 360px;
+  min-height: 68px;
+  border-radius: 4px;
   padding: 12px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   animation: slide-in 0.3s ease-in-out forwards;
   transform: translateX(100%);
+  background-color: #fff;
 
   .toast-icon {
     height: 26px;
