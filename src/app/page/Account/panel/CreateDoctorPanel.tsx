@@ -42,6 +42,7 @@ function CreatDoctorPanel() {
   });  
 
   const getDepartment = () => {
+    // dispatch(openPanelLoading())
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
@@ -54,6 +55,7 @@ function CreatDoctorPanel() {
     }).catch(err => {
         const { message } = err.response.data;
         // setErrorMessage(message)
+        dispatch(showToastMessage({message: message, type: toastType.error}));
     }).finally(() => dispatch(closePanelLoading()))
   }
 

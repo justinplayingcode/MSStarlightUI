@@ -1,5 +1,5 @@
 import { UniformPanel } from "src/app/common";
-import { BtnType, Gender, PanelType } from "src/model/enum";
+import { BtnType, Gender, PanelType, toastType } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
 import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
@@ -10,7 +10,7 @@ import Api from 'src/api'
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import SuccessDialog from "./Dialog";
-import { closePanel, tableRefresh } from "src/redux/reducers";
+import { closePanel, closePanelLoading, openLoading, openPanel, openPanelLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import { gender } from "src/model/userModel";
 
 interface ICreatePatientPanel{
@@ -51,7 +51,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   });
 
   const getDepartment = () => {
-    setIsLoading(true)
+    // dispatch(openPanelLoading())
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
@@ -65,12 +65,13 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
       setDepartmentList(list);
     }).catch(err => {
         const { message } = err.response.data;
-        // setErrorMessage(message)
-    }).finally(() => setIsLoading(false))
+          // dispatch(closePanelLoading());
+          dispatch(showToastMessage({message: message, type: toastType.error}));
+    }).finally(() => dispatch(closePanelLoading()))
   }
 
   const getPatientById = (id: string) => {
-    setIsLoading(true);
+    // dispatch(openPanelLoading())
     Api.cureProcessApi.getPatientById({userId: id}).then((data) =>{
       setFullname(data.data.fullname);      
       setSelectedtGender(data.data.gender.toString());
@@ -85,9 +86,10 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
     }).catch(err => {
       const { message } = err.response.data;
       // setErrorMessage(message)
+      dispatch(showToastMessage({message: message, type: toastType.error}));
   }).finally(() => {
     setDisable(true)
-    setIsLoading(false)
+    dispatch(closePanelLoading())
   })
   }
 
@@ -184,20 +186,16 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
           password: data.data.password
         });
         setIsDialogClosed(false);
-        // resetField();
-        //close panel
-        // dispatch(closePanel())
-        dispatch(tableRefresh())
       } else
       {
-        alert('failed')
-        //toast failed
-        //dont close panel
+        dispatch(closePanelLoading());
+        dispatch(showToastMessage({message: 'Tạo không thành công', type: toastType.error}));
       }
     }).catch(err => {
       const { message } = err.response.data;
-      // setErrorMessage(message)
-  }).finally(() => setIsLoading(false))
+      dispatch(closePanelLoading());
+      dispatch(showToastMessage({message: message, type: toastType.error}))
+    })
   }
 
   const renderInputField = () => {
@@ -312,27 +310,25 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
 
   return (
     <>
-    <UniformPanel
-      panelTitle='Tạo tài khoản bệnh nhân'
-      renderFooter={buttonFooter}
-    >
-      {/* content here */}
-      {
-        isLoading ? <Spinner size={SpinnerSize.large} />
-        :
-      <Stack className='form-input'>
-        {renderInputField()}
-      </Stack>
-      }
-    </UniformPanel>
-    <SuccessDialog 
-    isDialogClosed={isDialogClosed} 
-    account={newAccount}
-    closeDialog={() => {
-      setIsDialogClosed(true);
-      dispatch(closePanel());
-    }}
-  />
+      <UniformPanel
+        panelTitle='Tạo tài khoản bệnh nhân'
+        renderFooter={buttonFooter}
+      >
+        {/* content here */}
+        <Stack className='form-input'>
+          {renderInputField()}
+        </Stack>
+
+      </UniformPanel>
+      <SuccessDialog
+        isDialogClosed={isDialogClosed}
+        account={newAccount}
+        closeDialog={() => {
+          setIsDialogClosed(true);
+          dispatch(tableRefresh())
+          dispatch(closePanel());
+        }}
+      />
     </>
   );
 }
