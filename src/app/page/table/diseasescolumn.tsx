@@ -7,8 +7,6 @@ export const diseasesColumns =[
       minWidth: 70,
       maxWidth: 90,
       isResizable: true,
-      isSorted: true,
-      isSortedDescending: false,
       onRender: (item) => {
           return <div>{item?.code}</div>;
       },

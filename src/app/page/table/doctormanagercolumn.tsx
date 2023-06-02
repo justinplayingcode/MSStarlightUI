@@ -8,8 +8,6 @@ export const doctormanagementColumns: IColumn[] = [
     minWidth: 150,
     maxWidth: 350,
     isResizable: true,
-    isSorted: true,
-    isSortedDescending: false,
     onRender: (item) => {
       return <Stack>{item?.fullname}</Stack>;
     },

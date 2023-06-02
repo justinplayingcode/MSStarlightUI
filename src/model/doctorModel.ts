@@ -1,5 +1,5 @@
 import { IDropdownOption } from "@fluentui/react"
-import { DoctorRank, DoctorPosition } from "./enum"
+import { DoctorRank, DoctorPosition, TypeAppointmentSchedule } from "./enum"
 
 export const doctorRank: IDropdownOption[] = [
     {
@@ -37,4 +37,25 @@ export const doctorPosition: IDropdownOption[] = [
         key: `${DoctorPosition.none}`,
         text: 'Không'
     },
+]
+
+export const appointmentTypeList: IDropdownOption[] = [
+    {
+        key: `${TypeAppointmentSchedule.khamThuong}`,
+        text: "Khám thông thường"
+    },
+    {
+        key: `${TypeAppointmentSchedule.khamTheoBHYT}`,
+        text: "Khám theo bảo hiểm y tế",
+    },
+    {
+        key: `${TypeAppointmentSchedule.khamTheoYeuCau}`,
+        text: "Khám theo yêu cầu",
+        // this type is for pre-schedule
+    },
+    {
+        key: `${TypeAppointmentSchedule.khamTheoChiDinh}`,
+        text: "Khám theo chỉ định"
+        // this type not render to choose
+    }
 ]

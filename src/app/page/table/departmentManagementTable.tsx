@@ -18,10 +18,6 @@ export const departmentManagementColumns: IColumn[] = [
         maxWidth: 350,
         isRowHeader: true,
         isResizable: true,
-        isSorted: true,
-        isSortedDescending: false,
-        sortAscendingAriaLabel: 'Sorted A to Z',
-        sortDescendingAriaLabel: 'Sorted Z to A',
         onRender: (item) => {
             return <span>{item.name}</span>;
         },

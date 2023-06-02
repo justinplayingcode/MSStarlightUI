@@ -79,3 +79,10 @@ export enum toastType {
   info,
   warning
 }
+
+export enum TypeAppointmentSchedule {
+    khamTheoYeuCau,
+    khamThuong,
+    khamTheoBHYT,
+    khamTheoChiDinh,
+  }
