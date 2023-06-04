@@ -31,7 +31,9 @@ const NonBoardingTab = () => {
                 onClick: () => { setDialogClosed(false) },
             })
         };
-        if(tableSelectedCount === 1 && info?.department !== 'Khoa Tiếp Đón'){
+        if(tableSelectedCount === 1 
+            // && info?.department !== 'Khoa Tiếp Đón'
+            ){
             commandBar.push({
                 key: 'edit',
                 text: 'Bắt đầu',

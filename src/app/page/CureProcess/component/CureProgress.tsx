@@ -1,4 +1,4 @@
-import { DefaultButton, FontWeights, IButtonStyles, IIconProps, IconButton, Modal, PrimaryButton, Stack, TextField, getTheme, mergeStyleSets } from "@fluentui/react";
+import { Checkbox, DefaultButton, Dialog, DialogFooter, Dropdown, FontWeights, IButtonStyles, IIconProps, IconButton, Modal, PrimaryButton, Stack, TextField, getTheme, mergeStyleSets } from "@fluentui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './index.scss'
@@ -6,6 +6,8 @@ import { InfomationGridComponent } from "src/app/common";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import { TestList } from "src/model/doctorModel";
+import { TypeOfTest } from "src/model/enum";
 
 interface IProgressProps{
     isOpen: boolean,
@@ -13,12 +15,13 @@ interface IProgressProps{
 }
 
 const CureProgress = (props: IProgressProps) => {
-    const [step, setStep] = useState<number>(0);
-
     const dispatch = useDispatch();
     const {tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
 
     const navigate = useNavigate();
+
+    const [isDialogClosed, setDialogClosed] = useState<boolean>(true);
+    const [selectedTest, setSelectedTest] = useState<any[]>([]);
 
 
     const cancelIcon: IIconProps = { iconName: 'Cancel' };
@@ -84,6 +87,12 @@ const CureProgress = (props: IProgressProps) => {
         )
     }
 
+    const renderCommonInput = () => {
+        return(
+            <>Common info</>
+        )
+    }
+
     const renderInputInfo = () => {
         return(
             <Stack>
@@ -97,24 +106,83 @@ const CureProgress = (props: IProgressProps) => {
                     label="Chẩn đoán" 
                     multiline 
                     resizable={false} 
-                    rows={8}
+                    rows={4}
                 />
                 <TextField 
                     label="Đơn thuốc" 
                     multiline 
                     resizable={false} 
-                    rows={8}
+                    rows={4}
+                />
+                {renderTestResult()}
+                <TextField
+                    label="Ghi chú"
+                    multiline
+                    resizable={false}
+                    rows={6}
                 />
             </Stack>
+        )
+    }
+
+    const renderTestResult = () => {
+        return(
+            <>Test result</>
         )
     }
 
     const renderFooter = () => {
         return(
             <Stack className="modal-footer">
-                <DefaultButton text="Xét nghiệm"/>
+                <DefaultButton text="Xét nghiệm" onClick={() => setDialogClosed(false)}/>
                 <PrimaryButton text="Hoàn thành"/>
             </Stack>
+        )
+    }
+
+    const handleTestConfirm = () => {
+        console.log(selectedTest);
+        
+        // setDialogClosed(true);
+        // props.onDismiss();
+    }
+
+    const handleChangeCheck = (key: TypeOfTest) => {
+        let items = [];
+        if(selectedTest.length === 0){
+            items.push(key)
+        } 
+        else {
+            const index = selectedTest.findIndex((item) => item == key);        
+            console.log(index);
+            
+            if(index === -1){
+                console.log('not found');
+                
+                items.push(key)
+            }
+            else {
+                items = [...selectedTest.splice(index, 1)];
+            }
+        }        
+        setSelectedTest(items);
+    }
+
+    const renderTestList = () => {
+        return(
+            <>
+            {
+                TestList.map((item) => (
+                    <Checkbox
+                        key={item.key}
+                        label={item.text}
+                        onChange={(ev, checked) => {
+                            handleChangeCheck(item.key);
+                        }}
+                    />
+                ))
+            }
+            </>
         )
     }
 
@@ -130,9 +198,26 @@ const CureProgress = (props: IProgressProps) => {
                 {renderHeader()}
                 <Stack className="modal-main-content">
                     {renderPatientInfo()}
+                    {renderCommonInput()}
                     {renderInputInfo()}
                 </Stack>
                 {renderFooter()}
+
+                {/* Test dialog */}
+                <Dialog
+                    hidden={isDialogClosed}
+                    onDismiss={() => setDialogClosed(true)}
+                    dialogContentProps={{title: 'Chọn loại xét nghiệm'}}
+                    maxWidth={'480px'}
+                    minWidth={'480px'}
+                    modalProps={{isBlocking: true}}
+                >
+                    {renderTestList()}
+                    <DialogFooter>
+                        <DefaultButton text='Hủy' onClick={()=> setDialogClosed(true)}/>
+                        <PrimaryButton text='Xác nhận' onClick={() => handleTestConfirm()}/>
+                    </DialogFooter>
+                </Dialog>
             </Stack>
         </Modal>
     )

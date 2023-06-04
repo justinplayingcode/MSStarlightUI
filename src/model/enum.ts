@@ -86,3 +86,14 @@ export enum TypeAppointmentSchedule {
     khamTheoBHYT,
     khamTheoChiDinh,
   }
+
+export enum TypeOfTest {
+    SinhHoa,
+    DongMau,
+    HuyetHoc,
+    NuocTieu,
+    SieuAm,
+    DienTim,
+    XQuang,
+    CTScanner
+}
