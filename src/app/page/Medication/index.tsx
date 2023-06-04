@@ -22,8 +22,6 @@ const Medication = () => {
             minWidth: 180,
             maxWidth: 250,
             isResizable: true,
-            isSorted: true,
-            isSortedDescending: false,
             onRender: (item) => {
                 return <div>{item?.name}</div>;
             },

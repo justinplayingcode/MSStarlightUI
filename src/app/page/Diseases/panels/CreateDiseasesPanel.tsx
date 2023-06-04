@@ -93,7 +93,8 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                 <TextField 
                     required
                     label="Triệu chứng" 
-                    multiline 
+                    multiline
+                    rows={8}
                     autoAdjustHeight 
                     value={symptom}
                     onChange={(e, val) => {
@@ -106,6 +107,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                     required
                     label="Cách phòng ngừa" 
                     multiline 
+                    rows={8}
                     autoAdjustHeight 
                     value={prevention}
                     onChange={(e, val) => {
@@ -195,7 +197,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     return (
         <>
             <UniformPanel
-                panelTitle='Thêm bệnh mới'
+                panelTitle={props.panelType === PanelType.Create ? 'Thêm bệnh mới' : 'Chỉnh sửa bệnh'}
                 renderFooter={buttonFooter}
             >
                 {/* content here */}

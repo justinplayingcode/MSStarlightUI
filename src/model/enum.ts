@@ -79,3 +79,21 @@ export enum toastType {
   info,
   warning
 }
+
+export enum TypeAppointmentSchedule {
+    khamTheoYeuCau,
+    khamThuong,
+    khamTheoBHYT,
+    khamTheoChiDinh,
+  }
+
+export enum TypeOfTest {
+    SinhHoa,
+    DongMau,
+    HuyetHoc,
+    NuocTieu,
+    SieuAm,
+    DienTim,
+    XQuang,
+    CTScanner
+}

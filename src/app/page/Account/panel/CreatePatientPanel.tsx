@@ -82,10 +82,8 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
       setInsuranceNumber(data.data.insurance)
       setUserId(currentId)
       setIdentifyNumber(data.data?.identification)
-      // setSelectedDepartment
     }).catch(err => {
       const { message } = err.response.data;
-      // setErrorMessage(message)
       dispatch(showToastMessage({message: message, type: toastType.error}));
   }).finally(() => {
     setDisable(true)
@@ -293,6 +291,10 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
             }}
             errorMessage={errorMessage?.insuranceNumber}
         />
+        <TextField
+          label="Triệu chứng"
+        />
+        <Dropdown label="Loại khám" options={[]}/>
         <Dropdown
           required
           label='Khoa chỉ định'
