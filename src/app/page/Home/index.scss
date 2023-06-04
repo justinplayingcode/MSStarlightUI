@@ -20,10 +20,11 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
+    align-content: space-between;
 
     .chart-container-wrapper {
       width: calc(50% - 10px);
-      height: 50%;
+      height: calc(50% - 8px);
     }
     .chart-container {
       display: flex;
