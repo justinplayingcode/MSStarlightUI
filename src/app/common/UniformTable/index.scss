@@ -29,6 +29,27 @@
               & > * {
                 width: 100%;
               }
+              .details-list-sub-header-item-icon {
+                width: 31px !important;
+                height: 32px !important;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 20px;
+                border: 1px solid #0074bd;
+                border-left: transparent;
+                background-color: #0074bd;
+                color: #fff;
+
+                &:hover {
+                  background-color: #0075bde0;
+                  cursor: pointer;
+                }
+              }
+              .details-list-sub-header-item-icon.disable {
+                cursor: auto;
+                pointer-events: none;
+              }
 
               .ms-Button-flexContainer {
                 font-size: 16px;
@@ -48,7 +69,11 @@
                 max-width: 200px;
               }
               .ms-TextField {
-                margin: 0 20px 0 0;
+                margin: 0 2px 0 0;
+
+                .ms-TextField-field {
+                  font-size: 16px;
+                }
               }
             }
 
@@ -66,25 +91,18 @@
                 align-items: center;
                 margin-top: 40px;
 
-                img {
-                    height: 100px;
-                }
-
-                p {
-                    font-style: italic;
-                    color: #8f8f8f;
-                    font-size: 18px;
-                    font-weight: 500;
-                    margin-top: 8px;
+                .details-list-no-content-icon {
+                  font-size: 40px;
+                  padding-bottom: 8px;
                 }
             }
             .ms-DetailsHeader {
               padding: 6px 0;
-              background-color: #034A75;
+              background-color: #0074bd;
             }
 
             .ms-DetailsHeader-cell:hover {
-              background-color: #034A75;
+              background-color: #0074bd;
               cursor: pointer;
             }
 
@@ -96,6 +114,13 @@
             .ms-DetailsRow-cell {
                 font-size: 16px;
             }
+        }
+
+        .details-list-paging {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
         }
     }
 

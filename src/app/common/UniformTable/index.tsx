@@ -3,13 +3,14 @@ import { TextField } from '@fluentui/react/lib/TextField';
 import { DetailsListLayoutMode, Selection, SelectionMode, IColumn, ConstrainMode, DetailsList } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
-import { CommandBar, ICommandBarItemProps, ShimmeredDetailsList, Stack } from '@fluentui/react';
+import { CommandBar, ICommandBarItemProps, Icon, ShimmeredDetailsList, Stack } from '@fluentui/react';
 import './index.scss';
 import { Convert } from 'utils';
 import { ApiStatus } from 'model';
 import { connect } from 'react-redux';
 import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
+import Pagination from 'src/app/pagination';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -39,6 +40,11 @@ export interface IUniformTableState {
     selectionDetails: string;
     columns: IColumn[];
     isLoading: boolean;
+
+    page: number;
+    total?: number;
+    pageSize?: number;
+    searchKey: string;
 }
 
 const mapDispatchToProps = {
@@ -52,11 +58,11 @@ const mapStateToProps = (state: RootState) => ({
 
 class UniformTable extends React.Component<IUniformTableProps, IUniformTableState> {
     private _selection: Selection;
-    private _allItems: any[];
+    private _buttonSearch;
 
     constructor(props: IUniformTableProps) {
         super(props);
-        this._allItems = [];
+        this._buttonSearch = React.createRef();
         this._selection = new Selection({
             onSelectionChanged: () => {
               this.props.setTableSelectedCount(this._selection.getSelectedCount());
@@ -71,13 +77,15 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
             items: [],
             isLoading: true,
             columns: this.props.columns,
+            searchKey: "",
+            page: 1
         };
     }
 
     componentDidMount(): void {
       this.getData();
       this.props.setTableSelectedCount(0);
-      this.props.setTableSelectedItem([   ]);
+      this.props.setTableSelectedItem([]);
     }
 
     componentDidUpdate(prevProps: Readonly<IUniformTableProps>, prevState: Readonly<IUniformTableState>, snapshot?: any): void {
@@ -87,18 +95,23 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
     }
 
     private getData() {
+      const { searchKey, page } = this.state;
+      const requestBody = {
+        page: page,
+        pageSize: 10,
+        tableType: 1,
+        searchKey: searchKey
+      }
       this.props.integrateItems().then((data) => {
         if (data.status === ApiStatus.succes) {
           this.setState({
             items: data.data,
           })
-          this._allItems = data.data
         }
       }).catch(() => {
         this.setState({
           items: [],
         })
-        this._allItems = []
       }
       ).finally(() => {
         this.setState({ isLoading: false })
@@ -110,8 +123,23 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
         items: [],
         isLoading: true,
       });
-      this._allItems = []
       this.getData();
+    }
+
+    private onClickSearch() {
+      alert(this.state.searchKey) // 
+    }
+    private onKeyDownSearch = (e) => {
+      if(e.key === "Enter") {
+        this.state.searchKey.length > 0 ? this._buttonSearch.current.click() : undefined
+      }
+    }
+
+    private onChangePaging(value: number) {
+      this.setState({
+        page: value
+      })
+      this.OnRefresh();
     }
 
     public render() {
@@ -127,7 +155,8 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
         ]
 
         return (
-            <Stack className='table-container'>
+            <Stack className='table-container' onKeyDown={this.onKeyDownSearch.bind(this)}
+            >
                 <div className='details-list'>
                     <div className='details-list-sub-header'>
                         <div className='details-list-sub-header-item'>
@@ -136,7 +165,22 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             />
                         </div>
                         <div className={`${classNames.controlWrapper} details-list-sub-header-item`}>
-                            <TextField placeholder='Tìm kiếm' onChange={this._onChangeText} styles={controlStyles} iconProps={{iconName: 'search'}} />
+                            <TextField 
+                              placeholder='Tìm kiếm' 
+                              onChange={this._onChangeText} 
+                              styles={controlStyles} 
+                              disabled={isLoading}
+                              value={this.state.searchKey}
+                            />
+                            <div 
+                              className={`details-list-sub-header-item-icon ${isLoading ? "disable" : ""}`}
+                              onClick={this.state.searchKey.length > 0 ? this.onClickSearch.bind(this) : undefined}
+                              ref={this._buttonSearch}
+                            >
+                              <Icon 
+                                iconName={"Search"} 
+                              />
+                            </div>
                         </div>
                     </div>
                     <div className='details-list-wrapper'>
@@ -153,7 +197,6 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                               items={items}
                               columns={columns}
                               selectionMode={SelectionMode.single}
-                              getKey={this._getKey}
                               setKey="single"
                               layoutMode={DetailsListLayoutMode.justified}
                               constrainMode={ConstrainMode.unconstrained}
@@ -165,34 +208,35 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                                   {renderedWindowsAhead: 0,
                                   renderedWindowsBehind: 0}
                               }
-                              // onColumnHeaderClick={this._onColumnClick}
                             />
                           }
                         </MarqueeSelection>
                         {items.length === 0 && !isLoading &&
                             <div className='details-list-no-content'>
-                                {/* <img alt='' src={image.dataNotFound}/> */}
+                                <Icon 
+                                  iconName={"EventTentative"} 
+                                  className='details-list-no-content-icon'
+                                />
                                 <p>Không có dữ liệu...</p>
                             </div>
                         }
+                    </div>
+                    <div className='details-list-paging'>
+                        <Pagination
+                          pageTotal={2}
+                          postPerPage={10}
+                          callback={this.onChangePaging.bind(this)}
+                          disable={isLoading}
+                        />
                     </div>
                 </div>
             </Stack>
         );
     }
 
-    private _getKey(item: any, index?: number): string {
-        if(!!item) {
-            return item.key;
-        }
-        return ''
-    }
-
     private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
-        const { searchByKeyWord } = this.props
-        const removeDiacritics = Convert.removeDiacritics(text);
         this.setState({
-            items: removeDiacritics ? this._allItems.filter(i => Convert.removeDiacritics(i[searchByKeyWord]).toLowerCase().indexOf(removeDiacritics) > -1) : this._allItems,
+          searchKey: text.trim()
         });
     };
 
@@ -207,35 +251,5 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
             return `${selectionCount} items selected`;
         }
     }
-
-    private _onColumnClick = (ev: React.MouseEvent<HTMLElement>, column: IColumn): void => {
-        const { columns, items } = this.state;
-        const newColumns: IColumn[] = columns.slice();
-        const currColumn: IColumn = newColumns.filter(currCol => column.key === currCol.key)[0];
-        const diacritics = (item) => {
-          if(typeof item === 'string') {
-            return item.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-          }
-          return item
-        }
-        function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
-            const key = columnKey as keyof T;
-            return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? diacritics(a[key]) < diacritics(b[key]) : diacritics(a[key]) > diacritics(b[key])) ? 1 : -1));
-        }
-        newColumns.forEach((newCol: IColumn) => {
-            if (newCol === currColumn) {
-                currColumn.isSortedDescending = !currColumn.isSortedDescending;
-                currColumn.isSorted = true;
-            } else {
-                newCol.isSorted = false;
-                newCol.isSortedDescending = true;
-            }
-        });
-        const newItems = _copyAndSort(items, currColumn.key!, currColumn.isSortedDescending);
-        this.setState({
-            columns: newColumns,
-            items: newItems,
-        });
-    };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UniformTable)
