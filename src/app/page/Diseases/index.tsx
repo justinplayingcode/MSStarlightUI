@@ -11,6 +11,7 @@ import { openPanel } from 'src/redux/reducers';
 import { panelTypeConstant } from 'src/model/contant';
 import { diseasesColumns } from '../table/diseasescolumn';
 import Api from 'api';
+import { TableType } from 'src/model/enum';
 
 const Diseases = () => {
     const dispatch = useDispatch();
@@ -106,7 +107,8 @@ const Diseases = () => {
                 searchByKeyWord='name'
                 columns={diseasesColumns}  
                 commandBarItems={getDiseasesCommanBar()}     
-                integrateItems={Api.diseasesApi.getAllDiseases}     
+                integrateItems={Api.diseasesApi.getAllDiseases}
+                tableType={TableType.diseases}      
             />
         </div>
     )

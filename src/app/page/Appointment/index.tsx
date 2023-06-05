@@ -63,12 +63,13 @@ const Appointment = () => {
                         />
                         <DefaultButton text='Tìm kiếm' />
                     </Stack>
-                    <UniformTable
+                    {/* <UniformTable
                         integrateItems={Api.accountApi.getAllDoctor}
                         searchByKeyWord='fullname'
                         columns={aappointmentColumns}
-                        commandBarItems={[]}         
-                    />
+                        commandBarItems={[]}
+                      viết logic truyền đúng tableType
+                    /> */}
                 </Stack>
                 <Stack className='appointment-right'>
                     <Stack>

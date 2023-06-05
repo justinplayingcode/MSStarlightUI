@@ -11,8 +11,7 @@ const api = {
 
     // account
     createDoctor: '/account/registerdoctor',
-    getAllDoctor: '/account/getalldoctor',
-    getAllPatient: '/account/getallpatient',
+    getAll: '/account/getall',
     
     //healthcare
     getPatientByInsurance: '/healthcare/searchinsurance', // change
@@ -51,12 +50,10 @@ const authApi = {
 
 const accountApi = {
     //
-    getAllDoctor: () => apiClient.get(api.getAllDoctor),
+    getAll: (reqbody) => apiClient.post(api.getAll, reqbody),
     createDoctor: (reqbody) => {
         return apiClient.post(api.createDoctor, reqbody)
     },
-
-    getAllPatient: () => apiClient.get(api.getAllPatient),
     createPatient: (reqbody) => {
         return apiClient.post(api.createPatient, reqbody)
     },
