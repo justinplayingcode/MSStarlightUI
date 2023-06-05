@@ -88,12 +88,12 @@ const Speciality = () => {
 
     return(
         <div className='wrapper-table-content speciality-wrapper'>
-            <UniformTable
+            {/* <UniformTable
                 commandBarItems={[]}
                 searchByKeyWord='name'
                 columns={departmentManagementColumns} 
                 integrateItems={Api.departmentApi.getAllDepartment}            
-            />
+            /> */}
         </div>
     )
 }

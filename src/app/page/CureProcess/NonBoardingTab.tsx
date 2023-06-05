@@ -49,7 +49,7 @@ const NonBoardingTab = () => {
 
     return(
          <div className='wrapper-table-content speciality-wrapper'>
-            <UniformTable
+            {/* <UniformTable
                 searchByKeyWord='name'
                 integrateItems={() =>Api.cureProcessApi.getWaitPatient({
                     boarding: false,
@@ -57,7 +57,7 @@ const NonBoardingTab = () => {
                 })}
                 columns={nonBoardingPatientColumns}
                 commandBarItems={getNonBoardingPatientCommandBar()} 
-                />
+                /> */}
             
             {/* dialog when add patient to wait queue */}
             <StartProcessDialog 

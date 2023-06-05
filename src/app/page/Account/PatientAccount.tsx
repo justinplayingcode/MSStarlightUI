@@ -9,6 +9,7 @@ import Api from 'src/api'
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { accountRole } from "model";
+import { TableType } from "src/model/enum";
 
 function PatientAccount() {
   const dispatch = useDispatch();
@@ -46,9 +47,10 @@ function PatientAccount() {
     <div className='wrapper-table-content speciality-wrapper'>
       <UniformTable
         searchByKeyWord='name'
-        integrateItems={Api.accountApi.getAllPatient}      
+        integrateItems={Api.accountApi.getAll}      
         columns={patientmanagementColumns}
-        commandBarItems={getPatientmanagementCommandBar()} 
+        commandBarItems={getPatientmanagementCommandBar()}
+        tableType={TableType.patientAccount} 
         />
     </div>
   );

@@ -3,8 +3,6 @@ import * as React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getRouteItemByKey, getRouteItemByUrl } from './route.type';
 import './location.scss'
-import { RootState } from 'src/redux/store';
-import { useSelector } from 'react-redux';
 
 export const Location = () => {
     const { pathname } = useLocation();

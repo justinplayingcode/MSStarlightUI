@@ -9,6 +9,7 @@ import Api from 'src/api/index'
 import { useDispatch } from 'react-redux';
 import { openPanel } from 'src/redux/reducers';
 import { panelTypeConstant } from 'src/model/contant';
+import { TableType } from 'src/model/enum';
 
 const Medication = () => {
     const dispatch = useDispatch();
@@ -103,7 +104,8 @@ const Medication = () => {
                 searchByKeyWord='name'
                 columns={PillsColumns}  
                 commandBarItems={getPillsCommanBar()}  
-                integrateItems={Api.medicationApi.getAllMedication}        
+                integrateItems={Api.medicationApi.getAllMedication}  
+                tableType={TableType.medications}      
             />
         </div>
     )

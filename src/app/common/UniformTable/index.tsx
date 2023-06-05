@@ -5,12 +5,12 @@ import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
 import { mergeStyleSets } from '@fluentui/react/lib/Styling';
 import { CommandBar, ICommandBarItemProps, Icon, ShimmeredDetailsList, Stack } from '@fluentui/react';
 import './index.scss';
-import { Convert } from 'utils';
 import { ApiStatus } from 'model';
 import { connect } from 'react-redux';
 import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
 import Pagination from 'src/app/pagination';
+import { TableType } from 'src/model/enum';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -21,7 +21,9 @@ export interface IUniformTableOwnProps {
     columns: IColumn[];
     searchByKeyWord: string;
     commandBarItems: ICommandBarItemProps[];
-    integrateItems: () => Promise<any>
+    integrateItems: (requestBody: any) => Promise<any>;
+    tableType: TableType;
+    pageSize?: number;
 }
 
 export interface  IUniformTablePropsFromState {
@@ -42,8 +44,8 @@ export interface IUniformTableState {
     isLoading: boolean;
 
     page: number;
-    total?: number;
-    pageSize?: number;
+    total: number;
+    pageSize: number;
     searchKey: string;
 }
 
@@ -78,7 +80,9 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
             isLoading: true,
             columns: this.props.columns,
             searchKey: "",
-            page: 1
+            page: 1,
+            total: 1,
+            pageSize: this.props.pageSize || 20,
         };
     }
 
@@ -98,14 +102,15 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
       const { searchKey, page } = this.state;
       const requestBody = {
         page: page,
-        pageSize: 10,
-        tableType: 1,
+        pageSize: this.state.pageSize,
+        tableType: this.props.tableType,
         searchKey: searchKey
       }
-      this.props.integrateItems().then((data) => {
+      this.props.integrateItems(requestBody).then((data) => {
         if (data.status === ApiStatus.succes) {
           this.setState({
-            items: data.data,
+            items: data.data.values,
+            total: data.data.total
           })
         }
       }).catch(() => {
@@ -127,7 +132,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
     }
 
     private onClickSearch() {
-      alert(this.state.searchKey) // 
+      this.OnRefresh();
     }
     private onKeyDownSearch = (e) => {
       if(e.key === "Enter") {
@@ -138,12 +143,11 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
     private onChangePaging(value: number) {
       this.setState({
         page: value
-      })
-      this.OnRefresh();
+      }, () => this.OnRefresh())
     }
 
     public render() {
-        const { items, columns, isLoading } = this.state;
+        const { items, columns, isLoading, total, pageSize } = this.state;
         const commandBar: ICommandBarItemProps[] = [
           ...this.props.commandBarItems,
           {
@@ -223,7 +227,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                     </div>
                     <div className='details-list-paging'>
                         <Pagination
-                          pageTotal={2}
+                          pageTotal={Math.ceil(total/pageSize)}
                           postPerPage={10}
                           callback={this.onChangePaging.bind(this)}
                           disable={isLoading}

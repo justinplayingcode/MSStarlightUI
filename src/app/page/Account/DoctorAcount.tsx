@@ -6,7 +6,7 @@ import { openPanel, showToastMessage } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
 import Api from "src/api";
 import { AppDispatch, RootState } from "src/redux/store";
-import { toastType } from "src/model/enum";
+import { TableType, toastType } from "src/model/enum";
 
 function DoctorAcount() {
     const dispatch = useDispatch<AppDispatch>();
@@ -41,10 +41,11 @@ function DoctorAcount() {
     return(
         <div className='wrapper-table-content speciality-wrapper'>
             <UniformTable
-                integrateItems={Api.accountApi.getAllDoctor}
+                integrateItems={Api.accountApi.getAll}
                 searchByKeyWord='fullname'
                 columns={doctormanagementColumns}
-                commandBarItems={getDoctorManagmentCommandBar()}         
+                commandBarItems={getDoctorManagmentCommandBar()}  
+                tableType={TableType.doctorAccount}       
             />
         </div>
     )

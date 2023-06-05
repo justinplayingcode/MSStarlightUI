@@ -26,20 +26,6 @@ export enum ApiStatusCode {
     ServerError = 500,
 }
 
-export enum DepartmentType{
-    khambenh = 'BV00KKB01',
-    noiTongHop = 'BV00KTH02',
-    ngoai = 'BV00KN03',
-    canLamSang = 'BV00KCLS04',
-    san = 'BV00KS05',
-    daLieu = 'BV00KDL06',
-    dongY = 'BV00KDY07',
-    truyenNhiem = 'BV00KTN08',
-    duoc = 'BV00KD09',
-    nhi = 'BV00KN10',
-    thanNhanTao = 'BV00KTNT11'
-}
-
 export enum HealthIndicator {
     HeartRate = 'Nhịp tim',
     Temperature = 'Nhiệt độ cơ thể',
@@ -96,4 +82,18 @@ export enum TypeOfTest {
     DienTim,
     XQuang,
     CTScanner
+}
+
+export enum TableType {
+  doctorAccount,
+  patientAccount,
+  medications,
+  diseases,
+  scheduleNormalReception,
+  scheduleNormalOtherDepartment,
+  scheduleParaclinicalDepartment,
+  scheduleNormalOtherDepartmentTesting,
+  scheduleWithRequest,
+  patientOnboarding,
+  schedulePatientIn,
 }
