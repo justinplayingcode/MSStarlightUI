@@ -87,30 +87,30 @@ const Home = () => {
   }
 
   const onRenderPatient = (): JSX.Element => {
-    const systolic = info?.systolic ? "--" : info?.systolic,
-          diastolic = info?.systolic ? "--" : info?.diastolic;
+    const displayValue = (value) => value === 0 ? "--" : value;
+
     const healthStatus: IHealthStatus[] = [
       {
         title: 'Nhịp tim',
-        value: info?.heartRate === 0 ? '--' : info?.heartRate,
+        value: displayValue(info?.heartRate),
         unit: 'bpm',
         image: image.heartbeat
       },
       {
         title: 'Nhiệt độ cơ thể',
-        value: info?.temperature === 0 ? '--' : info?.temperature,
+        value: displayValue(info?.temperature),
         unit: '°C',
         image: image.temperature
       },
       {
         title: 'Huyết áp',
-        value: `${120}/${90}`,
+        value: `${displayValue(info?.bloodPressureSystolic)}/${displayValue(info?.bloodPressureDiastolic)}`,
         unit: 'mmHg',
         image: image.bloodPressure
       },
       {
         title: 'Đường huyết',
-        value: info?.glucose === 0 ? '--' : info?.glucose,
+        value: displayValue(info?.glucose),
         unit: 'mg/dl',
         image: image.glucose
       }
@@ -118,7 +118,10 @@ const Home = () => {
 
     return (
       <>
-        <div className="patient-section-container section1"></div>
+        <div className="patient-section-container section1">
+          <div className="patient-section"></div>
+          <div className="patient-section"></div>
+        </div>
         <div className="patient-section-container section2">
           <div className="patient-section">
             <div className="patient-section-header">
@@ -148,7 +151,7 @@ const Home = () => {
       <div className="health-item">
         <div className="health-content">
           <img alt={item.title} src={item.image} style={{height: '40px'}}/>
-          <div>{item.value}<span>{item.unit}</span></div>
+          <div>{item.value}<span className="health-content-unit">{item.unit}</span></div>
         </div>
         <div className="health-content-text">{item.title}</div>
       </div>
@@ -168,7 +171,6 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
-      {/* <div className="header">{`Xin chào ${info.fullname}`}</div> */}
       <div className="content">{onRenderContent()}</div>
     </div>
   )

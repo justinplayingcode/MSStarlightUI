@@ -4,6 +4,7 @@ import { UniformTable } from 'src/app/common';
 import Api from 'src/api/index'
 import { departmentManagementColumns } from '../table/departmentManagementTable';
 import { useEffect, useState } from 'react';
+import { TableType } from 'src/model/enum';
 
 const Speciality = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -88,12 +89,12 @@ const Speciality = () => {
 
     return(
         <div className='wrapper-table-content speciality-wrapper'>
-            {/* <UniformTable
+            <UniformTable
                 commandBarItems={[]}
-                searchByKeyWord='name'
                 columns={departmentManagementColumns} 
-                integrateItems={Api.departmentApi.getAllDepartment}            
-            /> */}
+                integrateItems={Api.departmentApi.getAllDepartmentForTable}
+                tableType={TableType.departments}
+            />
         </div>
     )
 }
