@@ -74,6 +74,7 @@ const cureProcessApi = {
 
 const departmentApi = {
     getAllDepartment: () => apiClient.get(api.getAllDepartment),
+    getAllDepartmentForTable: (reqbody) => apiClient.post(api.getAllDepartment, reqbody),
 }
 
 const diseasesApi = {

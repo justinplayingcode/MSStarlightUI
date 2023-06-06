@@ -19,7 +19,6 @@ const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
 
 export interface IUniformTableOwnProps {
     columns: IColumn[];
-    searchByKeyWord: string;
     commandBarItems: ICommandBarItemProps[];
     integrateItems: (requestBody: any) => Promise<any>;
     tableType: TableType;
