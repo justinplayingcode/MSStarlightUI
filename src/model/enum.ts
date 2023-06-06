@@ -96,4 +96,5 @@ export enum TableType {
   scheduleWithRequest,
   patientOnboarding,
   schedulePatientIn,
+  departments,
 }
