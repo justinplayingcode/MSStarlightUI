@@ -162,7 +162,15 @@
                   display: flex;
                   justify-content: space-between;
 
-                  span {
+                  img {
+                    height: 32px;
+                  }
+
+                  div {
+                    font-size: 28px;
+                  }
+
+                  .health-content-unit {
                     padding-left: 4px;
                   }
                 }
