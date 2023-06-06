@@ -5,8 +5,8 @@ export const patientmanagementColumns: IColumn[] = [
     {
         key: 'fullname',
         name: 'Họ và tên',
-        minWidth: 210,
-        maxWidth: 350,
+        minWidth: 150,
+        maxWidth: 250,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.fullname}</span>;
@@ -15,8 +15,8 @@ export const patientmanagementColumns: IColumn[] = [
     {
         key: 'gender',
         name: 'Giới tính',
-        minWidth: 70,
-        maxWidth: 90,
+        minWidth: 50,
+        // maxWidth: 90,
         isResizable: true,
         onRender: (item) => {
             return <span>{Convert.convertGender(item.gender)}</span>;
@@ -25,31 +25,41 @@ export const patientmanagementColumns: IColumn[] = [
     {
         key: 'dateOfBirth',
         name: 'Ngày sinh',
-        minWidth: 70,
-        maxWidth: 90,
+        minWidth: 100,
+        maxWidth: 150,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.dateOfBirth}</span>;
         },
     },
     {
-        key: 'address',
-        name: 'Địa chỉ',
-        minWidth: 70,
-        maxWidth: 90,
+        key: 'identification',
+        name: 'Căn cước công dân',
+        minWidth: 200,
+        maxWidth: 300,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item.address}</span>;
+            return <span>{item.identification}</span>;
         },
     },
     {
         key: 'insurance',
         name: 'Bảo hiểm y tế',
-        minWidth: 70,
-        maxWidth: 90,
+        minWidth: 200,
+        maxWidth: 300,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.insurance}</span>;
+        },
+    },    
+    {
+        key: 'address',
+        name: 'Địa chỉ',
+        minWidth: 200,
+        maxWidth: 300,
+        isResizable: true,
+        onRender: (item) => {
+            return <span>{item.address}</span>;
         },
     },
 ];

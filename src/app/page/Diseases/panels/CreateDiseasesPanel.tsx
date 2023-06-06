@@ -36,7 +36,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
           data.data.map((item) => {
             list.push({
               key: item._id,
-              text: item.name,
+              text: item.departmentName,
             })
           })
           setDepartmentList(list);
@@ -160,7 +160,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             code: code,
             symptom: symptom,
             prevention: prevention,
-            department: selectedDepartment
+            departmentId: selectedDepartment
         }
 
         setIsLoading(true);

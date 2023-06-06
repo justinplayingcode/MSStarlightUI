@@ -16,7 +16,7 @@ const api = {
     //healthcare
     getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
-    getWaitPatient: '/healthcare/getallpatient',
+    getWaitedPatient: '/schedule/schedulewait',
     getPatientById: '/healthcare/getinfobyuserid',
 
 
@@ -64,9 +64,9 @@ const cureProcessApi = {
     getPatientByInsurance: (reqbody) => {
         return apiClient.post(api.getPatientByInsurance, reqbody);
     },
-    getWaitPatient: (reqbody) => {
-        return apiClient.post(api.getWaitPatient, reqbody);
-    },
+    getWaitedPatient: (reqbody) => {
+        return apiClient.post(api.getWaitedPatient, reqbody);
+    },  
     getPatientById: (reqbody) => {
         return apiClient.post(api.getPatientById, reqbody);
     }

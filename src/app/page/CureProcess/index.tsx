@@ -7,6 +7,7 @@ import OnBoardingTab from './OnBoardingTab';
 import TestingTab from './TestingTab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
+import { DepartmentType } from 'src/model/enum';
 
 const CureProcess = () => {
     const { info } = useSelector((state: RootState) => state.user)
@@ -14,26 +15,27 @@ const CureProcess = () => {
 
     const getTab = () => {
       const tabs:ITabProps[] = [];
-      tabs.push(
-        {
-          label: "Khám bệnh",
-          index: 0,
-          Component: <NonBoardingTab/>
-        },
-      )
+      if(info?.departmentCode !== DepartmentType.canLamSang)
+        tabs.push(
+          {
+            label: "Chờ khám bệnh",
+            index: 0,
+            Component: <NonBoardingTab/>
+          },
+        );      
 
-      if(info?.department !== 'Khoa Tiếp Đón' && info?.department !== 'Khoa Cận Lâm Sàng'){
+      if(info?.departmentCode !== DepartmentType.tiepDon){
         tabs.push(
           {
             label: "Chờ xét nghiệm",
             index: 1,
             Component: <TestingTab/>
           },
-          {
-            label: "Đang điều trị tại viện",
-            index: 2,
-            Component: <OnBoardingTab/>
-          },
+          // {
+          //   label: "Đang điều trị tại viện",
+          //   index: 2,
+          //   Component: <OnBoardingTab/>
+          // },
         )
       }
       return tabs;
@@ -41,13 +43,6 @@ const CureProcess = () => {
 
     return (
         <div className='wrapper-content'>
-            {/* <>Khám chữa bệnh
-                <Stack>Danh sách bệnh nhân chờ khám</Stack>
-                <Stack>Danh sách bệnh nhân đang điều trị</Stack>
-            </>
-            <h1>Hello CodeSandbox</h1>
-            <h2>Start editing to see some magic happen!</h2>
-            <br /> */}
             <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={getTab()} />
         </div>
     )

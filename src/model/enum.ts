@@ -98,3 +98,17 @@ export enum TableType {
   schedulePatientIn,
   departments,
 }
+
+export enum DepartmentType {
+    tiepDon,
+    noiTongHop,
+    ngoai,
+    canLamSang,
+    san,
+    daLieu,
+    dongY,
+    truyenNhiem,
+    duoc,
+    nhi,
+    thanNhanTao
+}

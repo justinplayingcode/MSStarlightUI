@@ -26,11 +26,15 @@ const Profile = () => {
     
     const [name, setName] = React.useState<string>(info?.fullname);
     const [selectedGender, setSelectedGender] = useState<string>(info?.gender?.toString());    
-    const [dateOfBirth, setDateOfBirth] = useState<Date>(Convert.dmystringtoDate(info?.dateOfBirth));
+    const [dateOfBirth, setDateOfBirth] = useState<Date>(new Date);
     const [phonenumber, setPhonenumber] = useState<string>(info?.phonenumber);
     const [address, setAddress] = useState<string>(info?.address);
     const [email, setEmail] = useState<string>(info?.email);
     const [identification, setIdentification] = useState<string>(info?.identification);
+
+    useEffect(()=>{
+        setDateOfBirth(Convert.dmystringtoDate(info?.dateOfBirth))
+    },[])
 
     useEffect(() => {
         if(editmode){

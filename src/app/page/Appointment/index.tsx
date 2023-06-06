@@ -33,7 +33,7 @@ const Appointment = () => {
             if(item.name !== 'Khoa Tiếp Đón' && item.name !== 'Khoa Cận Lâm Sàng'){
               list.push({
                 key: item._id,
-                text: item.name,
+                text: item.departmentName,
               })
             }
           }) 
