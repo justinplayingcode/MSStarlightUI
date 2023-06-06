@@ -88,7 +88,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
                     path: '/cure/onBoarding',
                     state: '/cure/onBoarding',
                     sidebarProps:{
-                        displayText: 'Nằm viện',
+                        displayText: 'Điều trị',
                         icon: <MdOutlineArrowRightAlt/>
                     }
                 }

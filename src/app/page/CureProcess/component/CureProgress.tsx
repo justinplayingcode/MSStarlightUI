@@ -127,7 +127,7 @@ const CureProgress = (props: IProgressProps) => {
 
     const renderTestResult = () => {
         return(
-            <>Test result</>
+            <>{false && 'Test result'}</>
         )
     }
 
@@ -140,31 +140,26 @@ const CureProgress = (props: IProgressProps) => {
         )
     }
 
-    const handleTestConfirm = () => {
-        console.log(selectedTest);
-        
-        // setDialogClosed(true);
-        // props.onDismiss();
+    const handleTestConfirm = () => {        
+        setDialogClosed(true);
+        props.onDismiss();
     }
 
     const handleChangeCheck = (key: TypeOfTest) => {
-        let items = [];
+        let items = [...selectedTest];
         if(selectedTest.length === 0){
             items.push(key)
         } 
         else {
-            const index = selectedTest.findIndex((item) => item == key);        
-            console.log(index);
-            
-            if(index === -1){
-                console.log('not found');
-                
+            const index = selectedTest.findIndex((item) => item == key);            
+            if(index === -1){                
                 items.push(key)
             }
-            else {
-                items = [...selectedTest.splice(index, 1)];
+            else {                
+                items.splice(index, 1);                
             }
-        }        
+        }
+        items.sort();
         setSelectedTest(items);
     }
 

@@ -11,6 +11,7 @@ import { nonBoardingPatientColumns } from '../table/nonboardingcolumn';
 import { useNavigate } from 'react-router-dom';
 import ConfirmDialog from './dialog/confirmDialog';
 import CureProgress from './component/CureProgress';
+import { DepartmentType, TableType } from 'src/model/enum';
 
 const NonBoardingTab = () => {
     const navigate = useNavigate();
@@ -47,17 +48,24 @@ const NonBoardingTab = () => {
         return commandBar;
     }
 
+    const getTabletype = (department: number) => {
+        switch(department){
+            case DepartmentType.tiepDon:
+                return TableType.scheduleNormalReception;
+            default:
+                return TableType.scheduleNormalOtherDepartment;
+        }
+    }
+
     return(
          <div className='wrapper-table-content speciality-wrapper'>
-            {/* <UniformTable
+            <UniformTable
                 searchByKeyWord='name'
-                integrateItems={() =>Api.cureProcessApi.getWaitPatient({
-                    boarding: false,
-                    department: info?.departmentId
-                })}
+                integrateItems={Api.cureProcessApi.getWaitedPatient}
                 columns={nonBoardingPatientColumns}
                 commandBarItems={getNonBoardingPatientCommandBar()} 
-                /> */}
+                tableType={getTabletype(info?.departmentCode)}
+            />
             
             {/* dialog when add patient to wait queue */}
             <StartProcessDialog 

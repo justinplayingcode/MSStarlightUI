@@ -48,7 +48,7 @@ function CreatDoctorPanel() {
       data.data.map((item) => {
         list.push({
           key: item._id,
-          text: item.name,
+          text: item.departmentName,
         })
       })
       setDepartmentList(list);
@@ -131,7 +131,7 @@ function CreatDoctorPanel() {
       phonenumber: phoneNumber,
       email: email,
       identification: identifyNumber || '',
-      department: selectedDepartment || '',
+      departmentId: selectedDepartment || '',
       position: position,
       rank: rank,
     }

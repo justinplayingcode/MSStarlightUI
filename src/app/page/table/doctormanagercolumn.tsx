@@ -1,4 +1,5 @@
 import { IColumn, Stack } from "@fluentui/react"
+import { tooltipPlainText } from "src/utils/utils";
 import { Convert, Validate } from "utils";
 
 export const doctormanagementColumns: IColumn[] = [
@@ -6,7 +7,7 @@ export const doctormanagementColumns: IColumn[] = [
     key: 'fullname',
     name: 'Họ và tên',
     minWidth: 150,
-    maxWidth: 350,
+    maxWidth: 250,
     isResizable: true,
     onRender: (item) => {
       return <Stack>{item?.fullname}</Stack>;
@@ -15,20 +16,29 @@ export const doctormanagementColumns: IColumn[] = [
   {
     key: 'department',
     name: 'Khoa',
-    minWidth: 150,
-    maxWidth: 200,
+    minWidth: 100,
+    maxWidth: 300,
     isResizable: true,
     onRender: (item) => {
-      return <span>{item?.department}</span>;
+      return tooltipPlainText(item?.departmentName);
     },
+  },
+  { 
+    key: 'gender',
+    name:'Giới tính',
+    minWidth: 100,
+    isResizable: true,
+    onRender: (item) => {
+      return <span>{Convert.convertGender(item?.gender)}</span>
+    }
   },
   {
     key: 'position',
     name:'Chức vụ',
-    minWidth: 50,
+    minWidth: 100,
     isResizable: true,
     onRender: (item) => {
-      return <span>{Convert.convertGender(item?.gender)}</span>
+      return <span>{Convert.getDoctorPosition(item?.position)}</span>
     }
   },
   {

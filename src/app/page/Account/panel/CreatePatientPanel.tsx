@@ -1,7 +1,7 @@
 import { UniformPanel } from "src/app/common";
 import { BtnType, Gender, PanelType, toastType } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
-import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
+// import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { Dictionary } from "@reduxjs/toolkit";
@@ -58,7 +58,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         if(item.name !== 'Khoa Tiếp Đón' && item.name !== 'Khoa Cận Lâm Sàng'){
           list.push({
             key: item._id,
-            text: item.name,
+            text: item.departmentName,
           })
         }
       }) 
@@ -168,7 +168,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
       gender: selectedGender || '',
       dateOfBirth:  Convert.datetommddyyyy(dateOfBirth),
       phonenumber: phoneNumber || '',
-      department: selectedDepartment,
+      departmentId: selectedDepartment,
       email: email ||'',
       identification: identifyNumber || '',
       insurance: insuranceNumber || '',
