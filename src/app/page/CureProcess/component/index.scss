@@ -20,6 +20,15 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
+
+                .common-input{
+                    .input-label{
+                        width: 120px;
+                    }
+                    .input-field{
+                        width: 40px;
+                    }
+                }
             }
             .modal-footer{
                 display: flex;
