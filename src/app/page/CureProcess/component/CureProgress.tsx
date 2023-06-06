@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { TestList } from "src/model/doctorModel";
 import { TypeOfTest } from "src/model/enum";
+import CustomPeoplePicker from "src/app/common/picker/custompeoplepicker";
+import Picker from "src/app/common/picker";
 
 interface IProgressProps{
     isOpen: boolean,
@@ -89,25 +91,73 @@ const CureProgress = (props: IProgressProps) => {
 
     const renderCommonInput = () => {
         return(
-            <>Common info</>
+            <Stack className="common-input">
+                <Stack style={{fontWeight: 600, marginBottom: 16}}>Chỉ số cơ bản</Stack>
+                <Stack horizontal>
+                    <Stack style={{width: '50%'}}>
+                        <Stack horizontal verticalAlign="center">
+                            <Stack className="input-label">Nhịp tim</Stack>
+                            <TextField className="input-field"/>
+                            <Stack>bpm</Stack>
+                        </Stack>
+                        <Stack horizontal verticalAlign="center">
+                            <Stack className="input-label">Nhiệt độ</Stack>
+                            <TextField className="input-field"/>
+                            <Stack>&#8451;</Stack>
+                        </Stack>
+                        <Stack horizontal verticalAlign="center" >
+                            <Stack className="input-label">Huyết áp: </Stack>
+                            <Stack horizontal style={{alignItems: 'center'}}>
+                                <TextField className="input-field"/>
+                                <Stack>/</Stack>
+                                <TextField className="input-field"/>
+                            </Stack>
+                        </Stack>                        
+                    </Stack>
+                    <Stack style={{width: '50%'}}>
+                        <Stack horizontal verticalAlign="center">
+                            <Stack className="input-label">Đường huyết</Stack>
+                            <TextField className="input-field"/>
+                            <Stack>mmHg</Stack>
+                        </Stack>
+                        <Stack horizontal verticalAlign="center">
+                            <Stack className="input-label">Cân nặng</Stack>
+                            <TextField className="input-field"/>
+                            <Stack>Kg</Stack>
+                        </Stack>
+                        <Stack horizontal verticalAlign="center">
+                            <Stack className="input-label">Chiều cao</Stack>
+                            <TextField className="input-field"/>
+                            <Stack>m</Stack>
+                        </Stack>
+                    </Stack>
+                </Stack>
+            </Stack>
         )
     }
 
     const renderInputInfo = () => {
         return(
             <Stack>
-                <TextField 
-                    label="Triệu chứng" 
-                    multiline 
-                    resizable={false} 
-                    rows={8}
-                />
-                <TextField 
-                    label="Chẩn đoán" 
-                    multiline 
-                    resizable={false} 
-                    rows={4}
-                />
+                <Stack horizontal tokens={{childrenGap : 16}}>
+                    <Stack style={{width: '50%' }}>
+                        <TextField                            
+                            label="Triệu chứng" 
+                            multiline 
+                            resizable={false} 
+                            rows={6}
+                        />
+                    </Stack>
+                    <Stack style={{width: '50%' }}>
+                        <TextField 
+                            label="Chẩn đoán" 
+                            multiline 
+                            resizable={false} 
+                            rows={6}
+                        />
+                    </Stack>
+                </Stack>
+                <Picker/>
                 <TextField 
                     label="Đơn thuốc" 
                     multiline 
