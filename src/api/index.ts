@@ -44,7 +44,7 @@ const authApi = {
     checkCurrentUser: () => apiClient.get(api.checkcurrentuser),
     getInfoCurrentUser: () => apiClient.get(api.getInfoCurrentUser),
     editPersonalInfo: (reqbody) => {
-        return apiClient.post(api.editPersonalInfo, reqbody)
+        return apiClient.put(api.editPersonalInfo, reqbody)
     }
 }
 
@@ -83,7 +83,7 @@ const diseasesApi = {
         return apiClient.post(api.createDiseases,reqbody)
     },
     editDiseases: (reqbody) => {
-        return apiClient.post(api.editDiseases,reqbody)
+        return apiClient.put(api.editDiseases,reqbody)
     }
 }
 
@@ -93,7 +93,7 @@ const medicationApi = {
         return apiClient.post(api.createMedication, reqbody)
     },
     editMedication: (reqbody) => {
-        return apiClient.post(api.editMedication, reqbody)
+        return apiClient.put(api.editMedication, reqbody)
     }
 }
 

@@ -42,7 +42,6 @@ function DoctorAcount() {
         <div className='wrapper-table-content speciality-wrapper'>
             <UniformTable
                 integrateItems={Api.accountApi.getAll}
-                searchByKeyWord='fullname'
                 columns={doctormanagementColumns}
                 commandBarItems={getDoctorManagmentCommandBar()}  
                 tableType={TableType.doctorAccount}       

@@ -1,7 +1,18 @@
+import Api from "api";
+import { UniformTable } from "src/app/common";
+import { nonBoardingPatientColumns } from "../table/nonboardingcolumn";
+import { TableType } from "src/model/enum";
 
 const TestingTab = () => {
     return (
-        <>Chờ xét nghiệm</>
+      <div className='wrapper-table-content speciality-wrapper'>
+        <UniformTable
+                integrateItems={Api.cureProcessApi.getWaitedPatient}
+                columns={nonBoardingPatientColumns}
+                commandBarItems={[]} 
+                tableType={TableType.scheduleParaclinical}
+            />
+      </div>
     )
 }
 

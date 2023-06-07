@@ -89,14 +89,13 @@ export enum TableType {
   patientAccount,
   medications,
   diseases,
-  scheduleNormalReception,
-  scheduleNormalOtherDepartment,
-  scheduleParaclinicalDepartment,
-  scheduleNormalOtherDepartmentTesting,
+  departments,
+  doctorInDepartment,
+  scheduleNormal,
+  scheduleParaclinical,
   scheduleWithRequest,
   patientOnboarding,
   schedulePatientIn,
-  departments,
 }
 
 export enum DepartmentType {

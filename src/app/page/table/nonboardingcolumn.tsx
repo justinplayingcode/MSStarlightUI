@@ -5,8 +5,8 @@ export const nonBoardingPatientColumns: IColumn[] = [
     {
         key: 'fullname',
         name: 'Họ và tên',
-        minWidth: 210,
-        maxWidth: 350,
+        minWidth: 120,
+        maxWidth: 200,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.fullname}</span>;

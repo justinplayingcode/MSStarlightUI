@@ -29,9 +29,9 @@ const Tabs = (props: TabsProps) =>{
 
     return (
         <div
-            className={
-                props?.orientation === "vertical" ? "tabs-component vertical" : 'tabs-component'
-            }
+            className={`
+                ${props?.orientation === "vertical" ? "tabs-component vertical" : 'tabs-component'} tabs-container
+            `}
         >
             <div role="tablist" aria-orientation={props.orientation}>
                 {props.tabs.map((tab) => (

@@ -80,7 +80,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
             columns: this.props.columns,
             searchKey: "",
             page: 1,
-            total: 1,
+            total: 0,
             pageSize: this.props.pageSize || 20,
         };
     }
@@ -105,6 +105,10 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
         tableType: this.props.tableType,
         searchKey: searchKey
       }
+      this.setState({
+        items: [],
+        isLoading: true,
+      });
       this.props.integrateItems(requestBody).then((data) => {
         if (data.status === ApiStatus.succes) {
           this.setState({
@@ -124,14 +128,12 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
 
     private OnRefresh() {
       this.setState({
-        items: [],
-        isLoading: true,
-      });
-      this.getData();
+        searchKey: ""
+      }, () => this.getData());
     }
 
     private onClickSearch() {
-      this.OnRefresh();
+      this.getData();
     }
     private onKeyDownSearch = (e) => {
       if(e.key === "Enter") {
@@ -142,7 +144,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
     private onChangePaging(value: number) {
       this.setState({
         page: value
-      }, () => this.OnRefresh())
+      }, () => this.getData())
     }
 
     public render() {
