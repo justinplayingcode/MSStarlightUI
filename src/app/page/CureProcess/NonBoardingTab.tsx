@@ -48,23 +48,14 @@ const NonBoardingTab = () => {
         return commandBar;
     }
 
-    const getTabletype = (department: number) => {
-        switch(department){
-            case DepartmentType.tiepDon:
-                return TableType.scheduleNormalReception;
-            default:
-                return TableType.scheduleNormalOtherDepartment;
-        }
-    }
 
     return(
-         <div className='wrapper-table-content speciality-wrapper'>
+          <div className='wrapper-table-content speciality-wrapper'>
             <UniformTable
-                searchByKeyWord='name'
                 integrateItems={Api.cureProcessApi.getWaitedPatient}
                 columns={nonBoardingPatientColumns}
                 commandBarItems={getNonBoardingPatientCommandBar()} 
-                tableType={getTabletype(info?.departmentCode)}
+                tableType={TableType.scheduleNormal}
             />
             
             {/* dialog when add patient to wait queue */}

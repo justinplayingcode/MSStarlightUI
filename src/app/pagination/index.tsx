@@ -81,10 +81,12 @@ export default class Pagination extends React.Component<PagingProps, PagingState
 	};
 
 	render() {
+    const { pageTotal } = this.props;
+
 		const arrPage = this.handleNumberOfPage();
-    const disableComponent = this.props.pageTotal === 1 || this.props.disable
+    const disableComponent = pageTotal === 1 || this.props.disable
 		return (
-			<div className={`pagination-container ${disableComponent ? "disable" : ""}`}>
+			<div className={`pagination-container ${disableComponent ? "disable" : ""} ${pageTotal > 1 ? "" : "hidden"}`}>
 				<div
 					className={`pagination-button ${this.state.currentPage === 1 ? "disabled" : ""}`}
 					onClick={

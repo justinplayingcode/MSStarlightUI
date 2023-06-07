@@ -42,7 +42,7 @@ const CureProcess = () => {
     }
 
     return (
-        <div className='wrapper-content'>
+        <div className='wrapper-table-content speciality-wrapper'>
             <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={getTab()} />
         </div>
     )

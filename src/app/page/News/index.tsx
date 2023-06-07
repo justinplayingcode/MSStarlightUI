@@ -8,7 +8,7 @@ const News = () => {
   
 
     return(
-        <div className='wrapper-content'>
+        <div className='wrapper-table-content speciality-wrapper'>
 
             <>Thông tin, tư vấn
                 <Stack>Render theo template tạo khi thêm bài viết</Stack>
