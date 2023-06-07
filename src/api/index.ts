@@ -24,12 +24,12 @@ const api = {
     getAllDepartment: '/department/getall',
 
     //diseases
-    getAllDiseases:'/diseases/getalldiseases',
+    getAllDiseases:'/diseases/getall',
     createDiseases: '/diseases/creatediseases',
     editDiseases: '/diseases/editdiseases',
     
     //pills
-    getAllMedication: '/medication/getallmedications',
+    getAllMedication: '/medication/getall',
     createMedication: '/medication/createmedication',
     editMedication: '/medication/editmedication'
 
@@ -78,7 +78,7 @@ const departmentApi = {
 }
 
 const diseasesApi = {
-    getAllDiseases: () => apiClient.get(api.getAllDiseases),
+    getAllDiseases: (reqbody) => apiClient.post(api.getAllDiseases, reqbody),
     createDiseases: (reqbody) => {
         return apiClient.post(api.createDiseases,reqbody)
     },
@@ -88,7 +88,7 @@ const diseasesApi = {
 }
 
 const medicationApi = {
-    getAllMedication: () => apiClient.get(api.getAllMedication),
+    getAllMedication: (reqbody) => apiClient.post(api.getAllMedication, reqbody),
     createMedication: (reqbody) => {
         return apiClient.post(api.createMedication, reqbody)
     },

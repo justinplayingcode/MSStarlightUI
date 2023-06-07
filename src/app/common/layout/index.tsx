@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import UniformHeader from "../header";
 import {  ApiStatus, accountRole, pageConstant } from "model";
 import Home from "src/app/page/Home";
-import { LoadingCirle, LoadingDot } from "../loading";
+import { LoadingDot, LoadingInComing } from "../loading";
 import { Stack } from "@fluentui/react";
 import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
@@ -21,7 +21,6 @@ import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "sr
 import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
-import CureProgress from "src/app/page/CureProcess/component/CureProgress";
 import Medication from "src/app/page/Medication";
 import OnBoardingManagement from "src/app/page/CureProcess/OnBoardingManagement";
 import Appointment from "src/app/page/Appointment";
@@ -138,9 +137,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <OnBoardingManagement/>;
                 break;                
             
-            case pageConstant.LAYOUT_CURE_PROGRESS:
-                content = <CureProgress/>
-                break;
+            // case pageConstant.LAYOUT_CURE_PROGRESS:
+            //     content = <CureProgress/>
+            //     break;
 
             case pageConstant.LAYOUT_CURE_HISTORY:
                 content = <CureHistory />
@@ -199,7 +198,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         const { loading } = this.state;
         const { username, showToast, isLoading } = this.props;
         if(loading) {
-            return <LoadingCirle/>
+            return <LoadingInComing/>
         } else {
             return (
                 <>

@@ -1,13 +1,12 @@
 import * as React from "react";
 import "./index.scss";
-import { DefaultButton, IconButton, PrimaryButton, Stack, TextField } from "@fluentui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Stack, TextField } from "@fluentui/react";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openLoading, closeLoading, setRole, setUsername } from "src/redux/reducers";
 import Api from "src/api";
-import image from "image";
-import { LoadingCirle } from "src/app/common/loading";
+import { LoadingLogin } from "src/app/common/loading";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 
@@ -52,28 +51,15 @@ export const Login: React.FunctionComponent = () => {
 
     return (
         <>
-            {loading ? <LoadingCirle /> : <React.Fragment />}
+            {loading ? <LoadingLogin /> : <React.Fragment />}
             <Stack
                 className="login-container"
                 horizontalAlign="center"
                 verticalAlign="center"
                 onKeyDown={handleKeyDown}
             >
-                {/* <Stack className="login-form-header">
-                    <Stack className="form-header-content">
-                        <Stack className="img-div">
-                            <img alt='' src={image.logo}/>
-                            <Stack className="header-text">Bệnh viện huyện XXX</Stack>
-                        </Stack>
-                        <IconButton className="header-icon" iconProps={{ iconName: 'Help' }} />
-                    </Stack>
-                    <Stack className="header-ribbon">
-
-                    </Stack>
-                </Stack> */}
                 <Stack className="login-form-container">
                     <Stack className="form-container">
-                        {/* <img alt='' src={image.logo}/> */}
                         <Stack horizontalAlign="center" className="logo" >
                             Đăng nhập
                         </Stack>
