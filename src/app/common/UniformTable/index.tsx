@@ -9,7 +9,7 @@ import { ApiStatus } from 'model';
 import { connect } from 'react-redux';
 import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
-import Pagination from 'src/app/pagination';
+import Pagination from 'src/app/common/pagination';
 import { TableType } from 'src/model/enum';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});

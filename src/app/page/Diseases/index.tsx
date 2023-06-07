@@ -104,7 +104,6 @@ const Diseases = () => {
     return(
         <div className='wrapper-table-content'>
             <UniformTable
-                searchByKeyWord='name'
                 columns={diseasesColumns}  
                 commandBarItems={getDiseasesCommanBar()}     
                 integrateItems={Api.diseasesApi.getAllDiseases}

@@ -10,19 +10,17 @@ import { accountRole } from 'model';
 import { IInfomationGridItem, InfomationGridComponent, InputType } from 'src/app/common/InfomationGrid';
 import { useEffect, useState } from 'react';
 import { Dictionary } from '@reduxjs/toolkit';
-import { gender, onFormatDate } from 'src/model/userModel';
+import { gender } from 'src/model/userModel';
 import { useDispatch } from 'react-redux';
 import Api from 'api';
 import { closeLoading, openLoading, setInfoUser, showToastMessage } from 'src/redux/reducers';
 import { toastType } from 'src/model/enum';
-import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { role, username, info} = useSelector((state: RootState) => state.user);
+    const { role, username, info } = useSelector((state: RootState) => state.user);
     const [editmode, setEditmode] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] =useState<Dictionary<string>>();
+    const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
     
     const [name, setName] = React.useState<string>(info?.fullname);
     const [selectedGender, setSelectedGender] = useState<string>(info?.gender?.toString());    
@@ -38,15 +36,19 @@ const Profile = () => {
 
     useEffect(() => {
         if(editmode){
-            setName(info?.fullname);
-            setSelectedGender(info?.gender?.toString());
-            setDateOfBirth(Convert.dmystringtoDate(info?.dateOfBirth));
-            setPhonenumber(info?.phonenumber);
-            setAddress(info?.address)
-            setEmail(info?.email)
-            setIdentification(info?.identification)
+          getInfomationInRedux()
         }
     },[editmode])
+
+    const getInfomationInRedux = () => {
+      setName(info?.fullname);
+      setSelectedGender(info?.gender?.toString());
+      setDateOfBirth(Convert.dmystringtoDate(info?.dateOfBirth));
+      setPhonenumber(info?.phonenumber);
+      setAddress(info?.address)
+      setEmail(info?.email)
+      setIdentification(info?.identification)
+    }
 
     const topInfomation: IInfomationGridItem[] = [
         {
@@ -237,10 +239,7 @@ const Profile = () => {
         dispatch(openLoading())
         Api.authApi.editPersonalInfo(reqbody).then(data => {
             if (!data.status) {
-                //need loading and reload instead of navigate
-                // location.reload();
                 dispatch(setInfoUser(data.data))
-
                 dispatch(showToastMessage({ message: 'Sửa thông tin thành công', type: toastType.succes }))
             } else {
                 dispatch(showToastMessage({ message: 'Sửa thông tin không thành công', type: toastType.error }))
@@ -313,7 +312,7 @@ const Profile = () => {
                                 />
                                 <DefaultButton text='Hủy' onClick={() => {
                                     setEditmode(false);
-                                    location.reload();
+                                    getInfomationInRedux()
                                 }}
                                 />
                             </Stack>                    
