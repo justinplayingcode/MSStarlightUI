@@ -24,7 +24,7 @@ const NonBoardingTab = () => {
     
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
-        if (info?.department === 'Khoa Tiếp Đón' && role === accountRole.Doctor) {
+        if (info?.departmentCode !== DepartmentType.tiepDon && role === accountRole.Doctor) {
             commandBar.push({
                 key: 'newItem',
                 text: 'Thêm',
@@ -84,6 +84,7 @@ const NonBoardingTab = () => {
                 onDismiss={() => {
                     setModalClosed(true)
                 }}
+                isNormalProgress={info?.departmentCode !== DepartmentType.canLamSang}
             />
 
         </div>
