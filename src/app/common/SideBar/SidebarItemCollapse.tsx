@@ -61,11 +61,9 @@ const SidebarItemCollapse = ({ item }: Props) => {
                             route.child ? (
                                 <Stack className="route-child">
                                     <SidebarItemCollapse item={route} key={index} />
-
                                 </Stack>
                             ) : (
                                 <Stack className="route-child">
-
                                     <SidebarItem item={route} key={index} />
                                 </Stack>
                             )

@@ -20,7 +20,6 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    align-content: space-between;
 
     .chart-container-wrapper {
       width: calc(50% - 10px);
@@ -41,6 +40,7 @@
       padding-bottom: 20px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
       width: 100%;
 

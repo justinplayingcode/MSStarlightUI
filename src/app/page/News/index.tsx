@@ -1,20 +1,21 @@
-import { IPersonaProps, Stack } from '@fluentui/react';
-import { useState } from 'react';
-import Picker from 'src/app/common/picker';
+import { PrimaryButton } from "@fluentui/react";
+import { useState } from "react";
+import Stepper from "src/app/common/stepper";
 
-const News = () => {
+const NewsPost = () => {
+  // const labelArray = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5']
+  // const [currentStep, updateCurrentStep] = useState(1);
+
+  // function updateStep(step) {
+  //   updateCurrentStep(step);
+  // }
 
 
-  
-
-    return(
-        <div className='wrapper-table-content speciality-wrapper'>
-
-            <>Thông tin, tư vấn
-                <Stack>Render theo template tạo khi thêm bài viết</Stack>
-                <Picker />
-            </>
-        </div>
-    )
+  return(
+    <div>
+      <Stepper/>
+    </div>  
+  )
 }
-export default News;
+
+export default NewsPost;

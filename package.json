@@ -6,7 +6,10 @@
   "author": "Justin small hands <phamduythang00@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fluentui/react": "^8.107.3",
+    "@mui/material": "^5.13.4",
     "@reduxjs/toolkit": "^1.9.3",
     "@types/react-redux": "^7.1.25",
     "axios": "^1.3.6",

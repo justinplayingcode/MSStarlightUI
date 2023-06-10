@@ -53,7 +53,7 @@ export const routeMapping : { [key: string]: IRouteItem} = {
     },
     OnBoarding:{
         key: 'route-onboarding',
-        text: 'Đang nằm viện',
+        text: 'Điều trị',
         url: '/cure/onBoarding',
         parentKeys:["route-total-cure-process"]
     },
@@ -88,14 +88,14 @@ export const routeMapping : { [key: string]: IRouteItem} = {
     News: {
         key: 'route-news',
         text: 'Thông tin, tư vấn',
-        // url: '/news',
+        url: '/news',
     },
-    NewsPost: {
-        key: 'route-news-post',
-        text: 'Các bài đăng',
-        url: '/news/news-post',
-        parentKeys:["route-news"]
-    },
+    // NewsPost: {
+    //     key: 'route-news',
+    //     text: 'Các bài đăng',
+    //     url: '/news',
+    //     parentKeys:["route-news"]
+    // },
     NewsCreate:{
         key: 'route-news-create',
         text: 'Tạo bài đăng',

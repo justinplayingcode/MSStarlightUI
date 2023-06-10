@@ -22,11 +22,11 @@ import { Location } from "../layout/location";
 import AccountPage from "src/app/page/Account";
 import { MainPanel } from "../uniformpanel";
 import Medication from "src/app/page/Medication";
-import OnBoardingManagement from "src/app/page/CureProcess/OnBoardingManagement";
 import Appointment from "src/app/page/Appointment";
-import NewsPost from "src/app/page/News/SubMenu/NewsPost";
+import NewsPost from "src/app/page/News";
 import NewsCreate from "src/app/page/News/SubMenu/NewsCreate";
 import NewsReview from "src/app/page/News/SubMenu/NewsReview";
+import TreatmentManagement from "src/app/page/CureProcess/TreatmentManagement";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -134,7 +134,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <CureProcess/>
                 break;
             case pageConstant.LAYOUT_ON_BOARDING:
-                content = <OnBoardingManagement/>;
+                content = <TreatmentManagement/>;
                 break;                
             
             // case pageConstant.LAYOUT_CURE_PROGRESS:

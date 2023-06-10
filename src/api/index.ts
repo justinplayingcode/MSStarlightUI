@@ -22,6 +22,7 @@ const api = {
 
     //department
     getAllDepartment: '/department/getall',
+    getAllDoctorInDepartment: '/department/getalldoctors',
 
     //diseases
     getAllDiseases:'/diseases/getall',
@@ -75,6 +76,7 @@ const cureProcessApi = {
 const departmentApi = {
     getAllDepartment: () => apiClient.get(api.getAllDepartment),
     getAllDepartmentForTable: (reqbody) => apiClient.post(api.getAllDepartment, reqbody),
+    getAllDoctorInDepartment: (reqbody) => apiClient.post(api.getAllDoctorInDepartment, reqbody)
 }
 
 const diseasesApi = {
