@@ -9,7 +9,7 @@ import Api from 'src/api'
 import { useNavigate } from 'react-router-dom';
 import ConfirmDialog from './dialog/confirmDialog';
 import CureProgress from './component/CureProgress';
-import { TableType } from 'src/model/enum';
+import { DepartmentType, TableType } from 'src/model/enum';
 import { nonBoardingPatientColumns } from '../components/table/nonboardingcolumn';
 
 const NonBoardingTab = () => {
@@ -23,7 +23,7 @@ const NonBoardingTab = () => {
     
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
-        if (info?.department === 'Khoa Tiếp Đón' && role === accountRole.Doctor) {
+        if (info?.departmentCode !== DepartmentType.tiepDon && role === accountRole.Doctor) {
             commandBar.push({
                 key: 'newItem',
                 text: 'Thêm',
@@ -83,6 +83,7 @@ const NonBoardingTab = () => {
                 onDismiss={() => {
                     setModalClosed(true)
                 }}
+                isNormalProgress={info?.departmentCode !== DepartmentType.canLamSang}
             />
 
         </div>
