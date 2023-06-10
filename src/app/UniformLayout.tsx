@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Layout from "./common/layout";
+import Layout from "./page/structure/layout";
 import { accountRole, pageConstant } from "model";
 import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import { Login } from "./page/Login";
-import { ErrorPage } from "./common";
-import NoPermission from "./page/NoPermission";
+import NoPermission from "./page/structure/NoPermission";
+import { ErrorPage } from "./page/structure/ErrorPage";
 
 interface UniformLayoutPropsFromState {
 }

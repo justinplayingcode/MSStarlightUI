@@ -6,12 +6,11 @@ import { RootState } from 'src/redux/store';
 import { accountRole } from 'model';
 
 import Api from 'src/api'
-import { useEffect } from 'react';
-import { nonBoardingPatientColumns } from '../table/nonboardingcolumn';
 import { useNavigate } from 'react-router-dom';
 import ConfirmDialog from './dialog/confirmDialog';
 import CureProgress from './component/CureProgress';
 import { DepartmentType, TableType } from 'src/model/enum';
+import { nonBoardingPatientColumns } from '../components/table/nonboardingcolumn';
 
 const NonBoardingTab = () => {
     const navigate = useNavigate();

@@ -1,12 +1,12 @@
 import { ICommandBarItemProps } from "@fluentui/react"
 import { UniformTable } from "src/app/common"
-import { doctormanagementColumns } from "../table/doctormanagercolumn"
 import { useDispatch, useSelector } from "react-redux";
 import { openPanel, showToastMessage } from "src/redux/reducers";
 import { panelTypeConstant } from "src/model/contant";
 import Api from "src/api";
 import { AppDispatch, RootState } from "src/redux/store";
 import { TableType, toastType } from "src/model/enum";
+import { doctormanagementColumns } from "../components/table/doctormanagercolumn";
 
 function DoctorAcount() {
     const dispatch = useDispatch<AppDispatch>();

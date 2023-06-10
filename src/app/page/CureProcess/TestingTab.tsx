@@ -1,7 +1,7 @@
 import Api from "api";
 import { UniformTable } from "src/app/common";
-import { nonBoardingPatientColumns } from "../table/nonboardingcolumn";
 import { DepartmentType, TableType, accountRole } from "src/model/enum";
+import { nonBoardingPatientColumns } from "../components/table/nonboardingcolumn";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";

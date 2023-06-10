@@ -2,9 +2,9 @@ import { IColumn, Stack } from '@fluentui/react';
 import './index.scss';
 import { UniformTable } from 'src/app/common';
 import Api from 'src/api/index'
-import { departmentManagementColumns } from '../table/departmentManagementTable';
 import { useEffect, useState } from 'react';
 import { TableType } from 'src/model/enum';
+import { departmentManagementColumns } from '../components/table/departmentManagementTable';
 
 const Speciality = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)

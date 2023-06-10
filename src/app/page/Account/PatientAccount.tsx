@@ -1,15 +1,13 @@
-import { ICommandBarItemProps } from "@fluentui/react";
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { UniformTable } from "src/app/common";
 import { panelTypeConstant } from "src/model/contant";
 import { openPanel } from "src/redux/reducers";
-import { patientmanagementColumns } from "../table/patientmanagementcolumn";
 import Api from 'src/api'
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { accountRole } from "model";
 import { TableType } from "src/model/enum";
+import { patientmanagementColumns } from "../components/table/patientmanagementcolumn";
 
 function PatientAccount() {
   const dispatch = useDispatch();
@@ -46,7 +44,6 @@ function PatientAccount() {
   return (
     <div className='wrapper-table-content speciality-wrapper'>
       <UniformTable
-        searchByKeyWord='name'
         integrateItems={Api.accountApi.getAll}      
         columns={patientmanagementColumns}
         commandBarItems={getPatientmanagementCommandBar()}
