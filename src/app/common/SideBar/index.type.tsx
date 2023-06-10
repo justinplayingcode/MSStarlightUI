@@ -136,50 +136,55 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             }
         },
     );
-
-    const newsItems = {
-        ...(role === accountRole.Patient) && {path: '/news'},
+    let newsItems;
+    if(role === accountRole.Patient) {
+      newsItems = {
+        path: '/news',
         state: '/news',
         sidebarProps: {
-            displayText: 'Thông tin, tư vấn',
-            icon: <FaRegNewspaper />,
+          displayText: 'Thông tin, tư vấn',
+          icon: <FaRegNewspaper />,
         },
-        child:[]
-    };
-
-    if (role !== accountRole.Patient) {
+      }
+    } else {
+      newsItems = {
+        state: '/news',
+        sidebarProps: {
+          displayText: 'Thông tin, tư vấn',
+          icon: <FaRegNewspaper />,
+        },
+        child:[
+          {
+            path: '/news',
+            state: '/news',
+            sidebarProps: {
+                displayText: 'Tin tức',
+                icon: <MdOutlineArrowRightAlt />
+            }
+          },
+          {
+            path: '/news/news-create',
+            state: '/news/news-create',
+            sidebarProps:{
+                displayText: 'Tạo bài đăng',
+                icon: <MdOutlineArrowRightAlt/>
+            }
+          }
+        ]
+      }
+    }
+    if(role === accountRole.Admin){
         newsItems.child.push(
             {
-                path: '/news/news-post',
-                state: '/news/news-post',
-                sidebarProps: {
-                    displayText: 'Các bài đăng',
-                    icon: <MdOutlineArrowRightAlt />
-                }
-            },
-            {
-                path: '/news/news-create',
-                state: '/news/news-create',
+                path: '/news/news-review',
+                state: '/news/news-review',
                 sidebarProps:{
-                    displayText: 'Tạo bài đăng',
+                    displayText: 'Duyệt bài đăng',
                     icon: <MdOutlineArrowRightAlt/>
                 }
             }
-        );
-        if(role === accountRole.Admin){
-            newsItems.child.push(
-                {
-                    path: '/news/news-review',
-                    state: '/news/news-review',
-                    sidebarProps:{
-                        displayText: 'Duyệt bài đăng',
-                        icon: <MdOutlineArrowRightAlt/>
-                    }
-                }
-            )
-        }
+        )
     }
-
     list.push(newsItems);
 
     return list;

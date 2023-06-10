@@ -1,7 +1,7 @@
 import { IColumn, Stack } from "@fluentui/react";
 import { Convert } from "utils";
 
-export const aappointmentColumns: IColumn[] = [
+export const doctorInDepartmentColumns: IColumn[] = [
     {
       key: 'fullname',
       name: 'Họ và tên',

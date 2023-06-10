@@ -63,8 +63,8 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/diseases" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_DISEASES}/>} />
                         <Route path="/medication" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_MEDICATION}/>} />
 
-                        <Route path="/news" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS}/>} />
-                        <Route path="/news/news-post" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_POST}/>} />
+                        {/* <Route path="/news" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS}/>} /> */}
+                        <Route path="/news" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_POST}/>} />
                         <Route path="/news/news-create" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_CREATE}/>} />
                         <Route path="/news/news-review" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_REVIEW}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}

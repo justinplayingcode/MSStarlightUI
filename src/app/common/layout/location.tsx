@@ -33,7 +33,7 @@ export const Location = () => {
         const routeItem = getRouteItemByUrl(pathname);        
         const items: IBreadcrumbItem[] = [];
 
-        if( routeItem?.parentKeys?.length)
+        if(routeItem?.parentKeys?.length)
             routeItem.parentKeys.forEach((key) => {
                 items.push(assembleParentItem(key))
             });

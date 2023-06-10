@@ -3,22 +3,22 @@ import * as React from 'react'
 import { UniformTable } from 'src/app/common';
 import { doctormanagementColumns } from '../table/doctormanagercolumn';
 import Api from 'api';
-import { panelTypeConstant } from 'src/model/contant';
-import { toastType } from 'src/model/enum';
-import { openPanel, showToastMessage } from 'src/redux/reducers';
+import { TableType, toastType } from 'src/model/enum';
+import { closeLoading, openLoading, showToastMessage, tableRefresh } from 'src/redux/reducers';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import './index.scss'
 import { useEffect, useState } from 'react';
-import { aappointmentColumns } from '../table/appointmentColumn';
-import { Convert } from 'utils';
+import { doctorInDepartmentColumns } from '../table/doctorInDepartmentColumn';
+import { AxiosResponse } from 'axios';
 
 const Appointment = () => {
     const dispatch = useDispatch();
     const { tableSelectedCount } = useSelector((state: RootState) => state.currentSelected);
 
     const [departmentList, setDepartmentList] = useState<any[]>();
+    const [departmentId, setDepartmentId] = useState<string>("");
     const [name, setName] = useState<string>();
     const [selectedDate, setSelectedDate] = useState<Date>();
     const [description, setDescription] = useState<string>();
@@ -26,7 +26,7 @@ const Appointment = () => {
 
 
     const getDepartment = () => {
-        // dispatch(openPanelLoading())
+        dispatch(openLoading())
         Api.departmentApi.getAllDepartment().then(data => {
           const list: IDropdownOption[] = [];
           data.data.map((item) => {
@@ -41,7 +41,7 @@ const Appointment = () => {
         }).catch(err => {
             const { message } = err.response.data;
               dispatch(showToastMessage({message: message, type: toastType.error}));
-        })
+        }).finally(() => dispatch(closeLoading()))
       }
 
     useEffect(() => {
@@ -52,6 +52,22 @@ const Appointment = () => {
         setName('abc')
     }, [tableSelectedCount])
 
+    const handldeChangeDropDown = (_ ,option) => {
+      setDepartmentId(option.key);
+    }
+
+    const integrateItems = (reqbody): Promise<AxiosResponse<any, any>> => {
+      const body = {
+        ...reqbody,
+        departmentId
+      };
+      return Api.departmentApi.getAllDoctorInDepartment(body);
+    }
+
+    const handleSearch = () => {
+      dispatch(tableRefresh())
+    }
+
     return(
         <div className='wrapper-table-content'>
             <Stack className='appointment-container' horizontal tokens={{childrenGap: 20}}>
@@ -60,16 +76,18 @@ const Appointment = () => {
                         <Dropdown
                             label='Chọn khoa khám'
                             options={departmentList}
+                            onChange={handldeChangeDropDown}
                         />
-                        <DefaultButton text='Tìm kiếm' />
+                        <PrimaryButton text='Tìm kiếm' 
+                          onClick={handleSearch}
+                        />
                     </Stack>
-                    {/* <UniformTable
-                        integrateItems={Api.accountApi.getAllDoctor}
-                        searchByKeyWord='fullname'
-                        columns={aappointmentColumns}
+                    <UniformTable
+                        integrateItems={integrateItems}
+                        tableType={TableType.doctorInDepartment}
+                        columns={doctorInDepartmentColumns}
                         commandBarItems={[]}
-                      viết logic truyền đúng tableType
-                    /> */}
+                    />
                 </Stack>
                 <Stack className='appointment-right'>
                     <Stack>

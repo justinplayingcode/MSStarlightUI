@@ -36,11 +36,10 @@
                 flex-direction: row;
                 align-items: flex-start;
                 justify-content: space-between;
-
                 color: #9CA3AF;    
                 text-decoration: none;
-                font-size: 18px;
-                padding: 18px 0 18px 16px;
+                font-size: 16px;
+                padding: 18px 0;
                 border-left: 4px solid transparent;
                 &:hover{
                     color: #fff;
@@ -49,7 +48,6 @@
                     display: flex;
                     .icon{
                         min-width: 30px;
-                        // display: flex;
                         justify-content: center;
                         align-items: center;
                     }
@@ -60,10 +58,6 @@
                 .link-arrow{
                     padding-right: 20px;
                 }
-            }
-            .link.active {
-                color: #fff;
-                background: linear-gradient(to right, #111827, #374151);
             }
             .route-child{
                 .link-icon-text{

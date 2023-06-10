@@ -7,7 +7,7 @@ import NonBoardingTab from './NonBoardingTab';
 import TestingTab from './TestingTab';
 import OnBoardingTab from './OnBoardingTab';
 
-const OnBoardingManagement = () => {
+const TreatmentManagement = () => {
     const { info } = useSelector((state: RootState) => state.user)
     const [selectedTab, setSelectedTab] = React.useState<number>(0);
 
@@ -47,5 +47,5 @@ const OnBoardingManagement = () => {
     )
 }
 
-export default OnBoardingManagement;
+export default TreatmentManagement;
 
