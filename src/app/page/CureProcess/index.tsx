@@ -41,6 +41,10 @@ const CureProcess = () => {
       return tabs;
     }
 
+    React.useEffect(() => {
+      setSelectedTab(getTab()[0].index);
+    },[])
+
     return (
         <div className='wrapper-table-content speciality-wrapper'>
             <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={getTab()} />

@@ -10,10 +10,12 @@ import { TestList } from "src/model/doctorModel";
 import { TypeOfTest } from "src/model/enum";
 import CustomPeoplePicker from "src/app/common/picker/custompeoplepicker";
 import Picker from "src/app/common/picker";
+import { TestingForm } from "./TestingForm";
 
 interface IProgressProps{
     isOpen: boolean,
     onDismiss: () => void,
+    isNormalProgress: boolean
 }
 
 const CureProgress = (props: IProgressProps) => {
@@ -177,7 +179,12 @@ const CureProgress = (props: IProgressProps) => {
 
     const renderTestResult = () => {
         return(
-            <>{false && 'Test result'}</>
+            <>{false && (
+                <TestingForm
+                    isView={props.isNormalProgress}
+                    testingList={testList}
+                />
+            )}</>
         )
     }
 
@@ -231,6 +238,14 @@ const CureProgress = (props: IProgressProps) => {
         )
     }
 
+    const testList = [
+        {
+            title: "Xét nghiệm máu",
+            reason: "Nhóm máu O",
+            detail: undefined,
+        }
+    ]
+
     return (
         <Modal
             className="modal-container"
@@ -239,31 +254,49 @@ const CureProgress = (props: IProgressProps) => {
             isBlocking={true}
             // containerClassName={contentStyles.container}
         >
-            <Stack className="modal-content">
-                {renderHeader()}
-                <Stack className="modal-main-content">
-                    {renderPatientInfo()}
-                    {renderCommonInput()}
-                    {renderInputInfo()}
-                </Stack>
-                {renderFooter()}
+            {
+                props.isNormalProgress 
+                ? 
+                <Stack className="modal-content">
+                    {renderHeader()}
+                    <Stack className="modal-main-content">
+                        {renderPatientInfo()}
+                        {renderCommonInput()}
+                        {renderInputInfo()}
+                    </Stack>
+                    {renderFooter()}
 
-                {/* Test dialog */}
-                <Dialog
-                    hidden={isDialogClosed}
-                    onDismiss={() => setDialogClosed(true)}
-                    dialogContentProps={{title: 'Chọn loại xét nghiệm'}}
-                    maxWidth={'480px'}
-                    minWidth={'480px'}
-                    modalProps={{isBlocking: true}}
-                >
-                    {renderTestList()}
-                    <DialogFooter>
-                        <DefaultButton text='Hủy' onClick={()=> setDialogClosed(true)}/>
-                        <PrimaryButton text='Xác nhận' onClick={() => handleTestConfirm()}/>
-                    </DialogFooter>
-                </Dialog>
-            </Stack>
+                    {/* Test dialog */}
+                        <Dialog
+                            hidden={isDialogClosed}
+                            onDismiss={() => setDialogClosed(true)}
+                            dialogContentProps={{ title: 'Chọn loại xét nghiệm' }}
+                            maxWidth={'480px'}
+                            minWidth={'480px'}
+                            modalProps={{ isBlocking: true }}
+                        >
+                            {renderTestList()}
+                            <DialogFooter>
+                                <DefaultButton text='Hủy' onClick={() => setDialogClosed(true)} />
+                                <PrimaryButton text='Xác nhận' onClick={() => handleTestConfirm()} />
+                            </DialogFooter>
+                        </Dialog>
+                    </Stack>
+                    : (
+                        <Stack className="modal-content">
+                            <Stack className="modal-main-content">
+                                <TestingForm
+                                    isView={props.isNormalProgress}
+                                    testingList={testList}
+                                    />
+                            </Stack>
+                            <Stack className="modal-footer">
+                                <DefaultButton text="Hủy" onClick={() => setDialogClosed(false)}/>
+                                <PrimaryButton text="Hoàn thành"/>
+                            </Stack>
+                        </Stack>
+                    )
+            }
         </Modal>
     )
 }
