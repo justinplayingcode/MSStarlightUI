@@ -149,7 +149,6 @@
                 box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
                 border-radius: 15px;
                 padding: 20px;
-                min-height: 160px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -162,12 +161,8 @@
                   display: flex;
                   justify-content: space-between;
 
-                  img {
-                    height: 32px;
-                  }
-
                   div {
-                    font-size: 28px;
+                    font-size: 20px;
                   }
 
                   .health-content-unit {

@@ -45,14 +45,7 @@ export const Location = () => {
     },[pathname]);
 
     return(
-        <Stack className='breadcrumbs'
-            styles={{
-                root: {
-                    height: 32,
-                    marginBottom: 20,
-                }
-            }}
-        >
+        <Stack className='breadcrumbs'>
             <Breadcrumb
                 items={assembleBreadItem()}
             />

@@ -1,11 +1,10 @@
 .table-container{
     flex: 1;
-    max-height: 80vh;
+    max-height: 100%;
     width: 100%;
     border-radius: 8px;
     background-color: #ffffff;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    // overflow: scroll;
     padding-top: 12px;
     
     .details-list {
@@ -36,13 +35,13 @@
                 justify-content: center;
                 align-items: center;
                 margin-right: 20px;
-                border: 1px solid #0074bd;
+                border: 1px solid #111827;
                 border-left: transparent;
-                background-color: #0074bd;
+                background-color: #111827;
                 color: #fff;
 
                 &:hover {
-                  background-color: #0075bde0;
+                  opacity: 0.6;
                   cursor: pointer;
                 }
               }
@@ -98,11 +97,11 @@
             }
             .ms-DetailsHeader {
               padding: 6px 0;
-              background-color: #0074bd;
+              background-color: #111827;
             }
 
             .ms-DetailsHeader-cell:hover {
-              background-color: #0074bd;
+              background-color: #111827;
               cursor: pointer;
             }
 

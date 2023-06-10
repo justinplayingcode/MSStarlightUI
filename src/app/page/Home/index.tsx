@@ -150,7 +150,6 @@ const Home = () => {
     return (
       <div className="health-item">
         <div className="health-content">
-          <img alt={item.title} src={item.image} style={{height: '40px'}}/>
           <div>{item.value}<span className="health-content-unit">{item.unit}</span></div>
         </div>
         <div className="health-content-text">{item.title}</div>

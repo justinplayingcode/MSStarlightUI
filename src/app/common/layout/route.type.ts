@@ -74,13 +74,13 @@ export const routeMapping : { [key: string]: IRouteItem} = {
 
     Diseases: {
         key: 'route-diseases',
-        text: 'Bệnh',
+        text: 'Danh sách các loại bệnh',
         url: '/diseases',
         // parentKeys:["route-home"]
     },
     Pills: {
         key: 'route-medication',
-        text: 'Thuốc',
+        text: 'Danh sách các loại thuốc',
         url: '/medication',
         // parentKeys:["route-home"]
     },
