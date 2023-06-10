@@ -101,7 +101,6 @@ const Medication = () => {
                 <Stack> thêm sửa xóa thuốc - admin</Stack>
             </> */}
             <UniformTable
-                searchByKeyWord='name'
                 columns={PillsColumns}  
                 commandBarItems={getPillsCommanBar()}  
                 integrateItems={Api.medicationApi.getAllMedication}  

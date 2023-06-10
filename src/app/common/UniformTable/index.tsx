@@ -103,7 +103,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
         page: page,
         pageSize: this.state.pageSize,
         tableType: this.props.tableType,
-        searchKey: searchKey
+        searchKey: searchKey.trim()
       }
       this.setState({
         items: [],
@@ -137,7 +137,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
     }
     private onKeyDownSearch = (e) => {
       if(e.key === "Enter") {
-        this.state.searchKey.length > 0 ? this._buttonSearch.current.click() : undefined
+        this._buttonSearch.current.click()
       }
     }
 
@@ -179,7 +179,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             />
                             <div 
                               className={`details-list-sub-header-item-icon ${isLoading ? "disable" : ""}`}
-                              onClick={this.state.searchKey.length > 0 ? this.onClickSearch.bind(this) : undefined}
+                              onClick={this.onClickSearch.bind(this)}
                               ref={this._buttonSearch}
                             >
                               <Icon 
@@ -241,7 +241,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
 
     private _onChangeText = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
         this.setState({
-          searchKey: text.trim()
+          searchKey: text
         });
     };
 

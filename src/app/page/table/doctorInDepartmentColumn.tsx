@@ -5,7 +5,7 @@ export const doctorInDepartmentColumns: IColumn[] = [
     {
       key: 'fullname',
       name: 'Họ và tên',
-      minWidth: 150,
+      minWidth: 180,
       maxWidth: 250,
       isResizable: true,
       onRender: (item) => {
@@ -13,22 +13,43 @@ export const doctorInDepartmentColumns: IColumn[] = [
       },
     },
     {
-      key: 'department',
-      name: 'Khoa',
-      minWidth: 150,
-      maxWidth: 200,
-      isResizable: true,
-      onRender: (item) => {
-        return <span>{item?.department}</span>;
-      },
-    },
-    {
       key: 'position',
       name:'Chức vụ',
       minWidth: 50,
+      maxWidth: 150,
       isResizable: true,
       onRender: (item) => {
-        return <span>{Convert.convertGender(item?.gender)}</span>
+        return <span>{Convert.getDoctorPosition(item?.position)}</span>
+      }
+    },
+    {
+      key: 'rank',
+      name:'Trình độ',
+      minWidth: 50,
+      maxWidth: 150,
+      isResizable: true,
+      onRender: (item) => {
+        return <span>{Convert.getDoctorRank(item?.rank)}</span>
+      }
+    },
+    {
+      key: 'phonenumber',
+      name:'Số điện thoại',
+      minWidth: 50,
+      maxWidth: 150,
+      isResizable: true,
+      onRender: (item) => {
+        return <span>{item?.phonenumber}</span>
+      }
+    },
+    {
+      key: 'email',
+      name:'Email',
+      minWidth: 180,
+      maxWidth: 250,
+      isResizable: true,
+      onRender: (item) => {
+        return <span>{item?.email}</span>
       }
     },
   ];

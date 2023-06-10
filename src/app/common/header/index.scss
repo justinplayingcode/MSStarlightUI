@@ -3,49 +3,31 @@
     padding: 18px 40px 32px 40px;
     position: fixed;
     background-color: #f4f4f4;
+    z-index: 9000;
+    display: flex;
 
-    .header-info {
+    .location {
+      flex: 1;
+    }
+
+    .header-icon-group {
+        flex: 1;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
+        width: 160px;
 
-        .header-text {
-            width: 70%;
-
-            .ms-SearchBox {
-                width: 80%;
-                border: none;
-                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-            }
-            .hospital-name {
-                font-size: 28px;
-                font-weight: 700;
-                color: rgb(0, 120, 212);
-            }
-
-            // .current-user {}
-        }
-
-        .header-icon-group {
-            flex: 1;
-
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            flex-direction: row;
-
-            .header-icon {
-                width: 40px;
-                height: 40px;
-                margin-right: 16px;
-                border: 1px solid #eee;
-                border-radius: 8px;
-                background-color: #fff;
-                &:hover {
-                    background-color: #fafafa;
-                }
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            background-color: #fff;
+            &:hover {
+                background-color: #fafafa;
             }
         }
     }
+    
 }
