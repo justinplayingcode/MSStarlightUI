@@ -9,11 +9,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import './index.scss'
 import { useEffect, useState } from 'react';
-import { doctorInDepartmentColumns } from '../table/doctorInDepartmentColumn';
 import { AxiosResponse } from 'axios';
 import VerticalLinearStepper from 'src/app/common/stepper/VerticalStepper';
 import { Convert } from 'utils';
-import CustomDatePicker from 'src/app/common/datepicker';
+import { doctorInDepartmentColumns } from '../components/table/doctorInDepartmentColumn';
+import CustomDatePicker from 'src/app/common/Datepicker';
 
 const Appointment = () => {
     const dispatch = useDispatch();
@@ -106,7 +106,7 @@ const Appointment = () => {
           integrateItems={integrateItems}
           tableType={TableType.doctorInDepartment}
           columns={doctorInDepartmentColumns}
-          commandBarItems={[]}
+          commandBarItems={[]} // nên thêm 1 nút xem details bác sĩ
         />
       )
     }

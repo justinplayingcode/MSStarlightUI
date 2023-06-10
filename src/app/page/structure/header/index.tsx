@@ -1,6 +1,6 @@
 import "./index.scss"
 import { IconButton, Stack } from "@fluentui/react";
-import { Avatar, AvatarSize } from "../Avatar/avatar";
+import { Avatar, AvatarSize } from "../../../common/Avatar/avatar";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { Location } from "../layout/location";

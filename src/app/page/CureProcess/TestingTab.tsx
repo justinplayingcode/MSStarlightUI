@@ -1,7 +1,7 @@
 import Api from "api";
 import { UniformTable } from "src/app/common";
-import { nonBoardingPatientColumns } from "../table/nonboardingcolumn";
 import { TableType } from "src/model/enum";
+import { nonBoardingPatientColumns } from "../components/table/nonboardingcolumn";
 
 const TestingTab = () => {
     return (
