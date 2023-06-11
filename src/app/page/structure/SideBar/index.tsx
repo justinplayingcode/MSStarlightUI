@@ -31,6 +31,11 @@ const SideBar = () => {
         dispatch(setCurrentSidebar(getSectionUrl()))
     },[])
 
+    useEffect(() => {
+      setMenuItem(getNavList(role, false));
+      dispatch(setCurrentSidebar(getSectionUrl()))
+    },[window.location.href])
+
     return (
         <div className={`main-sidebar ${isOpen ? "" : 'sidebar-responsive'}`}>
             <div className='sidebar'>

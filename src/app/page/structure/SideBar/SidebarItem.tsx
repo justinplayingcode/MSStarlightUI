@@ -21,8 +21,9 @@ const SidebarItem = ({ item }: Props) => {
                 className="link"
                 style={{
                     paddingLeft: 20,
-                    borderLeft: currentSidebar === item.state ? '4px solid #fff' : '4px solid transparent',
-                    background: currentSidebar === item.state ? 'linear-gradient(to right, #111827, #374151)' : "none",
+                    // borderLeft: currentSidebar === item.state ? '4px solid #fff' : '4px solid transparent',
+                    backgroundColor: currentSidebar === item.state ? '#1976D2' : '#111827',
+                    // background: currentSidebar === item.state ? 'linear-gradient(to right, #111827, #374151)' : "none",
                     color: currentSidebar === item.state ? '#fff' : '#9CA3AF',
                 }}
                 onClick={() => {                    

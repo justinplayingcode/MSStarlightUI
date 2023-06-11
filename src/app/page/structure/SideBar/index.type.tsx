@@ -22,7 +22,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
     const list: RouteType[] = [];
     list.push({
         path: '/',
-        state:'',
+        state:'/',
         sidebarProps: {
             displayText: 'Tổng quát',
             icon: <AiOutlineFund/>
