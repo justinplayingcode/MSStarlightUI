@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./page/structure/layout";
 import { accountRole, pageConstant } from "model";
 import { RootState } from "src/redux/store";
@@ -39,14 +39,14 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
       patient: [accountRole.Patient],
       noAdmin: [accountRole.Doctor, accountRole.Patient],
     }
-
     render() {
         return (
             <div>
                 <Router>
                     <Routes>
                         <Route path="/login" element={<Login/>} />
-                        <Route path="/" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_HOME}/>} />
+                        <Route path="/" element={<Navigate to="/home" replace />} />
+                        <Route path="/home" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_HOME}/>} />
                         <Route path="/profile" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PROFILE}/>} />
 
                         <Route path="/account/patient-management" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT}/>}/>
@@ -69,8 +69,8 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/news/news-review" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_REVIEW}/>} />
                         {/* <Route path={`/login${id}`} element={<Login />} /> */}
                         <Route path="/error/nopermission" element={<NoPermission />} />
-                        <Route path="/error/not" element={<ErrorPage />} />
-                        <Route path="*" element={<ErrorPage />} />
+                        <Route path="/error/notfound" element={<ErrorPage />} />
+                        <Route path="*" element={<Navigate to="/error/notfound" replace />} />
                     </Routes>
                 </Router>                
             </div>

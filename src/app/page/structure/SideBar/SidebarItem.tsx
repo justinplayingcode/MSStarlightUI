@@ -22,9 +22,9 @@ const SidebarItem = ({ item }: Props) => {
                 style={{
                     paddingLeft: 20,
                     // borderLeft: currentSidebar === item.state ? '4px solid #fff' : '4px solid transparent',
-                    backgroundColor: currentSidebar === item.state ? '#1976D2' : '#111827',
+                    backgroundColor: currentSidebar.includes(item.state) ? '#1976D2' : '#111827',
                     // background: currentSidebar === item.state ? 'linear-gradient(to right, #111827, #374151)' : "none",
-                    color: currentSidebar === item.state ? '#fff' : '#9CA3AF',
+                    color: currentSidebar.includes(item.state) ? '#fff' : '#9CA3AF',
                 }}
                 onClick={() => {                    
                     dispatch(setCurrentSidebar(item.state))

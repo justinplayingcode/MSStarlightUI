@@ -1,5 +1,5 @@
-import React, { FC } from "react";
 import "./index.scss";
+import { useNavigate  } from 'react-router-dom';
 
 export interface ITabProps{
     label: string;
@@ -26,6 +26,7 @@ export interface TabsProps{
 
 const Tabs = (props: TabsProps) =>{
     const Panel = props.tabs && props.tabs.find((tab) => tab.index === props.selectedTab);
+    const navigate = useNavigate();
 
     return (
         <div
@@ -37,7 +38,10 @@ const Tabs = (props: TabsProps) =>{
                 {props.tabs.map((tab) => (
                     <button
                         className={props.selectedTab === tab.index ? "active" : ""}
-                        onClick={() => props.onClick(tab.index)}
+                        onClick={() => {
+                          props.onClick(tab.index);
+                          navigate(`#tab${tab.index}`)
+                        }}
                         key={tab.index}
                         type="button"
                         role="tab"
