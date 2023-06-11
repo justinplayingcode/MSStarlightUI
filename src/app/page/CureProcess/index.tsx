@@ -30,12 +30,7 @@ const CureProcess = () => {
             label: "Chờ xét nghiệm",
             index: 1,
             Component: <TestingTab/>
-          },
-          // {
-          //   label: "Đang điều trị tại viện",
-          //   index: 2,
-          //   Component: <OnBoardingTab/>
-          // },
+          }
         )
       }
       return tabs;

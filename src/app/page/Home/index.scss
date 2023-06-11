@@ -91,24 +91,29 @@
     }
 
     .patient-section-container {
-      border: 1px solid #ccc;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
       width: 100%;
       &.section1 {
-        height: 30%;
+        height: 40%;
       }
       &.section2 {
-        height: 70%;
-        padding-top: 12px;
+        height: 60%;
+        align-content: end;
+        .patient-section {
+          width: 100%;
+        }
       }
 
       .patient-section {
-        // background-color: #fff;
-        // box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
-        // border-radius: 15px;
-        height: 100%;
-        width: 100%;
+        height: calc(100% - 8px);
+        width: calc(50% - 8px);
         padding: 20px;
-
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         .patient-section-header {
           display: flex;
           justify-content: space-between;
@@ -139,37 +144,8 @@
             .heath-items {
               width: 100%;
               display: flex;
-              justify-content: space-evenly;
               flex-wrap: wrap;
               padding-top: 20px;
-
-              .health-item {
-                width: calc(25% - 30px);
-                background-color: #fff;
-                box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
-                border-radius: 15px;
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                .health-content-text {
-                  text-align: end;
-                }
-
-                .health-content {
-                  display: flex;
-                  justify-content: space-between;
-
-                  div {
-                    font-size: 20px;
-                  }
-
-                  .health-content-unit {
-                    padding-left: 4px;
-                  }
-                }
-              }
             }
           }
         }
