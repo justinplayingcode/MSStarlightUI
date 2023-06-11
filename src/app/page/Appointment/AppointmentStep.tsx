@@ -2,8 +2,8 @@ import { Dropdown, IDropdownOption, TextField } from '@fluentui/react';
 import * as React from 'react'
 import { UniformTable } from 'src/app/common';
 import Api from 'api';
-import { DepartmentType, TableType, toastType } from 'src/model/enum';
-import { closeLoading, openLoading, showToastMessage, tableRefresh } from 'src/redux/reducers';
+import { ApiStatus, DepartmentType, TableType, toastType } from 'src/model/enum';
+import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
@@ -14,9 +14,11 @@ import VerticalLinearStepper from 'src/app/common/stepper/VerticalStepper';
 import { Convert } from 'utils';
 import { doctorInDepartmentColumns } from '../components/table/doctorInDepartmentColumn';
 import CustomDatePicker from 'src/app/common/Datepicker';
+import { useNavigate } from 'react-router-dom';
 
 const AppointmentStep = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { tableSelectedCount, tableSelectedItem } = useSelector((state: RootState) => state.currentSelected);
     const { fullname, dateOfBirth, insurance, address } = useSelector((state: RootState) => state.user.info);
 
@@ -218,11 +220,19 @@ const AppointmentStep = () => {
       const reqBody = {
         departmentId,
         appointmentDate: Convert.datetommddyyyy(selectedDate),
-        description: description.trim(),
-        doctorId: tableSelectedItem[0]?.userId // sẽ thay bằng doctorId
-        // doctorId: tableSelectedItem[0]?.doctorId 
+        initialSymptom: description.trim(),
+        doctorId: tableSelectedItem[0]?.doctorId
       }
-      console.log(reqBody)
+      dispatch(openLoading());
+      Api.scheduleApi.requestSchedule(reqBody).then(data => {
+        if(data.status === ApiStatus.succes) {
+          dispatch(showToastMessage({message: "Hẹn lịch khám với bác sĩ thành công", type: toastType.succes}));
+        } else {
+          dispatch(showToastMessage({message: 'Có lỗi, vui lòng liên hệ bộ phận hỗ trợ', type: toastType.error}));
+        }
+      }).catch(err => {
+        dispatch(showToastMessage({message: 'Có lỗi, vui lòng liên hệ bộ phận hỗ trợ', type: toastType.error}))
+      }).finally(() => {dispatch(closeLoading()); navigate("/make-appointment")})
     }
 
     return(

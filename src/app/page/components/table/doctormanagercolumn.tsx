@@ -26,7 +26,8 @@ export const doctormanagementColumns: IColumn[] = [
   { 
     key: 'gender',
     name:'Giới tính',
-    minWidth: 100,
+    minWidth: 80,
+    maxWidth: 100,
     isResizable: true,
     onRender: (item) => {
       return <span>{Convert.convertGender(item?.gender)}</span>

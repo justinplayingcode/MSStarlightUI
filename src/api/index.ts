@@ -16,14 +16,13 @@ const api = {
     //healthcare
     getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
-    getWaitedPatient: '/schedule/schedulewait',
     getPatientById: '/healthcare/getinfobyuserid',
-
-
+    
+    
     //department
     getAllDepartment: '/department/getall',
     getAllDoctorInDepartment: '/department/getalldoctors',
-
+    
     //diseases
     getAllDiseases:'/diseases/getall',
     createDiseases: '/diseases/creatediseases',
@@ -32,7 +31,13 @@ const api = {
     //pills
     getAllMedication: '/medication/getall',
     createMedication: '/medication/createmedication',
-    editMedication: '/medication/editmedication'
+    editMedication: '/medication/editmedication',
+    
+    //schedule
+    getWaitedPatient: '/schedule/schedulewait',
+    patientGetListRequest: '/schedule/getlistrequestmedical',
+    requestSchedule: '/schedule/requestmedical',
+
 
 }
 
@@ -99,12 +104,18 @@ const medicationApi = {
     }
 }
 
+const scheduleApi = {
+  patientGetListScheduleRequest: (reqbody) => apiClient.post(api.patientGetListRequest, reqbody),
+  requestSchedule: (reqbody) => apiClient.post(api.requestSchedule, reqbody)
+}
+
 const Api = {
     authApi, 
     accountApi, 
     cureProcessApi,
     departmentApi,
     diseasesApi,
-    medicationApi
+    medicationApi,
+    scheduleApi,
   };
 export default Api;

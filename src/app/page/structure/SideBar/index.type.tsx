@@ -21,8 +21,8 @@ export type RouteType = {
 export const getNavList = (role: accountRole, isHomePage: boolean) => {
     const list: RouteType[] = [];
     list.push({
-        path: '/',
-        state:'/',
+        path: '/home',
+        state:'/home',
         sidebarProps: {
             displayText: 'Tổng quát',
             icon: <AiOutlineFund/>
@@ -109,7 +109,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
 
     if(role === accountRole.Patient){
         list.push({
-            path:'/make-appointment',
+            path:'/make-appointment#tab0',
             state:'/make-appointment',
             sidebarProps:{
                 displayText: 'Đặt lịch khám',
