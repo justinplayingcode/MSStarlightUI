@@ -1,6 +1,8 @@
 import { Stack, TextField } from '@fluentui/react';
 import { fontWeight } from '@mui/system';
 import * as React from 'react'
+import FileUpload from 'src/app/common/FileUpload';
+import FileLists from 'src/app/common/FileUpload/FileList';
 
 interface ITest{
     title: string;
@@ -15,20 +17,40 @@ export interface ITestingProps{
 
 export const TestingForm = (props: ITestingProps) => {
 
+    
+    const [fileLists, setFileList] = React.useState<File[]>([]);
+
+    const handleRemoveFile = (item : File) => {
+        const list = [...fileLists];
+        const index = list.findIndex(i => i.name === item.name);
+        list.splice(index, 1);
+        setFileList(list);
+      }
     const renderTest = (isView: boolean, test: ITest) => {
         if (isView){
             return <> <Stack>{test.reason}</Stack></>
         }
         return(
             <>
-                <TextField
-                    label='Kết quả xét nghiệm'
-                    multiline
-                    rows={4}
-                    resizable={false}
-                />
-                <Stack>Đính kèm file kết quả</Stack>
-                <input type='file'/>
+                <Stack>- Kết quả xét nghiệm</Stack>
+                {isView ? (<Stack>{test.reason}</Stack>)
+                    :
+                    <TextField
+                        label='- Kết quả xét nghiệm'
+                        multiline
+                        rows={4}
+                        resizable={false}
+                    />
+                }
+                <Stack>- File kết quả</Stack>
+                {!isView && (
+                    <FileUpload
+                        files={fileLists}
+                        addFiles={setFileList}
+                        isView={false}
+                    />
+                )}
+                <FileLists files={fileLists} isView={false} removeFiles={handleRemoveFile} />
             </>
         )
     }
