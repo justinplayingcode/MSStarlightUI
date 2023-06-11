@@ -7,7 +7,7 @@ import { Convert } from "utils";
 import Api from "src/api";
 import { RootState } from "src/redux/store";
 import image from "image";
-import { tooltipPlainText } from "src/utils/utils";
+import { basicKeyValueRender, tooltipPlainText } from "src/utils/utils";
 import DoctorManagementChart from "./components/adminChart/doctormanagement";
 import OnBoardingChart from "./components/adminChart/onboardingpermonth";
 import PatientManagementChart from "./components/adminChart/patientmanagement";
@@ -16,10 +16,8 @@ import { LinkButton } from "src/app/common/Link";
 import { useNavigate } from "react-router-dom";
 
 interface IHealthStatus {
-  title: string;
+  key: string;
   value: any;
-  unit: string;
-  image: string;
 }
 
 
@@ -91,28 +89,20 @@ const Home = () => {
 
     const healthStatus: IHealthStatus[] = [
       {
-        title: 'Nhịp tim',
-        value: displayValue(info?.heartRate),
-        unit: 'bpm',
-        image: image.heartbeat
+        key: 'Nhịp tim',
+        value: `${displayValue(info?.heartRate)} bpm`,
       },
       {
-        title: 'Nhiệt độ cơ thể',
-        value: displayValue(info?.temperature),
-        unit: '°C',
-        image: image.temperature
+        key: 'Nhiệt độ cơ thể',
+        value: `${displayValue(info?.temperature)} °C`,
       },
       {
-        title: 'Huyết áp',
-        value: `${displayValue(info?.bloodPressureSystolic)}/${displayValue(info?.bloodPressureDiastolic)}`,
-        unit: 'mmHg',
-        image: image.bloodPressure
+        key: 'Huyết áp',
+        value: `${displayValue(info?.bloodPressureSystolic)}/${displayValue(info?.bloodPressureDiastolic)} mmHg`,
       },
       {
-        title: 'Đường huyết',
-        value: displayValue(info?.glucose),
-        unit: 'mg/dl',
-        image: image.glucose
+        key: 'Đường huyết',
+        value: `${displayValue(info?.glucose)} mg/dl`,
       }
     ]
 
@@ -134,26 +124,15 @@ const Home = () => {
               <div className="text">Chiều cao: {info?.weight === 0 ? "--" : info?.weight} cm</div>
               <div className="text">Cân nặng: {info?.height === 0 ? "--" : info?.height} kg</div>
               <div className="health">
-                <div className="title">Các chỉ số cơ bản của cơ thể</div>
+                <div className="title">Các chỉ số quan trọng của cơ thể</div>
                 <div className="heath-items">
-                  {healthStatus.map(item => onRenderHealStatus(item))}
+                  {healthStatus.map(item => basicKeyValueRender(item.key, item.value))}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </>
-    )
-  }
-
-  const onRenderHealStatus = (item: IHealthStatus) => {
-    return (
-      <div className="health-item">
-        <div className="health-content">
-          <div>{item.value}<span className="health-content-unit">{item.unit}</span></div>
-        </div>
-        <div className="health-content-text">{item.title}</div>
-      </div>
     )
   }
 

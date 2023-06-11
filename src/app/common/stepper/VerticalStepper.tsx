@@ -9,9 +9,16 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import "./index.scss"
 
+
+export interface IStep {
+  label: string;
+  content: JSX.Element;
+  disableNextStep: boolean;
+  handleBackStep?: () => void;
+  handleNextStep?: () => void;
+}
 interface IVerticalLinearStepperProps {
-  steps: any[]
-  handleNextAction?: () => void;
+  steps: IStep[]
   handleSubmit: () => void;
   handleReset?: () => void;
 }
@@ -21,7 +28,6 @@ export default function VerticalLinearStepper({...props}: IVerticalLinearStepper
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    !!props.handleNextAction && props.handleNextAction();
   };
 
   const handleBack = () => {
@@ -52,7 +58,10 @@ export default function VerticalLinearStepper({...props}: IVerticalLinearStepper
                   <div>
                     <Button
                       variant="contained"
-                      onClick={handleNext}
+                      onClick={() => {
+                        !!step.handleNextStep && step.handleNextStep();
+                        handleNext()
+                      }}
                       sx={{ mt: 1, mr: 1 }}
                       disabled={step.disableNextStep}
                     >
@@ -60,7 +69,10 @@ export default function VerticalLinearStepper({...props}: IVerticalLinearStepper
                     </Button>
                     <Button
                       disabled={index === 0}
-                      onClick={handleBack}
+                      onClick={() => {
+                        !!step.handleBackStep && step.handleBackStep();
+                        handleBack()
+                      }}
                       sx={{ mt: 1, mr: 1 }}
                     >
                       Quay lại
