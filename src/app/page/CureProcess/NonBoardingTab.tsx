@@ -11,6 +11,7 @@ import ConfirmDialog from './dialog/confirmDialog';
 import CureProgress from './component/CureProgress';
 import { DepartmentType, TableType } from 'src/model/enum';
 import { nonBoardingPatientColumns } from '../components/table/nonboardingcolumn';
+import FileUpload from 'src/app/common/FileUpload';
 
 const NonBoardingTab = () => {
     const navigate = useNavigate();
