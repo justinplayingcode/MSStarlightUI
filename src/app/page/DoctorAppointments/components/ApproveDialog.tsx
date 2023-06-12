@@ -3,7 +3,7 @@ import { ApproveDialogType } from "../RequestAppointments"
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import "./../index.scss"
-import { closeLoading, openLoading, showToastMessage } from "src/redux/reducers";
+import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import Api from "api";
 import { ApiStatus } from "model";
 import { toastType } from "src/model/enum";
@@ -50,6 +50,7 @@ const ApproveDialog = (props: IApproveDialogProps) => {
       if(data.status === ApiStatus.succes) {
         dispatch(showToastMessage({message: "Xác nhận thành công", type: toastType.succes}));
         props.closeDialog();
+        dispatch(tableRefresh())
       } else {
         dispatch(showToastMessage({message: "Xác nhận thất bại, vui lòng thử lại", type: toastType.error}));
       }
