@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Tabs, { ITabProps } from "src/app/common/Tab";
+import RequestAppoinments from "./RequestAppointments";
 
 function DoctorAppointment() {
   const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -8,14 +9,14 @@ function DoctorAppointment() {
     const tabs: ITabProps[] = [];
       tabs.push(
         {
-          label: "Danh sách lịch hẹn",
+          label: "Lịch hẹn hôm nay",
           index: 0,
           Component: <>danh sách lịch hẹn</>
         },
         {
           label: "Yêu cầu hẹn lịch",
           index: 1,
-          Component: <>yêu cầu</>
+          Component: <RequestAppoinments/>
         }
       );      
     return tabs;

@@ -17,12 +17,15 @@ function Appointment() {
         {
           label: "Đặt lịch khám bệnh",
           index: 1,
-          Component: <AppointmentStep/>
+          Component: <AppointmentStep handleResetTab={handleResetTab} />
         }
       );      
     return tabs;
   }
 
+  const handleResetTab = () => {
+    setSelectedTab(getTab()[0].index)
+  }
 
   useEffect(() => {
     setSelectedTab(getTab()[0].index);

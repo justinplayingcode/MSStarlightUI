@@ -5,7 +5,7 @@
   min-height: 100vh;
   width: 100%;
   background: rgba(170, 170, 170, 0.4);
-  z-index: 999;
+  z-index: 10000010;
   position: fixed;
   top: 0;
   .loader {
@@ -62,7 +62,7 @@
 #loadingDot {
     position: fixed;
     top: 0;
-    z-index: 99999;
+    z-index: 10000010;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,7 +96,7 @@
     min-height: 100vh;
     width: 100%;
     background: rgb(240, 240, 240);
-    z-index: 999;
+    z-index: 10000010;
     position: fixed;
     top: 0;
 

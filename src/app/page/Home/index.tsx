@@ -59,7 +59,7 @@ const Home = () => {
           <div className="doctor-section">
             <div className="title">Số lịch hẹn khám hôm nay:</div>
             <div className="total">2</div>
-            <LinkButton className="details" onClick={() => alert('navigate to /henlichkham')}>Chi tiết</LinkButton>
+            <LinkButton className="details" onClick={() => navigate("/cure/appointment#tab0")}>Chi tiết</LinkButton>
           </div>
           <div className="doctor-section">
             <div className="title">Bệnh nhân đang điều trị tại khoa:</div>

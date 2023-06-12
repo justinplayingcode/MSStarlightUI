@@ -1,5 +1,4 @@
 import { DefaultButton, Dialog, DialogFooter, PrimaryButton, Stack } from '@fluentui/react'
-import * as React from 'react'
 
 export interface ISucccessDialogProps{
     isDialogClosed: boolean,
