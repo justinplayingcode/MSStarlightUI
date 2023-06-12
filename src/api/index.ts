@@ -37,6 +37,8 @@ const api = {
     getWaitedPatient: '/schedule/schedulewait',
     patientGetListRequest: '/schedule/getlistrequestmedical',
     requestSchedule: '/schedule/requestmedical',
+    requestAppointmentWait: '/schedule/getallrequestmedical',
+    approveRequestMedical: '/schedule/approverequestmedical',
 
 
 }
@@ -106,7 +108,9 @@ const medicationApi = {
 
 const scheduleApi = {
   patientGetListScheduleRequest: (reqbody) => apiClient.post(api.patientGetListRequest, reqbody),
-  requestSchedule: (reqbody) => apiClient.post(api.requestSchedule, reqbody)
+  requestSchedule: (reqbody) => apiClient.post(api.requestSchedule, reqbody),
+  requestAppopintmentWait: (reqbody) => apiClient.post(api.requestAppointmentWait, reqbody),
+  approveRequest: (reqbody) => apiClient.put(api.approveRequestMedical, reqbody)
 }
 
 const Api = {

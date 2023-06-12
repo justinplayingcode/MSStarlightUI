@@ -19,11 +19,6 @@ function DoctorAcount() {
             text: 'Thêm',
             iconProps: { iconName: 'Add' },
             onClick: () => { dispatch(openPanel(panelTypeConstant.PANEL_CREATE_DOCTOR)) },
-        },{
-          key: 'showToast',
-            text: 'toast',
-            iconProps: { iconName: 'Tag' },
-            onClick: () => { dispatch(showToastMessage({ message: 'Thắng tay bé pro vjp', type: toastType.succes })) },
         });
 
         if(tableSelectedCount === 1){

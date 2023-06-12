@@ -1,4 +1,5 @@
 import { IColumn, ICommandBarItemProps, TooltipHost } from "@fluentui/react"
+import { tooltipPlainText } from "src/utils/utils";
 import { Convert } from "utils";
 
 export const patientmanagementColumns: IColumn[] = [
@@ -9,7 +10,7 @@ export const patientmanagementColumns: IColumn[] = [
         maxWidth: 250,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item.fullname}</span>;
+            return tooltipPlainText(item.fullname)
         },
     },
     {
@@ -29,37 +30,57 @@ export const patientmanagementColumns: IColumn[] = [
         maxWidth: 150,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item.dateOfBirth}</span>;
+            return tooltipPlainText(item.dateOfBirth)
         },
     },
     {
         key: 'identification',
         name: 'Căn cước công dân',
-        minWidth: 200,
-        maxWidth: 300,
+        minWidth: 100,
+        maxWidth: 180,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item.identification}</span>;
+            return tooltipPlainText(item.identification)
         },
     },
     {
         key: 'insurance',
         name: 'Bảo hiểm y tế',
-        minWidth: 200,
-        maxWidth: 300,
+        minWidth: 100,
+        maxWidth: 180,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item.insurance}</span>;
-        },
-    },    
-    {
-        key: 'address',
-        name: 'Địa chỉ',
-        minWidth: 200,
-        maxWidth: 300,
-        isResizable: true,
-        onRender: (item) => {
-            return <span>{item.address}</span>;
+            return tooltipPlainText(item.insurance)
         },
     },
+    {
+      key: 'address',
+      name: 'Địa chỉ',
+      minWidth: 100,
+      maxWidth: 180,
+      isResizable: true,
+      onRender: (item) => {
+        return tooltipPlainText(item.address)
+      },
+    },
+    {
+      key: 'phonenumber',
+      name: 'Số điện thoại',
+      minWidth: 100,
+      maxWidth: 180,
+      isResizable: true,
+      onRender: (item) => {
+          return tooltipPlainText(item.phonenumber)
+      },
+    },
+    {
+      key: 'email',
+      name: 'Email',
+      minWidth: 100,
+      maxWidth: 180,
+      isResizable: true,
+      onRender: (item) => {
+          return tooltipPlainText(item.email)
+      },
+    },     
 ];

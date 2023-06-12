@@ -6,60 +6,71 @@ export const doctormanagementColumns: IColumn[] = [
   {
     key: 'fullname',
     name: 'Họ và tên',
-    minWidth: 150,
-    maxWidth: 250,
+    minWidth: 120,
+    maxWidth: 220,
     isResizable: true,
     onRender: (item) => {
-      return <Stack>{item?.fullname}</Stack>;
+      return tooltipPlainText(item?.fullname);
     },
   },
   {
     key: 'department',
     name: 'Khoa',
     minWidth: 100,
-    maxWidth: 300,
+    maxWidth: 200,
     isResizable: true,
     onRender: (item) => {
       return tooltipPlainText(item?.departmentName);
     },
   },
-  { 
-    key: 'gender',
-    name:'Giới tính',
-    minWidth: 80,
-    maxWidth: 100,
-    isResizable: true,
-    onRender: (item) => {
-      return <span>{Convert.convertGender(item?.gender)}</span>
-    }
-  },
   {
     key: 'position',
     name:'Chức vụ',
-    minWidth: 100,
+    minWidth: 80,
+    maxWidth: 120,
     isResizable: true,
     onRender: (item) => {
       return <span>{Convert.getDoctorPosition(item?.position)}</span>
     }
   },
   {
-    key: 'phonenumber',
-    name: 'Số điện thoại',
-    minWidth: 200,
-    maxWidth: 300,
+    key: 'rank',
+    name:'Trình độ',
+    minWidth: 80,
+    maxWidth: 120,
     isResizable: true,
     onRender: (item) => {
-      return <span>{item?.phonenumber}</span>;
+      return <span>{Convert.getDoctorRank(item?.rank)}</span>
+    }
+  },
+  {
+    key: 'phonenumber',
+    name: 'Số điện thoại',
+    minWidth: 100,
+    maxWidth: 180,
+    isResizable: true,
+    onRender: (item) => {
+      return tooltipPlainText(item?.phonenumber)
+    },
+  },
+  {
+    key: 'email',
+    name: 'Email',
+    minWidth: 100,
+    maxWidth: 200,
+    isResizable: true,
+    onRender: (item) => {
+      return tooltipPlainText(item?.email)
     },
   },
   {
     key: 'address',
     name: 'Địa chỉ',
-    minWidth: 200,
-    maxWidth: 300,
+    minWidth: 100,
+    maxWidth: 200,
     isResizable: true,
     onRender: (item) => {
-      return <span>{item?.address}</span>;
+      return tooltipPlainText(item?.address)
     },
   },
 ];

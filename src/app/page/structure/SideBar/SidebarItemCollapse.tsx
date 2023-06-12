@@ -34,7 +34,8 @@ const SidebarItemCollapse = ({ item }: Props) => {
                     to={''}
                     className='link'
                     style={{
-                        paddingLeft: 30,
+                        paddingLeft: 20,
+                        paddingRight: 20,
                         color: open ? "#fff" : "#9CA3AF",
                         background: 'unset',
                         borderLeft: '4px solid transparent',
@@ -51,9 +52,7 @@ const SidebarItemCollapse = ({ item }: Props) => {
                         {open ? <MdExpandMore /> : <MdExpandLess />}
                     </div>
                 </NavLink>
-                {/* secondary menu */}
                 <div 
-                // style={{paddingLeft: 40}}
                 >
                 {
                     open && item.child?.map((route, index) => (
@@ -64,7 +63,7 @@ const SidebarItemCollapse = ({ item }: Props) => {
                                 </Stack>
                             ) : (
                                 <Stack className="route-child">
-                                    <SidebarItem item={route} key={index} />
+                                    <SidebarItem isChild item={route} key={index} />
                                 </Stack>
                             )
                         ) : null

@@ -16,7 +16,7 @@ import { doctorInDepartmentColumns } from '../components/table/doctorInDepartmen
 import CustomDatePicker from 'src/app/common/Datepicker';
 import { useNavigate } from 'react-router-dom';
 
-const AppointmentStep = () => {
+const AppointmentStep = ({ ...props }: any) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { tableSelectedCount, tableSelectedItem } = useSelector((state: RootState) => state.currentSelected);
@@ -227,12 +227,13 @@ const AppointmentStep = () => {
       Api.scheduleApi.requestSchedule(reqBody).then(data => {
         if(data.status === ApiStatus.succes) {
           dispatch(showToastMessage({message: "Hẹn lịch khám với bác sĩ thành công", type: toastType.succes}));
+          props.handleResetTab();
         } else {
           dispatch(showToastMessage({message: 'Có lỗi, vui lòng liên hệ bộ phận hỗ trợ', type: toastType.error}));
         }
       }).catch(err => {
         dispatch(showToastMessage({message: 'Có lỗi, vui lòng liên hệ bộ phận hỗ trợ', type: toastType.error}))
-      }).finally(() => {dispatch(closeLoading()); navigate("/make-appointment")})
+      }).finally(() => dispatch(closeLoading()))
     }
 
     return(

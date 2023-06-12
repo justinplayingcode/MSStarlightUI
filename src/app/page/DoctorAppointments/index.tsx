@@ -1,31 +1,27 @@
 import { useEffect, useState } from "react";
 import Tabs, { ITabProps } from "src/app/common/Tab";
-import AppointmentStep from "./AppointmentStep";
-import AppointmentReportStatic from "./AppointmentReportStatic";
+import RequestAppoinments from "./RequestAppointments";
 
-function Appointment() {
+function DoctorAppointment() {
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
   const getTab = () => {
-    const tabs:ITabProps[] = [];
+    const tabs: ITabProps[] = [];
       tabs.push(
         {
-          label: "Danh sách lịch hẹn",
+          label: "Lịch hẹn hôm nay",
           index: 0,
-          Component: <AppointmentReportStatic/>
+          Component: <>danh sách lịch hẹn</>
         },
         {
-          label: "Đặt lịch khám bệnh",
+          label: "Yêu cầu hẹn lịch",
           index: 1,
-          Component: <AppointmentStep handleResetTab={handleResetTab} />
+          Component: <RequestAppoinments/>
         }
       );      
     return tabs;
   }
 
-  const handleResetTab = () => {
-    setSelectedTab(getTab()[0].index)
-  }
 
   useEffect(() => {
     setSelectedTab(getTab()[0].index);
@@ -38,4 +34,4 @@ function Appointment() {
   );
 }
 
-export default Appointment;
+export default DoctorAppointment;

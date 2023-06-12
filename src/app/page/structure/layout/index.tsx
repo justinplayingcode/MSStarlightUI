@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import UniformHeader from "../header";
 import {  ApiStatus, accountRole, pageConstant } from "model";
 import Home from "src/app/page/Home";
-import { LoadingDot, LoadingInComing } from "../../../common/loading";
 import { Stack } from "@fluentui/react";
 import Speciality from "src/app/page/Speciality";
 import CureHistory from "src/app/page/CureHistory";
@@ -18,15 +17,16 @@ import { Toast } from "../../../common/Toast";
 import { Navigate } from "react-router-dom";
 import Api from "src/api";
 import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "src/redux/reducers";
-import { Location } from "./location";
 import AccountPage from "src/app/page/Account";
-import { MainPanel } from "../../../common/uniformpanel";
 import Medication from "src/app/page/Medication";
 import Appointment from "src/app/page/Appointment";
 import NewsPost from "src/app/page/News";
 import NewsCreate from "src/app/page/News/SubMenu/NewsCreate";
 import NewsReview from "src/app/page/News/SubMenu/NewsReview";
 import TreatmentManagement from "src/app/page/CureProcess/TreatmentManagement";
+import { MainPanel } from "src/app/common/Uniformpanel";
+import { LoadingDot, LoadingInComing } from "src/app/common/loading";
+import DoctorAppointment from "../../DoctorAppointments";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -168,7 +168,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_NEWS_REVIEW:
                 content = <NewsReview/>
                 break;
-
+            case pageConstant.LAYOUT_DOCTORAPPOINTMENT:
+                content = <DoctorAppointment/>
+                break;
             default:
                 content = <></>
                 break;

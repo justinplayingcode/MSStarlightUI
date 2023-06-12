@@ -49,25 +49,21 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/home" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_HOME}/>} />
                         <Route path="/profile" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PROFILE}/>} />
 
-                        <Route path="/account/patient-management" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT}/>}/>
-                        <Route path="/account/doctor-management" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT}/>}/>
+                        <Route path="/patient-management" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT}/>}/>
+                        <Route path="/doctor-management" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT}/>}/>
                         
                         <Route path="/speciality" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_SPECIALITY}/>} />
 
-                        <Route path="/cure/cure-process" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
-                        <Route path="/cure/onBoarding" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_ON_BOARDING}/>} />
-                        <Route path="/curing-proces/cure-progress" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROGRESS}/>}/>
-
-                        <Route path="/cure-history" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
+                        <Route path="/cure/management" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
+                        <Route path="/patient-management-doctor" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_ON_BOARDING}/>} />
+                        <Route path="/schedulehistory" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
                         <Route path="/make-appointment" element={<Layout permission={this.Auth.patient} page={pageConstant.LAYOUT_APPOINTMENT} />} />
+                        <Route path="/cure/appointment" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_DOCTORAPPOINTMENT} />} />
                         <Route path="/diseases" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_DISEASES}/>} />
                         <Route path="/medication" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_MEDICATION}/>} />
-
-                        {/* <Route path="/news" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS}/>} /> */}
-                        <Route path="/news" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_POST}/>} />
-                        <Route path="/news/news-create" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_CREATE}/>} />
-                        <Route path="/news/news-review" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_REVIEW}/>} />
-                        {/* <Route path={`/login${id}`} element={<Login />} /> */}
+                        <Route path="/news/newsfeed" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_POST}/>} />
+                        <Route path="news/newscreate" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_CREATE}/>} />
+                        <Route path="news/newsreview" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_NEWS_REVIEW}/>} />
                         <Route path="/error/nopermission" element={<NoPermission />} />
                         <Route path="/error/notfound" element={<ErrorPage />} />
                         <Route path="*" element={<Navigate to="/error/notfound" replace />} />

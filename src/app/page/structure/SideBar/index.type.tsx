@@ -1,10 +1,11 @@
 import { accountRole } from "model";
 import { AiOutlineClockCircle, AiOutlineFund, AiOutlineSchedule } from 'react-icons/ai'
-import { FaBacterium, FaPills, FaRegNewspaper} from 'react-icons/fa'
-import { MdOutlineArrowRightAlt, MdManageAccounts, MdAccountTree } from 'react-icons/md'
+import { FaBacterium, FaPills, FaRegNewspaper, FaUserMd, FaUserFriends, FaUsers } from 'react-icons/fa'
+import { MdOutlineArrowRightAlt, MdManageAccounts, MdAccountTree, MdOutlineLocalHospital } from 'react-icons/md'
 import { TbStethoscope} from 'react-icons/tb'
 import { RiArrowDownSFill, RiArrowUpSFill} from 'react-icons/ri'
 import { ReactNode } from "react";
+import { DepartmentType } from "src/model/enum";
 
 export type RouteType = {
     index?: boolean,
@@ -18,7 +19,7 @@ export type RouteType = {
     child?: RouteType[],
   };
 
-export const getNavList = (role: accountRole, isHomePage: boolean) => {
+export const getNavList = (role: accountRole, departmentCode , isHomePage: boolean) => {
     const list: RouteType[] = [];
     list.push({
         path: '/home',
@@ -28,78 +29,93 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             icon: <AiOutlineFund/>
         }
     });
+    if(role === accountRole.Admin) {
+      list.push(
+        {
+          path: '/doctor-management',
+          state: '/doctor-management',
+          sidebarProps:{
+            displayText: 'Quản lý tải khoản bác sĩ',
+            icon: <FaUserMd/>,
+          },
+        },
+        {
+          path: '/patient-management',
+          state: '/patient-management',
+          sidebarProps:{
+            displayText: 'Quản lý tải khoản bệnh nhân',
+            icon: <FaUserFriends/>,
+          },
+        },
+        {
+          path: '/speciality',
+          state: '/speciality',
+          sidebarProps:{
+              displayText: 'Quản lý các khoa',
+              icon: <MdAccountTree />,
+          }
+      }
+      )
+    }
 
-    if(role === accountRole.Admin){
-        list.push({
-            state: '/account',
-            sidebarProps:{
-                displayText: 'Tài khoản',
-                icon: <MdManageAccounts/>,
-            },
-            child:[
-                {
-                    path: '/account/doctor-management',
-                    state: '/account/doctor-management',
-                    sidebarProps:{
-                        displayText: 'Bác sĩ',
-                        icon: <MdOutlineArrowRightAlt/>
-                    },  
-                },
-                {
-                    path: '/account/patient-management',
-                    state: '/account/patient-management',
-                    sidebarProps:{
-                        displayText: 'Bệnh nhân',
-                        icon: <MdOutlineArrowRightAlt/>
-                    }
-                }
-            ]
-        });
+    if(role === accountRole.Doctor) {
+      list.push(
+        {
+          path: '/patient-management-doctor#tab0',
+          state: '/patient-management-doctor',
+          sidebarProps:{
+            displayText: 'Quản lý bệnh nhân',
+            icon: <FaUsers/>
+          },
+        },
+      )
+    }
+
+    if(role === accountRole.Doctor) {
+      if( departmentCode! === DepartmentType.tiepDon || departmentCode! === DepartmentType.canLamSang) {
         list.push(
-            {
-                path: '/speciality',
-                state: '/speciality',
-                sidebarProps:{
-                    displayText: 'Khoa',
-                    icon: <MdAccountTree />,
-                }
-            }
-        );
-    
-    };
-
-    if(role === accountRole.Doctor){
-        list.push({
-            state: '/cure',
+          {
+            path: '/cure/management#tab0',
+            state: '/cure/management',
             sidebarProps:{
-                displayText: 'Khám chữa bệnh',
-                icon: <TbStethoscope/>,
+              displayText: !!departmentCode && departmentCode === DepartmentType.tiepDon ? 'Đăng ký khám bệnh' : 'Khám bệnh',
+              icon: <TbStethoscope/>,
             },
-            child:[
-                {
-                    path: '/cure/cure-process',
-                    state: '/cure/cure-process',
-                    sidebarProps:{
-                        displayText: 'Khám bệnh',
-                        icon: <MdOutlineArrowRightAlt/>
-                    },  
-                },
-                {
-                    path: '/cure/onBoarding',
-                    state: '/cure/onBoarding',
-                    sidebarProps:{
-                        displayText: 'Điều trị',
-                        icon: <MdOutlineArrowRightAlt/>
-                    }
-                }
-            ]
+          }
+        )
+      } else {
+        list.push({
+          state: '/cure',
+          sidebarProps:{
+            displayText: 'Khám bệnh',
+            icon: <TbStethoscope/>,
+          },
+          child: [
+            {
+              path: '/cure/management#tab0',
+              state: '/cure/management',
+              sidebarProps:{
+                displayText: 'Khám thường',
+                icon: <MdOutlineArrowRightAlt/>,
+              },
+            },
+            {
+              path: '/cure/appointment#tab0',
+              state: '/cure/appointment',
+              sidebarProps:{
+                displayText: 'Lịch hẹn khám',
+                icon: <MdOutlineArrowRightAlt/>,
+              },
+            }
+          ]
         })
+      }
     }
 
     if(role === accountRole.Doctor || role === accountRole.Patient){
         list.push({
-            path: '/cure-history',
-            state: '/cure-history',
+            path: '/schedulehistory',
+            state: '/schedulehistory',
             sidebarProps:{
                 displayText: 'Lịch sử khám bệnh',
                 icon: <AiOutlineClockCircle/>,
@@ -123,7 +139,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             path: '/diseases',
             state: '/diseases',
             sidebarProps:{
-                displayText: 'Bệnh',
+                displayText: 'Các loại bệnh',
                 icon: <FaBacterium/>,
             }
         },
@@ -131,7 +147,7 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
             path: '/medication',
             state: '/medication',
             sidebarProps:{
-                displayText: 'Thuốc',
+                displayText: 'Danh sách thuốc',
                 icon: <FaPills/>,
             }
         },
@@ -139,8 +155,8 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
     let newsItems;
     if(role === accountRole.Patient) {
       newsItems = {
-        path: '/news',
-        state: '/news',
+        path: '/news/newsfeed',
+        state: '/news/newsfeed',
         sidebarProps: {
           displayText: 'Thông tin, tư vấn',
           icon: <FaRegNewspaper />,
@@ -155,16 +171,16 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
         },
         child:[
           {
-            path: '/news',
-            state: '/news',
+            path: '/news/newsfeed',
+            state: '/news/newsfeed',
             sidebarProps: {
                 displayText: 'Tin tức',
                 icon: <MdOutlineArrowRightAlt />
             }
           },
           {
-            path: '/news/news-create',
-            state: '/news/news-create',
+            path: '/news/newscreate',
+            state: '/news/newscreate',
             sidebarProps:{
                 displayText: 'Tạo bài đăng',
                 icon: <MdOutlineArrowRightAlt/>
@@ -176,8 +192,8 @@ export const getNavList = (role: accountRole, isHomePage: boolean) => {
     if(role === accountRole.Admin){
         newsItems.child.push(
             {
-                path: '/news/news-review',
-                state: '/news/news-review',
+                path: '/news/newsreview',
+                state: '/news/newsreview',
                 sidebarProps:{
                     displayText: 'Duyệt bài đăng',
                     icon: <MdOutlineArrowRightAlt/>
