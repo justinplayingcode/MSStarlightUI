@@ -16,7 +16,7 @@ import { setCurrentSidebar } from 'src/redux/reducers';
 const SideBar = () => {
     const [isOpen, setIsOpen] = React.useState<boolean>(true);
     const [menuItem, setMenuItem] = React.useState<RouteType[]>([]);
-    const { role } = useSelector((state: RootState) => state.user);
+    const { role, info } = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
 
     const getSectionUrl = () => {
@@ -27,12 +27,12 @@ const SideBar = () => {
     }
 
     useEffect(() => {
-        setMenuItem(getNavList(role, false));
+        setMenuItem(getNavList(role, info?.departmentCode , false));
         dispatch(setCurrentSidebar(getSectionUrl()))
     },[])
 
     useEffect(() => {
-      setMenuItem(getNavList(role, false));
+      setMenuItem(getNavList(role, info?.departmentCode, false));
       dispatch(setCurrentSidebar(getSectionUrl()))
     },[window.location.href])
 
