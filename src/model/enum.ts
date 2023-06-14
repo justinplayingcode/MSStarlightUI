@@ -98,6 +98,10 @@ export enum TableType {
   scheduleRequestWaitApprove,
   scheduleRequestApproved,
   scheduleRequestOfPatient,
+  approveRequestMedical,
+  historyMedicalOfPatient, //
+  historyMedicalOfDoctor, //
+
 }
 
 export enum DepartmentType {

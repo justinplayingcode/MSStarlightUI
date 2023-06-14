@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Tabs, { ITabProps } from "src/app/common/Tab";
 import RequestAppoinments from "./RequestAppointments";
+import ScheduleApproved from "./ScheduleAppointments";
 
 function DoctorAppointment() {
   const [selectedTab, setSelectedTab] = useState<number>(0);
@@ -11,7 +12,7 @@ function DoctorAppointment() {
         {
           label: "Lịch hẹn hôm nay",
           index: 0,
-          Component: <>danh sách lịch hẹn</>
+          Component: <ScheduleApproved/>
         },
         {
           label: "Yêu cầu hẹn lịch",

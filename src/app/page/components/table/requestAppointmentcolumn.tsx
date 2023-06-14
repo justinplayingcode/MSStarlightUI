@@ -1,4 +1,4 @@
-import { getStatusRequestSchedule, tooltipPlainText } from "src/utils/utils";
+import { tooltipPlainText } from "src/utils/utils";
 import { Convert } from "utils";
 export const requestAppointmentColumn = [
   {

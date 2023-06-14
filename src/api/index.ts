@@ -17,7 +17,8 @@ const api = {
     getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
     getPatientById: '/healthcare/getinfobyuserid',
-    
+    getHistoryMedical: '/healthcare/gethistorymedical',
+    getPatientsOnBoarding: '/healthcare/getallpatientonbroading',
     
     //department
     getAllDepartment: '/department/getall',
@@ -39,7 +40,7 @@ const api = {
     requestSchedule: '/schedule/requestmedical',
     requestAppointmentWait: '/schedule/getallrequestmedical',
     approveRequestMedical: '/schedule/approverequestmedical',
-
+    getListApproveMedical: '/schedule/getallapproverequestmedical',
 
 }
 
@@ -77,7 +78,8 @@ const cureProcessApi = {
     },  
     getPatientById: (reqbody) => {
         return apiClient.post(api.getPatientById, reqbody);
-    }
+    },
+    getPatientsOnBoarding: (reqbody) => apiClient.post(api.getPatientsOnBoarding, reqbody)
 }
 
 const departmentApi = {
@@ -110,7 +112,12 @@ const scheduleApi = {
   patientGetListScheduleRequest: (reqbody) => apiClient.post(api.patientGetListRequest, reqbody),
   requestSchedule: (reqbody) => apiClient.post(api.requestSchedule, reqbody),
   requestAppopintmentWait: (reqbody) => apiClient.post(api.requestAppointmentWait, reqbody),
-  approveRequest: (reqbody) => apiClient.put(api.approveRequestMedical, reqbody)
+  approveRequest: (reqbody) => apiClient.put(api.approveRequestMedical, reqbody),
+  getListApproveMedical: (reqbody) => apiClient.put(api.getListApproveMedical, reqbody),
+}
+
+const historyMedicalApi = {
+  getAllHistoryMedical: (reqbody) => apiClient.post(api.getHistoryMedical, reqbody),
 }
 
 const Api = {
@@ -121,5 +128,6 @@ const Api = {
     diseasesApi,
     medicationApi,
     scheduleApi,
+    historyMedicalApi
   };
 export default Api;

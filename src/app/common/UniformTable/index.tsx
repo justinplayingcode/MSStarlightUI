@@ -9,8 +9,8 @@ import { ApiStatus } from 'model';
 import { connect } from 'react-redux';
 import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
-import Pagination from 'src/app/common/pagination';
 import { TableType } from 'src/model/enum';
+import Pagination from '../Pagination';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -216,7 +216,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             />
                           }
                         </MarqueeSelection>
-                        {items.length === 0 && !isLoading &&
+                        {items?.length === 0 && !isLoading &&
                             <div className='details-list-no-content'>
                                 <Icon 
                                   iconName={"EventTentative"} 

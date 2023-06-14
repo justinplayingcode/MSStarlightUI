@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useState } from 'react';
 import Tabs, { ITabProps, TabsProps } from 'src/app/common/Tab';
 import NonBoardingTab from './NonBoardingTab';
-import OnBoardingTab from './OnBoardingTab';
+import OnBoardingTab from './component/PatientOutOnboarding';
 import TestingTab from './TestingTab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
