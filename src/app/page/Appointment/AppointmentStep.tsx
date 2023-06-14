@@ -18,9 +18,8 @@ import { useNavigate } from 'react-router-dom';
 
 const AppointmentStep = ({ ...props }: any) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { tableSelectedCount, tableSelectedItem } = useSelector((state: RootState) => state.currentSelected);
-    const { fullname, dateOfBirth, insurance, address } = useSelector((state: RootState) => state.user.info);
+    const infoUser = useSelector((state: RootState) => state.user.info);
 
     const [departmentList, setDepartmentList] = useState<any[]>();
     const [departmentId, setDepartmentId] = useState<string>("");
@@ -118,19 +117,19 @@ const AppointmentStep = ({ ...props }: any) => {
       const info = [
         {
           key: "Người hẹn lịch",
-          value: fullname
+          value: infoUser.fullname || ""
         },
         {
           key: "Ngày sinh",
-          value: dateOfBirth
+          value: infoUser.dateOfBirth || ""
         },
         {
           key: "Địa chỉ",
-          value: address
+          value: infoUser.address || ""
         },
         {
           key: "Mã số BHYT",
-          value: insurance
+          value: infoUser.insurance || ""
         }
       ]
 

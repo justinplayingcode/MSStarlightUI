@@ -28,8 +28,8 @@ const ApproveDialog = (props: IApproveDialogProps) => {
   }
 
   const renderContent = (text: string) => {
-    const name = tableSelectedItem[0].fullname;
-    const date = tableSelectedItem[0].appointmentDate;
+    const name = tableSelectedItem[0]?.fullname;
+    const date = tableSelectedItem[0]?.appointmentDate;
 
     return (
       <div className="main-dialog">

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Tabs, { ITabProps } from 'src/app/common/Tab';
-import OnBoardingTab from './OnBoardingTab';
+import PatientOutOnboarding from './component/PatientOutOnboarding';
+import PatientInOnboarding from './component/PatientInOnboarding';
 
 const TreatmentManagement = () => {
     const [selectedTab, setSelectedTab] = React.useState<number>(0);
@@ -11,12 +12,12 @@ const TreatmentManagement = () => {
         {
           label: "Nội trú",
           index: 0,
-          Component: <OnBoardingTab/>
+          Component: <PatientInOnboarding/>
         },
         {
           label: "Ngoại trú",
           index: 1,
-          Component: <>Ngoại trú</>
+          Component: <PatientOutOnboarding/>
         },
       );      
       return tabs;
@@ -24,7 +25,7 @@ const TreatmentManagement = () => {
 
 
     return (
-        <div className='wrapper-content'>
+        <div className='wrapper-table-content speciality-wrapper'>
             <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={getTab()} />
         </div>
     )

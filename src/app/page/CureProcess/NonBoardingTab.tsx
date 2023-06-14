@@ -6,15 +6,12 @@ import { RootState } from 'src/redux/store';
 import { accountRole } from 'model';
 
 import Api from 'src/api'
-import { useNavigate } from 'react-router-dom';
 import ConfirmDialog from './dialog/confirmDialog';
 import CureProgress from './component/CureProgress';
 import { DepartmentType, TableType } from 'src/model/enum';
 import { nonBoardingPatientColumns } from '../components/table/nonboardingcolumn';
-import FileUpload from 'src/app/common/FileUpload';
 
 const NonBoardingTab = () => {
-    const navigate = useNavigate();
     const { info, role } = useSelector((state: RootState) => state.user);
     const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
 
