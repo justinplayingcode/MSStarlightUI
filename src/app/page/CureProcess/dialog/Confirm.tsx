@@ -9,6 +9,7 @@ interface IConfirmDialogProps{
     isDialogClosed: boolean;
     closeDialog: () => void;
     confirm: () => void;
+    title: string;
   }
 
 const ConfirmDialog = (props: IConfirmDialogProps) => {
@@ -17,7 +18,7 @@ const ConfirmDialog = (props: IConfirmDialogProps) => {
     const renderDialogContent = () => {
         return (
             <Stack>
-                <Stack style={{fontWeight: 700}}>Xác nhận khám cho bệnh nhân</Stack>
+                <Stack style={{fontWeight: 700}}>{props.title}</Stack>
                 <Stack horizontal horizontalAlign='space-between'>
                     <Stack>Họ và tên: {tableSelectedItem[0]?.fullname}</Stack>
                     <Stack>Giới tính: {Convert.convertGender(tableSelectedItem[0]?.gender)}</Stack>

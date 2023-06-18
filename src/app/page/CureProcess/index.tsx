@@ -2,9 +2,8 @@ import { Stack } from '@fluentui/react';
 import * as React from 'react'
 import { useState } from 'react';
 import Tabs, { ITabProps, TabsProps } from 'src/app/common/Tab';
-import NonBoardingTab from './NonBoardingTab';
-import OnBoardingTab from './component/PatientOutOnboarding';
-import TestingTab from './TestingTab';
+import PatientWait from './component/PatientWait';
+import TestingTab from './component/TestingTab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { DepartmentType } from 'src/model/enum';
@@ -20,14 +19,14 @@ const CureProcess = () => {
           {
             label: "Chờ khám bệnh",
             index: 0,
-            Component: <NonBoardingTab/>
+            Component: <PatientWait/>
           },
         );      
 
       if(info?.departmentCode !== DepartmentType.tiepDon){
         tabs.push(
           {
-            label: "Chờ xét nghiệm",
+            label: info?.departmentCode !== DepartmentType.canLamSang ? "Chờ xét nghiệm" : "Đang xét nghiệm",
             index: 1,
             Component: <TestingTab/>
           }

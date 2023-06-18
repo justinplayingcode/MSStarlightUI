@@ -22,13 +22,13 @@ export const tooltipPlainText = ( content: string, extraClassName?: string, id?:
 export const basicKeyValueRender = (key, value) => {
   return (
     <div className='basicInfoRender'
-      style={{display: "flex", justifyContent: "space-between", width: "40%", height: "36px", margin: "0 0 4px 20px"}}
+      style={{display: "flex", justifyContent: "space-between", minWidth: "160px", height: "36px", margin: "0 0 4px 20px"}}
     >
       <div className='key'
-        style={{ width: "30%", minWidth: "140px", backgroundColor: "#dddddd", display: "flex", alignItems: "center", paddingLeft: "8px" }}
+        style={{ width: "30%", minWidth: "132px", backgroundColor: "#dddddd", display: "flex", alignItems: "center", paddingLeft: "8px", fontWeight: "600", fontSize: '16px' }}
       >{key}</div>
       <div className='value'
-        style={{ width: "60%", display: "flex", alignItems: "center", paddingLeft: "8px"}}
+        style={{ width: "60%", display: "flex", alignItems: "center", paddingLeft: "8px", fontSize: '16px'}}
       >{value}</div>
     </div>
   )

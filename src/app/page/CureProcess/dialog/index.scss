@@ -1,8 +1,4 @@
-
-
-
 .dialog-content{
-    .search-section{}
     .result-section{
         padding: 20px 0;
         .patient-preview{
@@ -12,4 +8,91 @@
             padding: 8px;
         }
     }
+}
+
+.modal-process-container {
+  .ms-Dialog-main {
+    width: 80%;
+    height: 88%;
+    .ms-Modal-scrollableContent {
+      overflow-y: hidden;
+      height: 100%;
+
+      .modal-wrapper {
+        height: 100%;
+
+        .modeal-header {
+          height: 52px;
+          font-size: 24px;
+          margin: 0 40px;
+          text-align: center;
+          line-height: 52px;
+          font-weight: 600;
+          border-bottom: 1px solid #d5d5d5;
+        }
+
+        .modeal-content {
+          overflow-y: auto;
+          height: calc(100% - 104px);
+          padding: 12px 40px;
+
+          .section {
+            width: 100%;
+
+            .header-section {
+              text-decoration: underline;
+              font-size: 18px;
+              font-weight: 600;
+            }
+            .content-section {
+              padding: 12px 0;
+              display: flex;
+              width: 100%;
+              flex-wrap: wrap;
+              justify-content: space-between;
+              align-items: center;
+
+              .basicInfoRender {
+                width: 30%;
+              }
+              .content-section-input {
+                display: flex;
+                padding: 0 20px;
+                width: 30%;
+                margin-bottom: 32px;
+                .ms-TextField {
+                  width: calc(100% - 52px);
+                  height: 32px;
+                  display: inline-block;
+                }
+                .unit {
+                  margin-left: 4px;
+                  height: 32px;
+                  width: 48px;
+                  line-height: 32px;
+                }
+              }
+              .content-section-input.width50per {
+                width: 50%;
+              }
+              .content-section-input.width100per {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        .modeal-footer {
+          height: 52px;
+          float: right;
+          margin: 0 40px;
+
+          & > * {
+            margin-left: 8px;
+            min-width: 120px;
+          }
+        }
+      }
+    }
+  }
 }
