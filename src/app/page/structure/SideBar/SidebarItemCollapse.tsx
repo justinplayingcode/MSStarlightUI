@@ -57,15 +57,9 @@ const SidebarItemCollapse = ({ item }: Props) => {
                 {
                     open && item.child?.map((route, index) => (
                         route.sidebarProps ? (
-                            route.child ? (
-                                <Stack className="route-child">
-                                    <SidebarItemCollapse item={route} key={index} />
-                                </Stack>
-                            ) : (
-                                <Stack className="route-child">
-                                    <SidebarItem isChild item={route} key={index} />
-                                </Stack>
-                            )
+                            <Stack className="route-child" key={index}>
+                              {route.child ? <SidebarItemCollapse item={route}/> : <SidebarItem isChild item={route}/>}
+                            </Stack>
                         ) : null
                     ))
                 }
