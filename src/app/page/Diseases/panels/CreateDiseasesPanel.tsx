@@ -1,12 +1,12 @@
 import { Dropdown, IDropdownOption, Spinner, SpinnerSize, Stack, TextField } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { UniformPanel } from "src/app/common";
-import { BtnType, PanelType } from "src/model/enum"
+import { BtnType, PanelType, toastType } from "src/model/enum"
 import { IFooterPanel } from "src/model/interface";
 import Api from 'src/api/index'
 import { Dictionary } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import { closePanel, tableRefresh } from "src/redux/reducers";
+import { closePanel, closePanelLoading, openPanelLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import { RootState } from "src/redux/store";
 
 interface ICreateDiseasesProps{
@@ -18,7 +18,6 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     const dispatch = useDispatch();
     const {tableSelectedItem} = useSelector((state: RootState) => state.currentSelected)
     
-    const [isLoading, setIsLoading] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
     const [departmentList, setDepartmentList] = useState<any[]>();
 
@@ -30,7 +29,7 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     const [selectedDepartment, setSelectedDepartment] = useState<string>()
 
     const getDepartment = () => {
-        setIsLoading(true);
+        dispatch(openPanelLoading());
         Api.departmentApi.getAllDepartment().then(data => {
           const list: IDropdownOption[] = [];
           data.data.map((item) => {
@@ -40,20 +39,19 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             })
           })
           setDepartmentList(list);
-        }).catch(err => {
-            const { message } = err.response.data;
-            // setErrorMessage(message)
-        }).finally(() => setIsLoading(false))
+        }).catch(() => {
+          dispatch(showToastMessage({message: "Có lỗi, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
+        }).finally(() => dispatch(closePanelLoading()))
       }
     
       useEffect(() => {
         if(props.panelType === PanelType.Edit){
             setId(tableSelectedItem[0]?._id)
-            setName(tableSelectedItem[0]?.name);
-            setCode(tableSelectedItem[0]?.code);
+            setName(tableSelectedItem[0]?.diseasesName);
+            setCode(tableSelectedItem[0]?.diseasesCode);
             setSymptom(tableSelectedItem[0]?.symptom);
             setPrevention(tableSelectedItem[0]?.prevention);
-            setSelectedDepartment(tableSelectedItem[0]?.department)
+            setSelectedDepartment(tableSelectedItem[0]?.departmentId)
         }        
         getDepartment();
       },[])
@@ -153,60 +151,50 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             setErrorMessage({department: 'Hãy chọn khoa quản lý'});
             return;
         }
-
         const reqbody = {
             ...(props.panelType === PanelType.Edit) && {id: id},
-            name: name,
-            code: code,
+            diseasesName: name,
+            diseasesCode: code,
             symptom: symptom,
             prevention: prevention,
             departmentId: selectedDepartment
         }
-
-        setIsLoading(true);
-        if (props.panelType == PanelType.Create){
+        dispatch(openPanelLoading());
+        if (props.panelType === PanelType.Create){
             Api.diseasesApi.createDiseases(reqbody).then((data) => {
                 if(data.status === 0){
-                    console.log(data)
-                    alert("Success")
-                    //if success, close panel
-                    dispatch(closePanel());
-                    dispatch(tableRefresh())
+                  dispatch(showToastMessage({message: "Thêm bệnh mới thành công", type: toastType.succes}))
+                  //if success, close panel
+                  dispatch(closePanel());
+                  dispatch(tableRefresh());
                 }
-            }).catch(err => {
-                const { message } = err.response.data;
-                // setErrorMessage(message)
-            }).finally(() => setIsLoading(false))
+            }).catch(() => {
+              dispatch(showToastMessage({message: "Có lỗi, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
+            }).finally(() => dispatch(closePanelLoading()))
         }
 
-        if (props.panelType == PanelType.Edit){
+        if (props.panelType === PanelType.Edit){
             Api.diseasesApi.editDiseases(reqbody).then((data) => {
                 if(data.status === 0){
-                    console.log(data)
-                    alert("Success edit")
-                    //if success, close panel
-                    dispatch(closePanel())
+                  dispatch(showToastMessage({message: "Cập nhật thành công", type: toastType.succes}))
+                  //if success, close panel
+                  dispatch(closePanel());
+                  dispatch(tableRefresh());
                 }
-            }).catch(err => {
-                const { message } = err.response.data;
-                // setErrorMessage(message)
-            }).finally(() => setIsLoading(false))
+            }).catch(() => {
+              dispatch(showToastMessage({message: "Có lỗi, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
+            }).finally(() => dispatch(closePanelLoading()))
         }
     }
 
     return (
         <>
             <UniformPanel
-                panelTitle={props.panelType === PanelType.Create ? 'Thêm bệnh mới' : 'Chỉnh sửa bệnh'}
-                renderFooter={buttonFooter}
-            >
-                {/* content here */}
-                {
-                    isLoading ? <Spinner size={SpinnerSize.large} />
-                        : <Stack className='form-input'>
-                            {renderInputField()}
-                        </Stack>
-                }
+              panelTitle={props.panelType === PanelType.Create ? 'Thêm bệnh mới' : 'Chỉnh sửa thông tin'}
+              renderFooter={buttonFooter} >
+              <Stack className='form-input'>
+                  {renderInputField()}
+              </Stack>
             </UniformPanel>
         </>
     )

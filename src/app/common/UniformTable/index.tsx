@@ -12,7 +12,7 @@ import { RootState } from 'src/redux/store';
 import { TableType } from 'src/model/enum';
 import Pagination from '../Pagination';
 
-const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}, selectionDetails: { marginBottom: '20px'}});
+const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
 
 // ================
@@ -38,7 +38,6 @@ type IUniformTableProps = IUniformTableOwnProps & IUniformTablePropsFromDispatch
 
 export interface IUniformTableState {
     items: any[];
-    selectionDetails: string;
     columns: IColumn[];
     isLoading: boolean;
 
@@ -68,13 +67,9 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
             onSelectionChanged: () => {
               this.props.setTableSelectedCount(this._selection.getSelectedCount());
               this.props.setTableSelectedItem(this._selection.getSelection());
-              this.setState({
-                selectionDetails: this._getSelectionDetails(),
-              });
             },
         });
         this.state = {
-            selectionDetails: this._getSelectionDetails(),
             items: [],
             isLoading: true,
             columns: this.props.columns,
@@ -127,6 +122,14 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
     }
 
     private OnRefresh() {
+      this._selection = new Selection({
+        onSelectionChanged: () => {
+          this.props.setTableSelectedCount(this._selection.getSelectedCount());
+          this.props.setTableSelectedItem(this._selection.getSelection());
+        },
+      });
+      this.props.setTableSelectedCount(0);
+      this.props.setTableSelectedItem([]);
       this.setState({
         searchKey: ""
       }, () => this.getData());
@@ -244,17 +247,5 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
           searchKey: text
         });
     };
-
-    private _getSelectionDetails(): string {
-        const selectionCount = this._selection.getSelectedCount();
-        switch (selectionCount) {
-            case 0:
-            return 'No items selected';
-            case 1:
-            return '1 item selected: ' + (this._selection.getSelection()[0] as any).name;
-            default:
-            return `${selectionCount} items selected`;
-        }
-    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UniformTable)
