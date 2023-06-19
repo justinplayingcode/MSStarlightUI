@@ -4,9 +4,9 @@ import Api from "api";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UniformPanel } from "src/app/common";
-import { BtnType, PanelType } from "src/model/enum";
+import { BtnType, PanelType, toastType } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
-import { closePanel, tableRefresh } from "src/redux/reducers";
+import { closePanel, closePanelLoading, openPanelLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import { RootState } from "src/redux/store";
 
 interface ICreateMedicationProps{
@@ -17,7 +17,6 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
     const dispatch = useDispatch();
     const {tableSelectedItem} = useSelector((state: RootState) => state.currentSelected)
     
-    const [isLoading, setIsLoading] = useState<boolean>();
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
 
     const [id, setId] = useState<string>();
@@ -26,7 +25,6 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
     const [usage, setUsage] = useState<string>();
     const [price, setPrice] = useState<string>();
 
-    
       useEffect(() => {
         if(props.panelType === PanelType.Edit){
             setId(tableSelectedItem[0]?._id)
@@ -34,8 +32,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
             setDesignation(tableSelectedItem[0]?.designation);
             setUsage(tableSelectedItem[0]?.usage);
             setPrice(tableSelectedItem[0]?.price);
-        }        
-        console.log('run');        
+        }     
       },[])
 
     const buttonFooter: IFooterPanel[] = [
@@ -115,7 +112,7 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
             setErrorMessage({price: 'Hãy điền giá thuốc'});
             return;
         }
-
+        dispatch(openPanelLoading());
         const reqbody = {
             ...(props.panelType === PanelType.Edit) && {id: id},
             name: name,
@@ -123,33 +120,27 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
             usage: usage,
             price: price
         }
-        setIsLoading(true);
         if (props.panelType == PanelType.Create){
             Api.medicationApi.createMedication(reqbody).then((data) => {
                 if(data.status === 0){
-                    console.log(data)
-                    alert("Success")
-                    //if success, close panel
-                    dispatch(closePanel());
-                    dispatch(tableRefresh())
+                  dispatch(showToastMessage({message: "Thêm thuốc mới thành công", type: toastType.succes}))
+                  dispatch(closePanel());
+                  dispatch(tableRefresh())
                 }
-            }).catch(err => {
-                const { message } = err.response.data;
-                // setErrorMessage(message)
-            }).finally(() => setIsLoading(false))
+            }).catch(() => {
+              dispatch(showToastMessage({message: "Có lỗi, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
+            }).finally(() => dispatch(closePanelLoading()))
         }
         if (props.panelType == PanelType.Edit){
             Api.medicationApi.editMedication(reqbody).then((data) => {
                 if(data.status === 0){
-                    console.log(data)
-                    alert("Success edit")
-                    //if success, close panel
-                    dispatch(closePanel())
+                  dispatch(showToastMessage({message: "Cập nhật thành công", type: toastType.succes}))
+                  dispatch(closePanel());
+                  dispatch(tableRefresh())
                 }
-            }).catch(err => {
-                const { message } = err.response.data;
-                // setErrorMessage(message)
-            }).finally(() => setIsLoading(false))
+            }).catch(() => {
+              dispatch(showToastMessage({message: "Có lỗi, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
+            }).finally(() => dispatch(closePanelLoading()))
         }
 
     }
@@ -160,13 +151,9 @@ const CreateMedicationPanel = (props: ICreateMedicationProps) => {
                 panelTitle='Tạo thuốc mới'
                 renderFooter={buttonFooter}
             >
-                {/* content here */}
-                {
-                    isLoading ? <Spinner size={SpinnerSize.large} />
-                        : <Stack className='form-input'>
-                            {renderInputField()}
-                        </Stack>
-                }
+              {<Stack className='form-input'>
+                {renderInputField()}
+              </Stack>}
             </UniformPanel>
         </>
     )

@@ -30,7 +30,7 @@ const api = {
     editDiseases: '/diseases/editdiseases',
     
     //pills
-    getAllMedication: '/medication/getall',
+    getAllMedication: '/medication/getallmedications',
     createMedication: '/medication/createmedication',
     editMedication: '/medication/editmedication',
     

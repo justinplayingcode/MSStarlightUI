@@ -17,56 +17,56 @@ const Diseases = () => {
     const { tableSelectedCount } = useSelector((state: RootState) => state.currentSelected)
 
     const diseasesColumns =[
-        {
-            key: 'code',
-            name: 'Mã bệnh',
-            minWidth: 70,
-            maxWidth: 90,
-            isResizable: true,
-            onRender: (item) => {
-                return <div>{item?.code}</div>;
-            },
+      {
+          key: 'department',
+          name: 'Khoa',
+          minWidth: 100,
+          maxWidth: 180,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{item?.department}</span>;
+          },
+      },
+      {
+        key: 'diseasesCode',
+        name: 'Mã bệnh',
+        minWidth: 100,
+        maxWidth: 180,
+        isResizable: true,
+        onRender: (item) => {
+            return <span>{item?.diseasesCode}</span>;
         },
-        {
-            key: 'name',
-            name: 'Tên bệnh',
-            minWidth: 180,
-            maxWidth: 250,
-            isResizable: true,
-            onRender: (item) => {
-                return <span>{item?.name}</span>;
-            },
-        },
-        {
-            key: 'symptom',
-            name: 'Triệu chứng',
-            minWidth: 230,
-            maxWidth: 350,
-            isResizable: true,
-            onRender: (item) => {
-                return (tooltipPlainText(item?.symptom));
-            },
-        },
-        {
-            key: 'prevention',
-            name: 'Cách phòng tránh',
-            minWidth: 230,
-            maxWidth: 350,
-            isResizable: true,
-            onRender: (item) => {
-                return (tooltipPlainText(item?.prevention));
-            },
-        },
-        {
-            key: 'department',
-            name: 'Khoa',
-            minWidth: 230,
-            maxWidth: 350,
-            isResizable: true,
-            onRender: (item) => {
-                return <span>{item?.department}</span>;
-            },
-        },
+    },
+      {
+          key: 'name',
+          name: 'Tên bệnh',
+          minWidth: 150,
+          maxWidth: 220,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{item?.diseasesName}</span>;
+          },
+      },
+      {
+          key: 'symptom',
+          name: 'Triệu chứng',
+          minWidth: 230,
+          maxWidth: 350,
+          isResizable: true,
+          onRender: (item) => {
+              return (tooltipPlainText(item?.symptom));
+          },
+      },
+      {
+          key: 'prevention',
+          name: 'Cách phòng tránh',
+          minWidth: 230,
+          maxWidth: 350,
+          isResizable: true,
+          onRender: (item) => {
+              return (tooltipPlainText(item?.prevention));
+          },
+      },
 
     ];
 
