@@ -1,0 +1,36 @@
+.wrapper-table-content{
+    .change-password{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        // background-color: black;
+
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        padding: 20px;
+        margin-top: 10px;
+
+        .change-password-header{
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .change-password-content{
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .form-container{
+                width: 480px;
+
+            }
+
+            .footer-button{
+                margin-top: 20px;
+                justify-content: flex-end;
+            }
+        }
+    }
+}

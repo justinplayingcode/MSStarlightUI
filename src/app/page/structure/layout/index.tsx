@@ -27,6 +27,7 @@ import TreatmentManagement from "src/app/page/CureProcess/TreatmentManagement";
 import { MainPanel } from "src/app/common/Uniformpanel";
 import { LoadingDot, LoadingInComing } from "src/app/common/loading";
 import DoctorAppointment from "../../DoctorAppointments";
+import PasswordChange from "../../PasswordChange";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -117,6 +118,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 break;
             case pageConstant.LAYOUT_PROFILE:
                 content = <Profile />
+                break;
+            case pageConstant.LAYOUT_PASSWORD_CHANGE:
+                content = <PasswordChange />
                 break;
 
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:

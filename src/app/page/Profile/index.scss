@@ -28,6 +28,25 @@
                 min-width: 170px;
                 align-items: center;
                 padding-right: 20px;
+
+                .profile-change-password{
+                    width: 150px;
+                    .file-card{
+                        height: 30px;
+                        border: none;
+                        .file-input{
+                            height: inherit;
+                            .upload-btn{
+                                background-color: #fff;
+                                border-radius: 8px;
+                            }
+                            &:hover{
+                                cursor: pointer;
+                                background-color: #eee;
+                            }
+                        }
+                    }
+                }
             }
             .profile-detail-info{
                 flex: 1;

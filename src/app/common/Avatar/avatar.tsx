@@ -94,7 +94,7 @@ export const Avatar = (props: IAvatarProps) => {
                         setIsCalloutVisible(false)
                         navigate('/profile')
                     }} />
-                    <DefaultButton text="Đổi mật khẩu" onClick={(e) => alert('Đổi mật khẩu')} />
+                    <DefaultButton text="Đổi mật khẩu" onClick={(e) => navigate('/change-password')} />
                     <DefaultButton text="Đăng xuất" onClick={handleLogOut} />
                 </Callout>
             )}

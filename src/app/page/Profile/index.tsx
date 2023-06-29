@@ -1,4 +1,4 @@
-import { DatePicker, DefaultButton, Dropdown, IDropdownOption, Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
+import { DatePicker, DefaultButton, Dialog, DialogFooter, Dropdown, IDropdownOption, Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import Api from 'api';
 import { closeLoading, openLoading, setInfoUser, showToastMessage } from 'src/redux/reducers';
 import { toastType } from 'src/model/enum';
+import FileUpload from 'src/app/common/FileUpload';
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,8 @@ const Profile = () => {
     const [address, setAddress] = useState<string>(info?.address);
     const [email, setEmail] = useState<string>(info?.email);
     const [identification, setIdentification] = useState<string>(info?.identification);
+    const [avatarFile, setAvatarFile] = useState<File[]>([]);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
 
     useEffect(()=>{
         setDateOfBirth(Convert.dmystringtoDate(info?.dateOfBirth))
@@ -253,10 +256,6 @@ const Profile = () => {
         })
     }
 
-    const handleChangeAvatar = () => {
-        alert('change avatar')
-    }
-
     const renderViewInfo = () => {
         return (
             <>
@@ -279,6 +278,12 @@ const Profile = () => {
         )
     }
 
+    useEffect(() => {
+        if(avatarFile.length){
+            setOpenDialog(true);
+        }
+    },[avatarFile])
+
     return(
         <div className='wrapper-table-content'>
             <Stack className='user-profile'>
@@ -297,7 +302,15 @@ const Profile = () => {
                     <Stack className='profile-basic-info' tokens={{ childrenGap: 8 }}>
                         <Avatar size={AvatarSize.SuperLarge} avatar_scr={info?.avatar} isRound={true} />
                         <Stack>{Convert.getAccountRoleName(role)}</Stack>
-                        <DefaultButton text='Đổi ảnh đại diện' onClick={() => handleChangeAvatar()} />
+                        <Stack className='profile-change-password'>
+                            <FileUpload 
+                                files={avatarFile} 
+                                isView={false} 
+                                multiple={false}
+                                text='Đổi ảnh đại diện'
+                                accept="image/*"
+                                addFiles={setAvatarFile}/>
+                        </Stack>
                     </Stack>
                     <Stack className='profile-detail-info'>
                         <Stack className='detail-info-content'>
@@ -320,6 +333,31 @@ const Profile = () => {
                     </Stack>
                 </Stack>
             </Stack>
+            <Dialog
+                hidden={!openDialog}
+                onDismiss={() => setOpenDialog(false)}
+                dialogContentProps={{title: 'Cập nhật ảnh đại diện'}}
+                maxWidth={'480px'}
+                minWidth={'480px'}
+                modalProps={{isBlocking: true}}
+            >
+                <Stack>
+                    {`Bạn có muốn sử dụng file: ${avatarFile[0]?.name || ""}`} 
+                </Stack>
+                <DialogFooter>
+                    <DefaultButton text='Hủy'
+                        onClick={() => {
+                            setAvatarFile([]);
+                            setOpenDialog(false)
+                        }}
+                    />
+                    <PrimaryButton text='Xác nhận' 
+                        onClick={() => {
+                            console.log(avatarFile);                            
+                        }}
+                    />
+                </DialogFooter>
+            </Dialog>
         </div>
     )
 }
