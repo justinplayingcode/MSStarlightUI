@@ -113,6 +113,13 @@
 
             .ms-DetailsRow-cell {
                 font-size: 16px;
+                .name-viewed {
+                    text-decoration: none;
+                    color: #605E5C;
+                    &:hover{
+                      text-decoration: underline;
+                    }
+                  }
             }
         }
 

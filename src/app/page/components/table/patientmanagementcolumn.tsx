@@ -1,4 +1,5 @@
 import { IColumn, ICommandBarItemProps, TooltipHost } from "@fluentui/react"
+import { LinkButton } from "src/app/common/Link";
 import { tooltipPlainText } from "src/utils/utils";
 import { Convert } from "utils";
 
@@ -10,7 +11,9 @@ export const patientmanagementColumns: IColumn[] = [
         maxWidth: 250,
         isResizable: true,
         onRender: (item) => {
-            return tooltipPlainText(item.fullname)
+            return(
+                <LinkButton className="name-viewed" navigate={`/patient-details`}>{tooltipPlainText(item?.fullname)}</LinkButton>
+            )
         },
     },
     {

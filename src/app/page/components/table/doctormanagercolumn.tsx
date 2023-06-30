@@ -1,4 +1,6 @@
 import { IColumn, Stack } from "@fluentui/react"
+import { useNavigate } from "react-router-dom";
+import { LinkButton } from "src/app/common/Link";
 import { tooltipPlainText } from "src/utils/utils";
 import { Convert, Validate } from "utils";
 
@@ -10,7 +12,9 @@ export const doctormanagementColumns: IColumn[] = [
     maxWidth: 220,
     isResizable: true,
     onRender: (item) => {
-      return tooltipPlainText(item?.fullname);
+      return (
+        <LinkButton className="name-viewed" navigate={`/doctor-details`}>{tooltipPlainText(item?.fullname)}</LinkButton>
+      )
     },
   },
   {
@@ -25,7 +29,7 @@ export const doctormanagementColumns: IColumn[] = [
   },
   {
     key: 'position',
-    name:'Chức vụ',
+    name: 'Chức vụ',
     minWidth: 80,
     maxWidth: 120,
     isResizable: true,
@@ -35,7 +39,7 @@ export const doctormanagementColumns: IColumn[] = [
   },
   {
     key: 'rank',
-    name:'Trình độ',
+    name: 'Trình độ',
     minWidth: 80,
     maxWidth: 120,
     isResizable: true,

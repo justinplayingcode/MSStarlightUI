@@ -28,6 +28,8 @@ import { MainPanel } from "src/app/common/Uniformpanel";
 import { LoadingDot, LoadingInComing } from "src/app/common/loading";
 import DoctorAppointment from "../../DoctorAppointments";
 import PasswordChange from "../../PasswordChange";
+import PatientDetails from "../../Account/details/PatientDetails";
+import DoctorDetails from "../../Account/details/DoctorDetails";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -126,8 +128,14 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
                 content = <AccountPage page={page}/>
                 break;
+            case pageConstant.LAYOUT_ACCOUNT_PATIENT_DETAILS:
+                content = <PatientDetails/>
+                break;
             case pageConstant.LAYOUT_ACCOUNT_DOCTOR_MANAGEMENT:
                 content = <AccountPage page={page}/>
+                break;
+            case pageConstant.LAYOUT_ACCOUNT_DOCTOR_DETAILS:
+                content = <DoctorDetails/>;
                 break;
 
             case pageConstant.LAYOUT_SPECIALITY:
