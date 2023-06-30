@@ -8,18 +8,22 @@ import { RootState } from "src/redux/store";
 import { accountRole } from "model";
 import { TableType } from "src/model/enum";
 import { patientmanagementColumns } from "../components/table/patientmanagementcolumn";
+import { useState } from "react";
+import ResetPassword from "./dialog/resetPassword";
 
 function PatientAccount() {
   const dispatch = useDispatch();
-  const {role, info} = useSelector((state: RootState) => state.user);
-  const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
+
+  const [hiddenReset, setHiddenReset] = useState<boolean>(true);
+  const { role, info } = useSelector((state: RootState) => state.user);
+  const { tableSelectedCount } = useSelector((state: RootState) => state.currentSelected);
 
 
   const getPatientmanagementCommandBar = () => {
 
     //remove add button
     const commandBar = [];
-    if(role === accountRole.Doctor && info?.department === 'Khoa Tiếp Đón'){
+    if (role === accountRole.Doctor && info?.department === 'Khoa Tiếp Đón') {
       commandBar.push(
         {
           key: 'newItem',
@@ -29,26 +33,38 @@ function PatientAccount() {
         },
       )
     };
-    if(tableSelectedCount === 1){
+    if (tableSelectedCount === 1) {
+      // commandBar.push({
+      //   key: 'edit',
+      //   text: 'Sửa',
+      //   iconProps: { iconName: 'PageHeaderEdit' },
+      //   onClick: () => { alert('edit') },
+      // });
       commandBar.push({
-          key: 'edit',
-          text: 'Sửa',
-          iconProps: { iconName: 'PageHeaderEdit' },
-          onClick: () => { alert('edit') },
+        key: "resetPassword",
+        text: "Đặt lại mật khẩu",
+        iconProps: { iconName: 'Rename' },
+        onClick: () => setHiddenReset(false)
       })
-  };
+    };
     return commandBar;
-  
-  } 
+
+  }
 
   return (
     <div className='wrapper-table-content speciality-wrapper'>
       <UniformTable
-        integrateItems={Api.accountApi.getAll}      
+        integrateItems={Api.accountApi.getAll}
         columns={patientmanagementColumns}
         commandBarItems={getPatientmanagementCommandBar()}
-        tableType={TableType.patientAccount} 
-        />
+        tableType={TableType.patientAccount}
+      />
+      <ResetPassword
+        isHidden={hiddenReset}
+        onDismiss={() => {
+          setHiddenReset(true);
+        }}
+      />
     </div>
   );
 }

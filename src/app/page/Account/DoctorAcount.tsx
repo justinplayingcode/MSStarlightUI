@@ -7,10 +7,15 @@ import Api from "src/api";
 import { AppDispatch, RootState } from "src/redux/store";
 import { TableType, toastType } from "src/model/enum";
 import { doctormanagementColumns } from "../components/table/doctormanagercolumn";
+import { useState } from "react";
+import ResetPassword from "./dialog/resetPassword";
+import { useNavigate } from "react-router-dom";
 
 function DoctorAcount() {
+    const [hiddenReset, setHiddenReset] = useState<boolean>(true);
     const dispatch = useDispatch<AppDispatch>();
-    const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
+    const navigate = useNavigate();
+    const {tableSelectedCount, tableSelectedItem} = useSelector((state: RootState) => state.currentSelected);
 
     const getDoctorManagmentCommandBar = () => {
         const command: ICommandBarItemProps[] = [];
@@ -26,7 +31,13 @@ function DoctorAcount() {
                 key: 'edit',
                 text: 'Sửa',
                 iconProps: { iconName: 'Edit' },
-                onClick: () => { alert('edit') },
+                onClick: () => { navigate(`/doctor-details/${tableSelectedItem[0]?.userId}`) },
+            });
+            command.push({
+                key: "resetPassword",
+                text: "Đặt lại mật khẩu",
+                iconProps: { iconName: 'Rename'},
+                onClick: () => setHiddenReset(false)
             })
         };
 
@@ -40,6 +51,12 @@ function DoctorAcount() {
                 columns={doctormanagementColumns}
                 commandBarItems={getDoctorManagmentCommandBar()}  
                 tableType={TableType.doctorAccount}       
+            />
+            <ResetPassword
+                isHidden={hiddenReset}
+                onDismiss={() => {
+                    setHiddenReset(true);
+                }}
             />
         </div>
     )
