@@ -29,9 +29,9 @@ function DoctorAcount() {
         if(tableSelectedCount === 1){
             command.push({
                 key: 'edit',
-                text: 'Sửa',
-                iconProps: { iconName: 'Edit' },
-                onClick: () => { navigate(`/doctor-details/${tableSelectedItem[0]?.userId}`) },
+                text: 'Thông tin bác sĩ',
+                iconProps: { iconName: 'ProfileSearch' },
+                onClick: () => { navigate(`/doctor-management/doctor-details/${tableSelectedItem[0]?.userId}`) },
             });
             command.push({
                 key: "resetPassword",

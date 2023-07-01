@@ -13,7 +13,7 @@ export const doctormanagementColumns: IColumn[] = [
     isResizable: true,
     onRender: (item) => {
       return (
-        <LinkButton className="name-viewed" navigate={`/doctor-details`}>{tooltipPlainText(item?.fullname)}</LinkButton>
+        <LinkButton className="name-viewed" navigate={`/doctor-management/doctor-details/${item?.userId}`}>{tooltipPlainText(item?.fullname)}</LinkButton>
       )
     },
   },

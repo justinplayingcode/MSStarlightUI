@@ -1,25 +1,38 @@
 import { DefaultButton, Dialog, DialogFooter, PrimaryButton, Stack, Text } from '@fluentui/react';
-import React from 'react'
+import Api from 'api';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { toastType } from 'src/model/enum';
+import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
 import { Convert } from 'utils';
 
 interface IDialogProps {
     isHidden: boolean;
     onDismiss: () => void;
-    onReset?: () => void;
 }
 
 const ResetPassword = (props: IDialogProps) => {
 
     const { tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
+    const account = tableSelectedItem[0];
+    const dispatch = useDispatch();
 
     const handleConfirm = () => {
-        alert(`Đặt lại mật khẩu: ${tableSelectedItem[0]}`);
-        props?.onReset?.();
+        dispatch(openLoading());
+        Api.authApi.resetpassword({ userId: account?.userId }).then(data => {
+          const errorMessage = (data as any).message;
+          let typeToast = toastType.error;
+          if(!data.status) {
+            props.onDismiss();
+            typeToast = toastType.succes;
+          }
+          dispatch(showToastMessage({message: errorMessage, type: typeToast}))
+        }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => {
+          dispatch(closeLoading())
+        });
     }
 
-    const account = tableSelectedItem[0];
     return (
         <Dialog
             hidden={props.isHidden}

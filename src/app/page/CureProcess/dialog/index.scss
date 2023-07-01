@@ -78,7 +78,43 @@
               .content-section-input.width100per {
                 width: 100%;
               }
+              .content-test-result {
+                width: 100%;
+                display: flex;
+                border: 1px solid #e7e7e7;
+                padding: 6px 0;
+                .content-test-result-title {
+                  width: 180px;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-start;
+                  align-items: center;
+                  padding: 0 6px;
+                  .content-test-result-download {
+                    i {
+                      margin-left: 4px;
+                    }
+                    border: none;
+                    width: 100px;
+                  }
+                  .content-test-result-service {
+                    margin-bottom: 4px;
+                    text-align: center;
+                    height: 28px;
+                    line-height: 28px;
+                    background-color: #e7e7e7;
+                    width: 100%;
+                  }
+                }
+                .content-test-result-reason {
+                  flex: 1;
+                  padding-top: 4px;
+                }
+              }
             }
+          }
+          .section:last-child {
+            margin-bottom: 20px;
           }
         }
 
@@ -95,4 +131,8 @@
       }
     }
   }
+}
+
+.testing-request-dialog {
+  margin-bottom: 8px;
 }

@@ -1,5 +1,5 @@
 import { UniformPanel } from "src/app/common";
-import { BtnType, Gender, PanelType, toastType } from "src/model/enum";
+import { BtnType, DepartmentType, Gender, PanelType, TypeAppointmentSchedule, toastType } from "src/model/enum";
 import { IFooterPanel } from "src/model/interface";
 // import { CreateAccount, CreateAccountKey } from "../components/CreateAccount";
 import { DatePicker, Dropdown, IDropdownOption, Label, Spinner, SpinnerSize, Stack, TextField, mergeStyleSets } from "@fluentui/react";
@@ -10,7 +10,7 @@ import Api from 'src/api'
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import SuccessDialog from "./Dialog";
-import { closePanel, closePanelLoading, openLoading, openPanel, openPanelLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
+import { closePanel, closePanelLoading, openPanelLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import { gender } from "src/model/userModel";
 
 interface ICreatePatientPanel{
@@ -28,11 +28,12 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
   const [identifyNumber, setIdentifyNumber] = useState<string>();
   const [insuranceNumber, setInsuranceNumber] = useState<string>();
   const [selectedDepartment, setSelectedDepartment] = useState<string>();
+  const [selectedType, setSelectedType] = useState<number>(-1);
   const [userId, setUserId] = useState<string>();
+  const [symtom, setSymtom] = useState<string>();
 
   const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
 
-  const [isLoading, setIsLoading] = useState<boolean>();
   const [departmentList, setDepartmentList] = useState<any[]>();
 
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
     Api.departmentApi.getAllDepartment().then(data => {
       const list: IDropdownOption[] = [];
       data.data.map((item) => {
-        if(item.name !== 'Khoa Tiếp Đón' && item.name !== 'Khoa Cận Lâm Sàng'){
+        if(item.departmentCode !== DepartmentType.tiepDon && item.departmentCode !== DepartmentType.canLamSang){
           list.push({
             key: item._id,
             text: item.departmentName,
@@ -69,6 +70,17 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
           dispatch(showToastMessage({message: message, type: toastType.error}));
     }).finally(() => dispatch(closePanelLoading()))
   }
+
+  const mappingTypeAppointment = [
+    {
+      key: TypeAppointmentSchedule.khamTheoBHYT,
+      text: 'Khám theo BHYT'
+    },
+    {
+      key: TypeAppointmentSchedule.khamThuong,
+      text: 'Khám thường'
+    }
+  ]
 
   const getPatientById = (id: string) => {
     dispatch(openPanelLoading())
@@ -156,11 +168,16 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         setErrorMessage({insuranceNumber: 'Số bảo hiểm không hợp lệ'});
         return;
     }
+    if(selectedType === -1){
+      setErrorMessage({type: 'Hãy chọn loại khám'});
+      return;
+    }
 
     if(!selectedDepartment?.length){
       setErrorMessage({department: 'Hãy chọn khoa'});
       return;
     }
+
 
     const reqbody ={
       fullname: fullname,
@@ -172,28 +189,32 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
       email: email ||'',
       identification: identifyNumber || '',
       insurance: insuranceNumber || '',
-      userId: userId || ''
+      userId: userId || '',
+      initialSymptom: symtom || "",
+      typeAppointment: selectedType
     }
-
+    dispatch(openPanelLoading());
     Api.accountApi.createPatient(reqbody).then((data) => {
       if(!data.status){
-        //show dialog
-        setNewAccount({
-          fullname: data.data.fullname,
-          username: data.data.username,
-          password: data.data.password
-        });
-        setIsDialogClosed(false);
-      } else
-      {
-        dispatch(closePanelLoading());
+        if(reqbody.userId === "") {
+          setNewAccount({
+            fullname: data.data.fullname,
+            username: data.data.username,
+            password: data.data.password
+          });
+          setIsDialogClosed(false);
+        } else {
+          dispatch(closePanel());
+        }
+        dispatch(showToastMessage({message: 'Đăng ký khám bệnh thành công', type: toastType.succes}));
+      } else {
         dispatch(showToastMessage({message: 'Tạo không thành công', type: toastType.error}));
+        dispatch(closePanel());
       }
     }).catch(err => {
       const { message } = err.response.data;
-      dispatch(closePanelLoading());
       dispatch(showToastMessage({message: message, type: toastType.error}))
-    })
+    }).finally(() =>{ dispatch(closePanelLoading()); dispatch(tableRefresh())})
   }
 
   const renderInputField = () => {
@@ -293,8 +314,22 @@ function CreatPatientPanel(props: ICreatePatientPanel) {
         />
         <TextField
           label="Triệu chứng"
+          value={symtom}
+          onChange={(_, value) => {
+            setSymtom(value)
+          }}
         />
-        <Dropdown label="Loại khám" options={[]}/>
+        <Dropdown 
+          required
+          label="Loại khám" 
+          options={mappingTypeAppointment}
+          selectedKey={selectedType}
+          onChange={(ev, option) => {
+            setErrorMessage(undefined)
+            setSelectedType(option.key as number)
+          }}
+          errorMessage={errorMessage?.type}
+        />
         <Dropdown
           required
           label='Khoa chỉ định'

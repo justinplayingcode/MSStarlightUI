@@ -7,7 +7,7 @@ export interface IRouteItem {
     parentKeys?: string[]
 }
 
-export const routeMapping : { [key: string]: IRouteItem} = {
+export const routeMapping : {[key: string]: IRouteItem} = {
     Home: {
         key: "route-home",
         text: 'Tổng quát',
@@ -19,10 +19,22 @@ export const routeMapping : { [key: string]: IRouteItem} = {
         text: 'Quản lý tài khoản bệnh nhân',
         url: '/patient-management',
     },
+    PatientDetails: {
+      key: 'route-patient-management-details',
+      text: 'Thông tin bệnh nhân',
+      url: '/patient-management/patient-details',
+      parentKeys:["route-patient-management"]
+    },
     DoctorManagement: {
         key: 'route-doctor-management',
         text: 'Quản lý tài khoản bác sĩ',
         url: '/doctor-management',
+    },
+    DoctorDetails: {
+        key: 'route-doctor-management-details',
+        text: 'Thông tin bác sĩ',
+        url: '/doctor-management/doctor-details',
+        parentKeys:["route-doctor-management"]
     },
     PatientManagementDoctor: {
         key: 'route-patient-management-doctor',
@@ -119,7 +131,7 @@ export const getRouteItemByUrl = (url: string) => {
     let currentRouteItem = routeMapping.Home;
     for (const key in routeMapping){
         const item = routeMapping[key];
-        if (item.url === url){
+        if (url.includes(item.url)){
             currentRouteItem = item
         }
     }
