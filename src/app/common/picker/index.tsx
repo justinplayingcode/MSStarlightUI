@@ -1,33 +1,19 @@
 import { useState } from "react";
 import CustomPeoplePicker from "./custompeoplepicker";
 import { IPersonaProps } from "@fluentui/react";
+import Api from "api";
+import { ApiStatus } from "model";
 
 interface IPickerProps {
   label: string;
   value: IPersonaProps[];
   placeholder?: string;
   onChangeCallBack: (value) => void;
+  integrateItems: (requestBody: any) => Promise<any>;
+  mappingValues: (datas) => any[]
 }
 
 function Picker({...props}: IPickerProps) {
-
-  const peoples = [
-    {
-      displayName: 'kkkkk',
-      text: 'Annie Lindqvist',
-      secondaryText: 'Designer',
-    },
-    {
-      displayName: 'iiiii',
-      text: 'Aaron Reid',
-      secondaryText: 'Designer',
-    },
-    {
-      displayName: 'hhhhhh',
-      text: 'Alex Lundberg',
-      secondaryText: 'Software Developer',
-    },
-  ];
 
   function removeDuplicates(personas: IPersonaProps[], possibleDupes: IPersonaProps[]) {
     return personas.filter(persona => !listContainsPersona(persona, possibleDupes));
@@ -40,15 +26,11 @@ function Picker({...props}: IPickerProps) {
     return personas.filter(item => item.text === persona.text).length > 0;
   }
 
-  // Hàm gọi API để nhận danh sách gợi ý
-  const fetchSuggestions = async (searchQuery) => {
-    // const suggestions = await yourApiCall(searchQuery);
-
-    //people is result of api
-    return removeDuplicates(peoples, props.value);
+  const fetchSuggestions = async (keyWord) => {
+    const data = await props.integrateItems({ searchKey: keyWord })
+    return removeDuplicates(props.mappingValues(data.data), props.value);
   };
 
-  // Hàm xử lý khi có người được chọn trong custom People Picker
   const handlePeoplePickerChange = (people) => {
     props.onChangeCallBack(people)
   };

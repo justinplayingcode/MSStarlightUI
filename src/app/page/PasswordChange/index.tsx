@@ -1,9 +1,12 @@
 import { DefaultButton, PrimaryButton, Stack, TextField } from '@fluentui/react';
-import * as React from 'react'
 import "./index.scss"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dictionary } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
+import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
+import Api from 'api';
+import { toastType } from 'src/model/enum';
 
 
 const PasswordChange = () => {
@@ -13,6 +16,7 @@ const PasswordChange = () => {
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = () => {
         setErrorMessage(undefined);
@@ -35,7 +39,22 @@ const PasswordChange = () => {
             return;
         }
 
-        alert(`password: ${password}, newPassword: ${newPassword}`)
+        const body = {
+          password: password,
+          newpassword: newPassword
+        }
+        dispatch(openLoading());
+        Api.authApi.changepassword(body).then(data => {
+          const errorMessage = (data as any).message;
+          let typeToast = toastType.error;
+          if(!data.status) {
+            navigate('/home');
+            typeToast = toastType.succes;
+          }
+          dispatch(showToastMessage({message: errorMessage, type: typeToast}))
+        }).catch(() => {
+          dispatch(showToastMessage({message: "Có lỗi xảy ra, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
+        }).finally(() => dispatch(closeLoading()));
     }
 
     return (
@@ -54,6 +73,8 @@ const PasswordChange = () => {
                                 setPassword(val || "")
                             }}
                             errorMessage={errorMessage?.password}
+                            type='password'
+                            canRevealPassword={true}
                         />
                         <TextField
                             label='Mật khẩu mới'
@@ -63,6 +84,8 @@ const PasswordChange = () => {
                                 setNewPassword(val || "")
                             }}
                             errorMessage={errorMessage?.newPassword}
+                            type='password'
+                            canRevealPassword={true}
                         />
                         <TextField
                             label='Xác nhận mật khẩu'
@@ -72,6 +95,8 @@ const PasswordChange = () => {
                                 setConfirm(val || "")
                             }}
                             errorMessage={errorMessage?.confirm}
+                            type='password'
+                            canRevealPassword={true}
                         />
                         <Stack className='footer-button' horizontal tokens={{ childrenGap: 8 }}>
                             <DefaultButton

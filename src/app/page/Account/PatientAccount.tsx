@@ -10,13 +10,15 @@ import { TableType } from "src/model/enum";
 import { patientmanagementColumns } from "../components/table/patientmanagementcolumn";
 import { useState } from "react";
 import ResetPassword from "./dialog/resetPassword";
+import { useNavigate } from "react-router-dom";
 
 function PatientAccount() {
   const dispatch = useDispatch();
 
   const [hiddenReset, setHiddenReset] = useState<boolean>(true);
   const { role, info } = useSelector((state: RootState) => state.user);
-  const { tableSelectedCount } = useSelector((state: RootState) => state.currentSelected);
+  const { tableSelectedCount, tableSelectedItem } = useSelector((state: RootState) => state.currentSelected);
+  const navigate = useNavigate();
 
 
   const getPatientmanagementCommandBar = () => {
@@ -34,12 +36,12 @@ function PatientAccount() {
       )
     };
     if (tableSelectedCount === 1) {
-      // commandBar.push({
-      //   key: 'edit',
-      //   text: 'Sửa',
-      //   iconProps: { iconName: 'PageHeaderEdit' },
-      //   onClick: () => { alert('edit') },
-      // });
+      commandBar.push({
+        key: 'edit',
+        text: 'Thông tin bệnh nhân',
+        iconProps: { iconName: 'ProfileSearch' },
+        onClick: () => { navigate(`/patient-management/patient-details/${tableSelectedItem[0]?.userId}`) },
+      });
       commandBar.push({
         key: "resetPassword",
         text: "Đặt lại mật khẩu",

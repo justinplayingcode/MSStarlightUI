@@ -15,11 +15,12 @@
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 20px;
+            text-align: center;
         }
         .change-password-content{
             flex: 1;
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
 
             .form-container{

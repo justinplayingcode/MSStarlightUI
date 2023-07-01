@@ -1,17 +1,56 @@
-import { Checkbox, DefaultButton, Dialog, DialogFooter, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
+import { Checkbox, DefaultButton, Dialog, DialogFooter, Icon, IconButton, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { basicKeyValueRender } from "src/utils/utils";
 import { Convert } from "utils";
 import Picker from "src/app/common/Picker";
 import { TestList } from "src/model/doctorModel";
-import { TypeOfTest } from "src/model/enum";
+import { TypeOfTest, toastType } from "src/model/enum";
+import { useDispatch } from "react-redux";
+import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
+import Api from "api";
+
+const testsMock: ITestResult[] = [
+  {
+    service: 0,
+    reason: "The Masked Singer VietNam Ca Sĩ Mặt Nạ là cuộc tranh tài âm nhạc giữa ca sĩ nghệ sĩ hàng đầu Việt Nam. Khi tham gia tranh tài tại chương trình, họ sẽ được hóa thân thành những nhân vật mascot với tính cách đặc trưng riêng và được giữ kín danh phận tuyệt đối cho đến khi bị loại. The Masked Singer VietNam ",
+    detailFile: "https"
+  },
+  {
+    service: 2,
+    reason: "Binh thuong",
+    detailFile: "https"
+  },
+  {
+    service: 2,
+    reason: "Binh thuong",
+    detailFile: "https"
+  },
+  {
+    service: 2,
+    reason: "Binh thuong",
+    detailFile: "https"
+  },
+  {
+    service: 2,
+    reason: "Binh thuong",
+    detailFile: "https"
+  }
+]
+
+interface ITestResult {
+  service: TypeOfTest,
+  reason: string,
+  detailFile: string
+}
 
 interface INormalProgressPorops {
   isOpen: boolean,
   onDismiss: () => void,
+  historyAppointment: any;
+  testresult: any[];
 }
 
 interface IErrorMessage {
@@ -63,27 +102,32 @@ const initState: ICurrentState = {
 }
 
 function NormalProgress({ ...props }: INormalProgressPorops) {
-  const {tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
+  const { tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
+  const dispatch = useDispatch();
+
   const [dialogTestingClosed, setDialogTestingClosed] = useState<boolean>(true);
   const [dialogOnbroadingClosed, setDialogOnbroadingClosed] = useState<boolean>(true);
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [testResult, setTestResult] = useState<any[]>([]);
   const [selectedTest, setSelectedTest] = useState<any[]>([]);
-
-  // const [height, setHeight] = useState<string>("");
-  // const [weight, setWeight] = useState<string>("");
-  // const [heartRate, setHeartRate] = useState<string>("");
-  // const [temperature, setTemperature] = useState<string>("");
-  // const [bloodPressure, setBloodPressure] = useState<string>("");
-  // const [glucose, setGlucose] = useState<string>("");
-  // const [symptom, setSymptom] = useState<string>("");
-  // const [note, setNote] = useState<string>("");
-  // const [note2, setNote2] = useState<string>("");
-
   const [currentState, setCurrentState] = useState<ICurrentState>(initState);
+  const [errorMessage, setErrorMessage] = useState<IErrorMessage>(initErrorMessage);
+  const [servicedTest, setServiceTest] = useState<any[]>([]);
 
-  const [errorMessage, setErrorMessage] = useState<IErrorMessage>(initErrorMessage)
-
+  useEffect(() => {
+    const healthIndicator = props.historyAppointment?.healthIndicator;
+    const updateState: ICurrentState = {
+      height: healthIndicator?.height || "",
+      weight: healthIndicator?.weight || "",
+      heartRate: healthIndicator?.heartRate || "",
+      temperature: healthIndicator?.temperature || "",
+      bloodPressure: !!(healthIndicator?.bloodPressureSystolic && healthIndicator?.bloodPressureDiastoli) ? `${healthIndicator?.bloodPressureSystolic}/${healthIndicator?.bloodPressureDiastolic}` : "",
+      glucose: healthIndicator?.glucose || "",
+      symptom: healthIndicator?.symptom || "",
+      note: "",
+      note2: "",
+    }
+    setCurrentState(updateState)
+  }, [])
 
   const handleOnDisMissDialog = () => {
     setCurrentState(initState);
@@ -106,9 +150,32 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   };
 
   const handleTestConfirm = () => { 
-    alert(selectedTest)
-    // setDialogTestingClosed(true);
-    // props.onDismiss();
+    const body = {
+      testservices: selectedTest,
+      appointmentScheduleId: tableSelectedItem[0]._id,
+      height: currentState.height,
+      weight: currentState.weight,
+      heartRate: currentState.heartRate,
+      temperature: currentState.temperature,
+      glucose: currentState.glucose,
+      bloodPressureDiastolic: 0, // viet sau
+      bloodPressureSystolic: 0, // viet sau
+      initialSymptom: currentState.symptom,
+      historyId: props.historyAppointment?._id
+    }
+    dispatch(openLoading());
+    Api.scheduleApi.testingRequest(body).then(data => {
+      if(!data.status) {
+        dispatch(showToastMessage({message: 'Thành công gửi yêu cầu xét nghiệm cho bệnh nhân', type: toastType.succes}));
+        setDialogTestingClosed(true);
+        handleOnDisMissDialog(); // reset when call api send request success
+        props.onDismiss();
+        dispatch(tableRefresh());
+      } else {
+        dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+      }
+    }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error})))
+    .finally(() => dispatch(closeLoading()))
   }
 
   const validateInput = (key, value, messageErr) => {
@@ -153,8 +220,23 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     validateInput(key, value, messageErr)
   }
 
-  const firstStep = (): JSX.Element => {
+  const onRenderTestResult = (item: ITestResult) => {
+    return (
+      <div className="content-section">
+        <div className="content-test-result">
+          <div className="content-test-result-title">
+            <div className="content-test-result-service">{TestList[item.service]}</div>
+            <DefaultButton className="content-test-result-download">
+              Kết quả <Icon iconName= 'Installation' />
+            </DefaultButton>
+          </div>
+          <div className="content-test-result-reason">{item.reason}</div>
+        </div>
+      </div>
+    )
+  }
 
+  const firstStep = (): JSX.Element => {
     return (
       <>
         <div className="section">
@@ -255,10 +337,15 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
             </div>
           </div>
         </div>
-        {testResult.length > 0 && <div className="section">
-          <div className="header-section">Kết quả xét nghiệm</div>
-          <div className="content-section"></div>
-        </div>}
+        {
+          // (props.testresult || []).length > 0 && 
+            <div className="section">
+              <div className="header-section">Kết quả xét nghiệm</div>
+                {
+                  testsMock.map(item => onRenderTestResult(item))
+                }
+            </div>
+        }
         <div className="section">
           <div className="header-section">Kết luận</div>
           <div className="content-section">
@@ -283,7 +370,6 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const secondStep = (): JSX.Element => {
-
     return (
       <>
         <div className="section">
@@ -318,9 +404,52 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     }
   }
 
+  const handleTestingBtn = () => {
+    dispatch(openLoading());
+    Api.scheduleApi.getAllTestService().then(data => {
+      if(!data.status) {
+        const results = (data.data as any[]).map(e => {
+          return {
+            key: e._id,
+            displayName: TestList[e.service],
+          }
+        })
+        setServiceTest(results);
+        setDialogTestingClosed(false)
+      } else {
+        dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+      }
+    }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => dispatch(closeLoading()));
+  }
+
+  const disableNextBtn = (): boolean => {
+    let result = true;
+    if (errorMessage.height === ""
+      && errorMessage.weight === ""
+      && errorMessage.heartRate === ""
+      && errorMessage.temperature === ""
+      && errorMessage.glucose === ""
+      && errorMessage.bloodPressure === ""
+      && errorMessage.note === ""
+      && errorMessage.symptom === ""
+      //
+      && currentState.height !== ""
+      && currentState.weight !== ""
+      && currentState.heartRate !== ""
+      && currentState.temperature !== ""
+      && currentState.glucose !== ""
+      && currentState.bloodPressure !== ""
+      && currentState.note !== ""
+      && currentState.symptom !== ""
+    ) {
+      result = false
+    }
+    return result
+  }
+
   const renderFooter = (): JSX.Element => {
-    const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={() => setDialogTestingClosed(false)}/>
-    const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext}/>
+    const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn}/>
+    const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext} disabled={disableNextBtn()}/>
     const backButton = <DefaultButton text="Quay lại" onClick={handleBack} />
     const submitButton = <PrimaryButton text="Hoàn thành" onClick={handleSubmit}/>
     const onbroadingButton = <PrimaryButton text="Yêu cầu nhập viện" onClick={() => setDialogOnbroadingClosed(false)}/>
@@ -362,13 +491,14 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     return(
         <>
         {
-            TestList.map((item) => (
+            servicedTest.map((item) => (
                 <Checkbox
                     key={item.key}
-                    label={item.text}
+                    label={item.displayName}
                     onChange={(ev, checked) => {
                         handleChangeCheckTest(item.key);
                     }}
+                    className="testing-request-dialog"
                 />
             ))
         }
@@ -407,14 +537,14 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
           {renderTestList()}
           <DialogFooter>
               <DefaultButton text='Hủy' onClick={() => setDialogTestingClosed(true)} />
-              <PrimaryButton text='Xác nhận' onClick={() => handleTestConfirm()} />
+              <PrimaryButton text='Xác nhận' onClick={handleTestConfirm} disabled={selectedTest.length === 0} />
           </DialogFooter>
       </Dialog>
       {/*  */}
       <Dialog
         hidden={dialogOnbroadingClosed}
         onDismiss={() => setDialogOnbroadingClosed(true)}
-        dialogContentProps={{ title: 'Xác nhận cho bệnh nhân nhập viện' }}
+        dialogContentProps={{ title: `Xác nhận yêu cầu bệnh nhân ${tableSelectedItem[0]?.fullname || ""} nhập viện` }}
         modalProps={{ isBlocking: true }}
         
       >

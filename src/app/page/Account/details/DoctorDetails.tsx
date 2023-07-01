@@ -15,20 +15,21 @@ import { doctorPosition, doctorRank } from 'src/model/doctorModel';
 import { useParams } from 'react-router-dom';
 
 const DoctorDetails = () => {
-    const { role, username, info } = useSelector((state: RootState) => state.user);
     const [editmode, setEditmode] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
     const dispatch = useDispatch();
     const { tableSelectedItem } = useSelector((state: RootState) => state.currentSelected);
+    const account = tableSelectedItem[0];
 
     const [departmentList, setDepartmentList] = useState<IDropdownOption[]>([]);
     const [department, setDepartment] = useState<string>("");
     const [rank, setRank] = useState<string>();
     const [position, setPosition] = useState<string>();
 
-    const { id } = useParams();
+    const { id: userId } = useParams();
 
     const getDepartment = () => {
+        dispatch(openLoading());
         Api.departmentApi.getAllDepartment().then(data => {
           const list: IDropdownOption[] = [];
           data.data.map((item) => {
@@ -41,19 +42,23 @@ const DoctorDetails = () => {
         }).catch(err => {
             const { message } = err.response.data;
             dispatch(showToastMessage({message: message, type: toastType.error}));
-        })
-      }
+        }).finally(() => dispatch(closeLoading()))
+    }
     
       useEffect(() => {
-            dispatch(openLoading());
             getDepartment();
+            getDepartment();
+            setTimeout(() => {
+                dispatch(closeLoading())
+              }, 3000);
+          
+        getDepartment();
             setTimeout(() => {
                 dispatch(closeLoading())
               }, 3000);
           
       },[])
 
-    const account = tableSelectedItem[0];
 
     const information: IInfomationGridItem[] = [
         {
@@ -62,9 +67,37 @@ const DoctorDetails = () => {
             type: InputType.DisText,
         },
         {
-            label: 'Tên đăng nhập',
-            value: username,
-            type: InputType.DisText
+          label: 'Khoa',
+          value: editmode ? department : account?.departmentName,
+          type: InputType.Dropdown,
+          option: departmentList,
+          onChange: (option: IDropdownOption) => {
+              setErrorMessage(undefined)
+              setDepartment(option.key as string)
+          },
+          errorMessage: errorMessage?.department
+      },
+        {
+            label: 'Học vấn',
+            value: editmode ? rank : Convert.getDoctorRank(account?.rank),
+            type: InputType.Dropdown,
+            option: doctorRank,
+            onChange: (option: IDropdownOption) => {
+                setErrorMessage(undefined)
+                setRank(option.key as string)
+            },
+            errorMessage: errorMessage?.doctorRank
+        },
+        {
+            label: 'Chức vụ',
+            value: editmode ? position : Convert.getDoctorPosition(account?.position),
+            type: InputType.Dropdown,
+            option: doctorPosition,
+            onChange: (option: IDropdownOption) => {
+                setErrorMessage(undefined)
+                setPosition(option.key as string)
+            },
+            errorMessage: errorMessage?.doctorPosition
         },
         {
             label: 'Giới tính',
@@ -96,46 +129,12 @@ const DoctorDetails = () => {
             value: account?.identification,
             type: InputType.DisText
         },
-        {
-            label: 'Khoa',
-            value: editmode ? department : account?.departmentName,
-            type: InputType.Dropdown,
-            option: departmentList,
-            onChange: (option: IDropdownOption) => {
-                setErrorMessage(undefined)
-                setDepartment(option.key as string)
-            },
-            errorMessage: errorMessage?.department
-        },
-        {
-            label: 'Học vấn',
-            value: editmode ? rank : Convert.getDoctorRank(account?.rank),
-            type: InputType.Dropdown,
-            option: doctorRank,
-            onChange: (option: IDropdownOption) => {
-                setErrorMessage(undefined)
-                setRank(option.key as string)
-            },
-            errorMessage: errorMessage?.doctorRank
-        },
-        {
-            label: 'Chức vụ',
-            value: editmode ? position : Convert.getDoctorPosition(account?.position),
-            type: InputType.Dropdown,
-            option: doctorPosition,
-            onChange: (option: IDropdownOption) => {
-                setErrorMessage(undefined)
-                setPosition(option.key as string)
-            },
-            errorMessage: errorMessage?.doctorPosition
-        }
     ]
 
     const renderViewInfo = () => {
         return (
             <>
                 <Stack className='bottom-detail-info'>
-                    <Stack style={{ marginBottom: 10, fontWeight: 600 }}>Thông tin chi tiết</Stack>
                     <InfomationGridComponent
                         isEdit={editmode}
                         isDataLoaded={true}
@@ -147,16 +146,30 @@ const DoctorDetails = () => {
     }
 
     const handleClickSave = () => {
-
+      const body = {
+        userId: userId,
+        position: position,
+        rank: rank,
+        departmentId: department
+      }
+      dispatch(openLoading());
+      Api.accountApi.changeInfoDoctorByAdmin(body).then(data => {
+        const errorMessage = (data as any).message;
+        let typeToast = toastType.error;
+        if(!data.status) {
+          setEditmode(false);
+        }
+        dispatch(showToastMessage({message: errorMessage, type: typeToast}))
+      }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => {
+        dispatch(closeLoading());
+      });
     };
-
-    const getInfomationInRedux = () => { }
 
     return (
         <div className='wrapper-table-content'>
             <Stack className='account-profile'>
                 <Stack className='profile-header'>
-                    <Stack>Hồ sơ người dùng</Stack>
+                    <Stack>Hồ sơ chi tiết</Stack>
                     {
                         !editmode &&
                         <DefaultButton text='Sửa' iconProps={{ iconName: 'Edit' }}
@@ -174,13 +187,10 @@ const DoctorDetails = () => {
                         {
                             editmode &&
                             <Stack className='footer-button' horizontal>
-                                <PrimaryButton text='Lưu' onClick={() => {
-                                    handleClickSave();
-                                }}
+                                <PrimaryButton text='Lưu' onClick={handleClickSave}
                                 />
                                 <DefaultButton text='Hủy' onClick={() => {
                                     setEditmode(false);
-                                    getInfomationInRedux()
                                 }}
                                 />
                             </Stack>

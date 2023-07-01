@@ -71,17 +71,24 @@ export enum TypeAppointmentSchedule {
     khamThuong,
     khamTheoBHYT,
     khamTheoChiDinh,
-  }
+}
+
+export const MappingTypeAppointmentSchedule = {
+  [TypeAppointmentSchedule.khamTheoYeuCau]: 'Khám theo yêu cầu',
+  [TypeAppointmentSchedule.khamThuong]: 'Khám thường',
+  [TypeAppointmentSchedule.khamTheoBHYT]: 'Khám theo BHYT',
+  [TypeAppointmentSchedule.khamTheoChiDinh]: 'Khám theo chỉ định',
+}
 
 export enum TypeOfTest {
-    SinhHoa,
-    DongMau,
-    HuyetHoc,
-    NuocTieu,
-    SieuAm,
-    DienTim,
-    XQuang,
-    CTScanner
+  sinhHoa,
+  dongMau,
+  huyetHoc,
+  nuocTieu,
+  sieuAm,
+  dienTim,
+  chupXQuang,
+  chupCT
 }
 
 export enum TableType {

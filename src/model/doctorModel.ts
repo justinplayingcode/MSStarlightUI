@@ -60,37 +60,13 @@ export const appointmentTypeList: IDropdownOption[] = [
     }
 ]
 
-export const TestList = [
-    {
-        key: TypeOfTest.SinhHoa,
-        text: 'Sinh Hóa'
-    },
-    {
-        key: TypeOfTest.DongMau,
-        text: 'Đông máu'
-    },
-    {
-        key: TypeOfTest.HuyetHoc,
-        text: 'Huyết học'
-    },
-    {
-        key: TypeOfTest.NuocTieu,
-        text: 'Nước tiểu'
-    },
-    {
-        key: TypeOfTest.SieuAm,
-        text: 'Siêu âm'
-    },
-    {
-        key: TypeOfTest.DienTim,
-        text: 'Điện tim'
-    },
-    {
-        key: TypeOfTest.XQuang,
-        text: 'X-Quang'
-    },
-    {
-        key: TypeOfTest.CTScanner,
-        text: 'CT-Scanner'
-    },
-]
+export const TestList = {
+  [TypeOfTest.sinhHoa]: "Xét nghiệm sinh hóa",
+  [TypeOfTest.dongMau]: "Xét nghiệm đông máu",
+  [TypeOfTest.huyetHoc]: "Xét nghiệm máu",
+  [TypeOfTest.nuocTieu]: "Xét nghiệm nước tiểu",
+  [TypeOfTest.sieuAm]: "Siêu âm",
+  [TypeOfTest.dienTim]: "Điện tâm đồ (Điện tim)",
+  [TypeOfTest.chupXQuang]: "Chụp X quang",
+  [TypeOfTest.chupCT]: "Chụp cắt lớp vi tính (CT)",
+}
