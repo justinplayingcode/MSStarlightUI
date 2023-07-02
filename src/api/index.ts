@@ -15,6 +15,7 @@ const api = {
     createDoctor: '/account/registerdoctor',
     getAll: '/account/getall',
     changeInfoDoctorByAdmin: '/account/changeinfodoctor',
+    getInfoDetail: '/account/detail',
     
     //healthcare
     getPatientByInsurance: '/healthcare/searchinsurance', // change
@@ -81,7 +82,8 @@ const accountApi = {
     createPatient: (reqbody) => {
         return apiClient.post(api.createPatient, reqbody)
     },
-    changeInfoDoctorByAdmin: (reqbody) => apiClient.put(api.changeInfoDoctorByAdmin, reqbody)
+    changeInfoDoctorByAdmin: (reqbody) => apiClient.put(api.changeInfoDoctorByAdmin, reqbody),
+    getInfoDetail: (queryString) => apiClient.get(`${api.getInfoDetail}?id=${queryString}`)
 }
 
 const cureProcessApi = {    

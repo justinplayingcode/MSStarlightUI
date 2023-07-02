@@ -28,8 +28,8 @@ import { MainPanel } from "src/app/common/Uniformpanel";
 import { LoadingDot, LoadingInComing } from "src/app/common/loading";
 import DoctorAppointment from "../../DoctorAppointments";
 import PasswordChange from "../../PasswordChange";
-import PatientDetails from "../../Account/details/PatientDetails";
-import DoctorDetails from "../../Account/details/DoctorDetails";
+import PatientDetails from "../../DetailsUser/PatientDetails";
+import DoctorDetails from "../../DetailsUser/DoctorDetails";
 interface LayoutOwnProps {
     page: string;
     permission: number[];

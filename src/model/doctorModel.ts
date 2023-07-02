@@ -20,9 +20,17 @@ export const doctorRank: IDropdownOption[] = [
     },
     {
         key: `${DoctorRank.none}`,
-        text: 'Không'
+        text: 'Bác sĩ'
     },
 ]
+
+export const mappingDoctorRank = {
+  [DoctorRank.thacSi]: 'Thạc sĩ',
+  [DoctorRank.tienSi]: 'Tiến sĩ',
+  [DoctorRank.PGSTS]: 'Phó Giáo sư, Tiến sĩ',
+  [DoctorRank.GSTS]: 'Giáo sư, Tiến sĩ',
+  [DoctorRank.none]: 'Bác sĩ',
+}
 
 export const doctorPosition: IDropdownOption[] = [
     {
@@ -38,6 +46,12 @@ export const doctorPosition: IDropdownOption[] = [
         text: 'Không'
     },
 ]
+
+export const mappingDoctorPosition = {
+  [DoctorPosition.dean]: 'Trưởng Khoa',
+  [DoctorPosition.viceDean]: 'Phó Khoa',
+  [DoctorPosition.none]: 'Không',
+}
 
 export const appointmentTypeList: IDropdownOption[] = [
     {

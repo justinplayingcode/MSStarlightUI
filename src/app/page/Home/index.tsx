@@ -1,13 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { openLoading, closeLoading, setInfoUser } from "src/redux/reducers";
 import './index.scss'
 import { accountRole } from "model";
 import { Convert } from "utils";
-import Api from "src/api";
 import { RootState } from "src/redux/store";
-import image from "image";
-import { basicKeyValueRender, tooltipPlainText } from "src/utils/utils";
+import { basicKeyValueRender } from "src/utils/utils";
 import DoctorManagementChart from "./components/adminChart/doctormanagement";
 import OnBoardingChart from "./components/adminChart/onboardingpermonth";
 import PatientManagementChart from "./components/adminChart/patientmanagement";
