@@ -39,7 +39,7 @@ function PatientAccount() {
       commandBar.push({
         key: 'edit',
         text: 'Thông tin bệnh nhân',
-        iconProps: { iconName: 'ProfileSearch' },
+        iconProps: { iconName: 'ContactInfo' },
         onClick: () => { navigate(`/patient-management/patient-details/${tableSelectedItem[0]?.userId}`) },
       });
       commandBar.push({

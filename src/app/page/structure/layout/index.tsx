@@ -30,6 +30,7 @@ import DoctorAppointment from "../../DoctorAppointments";
 import PasswordChange from "../../PasswordChange";
 import PatientDetails from "../../DetailsUser/PatientDetails";
 import DoctorDetails from "../../DetailsUser/DoctorDetails";
+import DoctorInDepartment from "../../Speciality/DoctorInDepartment";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -182,6 +183,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 break;
             case pageConstant.LAYOUT_DOCTORAPPOINTMENT:
                 content = <DoctorAppointment/>
+                break;
+            case pageConstant.LAYOUT_SPECIALITY_DOCTOR:
+                content = <DoctorInDepartment/>
                 break;
             default:
                 content = <></>

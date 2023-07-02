@@ -45,7 +45,18 @@ export const routeMapping : {[key: string]: IRouteItem} = {
         key: 'route-speciality',
         text: 'Quản lý các khoa',
         url: '/speciality',
-        // parentKeys:["route-home"]
+    },
+    SpeciallityDoctors: {
+      key: 'route-speciality-doctors',
+      text: 'Danh sách bác sĩ',
+      url: '/speciality/doctors',
+      parentKeys: ['route-speciality'],
+    },
+    SpeciallityDoctor: {
+      key: 'route-speciality-doctors-details',
+      text: 'Thông tin bác sĩ',
+      url: '/speciality/doctors/details',
+      parentKeys: ['route-speciality']
     },
     TotalCureProcess: {
         key: 'route-cure',
@@ -64,20 +75,16 @@ export const routeMapping : {[key: string]: IRouteItem} = {
         url: '/cure/appointment',
         parentKeys:["route-cure"]
     },
-
-
     CureHistory: {
         key: 'route-schedulehistory',
         text: 'Lịch sử khám bệnh',
         url: '/schedulehistory',
     },
-
     Appointment:{
         key: 'route-make-appointment',
         text: 'Đặt lịch khám',
         url: '/make-appointment',
     },
-
     Diseases: {
         key: 'route-diseases',
         text: 'Các loại bệnh',
@@ -88,7 +95,6 @@ export const routeMapping : {[key: string]: IRouteItem} = {
         text: 'Danh sách thuốc',
         url: '/medication',
     },
-
     News: {
         key: 'route-news',
         text: 'Thông tin, tư vấn',
@@ -112,8 +118,6 @@ export const routeMapping : {[key: string]: IRouteItem} = {
         url: '/news/newsreview',
         parentKeys:["route-news"]
     }
-
-
 }
 
 export const getRouteItemByKey = (routeKey: string) => {
