@@ -1,26 +1,27 @@
 import { DefaultButton, IDropdownOption, PrimaryButton, Stack } from '@fluentui/react';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import "./index.scss"
-import { InfomationGridComponent } from 'src/app/common';
+import { Avatar, InfomationGridComponent } from 'src/app/common';
 import { IInfomationGridItem, InputType } from 'src/app/common/InfomationGrid';
 import { Convert } from 'utils';
 import { useDispatch } from 'react-redux';
 import Api from 'api';
 import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
-import { toastType } from 'src/model/enum';
+import { accountRole, toastType } from 'src/model/enum';
 import { Dictionary } from '@reduxjs/toolkit';
-import { doctorPosition, doctorRank } from 'src/model/doctorModel';
-import { useParams } from 'react-router-dom';
+import { doctorPosition, doctorRank, mappingDoctorPosition, mappingDoctorRank } from 'src/model/doctorModel';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AvatarSize } from 'src/app/common/Avatar/avatar';
 
 const DoctorDetails = () => {
     const [editmode, setEditmode] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
     const dispatch = useDispatch();
-    const { tableSelectedItem } = useSelector((state: RootState) => state.currentSelected);
-    const account = tableSelectedItem[0];
-
+    const navigate = useNavigate();
+    const { role } = useSelector((state: RootState) => state.user);
+    const [currentItem, setCurrentItem] = useState<any>({});
     const [departmentList, setDepartmentList] = useState<IDropdownOption[]>([]);
     const [department, setDepartment] = useState<string>("");
     const [rank, setRank] = useState<string>();
@@ -44,31 +45,44 @@ const DoctorDetails = () => {
             dispatch(showToastMessage({message: message, type: toastType.error}));
         }).finally(() => dispatch(closeLoading()))
     }
-    
-      useEffect(() => {
-            getDepartment();
-            getDepartment();
-            setTimeout(() => {
-                dispatch(closeLoading())
-              }, 3000);
-          
-        getDepartment();
-            setTimeout(() => {
-                dispatch(closeLoading())
-              }, 3000);
-          
-      },[])
 
+    useEffect(() => {
+      getInfo();
+    }, [])
+    
+    useEffect(() => {
+      if(editmode) {
+        getDepartment();
+      }
+    },[editmode])
+
+    const getInfo = () => {
+      dispatch(openLoading());
+      Api.accountApi.getInfoDetail(userId).then(data => {
+        if(data.status) {
+          dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+          navigate(-1);
+        } else {
+          setCurrentItem(data.data);
+          setRank(`${data.data?.rank}`);
+          setPosition(`${data.data?.position}`);
+          setDepartment(data.data?.departmentId)
+        }
+      }).catch(() => {
+          dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+          navigate(-1);
+        }).finally(() => dispatch(closeLoading()))
+    }
 
     const information: IInfomationGridItem[] = [
         {
             label: 'Họ và tên',
-            value: account?.fullname,
+            value: currentItem?.fullname,
             type: InputType.DisText,
         },
         {
           label: 'Khoa',
-          value: editmode ? department : account?.departmentName,
+          value: editmode ? department : currentItem?.department,
           type: InputType.Dropdown,
           option: departmentList,
           onChange: (option: IDropdownOption) => {
@@ -76,10 +90,10 @@ const DoctorDetails = () => {
               setDepartment(option.key as string)
           },
           errorMessage: errorMessage?.department
-      },
+        },
         {
             label: 'Học vấn',
-            value: editmode ? rank : Convert.getDoctorRank(account?.rank),
+            value: editmode ? rank : mappingDoctorRank[rank],
             type: InputType.Dropdown,
             option: doctorRank,
             onChange: (option: IDropdownOption) => {
@@ -90,7 +104,7 @@ const DoctorDetails = () => {
         },
         {
             label: 'Chức vụ',
-            value: editmode ? position : Convert.getDoctorPosition(account?.position),
+            value: editmode ? position : mappingDoctorPosition[position],
             type: InputType.Dropdown,
             option: doctorPosition,
             onChange: (option: IDropdownOption) => {
@@ -101,32 +115,32 @@ const DoctorDetails = () => {
         },
         {
             label: 'Giới tính',
-            value: Convert.convertGender(account?.gender),
+            value: Convert.convertGender(currentItem?.gender),
             type: InputType.DisText,
         },
         {
             label: 'Ngày sinh',
-            value: account?.dateOfBirth,
+            value: currentItem?.dateOfBirth,
             type: InputType.DisText
         },
         {
             label: 'Số điện thoại',
-            value: account?.phonenumber,
+            value: currentItem?.phonenumber,
             type: InputType.DisText,
         },
         {
             label: 'Địa chỉ',
-            value: account?.address,
+            value: currentItem?.address,
             type: InputType.DisText,
         },
         {
             label: 'Email',
-            value: account?.email,
+            value: currentItem?.email,
             type: InputType.DisText,
         },
         {
             label: 'Căn cước công dân',
-            value: account?.identification,
+            value: currentItem?.identification,
             type: InputType.DisText
         },
     ]
@@ -135,6 +149,18 @@ const DoctorDetails = () => {
         return (
             <>
                 <Stack className='bottom-detail-info'>
+                    <div className='bottom-detail-info-avatar'>
+                      <Avatar size={AvatarSize.SuperLarge} avatar_scr={currentItem?.avatar} isRound={true} />
+                      {
+                        (!editmode && role === accountRole.Admin) &&
+                        <DefaultButton text='Sửa' iconProps={{ iconName: 'Edit' }}
+                            onClick={() => {
+                                setEditmode(true);
+                            }}
+                        />
+                    }
+                    </div>
+                    <Stack style={{ marginBottom: 10, fontWeight: 600 }}>Thông tin liên hệ</Stack>
                     <InfomationGridComponent
                         isEdit={editmode}
                         isDataLoaded={true}
@@ -154,12 +180,13 @@ const DoctorDetails = () => {
       }
       dispatch(openLoading());
       Api.accountApi.changeInfoDoctorByAdmin(body).then(data => {
-        const errorMessage = (data as any).message;
-        let typeToast = toastType.error;
         if(!data.status) {
+          dispatch(showToastMessage({message: 'Cập nhật thông tin thành công', type: toastType.succes}));
+          getInfo();
           setEditmode(false);
+        } else {
+          dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))
         }
-        dispatch(showToastMessage({message: errorMessage, type: typeToast}))
       }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => {
         dispatch(closeLoading());
       });
@@ -168,17 +195,6 @@ const DoctorDetails = () => {
     return (
         <div className='wrapper-table-content'>
             <Stack className='account-profile'>
-                <Stack className='profile-header'>
-                    <Stack>Hồ sơ chi tiết</Stack>
-                    {
-                        !editmode &&
-                        <DefaultButton text='Sửa' iconProps={{ iconName: 'Edit' }}
-                            onClick={() => {
-                                setEditmode(true);
-                            }}
-                        />
-                    }
-                </Stack>
                 <Stack className="profile-info" tokens={{ childrenGap: 16 }}>
                     <Stack className='profile-detail-info'>
                         <Stack className='detail-info-content'>
