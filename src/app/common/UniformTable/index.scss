@@ -116,9 +116,7 @@
                 .name-viewed {
                     text-decoration: none;
                     color: #605E5C;
-                    &:hover{
-                      text-decoration: underline;
-                    }
+                    font-weight: bold;
                   }
             }
         }

@@ -1,5 +1,4 @@
 import { Dropdown, IDropdownOption, TextField } from '@fluentui/react';
-import * as React from 'react'
 import { UniformTable } from 'src/app/common';
 import Api from 'api';
 import { ApiStatus, DepartmentType, TableType, toastType } from 'src/model/enum';
@@ -10,11 +9,10 @@ import { RootState } from 'src/redux/store';
 import './index.scss'
 import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import VerticalLinearStepper from 'src/app/common/stepper/VerticalStepper';
+import VerticalLinearStepper from 'src/app/common/Stepper/VerticalStepper';
 import { Convert } from 'utils';
 import { doctorInDepartmentColumns } from '../components/table/doctorInDepartmentColumn';
 import CustomDatePicker from 'src/app/common/Datepicker';
-import { useNavigate } from 'react-router-dom';
 
 const AppointmentStep = ({ ...props }: any) => {
     const dispatch = useDispatch();

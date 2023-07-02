@@ -4,9 +4,9 @@ import { LinkButton } from "src/app/common/Link";
 export const departmentManagementColumns: IColumn[] = [
     {
         key: 'departmentName',
-        name: 'Khoa Chuyên Môn',
-        minWidth: 200,
-        maxWidth: 350,
+        name: 'Tên khoa',
+        minWidth: 120,
+        maxWidth: 220,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.departmentName}</span>;
@@ -15,12 +15,12 @@ export const departmentManagementColumns: IColumn[] = [
     {
         key: 'totalDoctors',
         name: 'Số lượng bác sĩ',
-        minWidth: 210,
-        maxWidth: 350,
+        minWidth: 100,
+        maxWidth: 150,
         isRowHeader: true,
         isResizable: true,
         onRender: (item) => {
-            return <LinkButton onClick={() => alert('navigate to /tablebenhnhannamvien')}>{item.totalDoctors}</LinkButton>;
+            return <LinkButton navigate={`/speciality/doctors/${item?._id}`}>{item.totalDoctors}</LinkButton>;
         },
     },
 ]

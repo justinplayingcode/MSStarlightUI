@@ -1,6 +1,8 @@
 .speciality-wrapper {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
 }

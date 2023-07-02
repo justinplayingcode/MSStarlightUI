@@ -30,7 +30,7 @@ function DoctorAcount() {
             command.push({
                 key: 'edit',
                 text: 'Thông tin bác sĩ',
-                iconProps: { iconName: 'ProfileSearch' },
+                iconProps: { iconName: 'ContactInfo' },
                 onClick: () => { navigate(`/doctor-management/doctor-details/${tableSelectedItem[0]?.userId}`) },
             });
             command.push({
