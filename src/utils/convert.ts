@@ -107,13 +107,13 @@ export default class Convert {
     }
 
     public static colorDonutChart = [
-      '#ED0736',
-      '#197B64',
-      '#1569E5',
-      '#EF990E',
-      '#8C0A54',
-      '#FFF600',
-      '#F1155D',
+      'RGBA( 0, 191, 255, 1 )',
+      'RGBA( 176, 224, 230, 1 )',
+      'RGBA( 0, 0, 205, 1 )',
+      'RGBA( 135, 206, 250, 1 )',
+      'RGBA( 72, 61, 139, 1 )',
+      'RGBA( 95, 158, 160, 1 )',
+      'RGBA( 75, 0, 130, 1 )',
       '#360443',
       '#ABACFF',
       '#99FFFF',

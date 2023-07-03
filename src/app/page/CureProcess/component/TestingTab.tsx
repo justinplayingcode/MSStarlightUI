@@ -46,11 +46,11 @@ const TestingTab = () => {
           confirm={() => {
               setConfirmClosed(true)
               setIsStartProgress(true)
+              // call api get list tests
           }}
         />
         <TestingForm
-          // isOpen={isStartProgress}
-          isOpen={true}
+          isOpen={isStartProgress}
           onDismiss={() => setIsStartProgress(false)}
         />
       </div>

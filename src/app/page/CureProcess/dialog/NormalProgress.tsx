@@ -1,4 +1,4 @@
-import { Checkbox, DefaultButton, Dialog, DialogFooter, Icon, IconButton, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
+import { Checkbox, DefaultButton, Dialog, DialogFooter, IPersonaProps, Icon, IconButton, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
@@ -50,7 +50,7 @@ interface INormalProgressPorops {
   isOpen: boolean,
   onDismiss: () => void,
   historyAppointment: any;
-  testresult: any[];
+  testresult: ITestResult[];
 }
 
 interface IErrorMessage {
@@ -112,6 +112,8 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   const [currentState, setCurrentState] = useState<ICurrentState>(initState);
   const [errorMessage, setErrorMessage] = useState<IErrorMessage>(initErrorMessage);
   const [servicedTest, setServiceTest] = useState<any[]>([]);
+  const [diseases, setDiseases] = useState<IPersonaProps[]>([]);
+  const [medication, setMedication] = useState<IPersonaProps[]>([]);
 
   useEffect(() => {
     const healthIndicator = props.historyAppointment?.healthIndicator;
@@ -126,19 +128,25 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       note: "",
       note2: "",
     }
-    setCurrentState(updateState)
+    setCurrentState(updateState);
   }, [])
+
+  useEffect(() => {
+    if(props.isOpen === true) {
+      setCurrentStep(0);
+    }
+  }, [props.isOpen])
 
   const handleOnDisMissDialog = () => {
     setCurrentState(initState);
     setErrorMessage(initErrorMessage)
-    setCurrentStep(0);
+    // setCurrentStep(0);
   }
 
   const handleSubmit = () => {
     // alert("submit");
-    handleOnDisMissDialog() // reset when call api send request success
     props.onDismiss();
+    handleOnDisMissDialog() // reset when call api send request success
   }
 
   const handleNext = () => {
@@ -237,6 +245,18 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const firstStep = (): JSX.Element => {
+    const mappingValues = (datas) => {
+      const values = datas.map(e => {
+        return {
+          displayName: e.diseasesName,
+          text: e.diseasesName,
+          secondaryText: e.symptom,
+          id: e._id,
+          prevention: e.prevention
+        }
+      })
+      return values
+    }
     return (
       <>
         <div className="section">
@@ -338,21 +358,28 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
           </div>
         </div>
         {
-          // (props.testresult || []).length > 0 && 
+          (props.testresult || []).length > 0 && 
             <div className="section">
               <div className="header-section">Kết quả xét nghiệm</div>
                 {
-                  testsMock.map(item => onRenderTestResult(item))
+                  props.testresult.map(item => onRenderTestResult(item))
                 }
             </div>
         }
         <div className="section">
           <div className="header-section">Kết luận</div>
           <div className="content-section">
-            <div className="content-section-input width50per">
-              {/* <Picker/> */}
+            <div className="content-section-input width100per">
+            <Picker
+              label={"Chuẩn đoán bệnh: "}
+              onChangeCallBack={(value) => setDiseases(value)}
+              value={diseases}
+              integrateItems={Api.diseasesApi.pickerDiseases}
+              mappingValues={mappingValues}
+              placeholder={"Nhập tên bệnh"}
+            />
             </div>
-            <div className="content-section-input width50per">
+            <div className="content-section-input width100per">
               <TextField 
                 label="Ghi chú" 
                 required 
@@ -370,15 +397,34 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const secondStep = (): JSX.Element => {
+    const mappingValues = (datas) => {
+      const values = datas.map(e => {
+        return {
+          displayName: e.name,
+          text: e.name,
+          secondaryText: e.designation,
+          id: e._id,
+          usage: e.usage
+        }
+      })
+      return values
+    }
     return (
       <>
         <div className="section">
           <div className="header-section">Kê đơn thuốc</div>
-          <div className="content-section">
-            <div className="content-section-input width50per">
-              {/* <Picker/> */}
+          <div className="content-section medication">
+            <div className="content-section-input width100per">
+              <Picker
+                label={"Chọn thuốc: "}
+                onChangeCallBack={(value) => setMedication(value)}
+                value={medication}
+                integrateItems={Api.medicationApi.pickerMedication}
+                mappingValues={mappingValues}
+                placeholder="Nhập tên thuốc"
+              />
             </div>
-            <div className="content-section-input width50per">
+            <div className="content-section-input width100per">
               <TextField 
                 label="Ghi chú" 
                 required 
@@ -424,27 +470,27 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
 
   const disableNextBtn = (): boolean => {
     let result = true;
-    if (errorMessage.height === ""
-      && errorMessage.weight === ""
-      && errorMessage.heartRate === ""
-      && errorMessage.temperature === ""
-      && errorMessage.glucose === ""
-      && errorMessage.bloodPressure === ""
-      && errorMessage.note === ""
-      && errorMessage.symptom === ""
-      //
-      && currentState.height !== ""
-      && currentState.weight !== ""
-      && currentState.heartRate !== ""
-      && currentState.temperature !== ""
-      && currentState.glucose !== ""
-      && currentState.bloodPressure !== ""
-      && currentState.note !== ""
-      && currentState.symptom !== ""
-    ) {
-      result = false
-    }
-    return result
+    // if (errorMessage.height === ""
+    //   && errorMessage.weight === ""
+    //   && errorMessage.heartRate === ""
+    //   && errorMessage.temperature === ""
+    //   && errorMessage.glucose === ""
+    //   && errorMessage.bloodPressure === ""
+    //   && errorMessage.note === ""
+    //   && errorMessage.symptom === ""
+    //   //
+    //   && currentState.height !== ""
+    //   && currentState.weight !== ""
+    //   && currentState.heartRate !== ""
+    //   && currentState.temperature !== ""
+    //   && currentState.glucose !== ""
+    //   && currentState.bloodPressure !== ""
+    //   && currentState.note !== ""
+    //   && currentState.symptom !== ""
+    // ) {
+    //   result = false
+    // }
+    return false
   }
 
   const renderFooter = (): JSX.Element => {
@@ -524,8 +570,6 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
           {renderFooter()}
         </div>
       </div>
-
-      {/*  */}
       <Dialog
           hidden={dialogTestingClosed}
           onDismiss={() => setDialogTestingClosed(true)}
@@ -540,7 +584,6 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
               <PrimaryButton text='Xác nhận' onClick={handleTestConfirm} disabled={selectedTest.length === 0} />
           </DialogFooter>
       </Dialog>
-      {/*  */}
       <Dialog
         hidden={dialogOnbroadingClosed}
         onDismiss={() => setDialogOnbroadingClosed(true)}
