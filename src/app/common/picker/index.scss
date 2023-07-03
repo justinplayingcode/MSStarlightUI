@@ -8,6 +8,10 @@
     margin-bottom: 8px;
   }
 
+  .ms-BasePicker-text {
+    padding: 4px;
+  }
+
   .ms-BasePicker-input {
     font-size: 16px;
     height: 36px;
@@ -29,6 +33,10 @@
       max-width: 100%;
       width: 100%;
       border: 1px #ccc solid;
+    }
+
+    .ms-Persona-details {
+      padding: 4px 8px;
     }
   }
 }

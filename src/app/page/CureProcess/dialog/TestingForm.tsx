@@ -1,15 +1,18 @@
-import { Modal, PrimaryButton, TextField } from '@fluentui/react';
+import { Label, Modal, PrimaryButton, TextField } from '@fluentui/react';
 import * as React from 'react'
 import "./index.scss";
 import { basicKeyValueRender } from 'src/utils/utils';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { Convert } from 'utils';
+import { useEffect, useState } from 'react';
+import { TestList } from 'src/model/doctorModel';
 
 interface ITest{
-    title: string;
-    reason: string;
-    detail?: File;
+  service: string;
+  reason: string;
+  detailFile: File;
+  errorMessage: string;
 }
 
 export interface ITestingProps{
@@ -19,14 +22,64 @@ export interface ITestingProps{
 
 export const TestingForm = ({...props}: ITestingProps) => {
     const {tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
-    const [fileLists, setFileList] = React.useState<File[]>([]);
+    const [tests, setTests] = React.useState<ITest[]>([]);
 
-
+    useEffect(() => {
+      // call api get all tests
+      const tests = [
+        {
+          service: TestList[0],
+          reason: '',
+          detailFile: undefined,
+          errorMessage: ''
+        },
+        {
+          service: TestList[2],
+          reason: '',
+          detailFile: undefined,
+          errorMessage: ''
+        },
+        {
+          service: TestList[2],
+          reason: '',
+          detailFile: undefined,
+          errorMessage: ''
+        }
+      ]
+      setTests(tests);
+    }, [])
     
     const handleSubmit = () => {
       // alert("submit");
       //handleOnDisMissDialog() // reset when call api send request success
       props.onDismiss();
+    }
+
+    const _onchange = (value: string, messageErr, index) => {
+      const newTests = tests.slice();
+      newTests[index].reason = value;
+      newTests[index].errorMessage = value.length === 0 ? "Vui lòng không để trống" : "";
+      setTests(newTests);
+    }
+
+    const renderTestResult = (item: ITest, index) => {
+
+      return (
+        <div className='test-section'>
+          <Label>{item.service}</Label>
+          <div className='test-resutl'>
+            <TextField 
+              multiline
+              placeholder="kết quả xét nghiệm"
+              errorMessage={item.errorMessage}
+              value={item.reason}
+              onChange={(_, value) => _onchange(value, "Vui lòng không để trống", index)}
+            />
+            {item.errorMessage === "" ? <div className='no-error'></div> : undefined}
+            {/* upload file */}
+          </div>
+        </div>
+      )
     }
 
     const renderContent = () => {
@@ -46,7 +99,7 @@ export const TestingForm = ({...props}: ITestingProps) => {
           <div className="section">
             <div className="header-section">Thông tin xét nghiệm</div>
             <div className="content-section">
-
+              {tests.map((item, index) => renderTestResult(item, index))}
             </div>
           </div>
         </>

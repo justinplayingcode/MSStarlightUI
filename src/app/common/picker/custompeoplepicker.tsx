@@ -1,5 +1,5 @@
 import { IPersonaProps, IPersonaStyles, Label } from '@fluentui/react';
-import { IBasePickerSuggestionsProps, ListPeoplePicker, PeoplePickerItemSuggestion } from '@fluentui/react/lib/Pickers';
+import { IBasePickerSuggestionsProps, ListPeoplePicker, NormalPeoplePicker, PeoplePickerItemSuggestion } from '@fluentui/react/lib/Pickers';
 import './index.scss'
 
 const personaStyles: Partial<IPersonaStyles> = {
@@ -51,7 +51,7 @@ const CustomPeoplePicker = ({ ...props }: ICustomPeoplePickerProps) => {
   return (
     <div className='custompeoplepicker'>
       <Label className='custompeoplepicker-label'>{props.label}</Label>
-      <ListPeoplePicker
+      <NormalPeoplePicker
         selectedItems={props.selectedPeople}
         onResolveSuggestions={props.fetchSuggestions}
         onChange={handlePeoplePickerChange}

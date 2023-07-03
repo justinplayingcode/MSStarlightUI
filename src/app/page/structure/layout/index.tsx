@@ -197,19 +197,14 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         };
         return (
             <div id="layout-wrapper">
-                <SideBar/>
-                <Stack className="main-wrapper">
-                    <UniformHeader/>
-                    <Stack className="main-content">
-                        {/* <Stack className="header-breadcrumb">
-                            <Location/>
-                        </Stack> */}
-                        {/* <div className="main-content-wrapper"> */}
-                          {content} 
-                        {/* </div> */}
-                    </Stack>
+              <SideBar/>
+              <Stack className="main-wrapper">
+                <UniformHeader/>
+                <Stack className="main-content">
+                  {content} 
                 </Stack>
-                <MainPanel/>
+              </Stack>
+              <MainPanel/>
             </div>
         )
     }

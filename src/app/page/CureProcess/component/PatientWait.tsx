@@ -22,7 +22,7 @@ const PatientWait = () => {
     const [isStartProgress, setIsStartProgress] = React.useState<boolean>(false);
 
     const [historyAppointment, setHistoryAppointment] = React.useState<any>(undefined);
-    const [testResult, setTestResult] = React.useState<any>(undefined);
+    const [testResult, setTestResult] = React.useState<any>([]); // call api để get các test réult
 
     
     const getNonBoardingPatientCommandBar = () => {
@@ -94,8 +94,8 @@ const PatientWait = () => {
                 confirm={confirmActionDialog}
             />
             <NormalProgress
-              // isOpen={isStartProgress} 
-              isOpen={true} 
+              isOpen={isStartProgress} 
+              // isOpen={true} 
               onDismiss={() => setIsStartProgress(false)}
               historyAppointment={historyAppointment}
               testresult={testResult}
