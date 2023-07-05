@@ -7,55 +7,112 @@ import { RootState } from 'src/redux/store';
 import { Convert } from 'utils';
 import { useEffect, useState } from 'react';
 import { TestList } from 'src/model/doctorModel';
+import { useDispatch } from 'react-redux';
+import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
+import Api from 'api';
+import { toastType } from 'src/model/enum';
 
 interface ITest{
   service: string;
   reason: string;
-  detailFile: File;
+  serviceId: string;
+  detailsFileCloud: File;
   errorMessage: string;
+  resultId: string;
 }
 
 export interface ITestingProps{
-  isOpen: boolean,
-  onDismiss: () => void,
+  isOpen: boolean;
+  onDismiss: () => void;
+  scheduleId: any;
 }
 
 export const TestingForm = ({...props}: ITestingProps) => {
     const {tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
     const [tests, setTests] = React.useState<ITest[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
       // call api get all tests
-      const tests = [
-        {
-          service: TestList[0],
-          reason: '',
-          detailFile: undefined,
-          errorMessage: ''
-        },
-        {
-          service: TestList[2],
-          reason: '',
-          detailFile: undefined,
-          errorMessage: ''
-        },
-        {
-          service: TestList[2],
-          reason: '',
-          detailFile: undefined,
-          errorMessage: ''
-        }
-      ]
-      setTests(tests);
-    }, [])
-    
-    const handleSubmit = () => {
-      // alert("submit");
-      //handleOnDisMissDialog() // reset when call api send request success
+      if(props.isOpen) {
+        dispatch(openLoading());
+        Api.scheduleApi.allTestRequest({ appointmentScheduleId: props.scheduleId }).then(data => {
+          if(!data.status) {
+            let arr: any[] = data.data;
+            let tests = arr.map((item) => {
+              return {
+                service: TestList[item.service],
+                serviceId: item.serviceId,
+                resultId: item._id,
+                errorMessage: "",
+                reason: "",
+                detailsFileCloud: undefined
+              }
+            })
+            setTests(tests);
+          } else {
+            dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+            handleDismis();
+          }
+        }).catch(() => {
+          dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+          handleDismis();
+        }).finally(() => dispatch(closeLoading()));
+      }
+      //   {
+      //     service: TestList[0],
+      //     reason: '',
+      //     detailFile: undefined,
+      //     errorMessage: ''
+      //   },
+      //   {
+      //     service: TestList[2],
+      //     reason: '',
+      //     detailFile: undefined,
+      //     errorMessage: ''
+      //   },
+      //   {
+      //     service: TestList[2],
+      //     reason: '',
+      //     detailFile: undefined,
+      //     errorMessage: ''
+      //   }
+      // ]
+      // setTests(tests);
+    }, [props.isOpen])
+
+    const handleDismis = () => {
+      //reset state
       props.onDismiss();
     }
+    
+    const handleSubmit = () => {
+      if(tests.some(item => item.reason === "")) {
+        setTests(tests.map((item) => {
+          return {
+            ...item,
+            errorMessage: item.reason !== "" ? "" : "Vui lòng không để trống"
+          }
+        }))
+        return;
+      }
 
-    const _onchange = (value: string, messageErr, index) => {
+      const body = {
+        appointmentScheduleId: tableSelectedItem[0]._id,
+        testResults: tests.map(item => {
+          return {
+            id: item.resultId,
+            reason: item.reason,
+            detailsFileCloud: item.detailsFileCloud
+          }
+        })
+      }
+      console.log(JSON.stringify(body))
+      //handleOnDisMissDialog() // reset when call api send request success
+      // props.onDismiss();
+    }
+
+    const _onchange = (value: string, index) => {
       const newTests = tests.slice();
       newTests[index].reason = value;
       newTests[index].errorMessage = value.length === 0 ? "Vui lòng không để trống" : "";
@@ -71,9 +128,9 @@ export const TestingForm = ({...props}: ITestingProps) => {
             <TextField 
               multiline
               placeholder="kết quả xét nghiệm"
-              errorMessage={item.errorMessage}
               value={item.reason}
-              onChange={(_, value) => _onchange(value, "Vui lòng không để trống", index)}
+              errorMessage={item.errorMessage}
+              onChange={(_, value) => _onchange(value, index)}
             />
             {item.errorMessage === "" ? <div className='no-error'></div> : undefined}
             {/* upload file */}

@@ -589,7 +589,6 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
         onDismiss={() => setDialogOnbroadingClosed(true)}
         dialogContentProps={{ title: `Xác nhận yêu cầu bệnh nhân ${tableSelectedItem[0]?.fullname || ""} nhập viện` }}
         modalProps={{ isBlocking: true }}
-        
       >
         <DialogFooter>
               <DefaultButton text='Hủy' onClick={() => setDialogOnbroadingClosed(true)} />

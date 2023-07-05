@@ -43,6 +43,7 @@ const ApproveDialog = (props: IApproveDialogProps) => {
   const handleSave = () => {
     const reqbody = {
       id: tableSelectedItem[0]._id,
+      patientId: tableSelectedItem[0].patientId,
       approve: props.dialogType === ApproveDialogType.accept
     }
     dispatch(openLoading());
