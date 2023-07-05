@@ -10,7 +10,7 @@ import { TestingForm } from "../dialog/TestingForm";
 
 const TestingTab = () => {
   const { info, role } = useSelector((state: RootState) => state.user);
-  const {tableSelectedCount} = useSelector((state: RootState) => state.currentSelected);
+  const {tableSelectedCount, tableSelectedItem} = useSelector((state: RootState) => state.currentSelected);
 
   const [isConfirmClosed, setConfirmClosed] = React.useState<boolean>(true);
   const [isStartProgress, setIsStartProgress] = React.useState<boolean>(false);
@@ -46,12 +46,13 @@ const TestingTab = () => {
           confirm={() => {
               setConfirmClosed(true)
               setIsStartProgress(true)
-              // call api get list tests
+              // call api change status testing to process
           }}
         />
         <TestingForm
           isOpen={isStartProgress}
           onDismiss={() => setIsStartProgress(false)}
+          scheduleId={tableSelectedItem[0]?._id}
         />
       </div>
     )
