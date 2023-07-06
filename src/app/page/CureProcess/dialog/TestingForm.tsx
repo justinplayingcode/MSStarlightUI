@@ -96,20 +96,25 @@ export const TestingForm = ({...props}: ITestingProps) => {
         }))
         return;
       }
-
       const body = {
         appointmentScheduleId: tableSelectedItem[0]._id,
         testResults: tests.map(item => {
           return {
             id: item.resultId,
             reason: item.reason,
-            detailsFileCloud: item.detailsFileCloud
+            detailsFileCloud: ""
           }
         })
       }
-      console.log(JSON.stringify(body))
-      //handleOnDisMissDialog() // reset when call api send request success
-      // props.onDismiss();
+      dispatch(openLoading());
+      Api.scheduleApi.doneTesting(body).then(data => {
+        if(!data.status) {
+          dispatch(showToastMessage({message: 'Gửi két quả thành công', type: toastType.succes}));
+          handleDismis();
+        } else {
+          dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+        }
+      }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => dispatch(closeLoading()));
     }
 
     const _onchange = (value: string, index) => {

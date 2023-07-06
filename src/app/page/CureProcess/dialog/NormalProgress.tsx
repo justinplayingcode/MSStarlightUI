@@ -1,4 +1,4 @@
-import { Checkbox, DefaultButton, Dialog, DialogFooter, IPersonaProps, Icon, IconButton, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
+import { Checkbox, ChoiceGroup, DefaultButton, Dialog, DialogFooter, IChoiceGroupOption, IPersonaProps, Icon, IconButton, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
@@ -7,7 +7,7 @@ import { basicKeyValueRender } from "src/utils/utils";
 import { Convert } from "utils";
 import Picker from "src/app/common/Picker";
 import { TestList } from "src/model/doctorModel";
-import { TypeOfTest, toastType } from "src/model/enum";
+import { Onboarding, TypeOfTest, toastType } from "src/model/enum";
 import { useDispatch } from "react-redux";
 import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import Api from "api";
@@ -75,6 +75,7 @@ interface ICurrentState {
   symptom: string;
   note: string;
   note2: string;
+  onBoarding: Onboarding;
 }
 
 const initErrorMessage: IErrorMessage = {
@@ -99,6 +100,7 @@ const initState: ICurrentState = {
   symptom: "",
   note: "",
   note2: "",
+  onBoarding: 0
 }
 
 function NormalProgress({ ...props }: INormalProgressPorops) {
@@ -127,6 +129,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       symptom: healthIndicator?.symptom || "",
       note: "",
       note2: "",
+      onBoarding: 0
     }
     setCurrentState(updateState);
   }, [])
@@ -139,14 +142,9 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
 
   const handleOnDisMissDialog = () => {
     setCurrentState(initState);
+    setDiseases([]);
+    setMedication([]);
     setErrorMessage(initErrorMessage)
-    // setCurrentStep(0);
-  }
-
-  const handleSubmit = () => {
-    // alert("submit");
-    props.onDismiss();
-    handleOnDisMissDialog() // reset when call api send request success
   }
 
   const handleNext = () => {
@@ -169,7 +167,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       bloodPressureDiastolic: 0, // viet sau
       bloodPressureSystolic: 0, // viet sau
       initialSymptom: currentState.symptom,
-      historyId: props.historyAppointment?._id
+      historyId: props.historyAppointment?._id,
     }
     dispatch(openLoading());
     Api.scheduleApi.testingRequest(body).then(data => {
@@ -493,17 +491,26 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     return false
   }
 
+  const handleSubmit = () => {
+    const body = {
+      ...currentState,
+      medication: medication.map(item => item.id),
+      diseases: diseases.map(item => item.id)
+    }
+    console.log(body);
+    // props.onDismiss();
+    // handleOnDisMissDialog() reset when call api send request success
+  }
+
   const renderFooter = (): JSX.Element => {
     const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn}/>
     const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext} disabled={disableNextBtn()}/>
     const backButton = <DefaultButton text="Quay lại" onClick={handleBack} />
-    const submitButton = <PrimaryButton text="Hoàn thành" onClick={handleSubmit}/>
-    const onbroadingButton = <PrimaryButton text="Yêu cầu nhập viện" onClick={() => setDialogOnbroadingClosed(false)}/>
+    const submitButton = <PrimaryButton text="Hoàn thành" onClick={() => { setDialogOnbroadingClosed(false); onChangeCurrentState("onBoarding", 1) }}/>
 
     switch (currentStep) {
       case 0:
         return <>
-          {onbroadingButton}
           {testDialogButton}
           {nextButton}
         </>
@@ -550,7 +557,25 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
         }
         </>
     )
-}
+  }
+
+  const onChangeOnboarding = (_, option) => {
+    onChangeCurrentState("onBoarding", Number(option.key))
+  }
+
+  const contentOnBoarding = () => {
+    const options: IChoiceGroupOption[] = [
+      { key: (Onboarding.none).toString(), text: 'Không' },
+      { key: (Onboarding.inpatient).toString(), text: 'Nội trú' },
+      { key: (Onboarding.outpatient).toString(), text: 'Ngoại trú' },
+    ];
+
+    return (
+      <>
+        <ChoiceGroup defaultSelectedKey={(Onboarding.none).toString()} options={options} onChange={onChangeOnboarding} label={`Yêu cầu bệnh nhân ${tableSelectedItem[0]?.fullname || ""} nhập viện`} required={true} />
+      </>
+    )
+  }
 
   return (  
     <Modal
@@ -586,13 +611,13 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       </Dialog>
       <Dialog
         hidden={dialogOnbroadingClosed}
-        onDismiss={() => setDialogOnbroadingClosed(true)}
-        dialogContentProps={{ title: `Xác nhận yêu cầu bệnh nhân ${tableSelectedItem[0]?.fullname || ""} nhập viện` }}
+        onDismiss={() => { setDialogOnbroadingClosed(true); onChangeCurrentState("onBoarding", 0)}}
         modalProps={{ isBlocking: true }}
       >
+        {contentOnBoarding()}
         <DialogFooter>
-              <DefaultButton text='Hủy' onClick={() => setDialogOnbroadingClosed(true)} />
-              <PrimaryButton text='Xác nhận' onClick={() => alert("confirm")} />
+              <DefaultButton text='Hủy' onClick={() => { setDialogOnbroadingClosed(true); onChangeCurrentState("onBoarding", 0)}} />
+              <PrimaryButton text='Xác nhận' onClick={handleSubmit} />
           </DialogFooter>
       </Dialog>
     </Modal>
