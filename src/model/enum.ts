@@ -130,3 +130,9 @@ export enum ScheduleRequestStatus {
   accpect,
   reject
 }
+
+export enum Onboarding {
+  none,
+  inpatient,
+  outpatient,
+}
