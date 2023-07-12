@@ -22,8 +22,7 @@ const PatientWait = () => {
     const [isStartProgress, setIsStartProgress] = React.useState<boolean>(false);
 
     const [historyAppointment, setHistoryAppointment] = React.useState<any>(undefined);
-    const [testResult, setTestResult] = React.useState<any>([]); // call api để get các test réult
-
+    const [testResult, setTestResult] = React.useState<any>([]);
     
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
@@ -49,22 +48,22 @@ const PatientWait = () => {
     }
 
     const confirmActionDialog = () => {
-      // dispatch(openLoading());
-      // Api.scheduleApi.startScheduleNormal({id: tableSelectedItem[0]?._id}).then(data => {
-      //   if(!data.status) {
-      //     setHistoryAppointment(data.data.history);
-      //     setTestResult(data.data.testResult);
-      //     dispatch(showToastMessage({message: 'Bắt đầu khám bệnh cho bệnh nhân', type: toastType.info}));
+      dispatch(openLoading());
+      Api.scheduleApi.startScheduleNormal({id: tableSelectedItem[0]?._id}).then(data => {
+        if(!data.status) {
+          setHistoryAppointment(data.data.history);
+          setTestResult(data.data.testResult);
+          dispatch(showToastMessage({message: 'Bắt đầu khám bệnh cho bệnh nhân', type: toastType.info}));
           setConfirmClosed(true);
           setIsStartProgress(true);
-      //   } else {
-      //     dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
-      //     setConfirmClosed(true);
-      //   }
-      // }).catch(() => {
-      //   dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
-      //   setConfirmClosed(true);
-      // }).finally(() => dispatch(closeLoading()))
+        } else {
+          dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+          setConfirmClosed(true);
+        }
+      }).catch(() => {
+        dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+        setConfirmClosed(true);
+      }).finally(() => dispatch(closeLoading()))
     }
 
     return(
@@ -75,16 +74,12 @@ const PatientWait = () => {
                 commandBarItems={getNonBoardingPatientCommandBar()} 
                 tableType={TableType.scheduleNormal}
             />
-            
-            {/* dialog when add patient to wait queue */}
             <StartProcessDialog 
                 isDialogClosed={isDialogClosed} 
                 closeDialog={() => {
                     setDialogClosed(true);
                 }}             
             />
-
-            {/* dialog confirm start the cure process */}
             <ConfirmDialog
                 title="Xác nhận khám cho bệnh nhân"
                 isDialogClosed={isConfirmClosed}
@@ -95,7 +90,6 @@ const PatientWait = () => {
             />
             <NormalProgress
               isOpen={isStartProgress} 
-              // isOpen={true} 
               onDismiss={() => setIsStartProgress(false)}
               historyAppointment={historyAppointment}
               testresult={testResult}

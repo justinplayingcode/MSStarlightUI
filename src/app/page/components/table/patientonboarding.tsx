@@ -3,21 +3,31 @@ import { tooltipPlainText } from "src/utils/utils";
 import { Convert } from "utils";
 
 export const patientonboardingtColumns: IColumn[] = [
-    {
+  {
+    key: 'onBoardingDate',
+    name: 'Ngày nhập viện',
+    minWidth: 80,
+    maxWidth: 110,
+    isResizable: true,
+    onRender: (item) => {
+        return <span>{item?.onBoardingDate}</span>;
+    },
+  },  
+  {
       key: 'departmentName',
       name: 'Khoa',
       minWidth: 80,
-      maxWidth: 150,
+      maxWidth: 110,
       isResizable: true,
       onRender: (item) => {
-          return <span>{item.departmentName}</span>;
+          return <span>{item?.departmentName}</span>;
       },
     },
     {
         key: 'fullname',
         name: 'Họ và tên',
-        minWidth: 150,
-        maxWidth: 250,
+        minWidth: 100,
+        maxWidth: 200,
         isResizable: true,
         onRender: (item) => {
             return tooltipPlainText(item.fullname)

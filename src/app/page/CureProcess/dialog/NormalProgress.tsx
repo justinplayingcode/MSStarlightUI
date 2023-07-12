@@ -4,41 +4,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useState, useEffect } from "react";
 import { basicKeyValueRender } from "src/utils/utils";
-import { Convert } from "utils";
+import { Convert, Validate } from "utils";
 import Picker from "src/app/common/Picker";
 import { TestList } from "src/model/doctorModel";
 import { Onboarding, TypeOfTest, toastType } from "src/model/enum";
 import { useDispatch } from "react-redux";
 import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import Api from "api";
-
-const testsMock: ITestResult[] = [
-  {
-    service: 0,
-    reason: "The Masked Singer VietNam Ca Sĩ Mặt Nạ là cuộc tranh tài âm nhạc giữa ca sĩ nghệ sĩ hàng đầu Việt Nam. Khi tham gia tranh tài tại chương trình, họ sẽ được hóa thân thành những nhân vật mascot với tính cách đặc trưng riêng và được giữ kín danh phận tuyệt đối cho đến khi bị loại. The Masked Singer VietNam ",
-    detailFile: "https"
-  },
-  {
-    service: 2,
-    reason: "Binh thuong",
-    detailFile: "https"
-  },
-  {
-    service: 2,
-    reason: "Binh thuong",
-    detailFile: "https"
-  },
-  {
-    service: 2,
-    reason: "Binh thuong",
-    detailFile: "https"
-  },
-  {
-    service: 2,
-    reason: "Binh thuong",
-    detailFile: "https"
-  }
-]
 
 interface ITestResult {
   service: TypeOfTest,
@@ -105,6 +77,7 @@ const initState: ICurrentState = {
 
 function NormalProgress({ ...props }: INormalProgressPorops) {
   const { tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
+  const { info } = useSelector((state: RootState) => state.user)
   const dispatch = useDispatch();
 
   const [dialogTestingClosed, setDialogTestingClosed] = useState<boolean>(true);
@@ -156,6 +129,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   };
 
   const handleTestConfirm = () => { 
+    const bloodPressureAray = currentState.bloodPressure.split("/");
     const body = {
       testservices: selectedTest,
       appointmentScheduleId: tableSelectedItem[0]._id,
@@ -164,8 +138,8 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       heartRate: currentState.heartRate,
       temperature: currentState.temperature,
       glucose: currentState.glucose,
-      bloodPressureDiastolic: 0, // viet sau
-      bloodPressureSystolic: 0, // viet sau
+      bloodPressureDiastolic: bloodPressureAray[1], 
+      bloodPressureSystolic: bloodPressureAray[0],
       initialSymptom: currentState.symptom,
       historyId: props.historyAppointment?._id,
     }
@@ -199,7 +173,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
         setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
         break;
       case 'bloodPressure':
-        setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.bloodPressure(value) ? messageErr : ""})
         break;
       case 'glucose':
         setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
@@ -279,7 +253,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--" 
                 errorMessage={errorMessage.height}
                 value={currentState.height}
-                onChange={(_, value) => _onchange("height" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("height" ,value, "Chưa đúng định dạng số")}
               />
               <div className="unit">cm</div>
             </div>
@@ -291,7 +265,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--"
                 errorMessage={errorMessage.weight}
                 value={currentState.weight}
-                onChange={(_, value) => _onchange("weight" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("weight" ,value, "Chưa đúng định dạng số")}
               />
               <div className="unit">kg</div>
             </div>
@@ -303,7 +277,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--"
                 errorMessage={errorMessage.heartRate}
                 value={currentState.heartRate}
-                onChange={(_, value) => _onchange("heartRate" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("heartRate" ,value, "Chưa đúng định dạng số")}
               />
               <div className="unit">bpm</div>
             </div>
@@ -315,7 +289,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--"
                 errorMessage={errorMessage.temperature}
                 value={currentState.temperature}
-                onChange={(_, value) => _onchange("temperature" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("temperature" ,value, "Chưa đúng định dạng số")}
               />
               <div className="unit">°C</div>
             </div>
@@ -327,7 +301,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--"
                 errorMessage={errorMessage.bloodPressure}
                 value={currentState.bloodPressure}
-                onChange={(_, value) => _onchange("bloodPressure" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("bloodPressure" ,value, "Chưa đúng định dạng, ví dụ: 120/80")}
               />
               <div className="unit">mmHg</div>
             </div>
@@ -339,7 +313,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--"
                 errorMessage={errorMessage.glucose}
                 value={currentState.glucose}
-                onChange={(_, value) => _onchange("glucose" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("glucose" ,value, "Chưa đúng định dạng số")}
               />
               <div className="unit">mg/dl</div>
             </div>
@@ -350,7 +324,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--"
                 errorMessage={errorMessage.symptom}
                 value={currentState.symptom}
-                onChange={(_, value) => _onchange("symptom" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("symptom" ,value, "Chưa đúng định dạng số")}
               />
             </div>
           </div>
@@ -385,7 +359,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 placeholder="--" 
                 errorMessage={errorMessage.note}
                 value={currentState.note}
-                onChange={(_, value) => _onchange("note" ,value, "Chua dung dinh dang")}
+                onChange={(_, value) => _onchange("note" ,value, "Chưa đúng định dạng số")}
               />
             </div>
           </div>
@@ -492,14 +466,38 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const handleSubmit = () => {
+    const bloodPressureAray = currentState.bloodPressure.split("/");
     const body = {
-      ...currentState,
-      medication: medication.map(item => item.id),
-      diseases: diseases.map(item => item.id)
+      id: tableSelectedItem[0]._id,
+      historyId: props.historyAppointment._id,
+      medicationId: medication.map(item => item.id),
+      diagnosis: diseases.map(item => item.id),
+      summary: currentState.note,
+      note: currentState.note2,
+      boardingStatus: currentState.onBoarding,
+      heartRate: currentState.heartRate,
+      temperature: currentState.temperature,
+      bloodPressureSystolic: bloodPressureAray[0],
+      bloodPressureDiastolic: bloodPressureAray[1],
+      height: currentState.height,
+      weight: currentState.weight,
+      glucose: currentState.glucose,
+      patientId: tableSelectedItem[0].patientId,
+      departmentId: info.departmentId
     }
-    console.log(body);
-    // props.onDismiss();
-    // handleOnDisMissDialog() reset when call api send request success
+    dispatch(openLoading());
+    Api.scheduleApi.done(body).then(data => {
+      if(!data.status) {
+        dispatch(showToastMessage({message: 'Hoàn thành khám bệnh cho bệnh nhân', type: toastType.succes}));
+        setDialogOnbroadingClosed(true);
+        props.onDismiss();
+        handleOnDisMissDialog();
+        dispatch(tableRefresh());
+      } else {
+        dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+      }
+    }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error})))
+    .finally(() => dispatch(closeLoading()))
   }
 
   const renderFooter = (): JSX.Element => {
