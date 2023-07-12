@@ -29,5 +29,10 @@ export default class Validate {
         // 10 ki tu
         return value.length === 10;
     }
+
+    public static bloodPressure = (value) => {
+      const regex = new RegExp('^\\d+\\/\\d+$');
+      return regex.test(value);
+    }
 }
 
