@@ -92,7 +92,7 @@ export const Avatar = (props: IAvatarProps) => {
                 >
                     <DefaultButton text="Thông tin tài khoản" onClick={(e) => {
                         setIsCalloutVisible(false)
-                        navigate('/profile')
+                        navigate('/home/profile')
                     }} />
                     <DefaultButton text="Đổi mật khẩu" onClick={(e) => navigate('/change-password')} />
                     <DefaultButton text="Đăng xuất" onClick={handleLogOut} />

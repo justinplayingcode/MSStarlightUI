@@ -14,10 +14,10 @@ export const Location = () => {
             text:'',
             key:''
         };
-        if (routeItem.key !== 'route-home'){
+        // if (routeItem.key !== 'route-home'){
             item.key = routeItem.key;
             item.text = routeItem.text
-        };
+        // };
         
         if (routeItem.url){
             item.onClick = () => {

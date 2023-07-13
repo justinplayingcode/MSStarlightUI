@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface currentSelectedState {
     currentId: string;
-    tableSelectedCount: Number;
+    tableSelectedCount: number;
     tableSelectedItem : any[];
     
     currentSidebar: string;

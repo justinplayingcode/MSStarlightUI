@@ -1,3 +1,3 @@
-# base_ui
+# ĐATN_HOSPITAL_MANAGEMENT_HUST
 
-## yarn run dev
+## yarn dev

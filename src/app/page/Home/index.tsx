@@ -50,7 +50,7 @@ const Home = () => {
             <hr/>
             <div className="infomation">{info?.department}</div>
             <div className="infomation">{Convert.getDoctorPosition(info?.position)}: {info?.fullname}</div>
-            <LinkButton className="details" onClick={() => navigate('/profile')}>Thông tin cá nhân</LinkButton>
+            <LinkButton className="details" onClick={() => navigate('/home/profile')}>Thông tin cá nhân</LinkButton>
           </div>
           <div className="doctor-section">
             <div className="title">Số lịch hẹn khám hôm nay:</div>

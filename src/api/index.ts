@@ -24,6 +24,7 @@ const api = {
     getHistoryMedical: '/healthcare/gethistorymedical',
     getPatientsOnBoarding: '/healthcare/getallpatientonbroading',
     getAllTestService: "/healthcare/alltestservice",
+    getDetailsMedical: "/healthcare/gethistorymedicaldetails",
     
     //department
     getAllDepartment: '/department/getall',
@@ -145,6 +146,7 @@ const scheduleApi = {
 
 const historyMedicalApi = {
   getAllHistoryMedical: (reqbody) => apiClient.post(api.getHistoryMedical, reqbody),
+  getDetails: (queryString) => apiClient.get(`${api.getDetailsMedical}?id=${queryString}`)
 }
 
 const Api = {
