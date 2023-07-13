@@ -1,0 +1,104 @@
+import UniformSection from "src/app/common/Section";
+import "./index.scss"
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { useNavigate, useParams } from "react-router-dom";
+import { accountRole } from "model";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { closeLoading, openLoading, showToastMessage } from "src/redux/reducers";
+import Api from "api";
+import { MappingTypeAppointmentSchedule, toastType } from "src/model/enum";
+import { basicKeyValueRender } from "src/utils/utils";
+import { Convert } from "utils";
+
+function DetailsCureHistory() {
+  const { id: scheduleId } = useParams();
+  const { role } = useSelector((state: RootState) => state.user);
+  const [currentState, setCurrentState] = useState<any>(null);
+  const [testResult, setTestResult] = useState<any[]>([]);
+  const [healthIndicator, setHealthIndicator] = useState<any>(null);
+  const [diseases, setDiseases] = useState<any[]>([]);
+  const [medication, setMedication] = useState<any[]>([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getInformation();
+  }, [])
+
+  const getInformation = () => {
+    dispatch(openLoading());
+    Api.historyMedicalApi.getDetails(scheduleId).then(data => {
+      if(data.status) {
+        dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+        navigate(-1);
+      } else {
+        setCurrentState(data.data);
+      }
+    }).catch(() => {
+      dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+      navigate(-1);
+    }).finally(() => dispatch(closeLoading()))
+  }
+
+  const renderInfoSchedule = (): JSX.Element => {
+    return (
+      <>
+        {basicKeyValueRender("Ngày khám", currentState?.appointmentDate)}
+        {basicKeyValueRender("Kiểu khám", MappingTypeAppointmentSchedule[currentState?.typeAppointment])}
+        {basicKeyValueRender("Khoa", currentState?.departmentName)}
+      </>
+    )
+  }
+
+  const renderInfoPatient = (): JSX.Element => {
+    return (
+      <>
+        {basicKeyValueRender("Họ và tên", currentState?.fullname)}
+        {basicKeyValueRender("Ngày sinh", currentState?.dateOfBirth)}
+        {basicKeyValueRender("Giới tính", Convert.convertGender(currentState?.gender))}
+        {basicKeyValueRender("Địa chỉ", currentState?.address)}
+        {basicKeyValueRender("Số điện thoại", currentState?.phonenumber)}
+        {basicKeyValueRender("Email", currentState?.email)}
+        {basicKeyValueRender("Số thẻ BHYT", currentState?.insurance)}
+        {basicKeyValueRender("Số CCCD/CMND", currentState?.identification)}
+      </>
+    )
+  }
+
+  const renderInfoDoctor = (): JSX.Element => {
+    return (
+      <>
+        {basicKeyValueRender("Họ và tên", currentState?.fullname)}
+      </>
+    )
+  }
+
+  return (
+    <div className='wrapper-content cure-details'>
+      <div className='wrapper-content-inner cure-details-wrapper'>
+        <div className="cure-details-header">Thông tin khám bệnh</div>
+        <div className="cure-details-content">
+          <UniformSection
+            headerTitle="Thông tin lịch khám"
+            elementInner={renderInfoSchedule()}
+            className="cure-details-content-item"
+          />
+          <UniformSection
+            headerTitle={role === accountRole.Doctor ? "Thông tin bệnh nhân" : "Thông tin bác sĩ"}
+            elementInner={role === accountRole.Doctor ? renderInfoPatient() : renderInfoDoctor()}
+            className="cure-details-content-item"
+          />
+          <UniformSection
+            headerTitle="Tình trạng sức khỏe"
+            elementInner={<>ádasdsded</>}
+            className="cure-details-content-item"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default DetailsCureHistory;

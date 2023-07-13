@@ -1,14 +1,16 @@
-import { Stack } from '@fluentui/react';
+import { ICommandBarItemProps } from '@fluentui/react';
 import Api from 'api';
-import * as React from 'react'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { UniformTable } from 'src/app/common';
-import { MappingTypeAppointmentSchedule, TableType, TypeAppointmentSchedule, accountRole } from 'src/model/enum';
+import { MappingTypeAppointmentSchedule, TableType, accountRole } from 'src/model/enum';
 import { RootState } from 'src/redux/store';
 import { Convert } from 'utils';
 
 const CureHistory = () => {
     const { role } = useSelector((state: RootState) => state.user);
+    const { tableSelectedItem, tableSelectedCount } = useSelector((state: RootState) => state.currentSelected);
+    const navigate = useNavigate();
 
     const cureHistoryColumns =[
       {
@@ -103,14 +105,20 @@ const CureHistory = () => {
       },
     ];
 
-    const cureHistoryCommanBar = [
-        {
-            key: 'details',
-            text: 'Chi tiết',
-            iconProps: { iconName: 'ComplianceAudit' },
-            onClick: () => { alert('Chi tiết') },
-        },
-    ]
+    const cureHistoryCommanBar = (): ICommandBarItemProps[] => {
+      const commandBar: ICommandBarItemProps[] = [];
+      if(tableSelectedCount > 0) {
+        commandBar.push(
+            {
+              key: 'details',
+              text: 'Chi tiết',
+              iconProps: { iconName: 'ComplianceAudit' },
+              onClick: () => navigate(`/schedulehistory/details/${tableSelectedItem[0]?._id}`),
+          }
+        )
+      }
+      return commandBar
+    }
 
     const tableType = ():TableType => {
       return role === accountRole.Doctor ? TableType.historyMedicalOfDoctor : TableType.historyMedicalOfPatient
@@ -120,7 +128,7 @@ const CureHistory = () => {
         <div className='wrapper-table-content'>
             <UniformTable
                 columns={cureHistoryColumns}  
-                commandBarItems={cureHistoryCommanBar}
+                commandBarItems={cureHistoryCommanBar()}
                 integrateItems={Api.historyMedicalApi.getAllHistoryMedical}
                 tableType={tableType()}            
             />

@@ -18,7 +18,6 @@ const UniformHeader = (props: UniformHeaderProps) => {
             <Location/>
           </div>
           <div className="header-icon-group" >
-              {/* <IconButton className="header-icon" iconProps={{ iconName: 'Ringer' }} /> */}
               <IconButton className="header-icon" iconProps={{ iconName: 'Help' }} />
               <Avatar
                   avatar_scr={info?.avatar}

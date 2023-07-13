@@ -288,7 +288,7 @@ const Profile = () => {
         <div className='wrapper-table-content'>
             <Stack className='user-profile'>
                 <Stack className='profile-header'>
-                    <Stack>Hồ sơ người dùng</Stack>
+                    <Stack>Thông tin cơ bản</Stack>
                     {
                     !editmode &&
                         <DefaultButton text='Sửa' iconProps={{iconName: 'Edit'}}

@@ -1,0 +1,34 @@
+.cure-details {
+  .cure-details-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .cure-details-header {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f8384;
+      border-bottom: 1px solid #e4e4e4;
+    }
+    .cure-details-content {
+      padding: 16px;
+
+      .cure-details-content-item {
+        margin-bottom: 16px;
+        .uniform-section-content {
+          .basicInfoRender {
+            width: 40%;
+            min-width: 250px;
+            .key {
+              font-weight: normal !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

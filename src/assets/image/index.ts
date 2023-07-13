@@ -6,7 +6,6 @@ import bloodPressure from "./logo/blood-pressure-removebg-preview.png"
 import glucose from "./logo/glucose-meter.png"
 import weight from "./logo/weight.png"
 import height from "./logo/height.png"
-import adminlogo from "./logo/adminlogo.png"
 import userdoctor from "./logo/userdoctor.png"
 import userpatient from "./logo/userpatient.png"
 import dataNotFound from "./logo/dataNotFound.png"
@@ -18,7 +17,6 @@ import success from "./logo/success.png"
 const Image = {
     info, warning, error, success, 
     logo,
-    adminlogo,
     heartbeat,
     temperature,
     bloodPressure,

@@ -11,8 +11,13 @@ export const routeMapping : {[key: string]: IRouteItem} = {
     Home: {
         key: "route-home",
         text: 'Tổng quát',
-        url: '/',
-        iconName: 'fas-house'
+        url: '/home',
+    },
+    Profile: {
+        key: "route-home-profile",
+        text: 'Hồ sơ cá nhân',
+        url: '/home/profile',
+        parentKeys:["route-home"]
     },
     PatientManagement: {
         key: 'route-patient-management',
@@ -79,6 +84,12 @@ export const routeMapping : {[key: string]: IRouteItem} = {
         key: 'route-schedulehistory',
         text: 'Lịch sử khám bệnh',
         url: '/schedulehistory',
+    },
+    CureHistoryDetails: {
+        key: 'route-schedulehistory-details',
+        text: 'Chi tiết',
+        url: '/schedulehistory/details',
+        parentKeys:["route-schedulehistory"]
     },
     Appointment:{
         key: 'route-make-appointment',

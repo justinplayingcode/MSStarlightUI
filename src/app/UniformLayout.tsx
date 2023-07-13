@@ -47,7 +47,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/login" element={<Login/>} />
                         <Route path="/" element={<Navigate to="/home" replace />} />
                         <Route path="/home" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_HOME}/>} />
-                        <Route path="/profile" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PROFILE}/>} />
+                        <Route path="/home/profile" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PROFILE}/>} />
                         <Route path="/change-password" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PASSWORD_CHANGE} />} />
                         <Route path="/patient-management" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT}/>}/>
                         <Route path="/patient-management/patient-details/:id" element={<Layout permission={this.Auth.admin} page={pageConstant.LAYOUT_ACCOUNT_PATIENT_DETAILS}/>}/>
@@ -59,6 +59,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
                         <Route path="/cure/management" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_CURE_PROCESS}/>} />
                         <Route path="/patient-management-doctor" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_ON_BOARDING}/>} />
                         <Route path="/schedulehistory" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
+                        <Route path="/schedulehistory/details/:id" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY_DETAILS}/>} />
                         <Route path="/make-appointment" element={<Layout permission={this.Auth.patient} page={pageConstant.LAYOUT_APPOINTMENT} />} />
                         <Route path="/cure/appointment" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_DOCTORAPPOINTMENT} />} />
                         <Route path="/diseases" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_DISEASES}/>} />
