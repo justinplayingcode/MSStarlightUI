@@ -25,7 +25,7 @@ export const basicKeyValueRender = (key, value) => {
       style={{display: "flex", justifyContent: "space-between", minWidth: "160px", height: "36px", margin: "0 0 4px 20px"}}
     >
       <div className='key'
-        style={{ width: "30%", minWidth: "132px", backgroundColor: "#dddddd", display: "flex", alignItems: "center", paddingLeft: "8px", fontWeight: "600", fontSize: '16px' }}
+        style={{ width: "30%", minWidth: "132px", backgroundColor: "rgb(243,243,243)", display: "flex", alignItems: "center", paddingLeft: "8px", fontWeight: "600", fontSize: '16px' }}
       >{key}</div>
       <div className='value'
         style={{ width: "60%", display: "flex", alignItems: "center", paddingLeft: "8px", fontSize: '16px'}}
@@ -54,4 +54,22 @@ export const getStatusRequestSchedule = (type: ScheduleRequestStatus) => {
 
   return <span style={{color: colorText}}>{text}</span>
 
+}
+
+export const basicDoubleKeyValueRender = (key, value1, value2) => {
+  return (
+    <div className='basicInfoRender'
+      style={{display: "flex", justifyContent: "space-between", minWidth: "160px", height: "36px", margin: "0 0 4px 20px"}}
+    >
+      <div className='key'
+        style={{ width: "30%", minWidth: "132px", backgroundColor: "rgb(243,243,243)", display: "flex", alignItems: "center", paddingLeft: "8px", fontWeight: "600", fontSize: '16px' }}
+      >{key}</div>
+      <div className='value'
+        style={{ width: "60%", display: "flex", flexDirection: "column", alignItems: "center", paddingLeft: "8px", fontSize: '16px'}}
+      >
+        <div>{value1}</div>
+        <div>{value2}</div>
+      </div>
+    </div>
+  )
 }

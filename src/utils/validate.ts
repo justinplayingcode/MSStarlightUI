@@ -34,5 +34,10 @@ export default class Validate {
       const regex = new RegExp('^\\d+\\/\\d+$');
       return regex.test(value);
     }
+
+    public static isNumber = (value) => {
+      const regex = /^\d+$/;
+      return regex.test(value);
+    }
 }
 

@@ -8,7 +8,7 @@ import { Convert } from 'utils';
 import { useEffect, useState } from 'react';
 import { TestList } from 'src/model/doctorModel';
 import { useDispatch } from 'react-redux';
-import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
+import { closeLoading, openLoading, showToastMessage, tableRefresh } from 'src/redux/reducers';
 import Api from 'api';
 import { toastType } from 'src/model/enum';
 
@@ -33,7 +33,6 @@ export const TestingForm = ({...props}: ITestingProps) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-      // call api get all tests
       if(props.isOpen) {
         dispatch(openLoading());
         Api.scheduleApi.allTestRequest({ appointmentScheduleId: props.scheduleId }).then(data => {
@@ -59,30 +58,10 @@ export const TestingForm = ({...props}: ITestingProps) => {
           handleDismis();
         }).finally(() => dispatch(closeLoading()));
       }
-      //   {
-      //     service: TestList[0],
-      //     reason: '',
-      //     detailFile: undefined,
-      //     errorMessage: ''
-      //   },
-      //   {
-      //     service: TestList[2],
-      //     reason: '',
-      //     detailFile: undefined,
-      //     errorMessage: ''
-      //   },
-      //   {
-      //     service: TestList[2],
-      //     reason: '',
-      //     detailFile: undefined,
-      //     errorMessage: ''
-      //   }
-      // ]
-      // setTests(tests);
     }, [props.isOpen])
 
     const handleDismis = () => {
-      //reset state
+      dispatch(tableRefresh());
       props.onDismiss();
     }
     
@@ -102,7 +81,7 @@ export const TestingForm = ({...props}: ITestingProps) => {
           return {
             id: item.resultId,
             reason: item.reason,
-            detailsFileCloud: ""
+            detailsFileCloud: "",
           }
         })
       }

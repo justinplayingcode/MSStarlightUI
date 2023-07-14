@@ -1,4 +1,4 @@
-import { Checkbox, ChoiceGroup, DefaultButton, Dialog, DialogFooter, IChoiceGroupOption, IPersonaProps, Icon, IconButton, Modal, PrimaryButton, TextField, Toggle } from "@fluentui/react";
+import { Checkbox, ChoiceGroup, DefaultButton, Dialog, DialogFooter, IChoiceGroupOption, IPersonaProps, Icon, Modal, PrimaryButton, TextField } from "@fluentui/react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
@@ -99,13 +99,13 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       temperature: healthIndicator?.temperature || "",
       bloodPressure: !!(healthIndicator?.bloodPressureSystolic && healthIndicator?.bloodPressureDiastoli) ? `${healthIndicator?.bloodPressureSystolic}/${healthIndicator?.bloodPressureDiastolic}` : "",
       glucose: healthIndicator?.glucose || "",
-      symptom: healthIndicator?.symptom || "",
+      symptom: tableSelectedItem[0]?.initialSymptom || "",
       note: "",
       note2: "",
       onBoarding: 0
     }
     setCurrentState(updateState);
-  }, [])
+  }, [props.historyAppointment])
 
   useEffect(() => {
     if(props.isOpen === true) {
@@ -121,6 +121,38 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const handleNext = () => {
+    if(!Validate.isNumber(currentState.height)) {
+      setErrorMessage({ ...errorMessage, height: "Chưa đúng định dạng số" })
+      return;
+    }
+    if(!Validate.isNumber(currentState.weight)) {
+      setErrorMessage({ ...errorMessage, weight: "Chưa đúng định dạng số" })
+      return;
+    }
+    if(!Validate.isNumber(currentState.heartRate)) {
+      setErrorMessage({ ...errorMessage, heartRate: "Chưa đúng định dạng số" })
+      return;
+    }
+    if(!Validate.isNumber(currentState.temperature)) {
+      setErrorMessage({ ...errorMessage, temperature: "Chưa đúng định dạng số" })
+      return;
+    }
+    if(!Validate.isNumber(currentState.glucose)) {
+      setErrorMessage({ ...errorMessage, glucose: "Chưa đúng định dạng số" })
+      return;
+    }
+    if(!Validate.bloodPressure(currentState.bloodPressure)) {
+      setErrorMessage({ ...errorMessage, height: "Chưa đúng định dạng, ví dụ: 120/80" })
+      return;
+    }
+    if(currentState.note.length === 0) {
+      setErrorMessage({ ...errorMessage, note: "Vui lòng không để trống" })
+      return;
+    }
+    if(currentState.symptom.length === 0) {
+      setErrorMessage({ ...errorMessage, symptom: "Vui lòng không để trống" })
+      return;
+    }
     setCurrentStep(currentStep + 1);
   };
 
@@ -161,22 +193,22 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   const validateInput = (key, value, messageErr) => {
     switch(key) {
       case 'height':
-        setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
         break;
       case 'weight':
-        setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
         break;
       case 'heartRate':
-        setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
         break;
       case 'temperature':
-        setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
         break;
       case 'bloodPressure':
         setErrorMessage({ ...errorMessage, [key]: !Validate.bloodPressure(value) ? messageErr : ""})
         break;
       case 'glucose':
-        setErrorMessage({ ...errorMessage, [key]: isNaN(Number(value)) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
         break;
       case 'symptom':
         setErrorMessage({ ...errorMessage, [key]: value.length === 0 ? messageErr : ""})
@@ -250,7 +282,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Chiều cao:" 
                 underlined 
                 required 
-                placeholder="--" 
+                placeholder="..." 
                 errorMessage={errorMessage.height}
                 value={currentState.height}
                 onChange={(_, value) => _onchange("height" ,value, "Chưa đúng định dạng số")}
@@ -262,7 +294,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Cân nặng:" 
                 underlined 
                 required 
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.weight}
                 value={currentState.weight}
                 onChange={(_, value) => _onchange("weight" ,value, "Chưa đúng định dạng số")}
@@ -274,7 +306,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Nhịp tim:" 
                 underlined 
                 required 
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.heartRate}
                 value={currentState.heartRate}
                 onChange={(_, value) => _onchange("heartRate" ,value, "Chưa đúng định dạng số")}
@@ -286,7 +318,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Nhiệt độ:" 
                 underlined 
                 required 
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.temperature}
                 value={currentState.temperature}
                 onChange={(_, value) => _onchange("temperature" ,value, "Chưa đúng định dạng số")}
@@ -298,7 +330,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Huyết áp:" 
                 underlined 
                 required 
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.bloodPressure}
                 value={currentState.bloodPressure}
                 onChange={(_, value) => _onchange("bloodPressure" ,value, "Chưa đúng định dạng, ví dụ: 120/80")}
@@ -310,7 +342,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Đường huyết:" 
                 underlined 
                 required 
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.glucose}
                 value={currentState.glucose}
                 onChange={(_, value) => _onchange("glucose" ,value, "Chưa đúng định dạng số")}
@@ -321,7 +353,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
               <TextField 
                 label="Triệu chứng ban đầu"  
                 underlined
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.symptom}
                 value={currentState.symptom}
                 onChange={(_, value) => _onchange("symptom" ,value, "Chưa đúng định dạng số")}
@@ -356,7 +388,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Ghi chú" 
                 required 
                 multiline
-                placeholder="--" 
+                placeholder="..." 
                 errorMessage={errorMessage.note}
                 value={currentState.note}
                 onChange={(_, value) => _onchange("note" ,value, "Chưa đúng định dạng số")}
@@ -401,7 +433,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
                 label="Ghi chú" 
                 required 
                 multiline
-                placeholder="--"
+                placeholder="..."
                 errorMessage={errorMessage.note2}
                 value={currentState.note2}
                 onChange={(_, value) => onChangeCurrentState("note2" ,value)}
@@ -442,27 +474,27 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
 
   const disableNextBtn = (): boolean => {
     let result = true;
-    // if (errorMessage.height === ""
-    //   && errorMessage.weight === ""
-    //   && errorMessage.heartRate === ""
-    //   && errorMessage.temperature === ""
-    //   && errorMessage.glucose === ""
-    //   && errorMessage.bloodPressure === ""
-    //   && errorMessage.note === ""
-    //   && errorMessage.symptom === ""
-    //   //
-    //   && currentState.height !== ""
-    //   && currentState.weight !== ""
-    //   && currentState.heartRate !== ""
-    //   && currentState.temperature !== ""
-    //   && currentState.glucose !== ""
-    //   && currentState.bloodPressure !== ""
-    //   && currentState.note !== ""
-    //   && currentState.symptom !== ""
-    // ) {
-    //   result = false
-    // }
-    return false
+    if (errorMessage.height === ""
+      && errorMessage.weight === ""
+      && errorMessage.heartRate === ""
+      && errorMessage.temperature === ""
+      && errorMessage.glucose === ""
+      && errorMessage.bloodPressure === ""
+      && errorMessage.note === ""
+      && errorMessage.symptom === ""
+      //
+      && currentState.height !== ""
+      && currentState.weight !== ""
+      && currentState.heartRate !== ""
+      && currentState.temperature !== ""
+      && currentState.glucose !== ""
+      && currentState.bloodPressure !== ""
+      && currentState.note !== ""
+      && currentState.symptom !== ""
+    ) {
+      result = false
+    }
+    return result
   }
 
   const handleSubmit = () => {
@@ -501,8 +533,8 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const renderFooter = (): JSX.Element => {
-    const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn}/>
-    const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext} disabled={disableNextBtn()}/>
+    const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn} disabled={disableNextBtn()}/>
+    const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext}/>
     const backButton = <DefaultButton text="Quay lại" onClick={handleBack} />
     const submitButton = <PrimaryButton text="Hoàn thành" onClick={() => { setDialogOnbroadingClosed(false); onChangeCurrentState("onBoarding", 1) }}/>
 
