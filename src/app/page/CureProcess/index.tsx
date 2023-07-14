@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { useState } from 'react';
-import Tabs, { ITabProps, TabsProps } from 'src/app/common/Tab';
+import Tabs, { ITabProps } from 'src/app/common/Tab';
 import PatientWait from './component/PatientWait';
 import TestingTab from './component/TestingTab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
-import { DepartmentType } from 'src/model/enum';
+import { DepartmentType, TableType } from 'src/model/enum';
 
 const CureProcess = () => {
     const { info } = useSelector((state: RootState) => state.user)
@@ -18,16 +18,25 @@ const CureProcess = () => {
           {
             label: "Chờ khám bệnh",
             index: 0,
-            Component: <PatientWait/>
+            Component: <PatientWait tableType={TableType.scheduleNormal}/>
           },
         );      
 
       if(info?.departmentCode !== DepartmentType.tiepDon){
         tabs.push(
           {
-            label: info?.departmentCode !== DepartmentType.canLamSang ? "Chờ xét nghiệm" : "Đang xét nghiệm",
+            label: info?.departmentCode === DepartmentType.canLamSang ? "Chờ xét nghiệm" : "Đang xét nghiệm",
             index: 1,
             Component: <TestingTab/>
+          }
+        )
+      }
+      if(info?.departmentCode !== DepartmentType.tiepDon && info?.departmentCode !== DepartmentType.canLamSang){
+        tabs.push(
+          {
+            label: "Hoàn thành xét nghiệm",
+            index: 2,
+            Component: <PatientWait tableType={TableType.scheduleDoneParaclinical}/>
           }
         )
       }

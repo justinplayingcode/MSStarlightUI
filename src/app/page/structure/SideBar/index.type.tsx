@@ -58,7 +58,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
       )
     }
 
-    if(role === accountRole.Doctor) {
+    if(role === accountRole.Doctor && departmentCode !== DepartmentType.tiepDon) {
       list.push(
         {
           path: '/patient-management-doctor#tab0',
@@ -72,13 +72,13 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
     }
 
     if(role === accountRole.Doctor) {
-      if( departmentCode! === DepartmentType.tiepDon || departmentCode! === DepartmentType.canLamSang) {
+      if(departmentCode! === DepartmentType.tiepDon || departmentCode! === DepartmentType.canLamSang) {
         list.push(
           {
             path: '/cure/management#tab0',
             state: '/cure/management',
             sidebarProps:{
-              displayText: !!departmentCode && departmentCode === DepartmentType.tiepDon ? 'Đăng ký khám bệnh' : 'Khám bệnh',
+              displayText: departmentCode === DepartmentType.tiepDon ? 'Đăng ký khám bệnh' : 'Khám bệnh',
               icon: <TbStethoscope/>,
             },
           }
@@ -112,7 +112,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
       }
     }
 
-    if(role === accountRole.Doctor || role === accountRole.Patient){
+    if((role === accountRole.Doctor && departmentCode !== DepartmentType.tiepDon)|| role === accountRole.Patient) {
         list.push({
             path: '/schedulehistory',
             state: '/schedulehistory',

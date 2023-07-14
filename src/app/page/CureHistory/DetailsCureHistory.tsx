@@ -48,6 +48,7 @@ function DetailsCureHistory() {
         {basicKeyValueRender("Ngày khám", currentState?.appointmentDate)}
         {basicKeyValueRender("Kiểu khám", MappingTypeAppointmentSchedule[currentState?.typeAppointment])}
         {basicKeyValueRender("Khoa", currentState?.departmentName)}
+        {basicKeyValueRender("Triệu chứng ban đầu", currentState?.initialSymptom)}
       </>
     )
   }
@@ -62,7 +63,7 @@ function DetailsCureHistory() {
         {basicKeyValueRender("Số điện thoại", currentState?.phonenumber)}
         {basicKeyValueRender("Email", currentState?.email)}
         {basicKeyValueRender("Số thẻ BHYT", currentState?.insurance)}
-        {basicKeyValueRender("Số CCCD/CMND", currentState?.identification)}
+        {basicKeyValueRender("CCCD/CMND", currentState?.identification)}
       </>
     )
   }
@@ -73,6 +74,51 @@ function DetailsCureHistory() {
         {basicKeyValueRender("Họ và tên", currentState?.fullname)}
       </>
     )
+  }
+
+  const renderHealthIndicator = (): JSX.Element => {
+    return (
+      <>
+        {basicKeyValueRender("Chiều cao", `${currentState?.healthIndicator?.height} cm`)}
+        {basicKeyValueRender("Cân nặng", `${currentState?.healthIndicator?.weight} kg`)}
+        {basicKeyValueRender("Nhiệt độ", `${currentState?.healthIndicator?.temperature} °C`)}
+        {basicKeyValueRender("Nhịp tim", `${currentState?.healthIndicator?.heartRate} bpm`)}
+        {basicKeyValueRender("Huyết áp", `${currentState?.healthIndicator?.bloodPressureSystolic}/${currentState?.healthIndicator?.bloodPressureDiastolic} mmHg`)}
+        {basicKeyValueRender("Đường huyết", `${currentState?.healthIndicator?.glucose} mg/dl`)}
+      </>
+    )
+  }
+
+  const renderTestResult = (): JSX.Element => {
+    const element: JSX.Element = <>
+      {basicKeyValueRender("Loại xét nghiệm", `${currentState?.healthIndicator?.glucose} mg/dl`)}
+    </>
+
+    if(currentState?.testResult?.length > 0) {
+      return <UniformSection
+        headerTitle="Kết quả xét nghiệm"
+        elementInner={element}
+        className="cure-details-content-item"
+      />
+    } else {
+      return <></>
+    }
+  }
+
+  const renderSummary = (): JSX.Element => {
+    return <>
+      {currentState?.diseases.map(e => {
+        return basicKeyValueRender("Chuẩn đoán", e.diseasesName)
+      })}
+    </>
+  }
+
+  const renderMedication = (): JSX.Element => {
+    return <>
+      {currentState?.medication.map(e => {
+        return basicKeyValueRender("Tên thuốc", e.name)
+      })}
+    </>
   }
 
   return (
@@ -86,13 +132,29 @@ function DetailsCureHistory() {
             className="cure-details-content-item"
           />
           <UniformSection
-            headerTitle={role === accountRole.Doctor ? "Thông tin bệnh nhân" : "Thông tin bác sĩ"}
+            headerTitle={role === accountRole.Doctor ? "Thông tin bệnh nhân" : "Thông tin bác sĩ khám bệnh"}
             elementInner={role === accountRole.Doctor ? renderInfoPatient() : renderInfoDoctor()}
             className="cure-details-content-item"
           />
           <UniformSection
             headerTitle="Tình trạng sức khỏe"
-            elementInner={<>ádasdsded</>}
+            elementInner={renderHealthIndicator()}
+            className="cure-details-content-item"
+          />
+          {renderTestResult()}
+          <UniformSection
+            headerTitle="Kết luận"
+            elementInner={renderSummary()}
+            className="cure-details-content-item"
+          />
+          <UniformSection
+            headerTitle="Đơn thuốc"
+            elementInner={renderMedication()}
+            className="cure-details-content-item"
+          />
+          <UniformSection
+            headerTitle="Ghi chú"
+            elementInner={currentState?.note}
             className="cure-details-content-item"
           />
         </div>

@@ -10,9 +10,13 @@ import { DepartmentType, TableType, toastType } from 'src/model/enum';
 import { nonBoardingPatientColumns } from '../../components/table/nonboardingcolumn';
 import NormalProgress from '../dialog/NormalProgress';
 import ConfirmDialog from '../dialog/Confirm';
-import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
+import { closeLoading, openLoading, showToastMessage, tableRefresh } from 'src/redux/reducers';
 
-const PatientWait = () => {
+interface IPatientWaitProps {
+  tableType: TableType
+}
+
+const PatientWait = ({...props}: IPatientWaitProps) => {
     const { info, role } = useSelector((state: RootState) => state.user);
     const {tableSelectedCount, tableSelectedItem} = useSelector((state: RootState) => state.currentSelected);
     const dispatch = useDispatch();
@@ -23,6 +27,10 @@ const PatientWait = () => {
 
     const [historyAppointment, setHistoryAppointment] = React.useState<any>(undefined);
     const [testResult, setTestResult] = React.useState<any>([]);
+
+    React.useEffect(() => {
+      dispatch(tableRefresh());
+    }, [props.tableType])
     
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
@@ -72,7 +80,7 @@ const PatientWait = () => {
                 integrateItems={Api.cureProcessApi.getWaitedPatient}
                 columns={nonBoardingPatientColumns}
                 commandBarItems={getNonBoardingPatientCommandBar()} 
-                tableType={TableType.scheduleNormal}
+                tableType={props.tableType}
             />
             <StartProcessDialog 
                 isDialogClosed={isDialogClosed} 
@@ -86,7 +94,9 @@ const PatientWait = () => {
                 closeDialog={() => {
                     setConfirmClosed(true)
                 }}
-                confirm={confirmActionDialog}
+                // confirm={confirmActionDialog}
+                confirm={() => {setConfirmClosed(true);
+                  setIsStartProgress(true);}}
             />
             <NormalProgress
               isOpen={isStartProgress} 

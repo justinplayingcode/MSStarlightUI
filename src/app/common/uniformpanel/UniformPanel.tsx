@@ -43,7 +43,7 @@ class UniformPanel extends React.Component<IUniformPanelProps, IUniformPanelStat
       disabled: false,
     };
 
-    const buttons = [...this.props.renderFooter, buttonCancel]
+    const buttons = [buttonCancel, ...this.props.renderFooter]
 
     return (
       <div className="uniform-panel-footer">
