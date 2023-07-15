@@ -10,12 +10,12 @@ function DoctorAppointment() {
     const tabs: ITabProps[] = [];
       tabs.push(
         {
-          label: "Lịch hẹn hôm nay",
+          label: "Lịch khám bệnh hôm nay",
           index: 0,
           Component: <ScheduleApproved/>
         },
         {
-          label: "Yêu cầu hẹn lịch",
+          label: "Yêu cầu hẹn lịch khám",
           index: 1,
           Component: <RequestAppoinments/>
         }

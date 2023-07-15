@@ -64,7 +64,7 @@ function DoctorHome() {
           </div>
           <div className="schedule-details">
             <div className="schedule-details-text">
-              <div className="schedule-details-title">Số bệnh nhân đang điều trị nội trú:</div>{currentState?.onboardingIn}
+              <div className="schedule-details-title">Số bệnh nhân đang điều trị nội trú</div>{currentState?.onboardingIn}
             </div>
             <div className="schedule-details-button">
               <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/patient-management-doctor')}>Chi tiết</LinkButton>
@@ -72,7 +72,7 @@ function DoctorHome() {
           </div>
           <div className="schedule-details">
             <div className="schedule-details-text">
-              <div className="schedule-details-title">Số bệnh nhân đang điều trị ngoại trú:</div>{currentState?.onboardingOut}
+              <div className="schedule-details-title">Số bệnh nhân đang điều trị ngoại trú</div>{currentState?.onboardingOut}
             </div>
             <div className="schedule-details-button">
               <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/patient-management-doctor')}>Chi tiết</LinkButton>       

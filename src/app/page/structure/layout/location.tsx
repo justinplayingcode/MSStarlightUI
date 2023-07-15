@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import './location.scss'
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
-import { DepartmentType } from 'src/model/enum';
+import { DepartmentType, accountRole } from 'src/model/enum';
 
 interface IRouteItem {
   key: string;
@@ -17,7 +17,7 @@ interface IRouteItem {
 export const Location = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
-    const { info } = useSelector((state: RootState) => state.user)
+    const { info, role } = useSelector((state: RootState) => state.user)
 
     const routeMapping : {[key: string]: IRouteItem} = {
       Home: {
@@ -94,7 +94,7 @@ export const Location = () => {
       },
       Schedule: {
           key: 'route-cure-appointment',
-          text: 'Lịch hẹn khám',
+          text: 'Lịch khám bệnh',
           url: '/cure/appointment',
           parentKeys:["route-cure"]
       },
@@ -111,7 +111,7 @@ export const Location = () => {
       },
       Appointment:{
           key: 'route-make-appointment',
-          text: 'Đặt lịch khám',
+          text: 'Lịch khám bệnh',
           url: '/make-appointment',
       },
       Diseases: {
@@ -126,14 +126,14 @@ export const Location = () => {
       },
       News: {
           key: 'route-news',
-          text: 'Thông tin, tư vấn',
+          text: 'Thông tin, tin tức',
           url: '/news/newsfeed',
       },
       NewsPost: {
           key: 'route-news-newsfeed',
-          text: 'Tin tức',
+          text: role === accountRole.Patient ? 'Thông tin, tin tức' : 'Tin tức',
           url: '/news/newsfeed',
-          parentKeys:["route-news"]
+          parentKeys: role === accountRole.Patient ? undefined : ["route-news"]
       },
       NewsCreate:{
           key: 'route-news-newscreate',
