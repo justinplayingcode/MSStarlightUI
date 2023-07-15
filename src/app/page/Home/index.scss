@@ -90,79 +90,17 @@
         }
       }
     }
-
-    .patient-section-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      width: 100%;
-      &.section1 {
-        height: 40%;
-      }
-      &.section2 {
-        height: 60%;
-        align-content: end;
-        .patient-section {
-          width: 100%;
-        }
-      }
-
-      .patient-section {
-        height: calc(100% - 8px);
-        width: calc(50% - 8px);
-        padding: 20px;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-        .patient-section-header {
-          display: flex;
-          justify-content: space-between;
-          padding-bottom: 12px;
-
-          .title {
-            color: RGBA( 25, 25, 112, 1 );
-            font-style: italic;
-            font-size: 20px;
-            font-weight: bold;
-            border-bottom: 2px solid RGBA( 25, 25, 112, 1 );
-          }
-        }
-        .patient-section-content {
-          padding: 20px;
-
-          .text {
-            padding-bottom: 12px;
-            font-style: italic;
-          }
-          .health {
-            padding-top: 20px;
-            .title {
-              width: fit-content;
-              font-style: italic;
-              font-weight: bold;
-            }
-            .heath-items {
-              width: 100%;
-              display: flex;
-              flex-wrap: wrap;
-              padding-top: 20px;
-            }
-          }
-        }
-      }
-    }
   }
 }
 
-#doctor-home {
+#doctor-home,
+#patient-home {
   display: flex;
   justify-content: space-between;
   align-content: start;
   height: 100%;
   width: 100%;
   flex-wrap: wrap;
-
   .information {
     height: 300px;
     width: calc(50% - 8px);
@@ -213,7 +151,6 @@
       align-items: end;
     }
   }
-
   .schedule {
     height: 300px;
     width: calc(50% - 8px);
@@ -228,6 +165,7 @@
       height: 40px;
       width: 100%;
       text-decoration: underline;
+      padding-left: 28px;
     }
     .schedule-content {
       height: calc(100% - 40px);
@@ -241,13 +179,17 @@
 
         .schedule-details-text {
           display: flex;
-          font-size: 16px;
+          flex-direction: column;
+          font-size: 28px;
           width: 100%;
           font-weight: bold;
           .schedule-details-title {
             margin-right: 6px;
+            font-size: 16px;
             font-style: italic;
             font-weight: normal;
+            display: flex;
+            justify-content: flex-start;
           }
         }
         .schedule-details-button {
@@ -255,12 +197,59 @@
           width: 100%;
           justify-content: start;
           margin-top: 8px;
-          padding-left: 20px;
         }
       }
     }
   }
 }
+
+#patient-home {
+  display: flex;
+  justify-content: space-between;
+  align-content: start;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  .information {
+    filter: saturate(0.4);
+    color: #fff;
+  }
+  .schedule {
+    background: linear-gradient(to left, #294150,#233643);
+    .schedule-content {
+      .schedule-details {
+        .schedule-details-text.fz20 {
+          font-size: 18px;
+        }
+        .schedule-details-text.flexrow {
+          flex-direction: row;
+          align-items: start;
+          .schedule-details-title {
+            margin-left: 4px;
+          }
+          span {
+            transform: translateY(-11px);
+          }
+        }
+      }
+    }
+  }
+  .schedule.healthInformation {
+    height: calc(50% - 8px);
+    margin-bottom: 16px;
+  }
+  .section {
+    height: 300px;
+    width: calc(50% - 8px);
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 20px;
+    color: rgb(210,210,210);
+    margin-bottom: 16px;
+  }
+}
+
 
 @media (max-width: 1080px) {
   .chart-container-wrapper {
@@ -268,7 +257,8 @@
     max-height: 400px;
   }
 
-  #doctor-home {
+  #doctor-home,
+  #patient-home {
     .information,
     .schedule {
       width: 100%;

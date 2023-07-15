@@ -15,18 +15,7 @@ interface IDoughnutChartProps {
 }
 
 export function DoughnutChart({...props}: IDoughnutChartProps) {
-
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-  // const colorss = Array.from({ length: props.values.length }, () => getRandomColor());
   const coiors = Convert.colorDonutChart.slice(0, props.values.length);
-
   const data = {
     labels: props.labels,
     datasets: [
@@ -39,7 +28,6 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
       },
     ]
   };
-
   const options = {
     maintainAspectRatio: false,
     plugins: {
@@ -56,7 +44,6 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
       },
     },
   }
-
   const textCenter = {
     id: 'textCenter',
     beforeDraw: function(chart) {
@@ -71,7 +58,6 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
           ctx.save();
     } 
   }
-
   return (
     <div className='chart doughnutchart'>
       <Doughnut data={data} options={options} plugins={[textCenter]} />

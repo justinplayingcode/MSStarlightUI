@@ -103,7 +103,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
               path: '/cure/appointment#tab0',
               state: '/cure/appointment',
               sidebarProps:{
-                displayText: 'Lịch hẹn khám',
+                displayText: 'Lịch khám bệnh',
                 icon: <MdOutlineArrowRightAlt/>,
               },
             }
@@ -128,7 +128,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
             path:'/make-appointment#tab0',
             state:'/make-appointment',
             sidebarProps:{
-                displayText: 'Đặt lịch khám',
+                displayText: 'Lịch khám bệnh',
                 icon: <AiOutlineSchedule/>
             }
         })
@@ -158,7 +158,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
         path: '/news/newsfeed',
         state: '/news/newsfeed',
         sidebarProps: {
-          displayText: 'Thông tin, tư vấn',
+          displayText: 'Thông tin, tin tức',
           icon: <FaRegNewspaper />,
         },
       }
@@ -166,7 +166,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
       newsItems = {
         state: '/news',
         sidebarProps: {
-          displayText: 'Thông tin, tư vấn',
+          displayText: 'Thông tin, tin tức',
           icon: <FaRegNewspaper />,
         },
         child:[

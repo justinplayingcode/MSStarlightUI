@@ -58,9 +58,9 @@ export const Avatar = (props: IAvatarProps) => {
     const avatarStyle = getAvatarSize(props.size) || defaultSize;
     const defaultHasCallout = props.hasCallout || false;
 
-    const charater = info?.fullname.split(" ");
-    const mainCharater = charater.pop().split("")[0].toUpperCase();
-    const subCharater = charater.pop().split("")[0].toUpperCase();
+    const charater = info?.fullname.split(" ") || undefined;
+    const mainCharater = charater ? charater.pop().split("")[0].toUpperCase() : "";
+    const subCharater = charater ? charater.pop().split("")[0].toUpperCase() : "";
 
     const style: React.CSSProperties = {
         backgroundImage: props.hasCallout ? "unset" : `url(${props.avatar_scr !== '' ? props.avatar_scr : defaultAvatar})`,
