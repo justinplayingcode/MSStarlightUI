@@ -4,14 +4,39 @@
         background-position: top center;
     }
 }
-.callout{
-    .ms-Callout-main{
-        width: 180px;
-        display: flex;
-        flex-direction: column;
+// .callout{
+//     .ms-Callout-main{
+//         width: 180px;
+//         display: flex;
+//         flex-direction: column;
 
-        .ms-Button{
-            border: none;
-        }
+//         .ms-Button{
+//             border: none;
+//         }
+//     }
+// }
+
+.avatar-callout {
+  width: 280px;
+  padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .buttonAvatar {
+    display: flex;
+    height: 52px;
+  }
+  .ms-Button{
+    border: none;
+    width: 100%;
+  }
+
+  .buttonAction {
+    .ms-Button-flexContainer {
+      justify-content: space-between;
+      font-style: italic;
     }
+  }
 }
