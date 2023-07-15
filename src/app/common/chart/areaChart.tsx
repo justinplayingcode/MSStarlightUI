@@ -24,8 +24,10 @@ ChartJS.register(
 
 interface IAreaChartProps {
   labels: any[];
-  values: any[];
-  legend: string;
+  valuefisrt: any[];
+  valuesecond: any[];
+  legendfirst: string;
+  legendsecond: string;
   titleChart: string;
 }
 
@@ -50,10 +52,17 @@ export function AreaChart({...props}: IAreaChartProps) {
     datasets: [
       {
         fill: true,
-        label: props.legend,
-        data: props.values,
+        label: props.legendfirst,
+        data: props.valuefisrt,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        fill: true,
+        label: props.legendsecond,
+        data: props.valuesecond,
+        borderColor: '#FF6384',
+        backgroundColor: '#FFB1C1',
       },
     ],
   }

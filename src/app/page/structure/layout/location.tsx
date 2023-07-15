@@ -31,6 +31,12 @@ export const Location = () => {
           url: '/home/profile',
           parentKeys:["route-home"]
       },
+      ChangePW: {
+        key: "route-home-changepw",
+        text: 'Đổi mật khẩu',
+        url: '/home/change-password',
+        parentKeys:["route-home"]
+    },
       PatientManagement: {
           key: 'route-patient-management',
           text: 'Quản lý tài khoản bệnh nhân',

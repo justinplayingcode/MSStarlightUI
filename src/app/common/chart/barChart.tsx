@@ -47,7 +47,7 @@ export function BarChart({...props}: IBarChartProps) {
       {
         label: props.legend,
         data: props.values,
-        backgroundColor: '#007FFF',
+        backgroundColor: '#5D8AA8',
       }
     ],
   };

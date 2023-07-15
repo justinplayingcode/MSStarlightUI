@@ -37,7 +37,7 @@ const SidebarItemCollapse = ({ item }: Props) => {
                         paddingLeft: 20,
                         paddingRight: 20,
                         color: open ? "#fff" : "#9CA3AF",
-                        background: 'unset',
+                        background: open ? '#264A63' : 'unset',
                         borderLeft: '4px solid transparent',
                     }}
                     onClick={() => {
@@ -58,7 +58,7 @@ const SidebarItemCollapse = ({ item }: Props) => {
                     open && item.child?.map((route, index) => (
                         route.sidebarProps ? (
                             <Stack className="route-child" key={index}>
-                              {route.child ? <SidebarItemCollapse item={route}/> : <SidebarItem isChild item={route}/>}
+                              {route.child ? <SidebarItemCollapse item={route}/> : <SidebarItem item={route} bcColor="#111827"/>}
                             </Stack>
                         ) : null
                     ))

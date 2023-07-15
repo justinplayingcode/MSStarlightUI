@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BarChart } from "src/app/common/chart/barChart";
+import { BarChart } from "src/app/common/Chart/barChart";
 
 function PatientExaminedChart() {
   const [labels, setLabels] = useState<string[]>([]);

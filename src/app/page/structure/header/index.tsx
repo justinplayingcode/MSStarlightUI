@@ -1,5 +1,5 @@
 import "./index.scss"
-import { IconButton, Stack } from "@fluentui/react";
+import { IconButton, Stack, TooltipHost } from "@fluentui/react";
 import { Avatar, AvatarSize } from "../../../common/Avatar/avatar";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
@@ -18,12 +18,23 @@ const UniformHeader = (props: UniformHeaderProps) => {
             <Location/>
           </div>
           <div className="header-icon-group" >
-              <IconButton className="header-icon" iconProps={{ iconName: 'Help' }} />
-              <Avatar
-                  avatar_scr={info?.avatar}
-                  size={AvatarSize.Large}
-                  hasCallout={true}
-              />
+            <TooltipHost
+              content={"Process"}
+              closeDelay={100}  
+            >
+              <IconButton className="header-icon" iconProps={{ iconName: 'ConfigurationSolid' }} />
+            </TooltipHost>
+            <TooltipHost
+              content={"Help"}
+              closeDelay={100}  
+            >
+              <IconButton className="header-icon" iconProps={{ iconName: 'HeadsetSolid' }} />
+            </TooltipHost>
+            <Avatar
+                avatar_scr={info?.avatar}
+                size={AvatarSize.Large}
+                hasCallout={true}
+            />
           </div>
         </div>
     );
