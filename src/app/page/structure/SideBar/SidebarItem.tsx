@@ -9,10 +9,10 @@ import './index.scss'
 
 type Props = {
   item: RouteType;
-  isChild?: boolean
+  bcColor?: string;
 };
 
-const SidebarItem = ({ item, isChild }: Props) => {
+const SidebarItem = ({ item, bcColor }: Props) => {
   const { currentSidebar } = useSelector((state: RootState) => state.currentSelected);
     const dispatch = useDispatch();
     
@@ -23,7 +23,7 @@ const SidebarItem = ({ item, isChild }: Props) => {
                 style={{
                     paddingLeft: 20,
                     paddingRight: 20,
-                    backgroundColor: currentSidebar.includes(item.state) ? '#1976D2' : '#111827',
+                    backgroundColor: currentSidebar.includes(item.state) ? bcColor || '#264A63' : '#111827',
                     color: currentSidebar.includes(item.state) ? '#fff' : '#9CA3AF',
                 }}
                 onClick={() => {                    

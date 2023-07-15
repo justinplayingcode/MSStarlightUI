@@ -10,6 +10,7 @@ import PatientManagementChart from "./components/adminChart/patientmanagement";
 import PatientExaminedChart from "./components/adminChart/patientexaminedperday";
 import { LinkButton } from "src/app/common/Link";
 import { useNavigate } from "react-router-dom";
+import DoctorHome from "./components/Doctor";
 
 interface IHealthStatus {
   key: string;
@@ -37,45 +38,6 @@ const Home = () => {
       <div className="chart-container-wrapper chart-container">
         <PatientManagementChart/>
       </div>
-      </>
-    )
-  }
-
-  const onRenderDoctor = (): JSX.Element => {
-    return (
-      <>
-        <div className="doctor-section-container container1">
-          <div className="doctor-section">
-            <div className="date">{Convert.getCurrentDateString()}</div>
-            <hr/>
-            <div className="infomation">{info?.department}</div>
-            <div className="infomation">{Convert.getDoctorPosition(info?.position)}: {info?.fullname}</div>
-            <LinkButton className="details" onClick={() => navigate('/home/profile')}>Thông tin cá nhân</LinkButton>
-          </div>
-          <div className="doctor-section">
-            <div className="title">Số lịch hẹn khám hôm nay:</div>
-            <div className="total">2</div>
-            <LinkButton className="details" onClick={() => navigate("/cure/appointment#tab0")}>Chi tiết</LinkButton>
-          </div>
-          <div className="doctor-section">
-            <div className="title">Bệnh nhân đang điều trị tại khoa:</div>
-            <div className="total">20</div>
-            <LinkButton className="details" onClick={() => alert('navigate to /tablebenhnhannamvien')}>Chi tiết</LinkButton>
-          </div>
-
-          <div className="doctor-section">
-            <div className="title">Bệnh nhân khám tại khoa trong ngày:</div>
-            <div className="total">40</div>
-            <LinkButton className="details" onClick={() => alert('navigate to /lichsukham')}>Chi tiết</LinkButton>
-          </div>
-        </div>
-        {/*  */}
-        <div className="chart-container-wrapper chart-container">
-          <DoctorManagementChart/> {/* thay đôi sau */}
-        </div>
-        <div className="chart-container-wrapper chart-container">
-          <PatientManagementChart/> {/* thay đôi sau */}
-        </div>
       </>
     )
   }
@@ -137,7 +99,7 @@ const Home = () => {
       case accountRole.Admin:
         return onRenderAdmin();
       case accountRole.Doctor:
-        return onRenderDoctor();
+        return <DoctorHome/>;
       case accountRole.Patient:
         return onRenderPatient();
     }

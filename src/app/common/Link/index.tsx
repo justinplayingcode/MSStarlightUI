@@ -6,12 +6,14 @@ interface ILinkButtonProps {
   onClick?: () => void;
   className?: string;
   navigate?: string;
+  style?: React.CSSProperties;
 }
 
 export const LinkButton = ({...props}: ILinkButtonProps) => {
   const navigate = useNavigate();
   return (
         <Link 
+          style={props?.style}
           onClick={() => {
             if(props?.navigate) {
               navigate(`${props?.navigate}`)
