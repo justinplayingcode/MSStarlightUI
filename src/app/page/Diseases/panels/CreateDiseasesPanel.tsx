@@ -1,4 +1,4 @@
-import { Dropdown, IDropdownOption, Spinner, SpinnerSize, Stack, TextField } from "@fluentui/react";
+import { Stack, TextField } from "@fluentui/react";
 import { useEffect, useState } from "react";
 import { UniformPanel } from "src/app/common";
 import { BtnType, PanelType, toastType } from "src/model/enum"
@@ -13,58 +13,32 @@ interface ICreateDiseasesProps{
     panelType?: PanelType
 }
 
-
 const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     const dispatch = useDispatch();
     const {tableSelectedItem} = useSelector((state: RootState) => state.currentSelected)
-    
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
-    const [departmentList, setDepartmentList] = useState<any[]>();
-
     const [id, setId] = useState<string>();
     const [name, setName] = useState<string>();
     const [code, setCode] = useState<string>();
     const [symptom, setSymptom] = useState<string>();
     const [prevention, setPrevention] = useState<string>();
-    const [selectedDepartment, setSelectedDepartment] = useState<string>()
-
-    const getDepartment = () => {
-        dispatch(openPanelLoading());
-        Api.departmentApi.getAllDepartment().then(data => {
-          const list: IDropdownOption[] = [];
-          data.data.map((item) => {
-            list.push({
-              key: item._id,
-              text: item.departmentName,
-            })
-          })
-          setDepartmentList(list);
-        }).catch(() => {
-          dispatch(showToastMessage({message: "Có lỗi, vui lòng liên hệ bộ phận hỗ trợ", type: toastType.error}))
-        }).finally(() => dispatch(closePanelLoading()))
-      }
-    
-      useEffect(() => {
-        if(props.panelType === PanelType.Edit){
-            setId(tableSelectedItem[0]?._id)
-            setName(tableSelectedItem[0]?.diseasesName);
-            setCode(tableSelectedItem[0]?.diseasesCode);
-            setSymptom(tableSelectedItem[0]?.symptom);
-            setPrevention(tableSelectedItem[0]?.prevention);
-            setSelectedDepartment(tableSelectedItem[0]?.departmentId)
-        }        
-        getDepartment();
-      },[])
-
+    useEffect(() => {
+      if(props.panelType === PanelType.Edit){
+          setId(tableSelectedItem[0]?._id)
+          setName(tableSelectedItem[0]?.diseasesName);
+          setCode(tableSelectedItem[0]?.diseasesCode);
+          setSymptom(tableSelectedItem[0]?.symptom);
+          setPrevention(tableSelectedItem[0]?.prevention);
+      }        
+    },[])
     const buttonFooter: IFooterPanel[] = [
         {
           text: 'Lưu',
           type: BtnType.Primary,
           disabled: false,
-          onClick: () => clickSave() // sau se truyen ham post api create
+          onClick: () => clickSave() 
         }
     ];
-
     const renderInputField = () => {
         return(
             <>
@@ -114,23 +88,11 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                     }}
                     errorMessage={errorMessage?.prevention}
                 />
-                <Dropdown
-                    required
-                    label='Khoa quản lý'
-                    options={departmentList}
-                    selectedKey={selectedDepartment}
-                    onChange={(e, option) => {
-                        setErrorMessage(undefined)
-                        setSelectedDepartment(option.key as string)
-                    }} 
-                    errorMessage={errorMessage?.department}
-                />
             </>
         )
     }
 
     const clickSave = () => {
-        //validate
         if(!name){
             setErrorMessage({name: 'Hãy điền tên bệnh'});
             return;
@@ -147,24 +109,18 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             setErrorMessage({name: 'Hãy điền cách phòng bệnh'});
             return;
         }
-        if(!selectedDepartment){
-            setErrorMessage({department: 'Hãy chọn khoa quản lý'});
-            return;
-        }
         const reqbody = {
             ...(props.panelType === PanelType.Edit) && {id: id},
             diseasesName: name,
             diseasesCode: code,
             symptom: symptom,
             prevention: prevention,
-            departmentId: selectedDepartment
         }
         dispatch(openPanelLoading());
         if (props.panelType === PanelType.Create){
             Api.diseasesApi.createDiseases(reqbody).then((data) => {
                 if(data.status === 0){
                   dispatch(showToastMessage({message: "Thêm bệnh mới thành công", type: toastType.succes}))
-                  //if success, close panel
                   dispatch(closePanel());
                   dispatch(tableRefresh());
                 }
@@ -177,7 +133,6 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             Api.diseasesApi.editDiseases(reqbody).then((data) => {
                 if(data.status === 0){
                   dispatch(showToastMessage({message: "Cập nhật thành công", type: toastType.succes}))
-                  //if success, close panel
                   dispatch(closePanel());
                   dispatch(tableRefresh());
                 }
@@ -186,7 +141,6 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             }).finally(() => dispatch(closePanelLoading()))
         }
     }
-
     return (
         <>
             <UniformPanel
@@ -199,5 +153,4 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
         </>
     )
 }
-
 export default CreateDiseasesPanel;

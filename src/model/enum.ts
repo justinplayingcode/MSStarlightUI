@@ -122,7 +122,11 @@ export enum DepartmentType {
     truyenNhiem,
     duoc,
     nhi,
-    thanNhanTao
+    thanNhanTao,
+    capCuu,
+    rangHamMat,
+    taiMuiHong,
+    dinhDuong
 }
 
 export enum ScheduleRequestStatus {
