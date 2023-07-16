@@ -74,6 +74,10 @@ function DetailsCureHistory() {
     return (
       <>
         {basicKeyValueRender("Họ và tên", currentState?.fullname)}
+        {basicKeyValueRender("Chức vụ", Convert.getDoctorPosition(currentState?.position))}
+        {basicKeyValueRender("Trình độ", Convert.getDoctorRank(currentState?.rank))}
+        {basicKeyValueRender("Email", currentState?.email)}
+        {basicKeyValueRender("Số điện thoại", currentState?.phonenumber)}
       </>
     )
   }
@@ -120,8 +124,9 @@ function DetailsCureHistory() {
 
   const renderSummary = (): JSX.Element => {
     return <>
+      {basicKeyValueRender("Chuẩn đoán", currentState?.summary)}
       {currentState?.diseases.map(e => {
-        return basicKeyValueRender("Chuẩn đoán", e.diseasesName)
+        return basicKeyValueRender("Bệnh", e.diseasesName)
       })}
     </>
   }

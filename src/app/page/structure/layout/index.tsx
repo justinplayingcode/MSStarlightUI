@@ -89,10 +89,11 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             localStorage.clear();
             window.location.pathname = "/login";
           }
-        }).catch(() => {
-          localStorage.clear();
-          window.location.pathname = "/login";
         })
+        // .catch(() => {
+        //   localStorage.clear();
+        //   window.location.pathname = "/login";
+        // })
     }
 
     checkCurrentUser = async () => {
