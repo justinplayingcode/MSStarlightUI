@@ -11,18 +11,15 @@ import NormalProgress from '../dialog/NormalProgress';
 import ConfirmDialog from '../dialog/Confirm';
 import { closeLoading, openLoading, showToastMessage } from 'src/redux/reducers';
 
-const PatientWait = () => {
+const PatientDoneTesting = () => {
     const { info, role } = useSelector((state: RootState) => state.user);
     const {tableSelectedCount, tableSelectedItem} = useSelector((state: RootState) => state.currentSelected);
     const dispatch = useDispatch();
-
     const [isDialogClosed, setDialogClosed] = React.useState<boolean>(true);
     const [isConfirmClosed, setConfirmClosed] = React.useState<boolean>(true);
     const [isStartProgress, setIsStartProgress] = React.useState<boolean>(false);
-
     const [historyAppointment, setHistoryAppointment] = React.useState<any>(undefined);
     const [testResult, setTestResult] = React.useState<any>([]);
-    
     const getNonBoardingPatientCommandBar = () => {
         const commandBar = [];
         if (info?.departmentCode === DepartmentType.tiepDon && role === accountRole.Doctor && tableSelectedCount === 0) {
@@ -45,7 +42,6 @@ const PatientWait = () => {
         };
         return commandBar;
     }
-
     const confirmActionDialog = () => {
       dispatch(openLoading());
       Api.scheduleApi.startScheduleNormal({id: tableSelectedItem[0]?._id}).then(data => {
@@ -64,14 +60,13 @@ const PatientWait = () => {
         setConfirmClosed(true);
       }).finally(() => dispatch(closeLoading()))
     }
-
     return(
           <div className='wrapper-table-content speciality-wrapper'>
             <UniformTable
                 integrateItems={Api.cureProcessApi.getWaitedPatient}
                 columns={nonBoardingPatientColumns}
                 commandBarItems={getNonBoardingPatientCommandBar()} 
-                tableType={TableType.scheduleNormal}
+                tableType={TableType.scheduleDoneParaclinical}
             />
             <StartProcessDialog 
                 isDialogClosed={isDialogClosed} 
@@ -96,5 +91,4 @@ const PatientWait = () => {
         </div>
     )
 }
-
-export default PatientWait;
+export default PatientDoneTesting;

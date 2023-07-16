@@ -12,7 +12,7 @@ const CureHistory = () => {
     const { tableSelectedItem, tableSelectedCount } = useSelector((state: RootState) => state.currentSelected);
     const navigate = useNavigate();
 
-    const cureHistoryColumns =[
+    const cureHistoryColumns = [
       {
         key: 'appointmentDate',
         name: 'Ngày khám',
@@ -54,43 +54,13 @@ const CureHistory = () => {
         },
       },
       {
-        key: 'gender',
-        name: 'Giới tính',
-        minWidth: 80,
-        maxWidth: 150,
-        isResizable: true,
-        onRender: (item) => {
-            return <span>{Convert.convertGender(item?.gender)}</span>;
-        },
-      },
-      {
-        key: 'dateOfBirth',
-        name: 'Ngày sinh',
+        key: 'email',
+        name: 'Email',
         minWidth: 120,
         maxWidth: 180,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item?.dateOfBirth}</span>;
-        },
-      },
-      {
-        key: 'address',
-        name: 'Địa chỉ',
-        minWidth: 120,
-        maxWidth: 180,
-        isResizable: true,
-        onRender: (item) => {
-            return <span>{item?.address}</span>;
-        },
-      },
-      {
-        key: 'insurance',
-        name: 'Số BHYT',
-        minWidth: 120,
-        maxWidth: 180,
-        isResizable: true,
-        onRender: (item) => {
-            return <span>{item?.insurance}</span>;
+            return <span>{item?.email}</span>;
         },
       },
       {
@@ -104,6 +74,64 @@ const CureHistory = () => {
         },
       },
     ];
+
+    if(role === accountRole.Doctor) {
+      cureHistoryColumns.push(
+        {
+          key: 'dateOfBirth',
+          name: 'Ngày sinh',
+          minWidth: 120,
+          maxWidth: 180,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{item?.dateOfBirth}</span>;
+          },
+        },
+        {
+          key: 'address',
+          name: 'Địa chỉ',
+          minWidth: 120,
+          maxWidth: 180,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{item?.address}</span>;
+          },
+        },
+        {
+          key: 'insurance',
+          name: 'Số BHYT',
+          minWidth: 120,
+          maxWidth: 180,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{item?.insurance}</span>;
+          },
+        }
+      )
+    } else if (role === accountRole.Patient) {
+      cureHistoryColumns.push(
+        {
+          key: 'rank',
+          name: 'Trình độ',
+          minWidth: 120,
+          maxWidth: 180,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{Convert.getDoctorRank(item?.rank)}</span>;
+          },
+        },
+        {
+          key: 'position',
+          name: 'Chức vụ',
+          minWidth: 120,
+          maxWidth: 180,
+          isResizable: true,
+          onRender: (item) => {
+              return <span>{Convert.getDoctorPosition(item?.position)}</span>;
+          },
+        },
+      )
+    }
 
     const cureHistoryCommanBar = (): ICommandBarItemProps[] => {
       const commandBar: ICommandBarItemProps[] = [];

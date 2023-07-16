@@ -6,6 +6,7 @@ import TestingTab from './component/TestingTab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 import { DepartmentType, TableType } from 'src/model/enum';
+import PatientDoneTesting from './component/PatientDoneTesting';
 
 const CureProcess = () => {
     const { info } = useSelector((state: RootState) => state.user)
@@ -18,7 +19,7 @@ const CureProcess = () => {
           {
             label: "Chờ khám bệnh",
             index: 0,
-            Component: <PatientWait tableType={TableType.scheduleNormal}/>
+            Component: <PatientWait/>
           },
         );      
 
@@ -36,7 +37,7 @@ const CureProcess = () => {
           {
             label: "Hoàn thành xét nghiệm",
             index: 2,
-            Component: <PatientWait tableType={TableType.scheduleDoneParaclinical}/>
+            Component: <PatientDoneTesting/>
           }
         )
       }

@@ -1,5 +1,5 @@
 import { accountRole } from "model";
-import { DoctorPosition, DoctorRank, ScheduleRequestStatus } from "src/model/enum";
+import { DoctorPosition, DoctorRank } from "src/model/enum";
 
 export default class Convert {
     public static shortenString = (t: string, n: number):string => {

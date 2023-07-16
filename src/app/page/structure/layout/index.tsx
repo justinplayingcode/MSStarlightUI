@@ -81,13 +81,19 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         }
     }
 
-    async componentDidMount() {
-        const result  = await Promise.all([this.checkCurrentUser(), this.getInfoCurrentUser()])
-        if(result[0] === ApiStatus.succes && result[1] === ApiStatus.succes) {
+    componentDidMount() {
+        Promise.all([this.checkCurrentUser(), this.getInfoCurrentUser()]).then(result => {
+          if(result[0] === ApiStatus.succes && result[1] === ApiStatus.succes) {
             this.setState({loading: false})
-        } else {
-            window.location.pathname = "/error/notfound";
-        }
+          } else {
+            localStorage.clear();
+            window.location.pathname = "/login";
+          }
+        })
+        // .catch(() => {
+        //   localStorage.clear();
+        //   window.location.pathname = "/login";
+        // })
     }
 
     checkCurrentUser = async () => {
@@ -150,26 +156,18 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_ON_BOARDING:
                 content = <TreatmentManagement/>;
                 break;                
-            
-            // case pageConstant.LAYOUT_CURE_PROGRESS:
-            //     content = <CureProgress/>
-            //     break;
-
             case pageConstant.LAYOUT_CURE_HISTORY:
                 content = <CureHistory />
                 break;
-
             case pageConstant.LAYOUT_APPOINTMENT:
                 content = <Appointment/>
                 break;
-
             case pageConstant.LAYOUT_DISEASES:
                 content = <Diseases />
                 break;
             case pageConstant.LAYOUT_MEDICATION:
                 content = <Medication />
                 break;
-
             case pageConstant.LAYOUT_NEWS:
                 content = <News />
                 break;

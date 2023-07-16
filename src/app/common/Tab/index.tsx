@@ -1,3 +1,4 @@
+import React from "react";
 import "./index.scss";
 import { useNavigate  } from 'react-router-dom';
 

@@ -18,57 +18,46 @@ const Diseases = () => {
 
     const diseasesColumns =[
       {
-          key: 'department',
-          name: 'Khoa',
-          minWidth: 100,
-          maxWidth: 180,
-          isResizable: true,
-          onRender: (item) => {
-              return <span>{item?.department}</span>;
-          },
-      },
-      {
         key: 'diseasesCode',
         name: 'Mã bệnh',
-        minWidth: 100,
-        maxWidth: 180,
+        minWidth: 80,
+        maxWidth: 120,
         isResizable: true,
         onRender: (item) => {
             return <span>{item?.diseasesCode}</span>;
         },
     },
-      {
-          key: 'name',
-          name: 'Tên bệnh',
-          minWidth: 150,
-          maxWidth: 220,
-          isResizable: true,
-          onRender: (item) => {
-              return <span>{item?.diseasesName}</span>;
-          },
-      },
-      {
-          key: 'symptom',
-          name: 'Triệu chứng',
-          minWidth: 230,
-          maxWidth: 350,
-          isResizable: true,
-          onRender: (item) => {
-              return (tooltipPlainText(item?.symptom));
-          },
-      },
-      {
-          key: 'prevention',
-          name: 'Cách phòng tránh',
-          minWidth: 230,
-          maxWidth: 350,
-          isResizable: true,
-          onRender: (item) => {
-              return (tooltipPlainText(item?.prevention));
-          },
-      },
-
-    ];
+    {
+        key: 'name',
+        name: 'Tên bệnh',
+        minWidth: 120,
+        maxWidth: 200,
+        isResizable: true,
+        onRender: (item) => {
+            return <span>{item?.diseasesName}</span>;
+        },
+    },
+    {
+        key: 'symptom',
+        name: 'Triệu chứng',
+        minWidth: 230,
+        maxWidth: 350,
+        isResizable: true,
+        onRender: (item) => {
+            return (tooltipPlainText(item?.symptom));
+        },
+    },
+    {
+        key: 'prevention',
+        name: 'Cách phòng tránh',
+        minWidth: 230,
+        maxWidth: 350,
+        isResizable: true,
+        onRender: (item) => {
+            return (tooltipPlainText(item?.prevention));
+        },
+    },
+  ];
 
     const getDiseasesCommanBar = () => {
         const commadBarButton: ICommandBarItemProps[] =[];
