@@ -6,8 +6,8 @@ export const nonBoardingPatientColumns: IColumn[] = [
     {
         key: 'fullname',
         name: 'Họ và tên',
-        minWidth: 120,
-        maxWidth: 200,
+        minWidth: 100,
+        maxWidth: 150,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.fullname}</span>;
@@ -36,8 +36,8 @@ export const nonBoardingPatientColumns: IColumn[] = [
     {
         key: 'address',
         name: 'Địa chỉ',
-        minWidth: 70,
-        maxWidth: 90,
+        minWidth: 90,
+        maxWidth: 150,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.address}</span>;
@@ -46,41 +46,51 @@ export const nonBoardingPatientColumns: IColumn[] = [
     {
         key: 'insurance',
         name: 'Bảo hiểm y tế',
-        minWidth: 70,
-        maxWidth: 90,
+        minWidth: 90,
+        maxWidth: 120,
         isResizable: true,
         onRender: (item) => {
             return <span>{item.insurance}</span>;
         },
     },
     {
-      key: 'departmentName',
-      name: 'Khoa đăng ký khám',
+      key: 'phonenumber',
+      name: 'Số điện thoại',
+      minWidth: 90,
+      maxWidth: 120,
+      isResizable: true,
+      onRender: (item) => {
+          return <span>{item.phonenumber}</span>;
+      },
+    },
+    {
+      key: 'typeAppointment',
+      name: 'Loại khám',
       minWidth: 70,
       maxWidth: 90,
       isResizable: true,
       onRender: (item) => {
+          return <span>{MappingTypeAppointmentSchedule[item.typeAppointment]}</span>;
+      },
+    },
+    {
+      key: 'departmentName',
+      name: 'Khoa đăng ký khám',
+      minWidth: 90,
+      maxWidth: 120,
+      isResizable: true,
+      onRender: (item) => {
           return <span>{item.departmentName}</span>;
       },
-  },
-  {
-    key: 'phonenumber',
-    name: 'Số điện thoại',
-    minWidth: 70,
-    maxWidth: 90,
-    isResizable: true,
-    onRender: (item) => {
-        return <span>{item.phonenumber}</span>;
     },
-  },
-  {
-    key: 'typeAppointment',
-    name: 'Loại khám',
-    minWidth: 70,
-    maxWidth: 90,
-    isResizable: true,
-    onRender: (item) => {
-        return <span>{MappingTypeAppointmentSchedule[item.typeAppointment]}</span>;
+    {
+      key: 'initialSymptom',
+      name: 'Triệu chứng ban đầu',
+      minWidth: 100,
+      maxWidth: 140,
+      isResizable: true,
+      onRender: (item) => {
+          return <span>{item.initialSymptom}</span>;
+      },
     },
-  },
 ];
