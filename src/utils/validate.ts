@@ -39,5 +39,10 @@ export default class Validate {
       const regex = /^\d+$/;
       return regex.test(value);
     }
+
+    public static isDecimal = (value) => {
+      const regex = /^\d+(\.\d{1,2})?$/;
+      return regex.test(value)
+    }
 }
 

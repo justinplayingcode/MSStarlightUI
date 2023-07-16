@@ -11,6 +11,8 @@ import Api from "api";
 import { MappingTypeAppointmentSchedule, toastType } from "src/model/enum";
 import { basicKeyValueRender } from "src/utils/utils";
 import { Convert } from "utils";
+import { DefaultButton, Icon } from "@fluentui/react";
+import { TestList } from "src/model/doctorModel";
 
 function DetailsCureHistory() {
   const { id: scheduleId } = useParams();
@@ -90,16 +92,27 @@ function DetailsCureHistory() {
   }
 
   const renderTestResult = (): JSX.Element => {
-    const element: JSX.Element = <>
-      {basicKeyValueRender("Loại xét nghiệm", `${currentState?.healthIndicator?.glucose} mg/dl`)}
-    </>
-
     if(currentState?.testResult?.length > 0) {
+      let element = currentState?.testResult.map(e => {
+        return (
+          <div className="content-section">
+            <div className="content-test-result">
+              <div className="content-test-result-title">
+                <div className="content-test-result-service">{TestList[e.service]}</div>
+                <DefaultButton className="content-test-result-download">
+                  Kết quả <Icon iconName= 'Installation' />
+                </DefaultButton>
+              </div>
+              <div className="content-test-result-reason">{e.reason}</div>
+            </div>
+          </div>
+        )
+      })
       return <UniformSection
-        headerTitle="Kết quả xét nghiệm"
-        elementInner={element}
-        className="cure-details-content-item"
-      />
+          headerTitle="Kết quả xét nghiệm"
+          elementInner={element}
+          className="cure-details-content-item"
+        />
     } else {
       return <></>
     }
