@@ -94,9 +94,7 @@ const PatientWait = ({...props}: IPatientWaitProps) => {
                 closeDialog={() => {
                     setConfirmClosed(true)
                 }}
-                // confirm={confirmActionDialog}
-                confirm={() => {setConfirmClosed(true);
-                  setIsStartProgress(true);}}
+                confirm={confirmActionDialog}
             />
             <NormalProgress
               isOpen={isStartProgress} 

@@ -58,7 +58,7 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
       )
     }
 
-    if(role === accountRole.Doctor && departmentCode !== DepartmentType.tiepDon) {
+    if(role === accountRole.Doctor && departmentCode !== DepartmentType.tiepDon && departmentCode !== DepartmentType.canLamSang) {
       list.push(
         {
           path: '/patient-management-doctor#tab0',

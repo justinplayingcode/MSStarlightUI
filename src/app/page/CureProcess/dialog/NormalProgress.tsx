@@ -35,6 +35,7 @@ interface IErrorMessage {
   symptom: string;
   note: string;
   note2: string;
+  diseases: string;
 }
 
 interface ICurrentState {
@@ -60,6 +61,7 @@ const initErrorMessage: IErrorMessage = {
   symptom: "",
   note: "",
   note2: "",
+  diseases: ""
 }
 
 const initState: ICurrentState = {
@@ -97,7 +99,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
       weight: healthIndicator?.weight || "",
       heartRate: healthIndicator?.heartRate || "",
       temperature: healthIndicator?.temperature || "",
-      bloodPressure: !!(healthIndicator?.bloodPressureSystolic && healthIndicator?.bloodPressureDiastoli) ? `${healthIndicator?.bloodPressureSystolic}/${healthIndicator?.bloodPressureDiastolic}` : "",
+      bloodPressure: !!(healthIndicator?.bloodPressureSystolic && healthIndicator?.bloodPressureDiastolic) ? `${healthIndicator?.bloodPressureSystolic}/${healthIndicator?.bloodPressureDiastolic}` : "",
       glucose: healthIndicator?.glucose || "",
       symptom: tableSelectedItem[0]?.initialSymptom || "",
       note: "",
@@ -121,24 +123,24 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const handleNext = () => {
-    if(!Validate.isNumber(currentState.height)) {
-      setErrorMessage({ ...errorMessage, height: "Chưa đúng định dạng số" })
+    if(!Validate.isDecimal(currentState.height)) {
+      setErrorMessage({ ...errorMessage, height: "Chưa đúng định dạng, ví dụ: 160" })
       return;
     }
-    if(!Validate.isNumber(currentState.weight)) {
-      setErrorMessage({ ...errorMessage, weight: "Chưa đúng định dạng số" })
+    if(!Validate.isDecimal(currentState.weight)) {
+      setErrorMessage({ ...errorMessage, weight: "Chưa đúng định dạng, ví dụ: 50" })
       return;
     }
-    if(!Validate.isNumber(currentState.heartRate)) {
-      setErrorMessage({ ...errorMessage, heartRate: "Chưa đúng định dạng số" })
+    if(!Validate.isDecimal(currentState.heartRate)) {
+      setErrorMessage({ ...errorMessage, heartRate: "Chưa đúng định dạng, ví dụ: 60" })
       return;
     }
-    if(!Validate.isNumber(currentState.temperature)) {
-      setErrorMessage({ ...errorMessage, temperature: "Chưa đúng định dạng số" })
+    if(!Validate.isDecimal(currentState.temperature)) {
+      setErrorMessage({ ...errorMessage, temperature: "Chưa đúng định dạng, ví dụ: 36 hoặc 36.5" })
       return;
     }
-    if(!Validate.isNumber(currentState.glucose)) {
-      setErrorMessage({ ...errorMessage, glucose: "Chưa đúng định dạng số" })
+    if(!Validate.isDecimal(currentState.glucose)) {
+      setErrorMessage({ ...errorMessage, glucose: "Chưa đúng định dạng, ví dụ: 4 hoặc 4.5 hoặc 4.55" })
       return;
     }
     if(!Validate.bloodPressure(currentState.bloodPressure)) {
@@ -151,6 +153,10 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     }
     if(currentState.symptom.length === 0) {
       setErrorMessage({ ...errorMessage, symptom: "Vui lòng không để trống" })
+      return;
+    }
+    if(diseases.length === 0) {
+      setErrorMessage({ ...errorMessage, diseases: "Vui lòng không để trống" })
       return;
     }
     setCurrentStep(currentStep + 1);
@@ -193,22 +199,22 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   const validateInput = (key, value, messageErr) => {
     switch(key) {
       case 'height':
-        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isDecimal(value) ? messageErr : ""})
         break;
       case 'weight':
-        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isDecimal(value) ? messageErr : ""})
         break;
       case 'heartRate':
-        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isDecimal(value) ? messageErr : ""})
         break;
       case 'temperature':
-        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isDecimal(value) ? messageErr : ""})
         break;
       case 'bloodPressure':
         setErrorMessage({ ...errorMessage, [key]: !Validate.bloodPressure(value) ? messageErr : ""})
         break;
       case 'glucose':
-        setErrorMessage({ ...errorMessage, [key]: !Validate.isNumber(value) ? messageErr : ""})
+        setErrorMessage({ ...errorMessage, [key]: !Validate.isDecimal(value) ? messageErr : ""})
         break;
       case 'symptom':
         setErrorMessage({ ...errorMessage, [key]: value.length === 0 ? messageErr : ""})
@@ -234,7 +240,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
 
   const onRenderTestResult = (item: ITestResult) => {
     return (
-      <div className="content-section">
+      <div className="content-section" style={{width: "50%"}}>
         <div className="content-test-result">
           <div className="content-test-result-title">
             <div className="content-test-result-service">{TestList[item.service]}</div>
@@ -376,12 +382,13 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
             <div className="content-section-input width100per">
             <Picker
               label={"Chuẩn đoán bệnh: "}
-              onChangeCallBack={(value) => setDiseases(value)}
+              onChangeCallBack={(value) => {setDiseases(value); setErrorMessage({...errorMessage, diseases: "" })}}
               value={diseases}
               integrateItems={Api.diseasesApi.pickerDiseases}
               mappingValues={mappingValues}
               placeholder={"Nhập tên bệnh"}
             />
+            <span className="common-error">{errorMessage.diseases}</span>
             </div>
             <div className="content-section-input width100per">
               <TextField 
@@ -455,6 +462,34 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const handleTestingBtn = () => {
+    if(!Validate.isDecimal(currentState.height)) {
+      setErrorMessage({ ...errorMessage, height: "Chưa đúng định dạng, ví dụ: 160" })
+      return;
+    }
+    if(!Validate.isDecimal(currentState.weight)) {
+      setErrorMessage({ ...errorMessage, weight: "Chưa đúng định dạng, ví dụ: 50" })
+      return;
+    }
+    if(!Validate.isDecimal(currentState.heartRate)) {
+      setErrorMessage({ ...errorMessage, heartRate: "Chưa đúng định dạng, ví dụ: 60" })
+      return;
+    }
+    if(!Validate.isDecimal(currentState.temperature)) {
+      setErrorMessage({ ...errorMessage, temperature: "Chưa đúng định dạng, ví dụ: 36 hoặc 36.5" })
+      return;
+    }
+    if(!Validate.isDecimal(currentState.glucose)) {
+      setErrorMessage({ ...errorMessage, glucose: "Chưa đúng định dạng, ví dụ: 4 hoặc 4.5 hoặc 4.55" })
+      return;
+    }
+    if(!Validate.bloodPressure(currentState.bloodPressure)) {
+      setErrorMessage({ ...errorMessage, height: "Chưa đúng định dạng, ví dụ: 120/80" })
+      return;
+    }
+    if(currentState.symptom.length === 0) {
+      setErrorMessage({ ...errorMessage, symptom: "Vui lòng không để trống" })
+      return;
+    }
     dispatch(openLoading());
     Api.scheduleApi.getAllTestService().then(data => {
       if(!data.status) {
@@ -470,31 +505,6 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
         dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
       }
     }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => dispatch(closeLoading()));
-  }
-
-  const disableNextBtn = (): boolean => {
-    let result = true;
-    if (errorMessage.height === ""
-      && errorMessage.weight === ""
-      && errorMessage.heartRate === ""
-      && errorMessage.temperature === ""
-      && errorMessage.glucose === ""
-      && errorMessage.bloodPressure === ""
-      && errorMessage.note === ""
-      && errorMessage.symptom === ""
-      //
-      && currentState.height !== ""
-      && currentState.weight !== ""
-      && currentState.heartRate !== ""
-      && currentState.temperature !== ""
-      && currentState.glucose !== ""
-      && currentState.bloodPressure !== ""
-      && currentState.note !== ""
-      && currentState.symptom !== ""
-    ) {
-      result = false
-    }
-    return result
   }
 
   const handleSubmit = () => {
@@ -533,7 +543,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   }
 
   const renderFooter = (): JSX.Element => {
-    const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn} disabled={disableNextBtn()}/>
+    const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn}/>
     const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext}/>
     const backButton = <DefaultButton text="Quay lại" onClick={handleBack} />
     const submitButton = <PrimaryButton text="Hoàn thành" onClick={() => { setDialogOnbroadingClosed(false); onChangeCurrentState("onBoarding", 1) }}/>
