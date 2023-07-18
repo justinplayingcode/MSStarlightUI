@@ -22,7 +22,6 @@ export interface IUniformTableOwnProps {
     commandBarItems: ICommandBarItemProps[];
     integrateItems: (requestBody: any) => Promise<any>;
     tableType: TableType;
-    pageSize?: number;
 }
 
 export interface  IUniformTablePropsFromState {
@@ -59,10 +58,13 @@ const mapStateToProps = (state: RootState) => ({
 class UniformTable extends React.Component<IUniformTableProps, IUniformTableState> {
     private _selection: Selection;
     private _buttonSearch;
+    private _detailListRef;
 
     constructor(props: IUniformTableProps) {
         super(props);
+        this._detailListRef = React.createRef();
         this._buttonSearch = React.createRef();
+        this._detailListRef = React.createRef();
         this._selection = new Selection({
             onSelectionChanged: () => {
               this.props.setTableSelectedCount(this._selection.getSelectedCount());
@@ -76,14 +78,20 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
             searchKey: "",
             page: 1,
             total: 0,
-            pageSize: this.props.pageSize || 20,
+            pageSize: 10,
         };
     }
 
     componentDidMount(): void {
-      this.getData();
+      // this.getData();
       this.props.setTableSelectedCount(0);
       this.props.setTableSelectedItem([]);
+      const detailListElement = this._detailListRef.current;
+      const detailListElementHeight = detailListElement.clientHeight;
+      const _pageSize = Math.floor(detailListElementHeight/44 - 3)
+      this.setState({
+        pageSize: _pageSize
+      }, () => this.getData())
     }
 
     componentDidUpdate(prevProps: Readonly<IUniformTableProps>, prevState: Readonly<IUniformTableState>, snapshot?: any): void {
@@ -191,7 +199,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             </div>
                         </div>
                     </div>
-                    <div className='details-list-wrapper'>
+                    <div className='details-list-wrapper' ref={this._detailListRef}>
                         <MarqueeSelection selection={this._selection}>
                           {
                             isLoading ? 
@@ -230,7 +238,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             </div>
                         }
                     </div>
-                    {total > 20 ? 
+                    {total > 10 ? 
                       <div className='details-list-paging'>
                           <Pagination
                             pageTotal={Math.ceil(total/pageSize)}
