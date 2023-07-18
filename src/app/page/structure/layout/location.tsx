@@ -64,6 +64,12 @@ export const Location = () => {
           text: 'Quản lý bệnh nhân',
           url: '/patient-management-doctor',
       },
+      PatientManagementDoctorDetails: {
+        key: 'route-patient-management-doctor-details',
+        text: 'Thông tin bệnh nhân',
+        url: '/patient-management-doctor/details-history/',
+        parentKeys:["route-patient-management-doctor"]
+    },
       Speciallity: {
           key: 'route-speciality',
           text: 'Quản lý các khoa',
@@ -79,7 +85,7 @@ export const Location = () => {
         key: 'route-speciality-doctors-details',
         text: 'Thông tin bác sĩ',
         url: '/speciality/doctors/details',
-        parentKeys: ['route-speciality']
+        parentKeys: ['route-speciality','route-speciality-doctors']
       },
       TotalCureProcess: {
           key: 'route-cure',
@@ -177,14 +183,15 @@ export const Location = () => {
             text:'',
             key:''
         };
-        // if (routeItem.key !== 'route-home'){
-            item.key = routeItem.key;
-            item.text = routeItem.text
-        // };
-        
+        item.key = routeItem.key;
+        item.text = routeItem.text
         if (routeItem.url){
             item.onClick = () => {
+              if(routeItem.parentKeys) {
+                navigate(-1);
+              } else {
                 navigate(routeItem.url)
+              }
             }
         } else {
             item.style = { textDecoration: "unset"};
@@ -197,13 +204,13 @@ export const Location = () => {
         const items: IBreadcrumbItem[] = [];
 
         if(routeItem?.parentKeys?.length)
-            routeItem.parentKeys.forEach((key) => {
-                items.push(assembleParentItem(key))
-            });
-        items.push({
-        key: routeItem.key,
-        text: routeItem.text
-        });
+          routeItem.parentKeys.forEach((key) => {
+              items.push(assembleParentItem(key))
+          });
+          items.push({
+            key: routeItem.key,
+            text: routeItem.text
+          });
         return items;
     },[pathname]);
 

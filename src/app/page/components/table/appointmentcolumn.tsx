@@ -6,7 +6,7 @@ export const appointmentColumn = [
       key: 'departmentName',
       name: 'Khoa',
       minWidth: 80,
-      maxWidth: 150,
+      maxWidth: 120,
       isResizable: true,
       onRender: (item) => {
           return <span>{item.departmentName}</span>;
@@ -49,7 +49,7 @@ export const appointmentColumn = [
     maxWidth: 90,
     isResizable: true,
     onRender: (item) => {
-        return <span>{Convert.getDoctorPosition(item?.position)}</span>
+        return <span>{Convert.getDoctorPosition(item?.doctorPosition)}</span>
     },
   },
   {
@@ -59,7 +59,7 @@ export const appointmentColumn = [
     maxWidth: 90,
     isResizable: true,
     onRender: (item) => {
-        return <span>{Convert.getDoctorRank(item?.rank)}</span>
+        return <span>{Convert.getDoctorRank(item?.doctorRank)}</span>
     },
   },
   {

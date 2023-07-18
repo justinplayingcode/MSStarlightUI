@@ -23,7 +23,6 @@ import Appointment from "src/app/page/Appointment";
 import NewsPost from "src/app/page/News";
 import NewsCreate from "src/app/page/News/SubMenu/NewsCreate";
 import NewsReview from "src/app/page/News/SubMenu/NewsReview";
-import TreatmentManagement from "src/app/page/CureProcess/TreatmentManagement";
 import { MainPanel } from "src/app/common/Uniformpanel";
 import { LoadingDot, LoadingInComing } from "src/app/common/loading";
 import DoctorAppointment from "../../DoctorAppointments";
@@ -32,6 +31,7 @@ import PatientDetails from "../../DetailsUser/PatientDetails";
 import DoctorDetails from "../../DetailsUser/DoctorDetails";
 import DoctorInDepartment from "../../Speciality/DoctorInDepartment";
 import DetailsCureHistory from "../../CureHistory/DetailsCureHistory";
+import PatientManagement from "../../PatientManagement";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -154,7 +154,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <CureProcess/>
                 break;
             case pageConstant.LAYOUT_ON_BOARDING:
-                content = <TreatmentManagement/>;
+                content = <PatientManagement/>;
                 break;                
             case pageConstant.LAYOUT_CURE_HISTORY:
                 content = <CureHistory />

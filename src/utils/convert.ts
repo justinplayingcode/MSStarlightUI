@@ -91,7 +91,7 @@ export default class Convert {
             case DoctorRank.GSTS: 
                 return 'Giáo sư, Tiến sĩ';
             default:
-                return 'Bác sĩ';
+                return 'Không';
         }
     }
 

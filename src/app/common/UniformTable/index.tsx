@@ -199,6 +199,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                                 items={items}
                                 columns={columns}
                                 enableShimmer={true}
+                                className='shimmertable'
                               />
                             :
                             <DetailsList
@@ -229,14 +230,16 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             </div>
                         }
                     </div>
-                    <div className='details-list-paging'>
-                        <Pagination
-                          pageTotal={Math.ceil(total/pageSize)}
-                          postPerPage={10}
-                          callback={this.onChangePaging.bind(this)}
-                          disable={isLoading}
-                        />
-                    </div>
+                    {total > 20 ? 
+                      <div className='details-list-paging'>
+                          <Pagination
+                            pageTotal={Math.ceil(total/pageSize)}
+                            postPerPage={10}
+                            callback={this.onChangePaging.bind(this)}
+                            disable={isLoading}
+                          />
+                      </div>
+                    : <></>}
                 </div>
             </Stack>
         );

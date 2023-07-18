@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Tabs, { ITabProps } from 'src/app/common/Tab';
-import PatientOutOnboarding from './component/PatientOutOnboarding';
-import PatientInOnboarding from './component/PatientInOnboarding';
+import PatientOutOnboarding from './components/PatientOutOnboarding';
+import PatientInOnboarding from './components/PatientInOnboarding';
 
-const TreatmentManagement = () => {
+const PatientManagement = () => {
     const [selectedTab, setSelectedTab] = React.useState<number>(0);
 
     const getTab = () => {
@@ -31,5 +31,5 @@ const TreatmentManagement = () => {
     )
 }
 
-export default TreatmentManagement;
+export default PatientManagement;
 

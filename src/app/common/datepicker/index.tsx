@@ -4,7 +4,8 @@ import { Convert } from 'utils';
 
 interface ICustomDatePickerProps {
   onChangeDate: (value) => void;
-  errorMessage: string
+  errorMessage: string;
+  currentDate?: Date;
 }
 
 const CustomDatePicker = ({...props}: ICustomDatePickerProps) => {
@@ -60,7 +61,7 @@ const CustomDatePicker = ({...props}: ICustomDatePickerProps) => {
     <div className='date-picker-container'>
       <DatePicker
         placeholder="Chọn ngày"
-        value={selectedDate}
+        value={props.currentDate || selectedDate}
         minDate={minDate}
         onSelectDate={handleSelectDate}
         strings={datePickerStrings}
