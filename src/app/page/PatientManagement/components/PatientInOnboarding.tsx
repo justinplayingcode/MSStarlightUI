@@ -1,5 +1,5 @@
 import { UniformTable } from "src/app/common";
-import { TableType } from "src/model/enum";
+import { ApiStatus, TableType, toastType } from "src/model/enum";
 import Api from "api";
 import { patientonboardingtColumns } from "../../components/table/patientonboarding";
 import { RootState } from "src/redux/store";
@@ -8,7 +8,10 @@ import { useState } from "react";
 import { DefaultButton, Dialog, DialogFooter, ICommandBarItemProps, PrimaryButton, TextField } from "@fluentui/react";
 import CustomDatePicker from "src/app/common/Datepicker";
 import { basicKeyValueRender } from "src/utils/utils";
-import "./index.scss"
+import { useDispatch } from "react-redux";
+import { closeLoading, openLoading, showToastMessage } from "src/redux/reducers";
+import { Convert } from "utils";
+import { useNavigate } from "react-router-dom";
 
 const PatientInOnboarding = () => {
   const {tableSelectedCount, tableSelectedItem} = useSelector((state: RootState) => state.currentSelected);
@@ -18,25 +21,57 @@ const PatientInOnboarding = () => {
   const [dateError, setDateError] = useState<string>("Hãy chọn ngày hẹn");
   const [descError, setDescError] = useState<string>("Hãy điền vào trường này");
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const resetDialog = () => {
+    setSelectedDate(undefined);
+    setDescription("")
+  }
+
   const getCommandBar = () => {
     const commandBar: ICommandBarItemProps[] = [];
     if(tableSelectedCount === 1) {
-      commandBar.push({
-        key: "appointment",
-        text: "Hẹn lịch khám",
-        iconProps: { iconName: 'CalendarAgenda' },
-        onClick: () => setCloseDialog(false)
-      })
+      commandBar.push(
+        {
+          key: "details-patient",
+          text: "Thông tin chi tiết",
+          iconProps: { iconName: 'TextDocumentShared' },
+          onClick: () => navigate(`/patient-management-doctor/details-history/${tableSelectedItem[0].patientId}`)
+        },
+        {
+          key: "appointment",
+          text: "Hẹn lịch khám",
+          iconProps: { iconName: 'CalendarMirrored' },
+          onClick: () => setCloseDialog(false)
+        }
+      )
     }
     return commandBar;
   }
 
   const handleSubmitDialog = () => {
-    if(dateError && descError) {
+    if(!!dateError || !!descError) {
       return
     }
-    // call api
-    setCloseDialog(true)
+    const body = {
+      patientId: tableSelectedItem[0]?.patientId,
+      initialSymptom: description,
+      departmentId: tableSelectedItem[0]?.departmentId,
+      appointmentDate: Convert.datetommddyyyy(selectedDate),
+    }
+    dispatch(openLoading());
+    Api.scheduleApi.doctorRequestSchedule(body).then(data => {
+      if(data.status === ApiStatus.succes) {
+        dispatch(showToastMessage({message: "Hẹn lịch khám với bệnh nhân thành công", type: toastType.succes}));
+        setCloseDialog(true);
+        resetDialog();
+      } else {
+        dispatch(showToastMessage({message: 'Có lỗi, vui lòng liên hệ bộ phận hỗ trợ', type: toastType.error}));
+      }
+    }).catch(() => {
+      dispatch(showToastMessage({message: 'Có lỗi, vui lòng liên hệ bộ phận hỗ trợ', type: toastType.error}))
+    }).finally(() => dispatch(closeLoading()))
   }
 
   const onDismissDialog = () => {
@@ -67,6 +102,7 @@ const PatientInOnboarding = () => {
           <CustomDatePicker
             onChangeDate={handleChangeDate}
             errorMessage={dateError}
+            currentDate={selectedDate}
           />
       </div>
       <div className="make-appointment-dialog">

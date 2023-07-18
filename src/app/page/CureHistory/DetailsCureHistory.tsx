@@ -124,10 +124,9 @@ function DetailsCureHistory() {
 
   const renderSummary = (): JSX.Element => {
     return <>
-      {basicKeyValueRender("Chuẩn đoán", currentState?.summary)}
-      {currentState?.diseases.map(e => {
-        return basicKeyValueRender("Bệnh", e.diseasesName)
-      })}
+        {currentState?.diseases.map(e => {
+          return basicKeyValueRender("Tên bệnh", e.diseasesName)
+        })}
     </>
   }
 
@@ -136,6 +135,13 @@ function DetailsCureHistory() {
       {currentState?.medication.map(e => {
         return basicKeyValueRender("Tên thuốc", e.name)
       })}
+      {basicKeyValueRender("Ghi chú", currentState?.note)}
+    </>
+  }
+
+  const renderNote = ():JSX.Element => {
+    return <>
+      {basicKeyValueRender("Chỉ định", currentState?.summary)}
     </>
   }
 
@@ -161,18 +167,18 @@ function DetailsCureHistory() {
           />
           {renderTestResult()}
           <UniformSection
-            headerTitle="Kết luận"
+            headerTitle="Chuẩn đoán"
             elementInner={renderSummary()}
+            className="cure-details-content-item"
+          />
+          <UniformSection
+            headerTitle="Kết luận"
+            elementInner={renderNote()}
             className="cure-details-content-item"
           />
           <UniformSection
             headerTitle="Đơn thuốc"
             elementInner={renderMedication()}
-            className="cure-details-content-item"
-          />
-          <UniformSection
-            headerTitle="Ghi chú"
-            elementInner={currentState?.note}
             className="cure-details-content-item"
           />
         </div>

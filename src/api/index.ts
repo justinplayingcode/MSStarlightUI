@@ -25,6 +25,7 @@ const api = {
     getPatientsOnBoarding: '/healthcare/getallpatientonbroading',
     getAllTestService: "/healthcare/alltestservice",
     getDetailsMedical: "/healthcare/gethistorymedicaldetails",
+    getDetailsPatientWithHitories: "/healthcare/gethistorymedical",
     
     //department
     getAllDepartment: '/department/getall',
@@ -55,8 +56,7 @@ const api = {
     allTestRequest: '/schedule/alltestrequest', // bác sĩ xét nghiệm lấy toàn bộ yêu cầu xét nghiệm
     doneTesting: '/schedule/donetesting',
     done: '/schedule/done', // kết thúc 1 lần khám, chưa viết xong
-
-
+    doctorRequestSchedule: '/schedule/doctorrequestschedule',
 }
 
 const authApi = {
@@ -142,11 +142,13 @@ const scheduleApi = {
   allTestRequest: (reqbody) => apiClient.post(api.allTestRequest, reqbody),
   doneTesting: (reqbody) => apiClient.post(api.doneTesting, reqbody),
   done: (reqbody) => apiClient.post(api.done, reqbody),
+  doctorRequestSchedule: (reqbody) => apiClient.post(api.doctorRequestSchedule, reqbody),
 }
 
 const historyMedicalApi = {
   getAllHistoryMedical: (reqbody) => apiClient.post(api.getHistoryMedical, reqbody),
-  getDetails: (queryString) => apiClient.get(`${api.getDetailsMedical}?id=${queryString}`)
+  getDetails: (queryString) => apiClient.get(`${api.getDetailsMedical}?id=${queryString}`),
+  getDetailsPatient: (queryString) => apiClient.get(`${api.getDetailsPatientWithHitories}?id=${queryString}`)
 }
 
 const Api = {
