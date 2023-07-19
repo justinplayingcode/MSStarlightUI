@@ -37,7 +37,7 @@ const PatientInOnboarding = () => {
           key: "details-patient",
           text: "Thông tin chi tiết",
           iconProps: { iconName: 'TextDocumentShared' },
-          onClick: () => navigate(`/patient-management-doctor/details-history/${tableSelectedItem[0].patientId}`)
+          onClick: () => navigate(`/patient-management-doctor/details/${tableSelectedItem[0].patientId}`)
         },
         {
           key: "appointment",

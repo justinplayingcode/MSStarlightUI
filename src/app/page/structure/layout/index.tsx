@@ -32,6 +32,7 @@ import DoctorDetails from "../../DetailsUser/DoctorDetails";
 import DoctorInDepartment from "../../Speciality/DoctorInDepartment";
 import DetailsCureHistory from "../../CureHistory/DetailsCureHistory";
 import PatientManagement from "../../PatientManagement";
+import PatientDetailsWithHitories from "../../PatientManagement/components/PatientDetailsWithHitstories";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -132,7 +133,6 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_PASSWORD_CHANGE:
                 content = <PasswordChange />
                 break;
-
             case pageConstant.LAYOUT_ACCOUNT_PATIENT_MANAGEMENT:
                 content = <AccountPage page={page}/>
                 break;
@@ -145,11 +145,9 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             case pageConstant.LAYOUT_ACCOUNT_DOCTOR_DETAILS:
                 content = <DoctorDetails/>;
                 break;
-
             case pageConstant.LAYOUT_SPECIALITY:
                 content = <Speciality />
                 break;
-
             case pageConstant.LAYOUT_CURE_PROCESS:
                 content = <CureProcess/>
                 break;
@@ -187,8 +185,14 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
                 content = <DoctorInDepartment/>
                 break;
             case pageConstant.LAYOUT_CURE_HISTORY_DETAILS:
-              content = <DetailsCureHistory/>
-              break;
+                content = <DetailsCureHistory/>
+                break;
+            case pageConstant.LAYOUT_ON_BOARDING_DETAILS:
+                content = <PatientDetailsWithHitories/>
+                break;
+            case pageConstant.LAYOUT_ON_BOARDING_HISTORY:
+                content = <DetailsCureHistory/>
+                break;
             default:
                 content = <></>
                 break;

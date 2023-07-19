@@ -18,10 +18,10 @@ function DetailsCureHistory() {
   const { id: scheduleId } = useParams();
   const { role } = useSelector((state: RootState) => state.user);
   const [currentState, setCurrentState] = useState<any>(null);
-  const [testResult, setTestResult] = useState<any[]>([]);
-  const [healthIndicator, setHealthIndicator] = useState<any>(null);
-  const [diseases, setDiseases] = useState<any[]>([]);
-  const [medication, setMedication] = useState<any[]>([]);
+  // const [testResult, setTestResult] = useState<any[]>([]);
+  // const [healthIndicator, setHealthIndicator] = useState<any>(null);
+  // const [diseases, setDiseases] = useState<any[]>([]);
+  // const [medication, setMedication] = useState<any[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
