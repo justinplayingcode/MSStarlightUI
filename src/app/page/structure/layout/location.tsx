@@ -67,9 +67,15 @@ export const Location = () => {
       PatientManagementDoctorDetails: {
         key: 'route-patient-management-doctor-details',
         text: 'Thông tin bệnh nhân',
-        url: '/patient-management-doctor/details-history/',
+        url: '/patient-management-doctor/details/',
         parentKeys:["route-patient-management-doctor"]
-    },
+      },
+      PatientManagementDoctorDetailsHitories: {
+        key: 'route-patient-management-doctor-details-hítory',
+        text: 'Lịch sử khám bệnh',
+        url: '/patient-management-doctor/details/historymedical/',
+        parentKeys:["route-patient-management-doctor", "route-patient-management-doctor-details"]
+      },
       Speciallity: {
           key: 'route-speciality',
           text: 'Quản lý các khoa',

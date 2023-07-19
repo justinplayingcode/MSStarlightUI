@@ -1,8 +1,7 @@
-import { IColumn, Stack } from "@fluentui/react"
-import { useNavigate } from "react-router-dom";
+import { IColumn } from "@fluentui/react"
 import { LinkButton } from "src/app/common/Link";
 import { tooltipPlainText } from "src/utils/utils";
-import { Convert, Validate } from "utils";
+import { Convert } from "utils";
 
 export const doctormanagementColumns: IColumn[] = [
   {
