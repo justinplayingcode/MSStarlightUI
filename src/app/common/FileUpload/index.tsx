@@ -1,5 +1,4 @@
-import { PrimaryButton, Stack } from "@fluentui/react";
-import * as React from "react"
+import { Stack } from "@fluentui/react";
 import "./FileUpload.scss"
 
 interface IUploadProps{
@@ -24,8 +23,8 @@ const FileUpload = (props: IUploadProps) => {
         <>
             <Stack className="file-card">
                 <Stack className="file-input">
-                    <input type="file" accept={props.accept} onChange={uploadHandler}/>
-                    <button className="upload-btn">{props?.text ? props.text : "Upload"}</button>
+                    <input id="upload-input" type="file" accept={props.accept} onChange={uploadHandler}/>
+                    <label htmlFor="upload-input" className="upload-label">{props?.text ? props.text : "Upload"}</label>
                 </Stack>
             </Stack>
         </>

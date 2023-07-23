@@ -74,3 +74,40 @@
     }
   }
 }
+
+.modal-cure-history-test-result {
+  height: 100%;
+  .ms-Dialog-main {
+    height: calc(100% - 60px);
+    .ms-Modal-scrollableContent {
+      height: 100%;
+      .modal-cure-history-wrapper {
+        background-color: rgba(0, 0, 0, 0.4);
+        height: 100%;
+        width: 84vw;
+        position: relative;
+
+        .modal-cure-history-content {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .modal-cure-history-image {
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: top center;
+          }
+        }
+        .modal-cure-history-btn-dismiss {
+          position: absolute;
+          right: 0;
+          top: 0;
+          &:hover {
+            background-color: #9f9f9f;
+          }
+        }
+      }
+    }
+  }
+}

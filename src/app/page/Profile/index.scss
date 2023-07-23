@@ -44,6 +44,26 @@
                             }
                         }
                     }
+                    .btn-set-avatar-to-default {
+                      margin-top: 8px;
+                      background-color: #F2F3F4;
+                      height: 36px;
+                      font-weight: normal;
+                      border: 1px #ccc solid;
+                      border-radius: 4px;
+                      &:hover {
+                        background-color: #F2F3F4;
+                      }
+
+                      .ms-Button-flexContainer {
+                        .ms-Button-textContainer {
+                          .ms-Button-label {
+                            font-weight: normal;
+                            font-size: 14px;
+                          }
+                        }
+                      }
+                    }
                 }
             }
             .profile-detail-info{

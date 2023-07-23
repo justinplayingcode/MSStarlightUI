@@ -16,7 +16,9 @@ const api = {
     getAll: '/account/getall',
     changeInfoDoctorByAdmin: '/account/changeinfodoctor',
     getInfoDetail: '/account/detail',
-    
+    editAvatar: '/account/uploadavatar',
+    avatarToDefault: '/account/defaultavatar',
+  
     //healthcare
     getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
@@ -84,7 +86,9 @@ const accountApi = {
         return apiClient.post(api.createPatient, reqbody)
     },
     changeInfoDoctorByAdmin: (reqbody) => apiClient.put(api.changeInfoDoctorByAdmin, reqbody),
-    getInfoDetail: (queryString) => apiClient.get(`${api.getInfoDetail}?id=${queryString}`)
+    getInfoDetail: (queryString) => apiClient.get(`${api.getInfoDetail}?id=${queryString}`),
+    editAvatar: (formData) => apiClient.post(api.editAvatar, formData),
+    toDefaultAvatar: () => apiClient.put(api.avatarToDefault)
 }
 
 const cureProcessApi = {    
