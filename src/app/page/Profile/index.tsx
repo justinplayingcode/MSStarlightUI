@@ -1,4 +1,4 @@
-import { DatePicker, DefaultButton, Dialog, DialogFooter, Dropdown, IDropdownOption, Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
+import { DefaultButton, Dialog, DialogFooter, IDropdownOption, PrimaryButton, Stack } from '@fluentui/react';
 import * as React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
@@ -14,7 +14,7 @@ import { gender } from 'src/model/userModel';
 import { useDispatch } from 'react-redux';
 import Api from 'api';
 import { closeLoading, openLoading, setInfoUser, showToastMessage } from 'src/redux/reducers';
-import { toastType } from 'src/model/enum';
+import { ApiStatus, toastType } from 'src/model/enum';
 import FileUpload from 'src/app/common/FileUpload';
 
 const Profile = () => {
@@ -32,6 +32,7 @@ const Profile = () => {
     const [identification, setIdentification] = useState<string>(info?.identification);
     const [avatarFile, setAvatarFile] = useState<File[]>([]);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [openDefaultAvatar, setOpenDefaultAvatar] = useState<boolean>(false);
 
     useEffect(()=>{
         setDateOfBirth(Convert.dmystringtoDate(info?.dateOfBirth))
@@ -284,6 +285,47 @@ const Profile = () => {
         }
     },[avatarFile])
 
+    const handleConfirmAvatar = () => {
+      const formData = new FormData();
+      formData.append('avatar', avatarFile[0]);
+      dispatch(openLoading());
+      Api.accountApi.editAvatar(formData).then(data => {
+        if(data.status) {
+          dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+        } else {
+          dispatch(showToastMessage({message: "Cập nhật ảnh đại diện thành công", type: toastType.succes}));
+          getInfoCurrentUser();
+          setAvatarFile([]);
+          setOpenDialog(false)
+        }
+      }).catch(() => {
+        dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+      }).finally(() => dispatch(closeLoading()))
+    }
+
+    const getInfoCurrentUser = async () => {
+      const res = await Api.authApi.getInfoCurrentUser();
+      if(res.status === ApiStatus.succes) {
+          dispatch(setInfoUser(res.data));
+      }
+      return res.status
+    }
+
+    const handleSetAvatarToDefault = () => {
+      dispatch(openLoading());
+      Api.accountApi.toDefaultAvatar().then(data => {
+        if(data.status) {
+          dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+        } else {
+          dispatch(showToastMessage({message: "Đặt ảnh đại diện về mặc định", type: toastType.info}));
+          getInfoCurrentUser();
+          setOpenDefaultAvatar(false)
+        }
+      }).catch(() => {
+        dispatch(showToastMessage({message: "Có lỗi xảy ra, hãy thử lại", type: toastType.error}));
+      }).finally(() => dispatch(closeLoading()))
+    }
+
     return(
         <div className='wrapper-table-content'>
             <Stack className='user-profile'>
@@ -303,13 +345,18 @@ const Profile = () => {
                         <Avatar size={AvatarSize.SuperLarge} avatar_scr={info?.avatar} isRound={true} />
                         <Stack>{Convert.getAccountRoleName(role)}</Stack>
                         <Stack className='profile-change-password'>
-                            <FileUpload 
-                                files={avatarFile} 
-                                isView={false} 
-                                multiple={false}
-                                text='Đổi ảnh đại diện'
-                                accept="image/*"
-                                addFiles={setAvatarFile}/>
+                          <FileUpload 
+                            files={avatarFile} 
+                            isView={false} 
+                            multiple={false}
+                            text='Đổi ảnh đại diện'
+                            accept="image/*"
+                            addFiles={setAvatarFile}/>
+
+                          <DefaultButton 
+                            onClick={() => setOpenDefaultAvatar(true)}
+                            className='btn-set-avatar-to-default'
+                            >Đặt về mặc định</DefaultButton>
                         </Stack>
                     </Stack>
                     <Stack className='profile-detail-info'>
@@ -352,9 +399,27 @@ const Profile = () => {
                         }}
                     />
                     <PrimaryButton text='Xác nhận' 
+                        onClick={handleConfirmAvatar}
+                    />
+                </DialogFooter>
+            </Dialog>
+            <Dialog
+                hidden={!openDefaultAvatar}
+                onDismiss={() => setOpenDefaultAvatar(false)}
+                dialogContentProps={{title: 'Đặt ảnh đại diện về mặc định'}}
+                maxWidth={'480px'}
+                minWidth={'480px'}
+                modalProps={{isBlocking: true}}
+            >
+                <Stack>Bạn có muốn đặt ảnh đại diện hiện tại về mặc định</Stack>
+                <DialogFooter>
+                    <DefaultButton text='Hủy'
                         onClick={() => {
-                            console.log(avatarFile);                            
+                          setOpenDefaultAvatar(false)
                         }}
+                    />
+                    <PrimaryButton text='Xác nhận' 
+                        onClick={handleSetAvatarToDefault}
                     />
                 </DialogFooter>
             </Dialog>

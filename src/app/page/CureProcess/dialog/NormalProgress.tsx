@@ -1,4 +1,4 @@
-import { Checkbox, ChoiceGroup, DefaultButton, Dialog, DialogFooter, IChoiceGroupOption, IPersonaProps, Icon, Modal, PrimaryButton, TextField } from "@fluentui/react";
+import { Checkbox, ChoiceGroup, DefaultButton, Dialog, DialogFooter, IChoiceGroupOption, IPersonaProps, Icon, IconButton, Modal, PrimaryButton, TextField } from "@fluentui/react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
@@ -91,6 +91,9 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
   const [servicedTest, setServiceTest] = useState<any[]>([]);
   const [diseases, setDiseases] = useState<IPersonaProps[]>([]);
   const [medication, setMedication] = useState<IPersonaProps[]>([]);
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [resultImage, setResultImage] = useState<string>(null);
 
   useEffect(() => {
     const healthIndicator = props.historyAppointment?.healthIndicator;
@@ -238,14 +241,20 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     validateInput(key, value, messageErr)
   }
 
-  const onRenderTestResult = (item: ITestResult) => {
+  const handleOpenModel = (image: string) => {
+    setResultImage(image)
+    setIsModalOpen(true)
+  }
+
+  const onRenderTestResult = (item) => {
     return (
       <div className="content-section" style={{width: "50%"}}>
         <div className="content-test-result">
           <div className="content-test-result-title">
             <div className="content-test-result-service">{TestList[item.service]}</div>
-            <DefaultButton className="content-test-result-download">
-              Kết quả <Icon iconName= 'Installation' />
+            <DefaultButton className="content-test-result-download"
+            onClick={() => handleOpenModel(item.detailsFileCloud)}>
+              Chi tiết<Icon iconName= 'QuestionnaireMirrored' />
             </DefaultButton>
           </div>
           <div className="content-test-result-reason">{item.reason}</div>
@@ -617,6 +626,24 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     )
   }
 
+  const renderContentModal = ():JSX.Element => {
+    return (
+      <div className="modal-cure-history-wrapper">
+        <div className="modal-cure-history-content">
+          <div className="modal-cure-history-image"
+            style={{backgroundImage: `url(${resultImage})`}}
+          ></div>
+        </div>
+        <IconButton
+            className="modal-cure-history-btn-dismiss"
+            iconProps={{ iconName: 'Cancel' }}
+            ariaLabel="Close popup modal"
+            onClick={() => setIsModalOpen(false)}
+          />
+      </div>
+    )
+  }
+
   return (  
     <Modal
       className="modal-process-container"
@@ -660,6 +687,14 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
               <PrimaryButton text='Xác nhận' onClick={handleSubmit} />
           </DialogFooter>
       </Dialog>
+      <Modal
+        isOpen={isModalOpen}
+        onDismiss={() => setIsModalOpen(false)}
+        isBlocking={false}
+        className="modal-cure-history-test-result"
+      >
+        {renderContentModal()}
+      </Modal>
     </Modal>
   );
 }

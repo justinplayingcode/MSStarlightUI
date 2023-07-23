@@ -57,7 +57,12 @@ export const Login: React.FunctionComponent = () => {
                 horizontalAlign="center"
                 verticalAlign="center"
                 onKeyDown={handleKeyDown}
+                style={{background: "url(https://res.cloudinary.com/justinpham311/image/upload/v1689872100/benhvien/2_ax63na.jpg)", backgroundRepeat: "no-repeat", backgroundSize: "cover"}}
             >
+                <div id="overlay-login"></div>
+                <div id="header-login">
+                  
+                </div>
                 <Stack className="login-form-container">
                     <Stack className="form-container">
                         <Stack horizontalAlign="center" className="logo" >

@@ -1,3 +1,5 @@
-# ĐATN_HOSPITAL_MANAGEMENT_HUST
+### ĐATN_HOSPITAL_MANAGEMENT_HUST
 
-## yarn dev
+##### Phạm Duy Thắng _ 20193107
+##### Nguyễn Trọng Dự _ 20192763
+

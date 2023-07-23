@@ -4,47 +4,25 @@ $radius : 20px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(35deg, rgba(205,218,116,1) 0%, rgba(33,101,207,1) 100%);
-    .login-form-header{
-        z-index: 10;
-        position: fixed;
-        top: 0;
+    position: relative;
 
-        background-color: #fff;
-        height: 100px;
-        width: 100%;
-
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;       
-        .form-header-content{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 88px;
-            .img-div{
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                .header-text{
-                    font-size: 24px;
-                    color:rgb(0, 120, 212)
-                }
-            }
-            img{
-                height: 100px;
-                width: 100px;
-            }
-        }
+    #overlay-login {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.7);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99;
     }
+
     .login-form-container{
-        min-width: 360px;
-        padding: 30px;
-        border-radius: 30px;
-
-        background-color: #f6f6f6;
-        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-
+        min-width: 390px;
+        width: 25%;
+        padding: 30px 40px;
+        border-radius: 4px;
+        z-index: 100;
+        background-color: #fff;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -61,8 +39,7 @@ $radius : 20px;
             }
             .ms-TextField-fieldGroup{
               border: none;
-              border-radius: 20px;
-              height: 40px;
+              box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
                 &::after{
                     border: none;
                 }
@@ -72,9 +49,13 @@ $radius : 20px;
                 font-size: 16px;
               }
               .ms-TextField-reveal {
-                height: 40px;
-                border-radius: 20px;
+                height: 32px;
                 color: #333;
+                background-color: #fff;
+                &:hover {
+                  cursor: pointer;
+                  background-color: #fff;
+                }
               }
             }
             .error-message{
@@ -84,16 +65,15 @@ $radius : 20px;
                 font-size: 14px;
             }
             .log-in-btn{
-              background-color: #ccc;
+              background-color: #39688a;
+              color: #fff;
               margin-bottom: 4px;
-              border-radius: 20px;
               height: 40px;   
               border: none; 
-              box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
+              box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
               &:hover{
-                  color: #7d7d7d;
-                  background-color: #d5d5d5;
+                  background-color: #345e7c;
+                  cursor: pointer;
               }
               .ms-Button-label {
                 font-size: 18px;

@@ -11,19 +11,18 @@ import Api from "api";
 import { MappingTypeAppointmentSchedule, toastType } from "src/model/enum";
 import { basicKeyValueRender } from "src/utils/utils";
 import { Convert } from "utils";
-import { DefaultButton, Icon } from "@fluentui/react";
+import { DefaultButton, Icon, IconButton, Modal } from "@fluentui/react";
 import { TestList } from "src/model/doctorModel";
 
 function DetailsCureHistory() {
   const { id: scheduleId } = useParams();
   const { role } = useSelector((state: RootState) => state.user);
   const [currentState, setCurrentState] = useState<any>(null);
-  // const [testResult, setTestResult] = useState<any[]>([]);
-  // const [healthIndicator, setHealthIndicator] = useState<any>(null);
-  // const [diseases, setDiseases] = useState<any[]>([]);
-  // const [medication, setMedication] = useState<any[]>([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [resultImage, setResultImage] = useState<string>(null);
 
   useEffect(() => {
     getInformation();
@@ -97,14 +96,16 @@ function DetailsCureHistory() {
 
   const renderTestResult = (): JSX.Element => {
     if(currentState?.testResult?.length > 0) {
-      let element = currentState?.testResult.map(e => {
+      let element = currentState?.testResult.map((e,i) => {
         return (
-          <div className="content-section">
+          <div className="content-section" key={i}>
             <div className="content-test-result">
               <div className="content-test-result-title">
                 <div className="content-test-result-service">{TestList[e.service]}</div>
-                <DefaultButton className="content-test-result-download">
-                  Kết quả <Icon iconName= 'Installation' />
+                <DefaultButton 
+                  className="content-test-result-download"
+                  onClick={() => handleOpenModel(e.detailsFileCloud)}
+                >Chi tiết<Icon iconName= 'QuestionnaireMirrored' />
                 </DefaultButton>
               </div>
               <div className="content-test-result-reason">{e.reason}</div>
@@ -122,18 +123,23 @@ function DetailsCureHistory() {
     }
   }
 
+  const handleOpenModel = (image: string) => {
+    setResultImage(image)
+    setIsModalOpen(true)
+  }
+
   const renderSummary = (): JSX.Element => {
     return <>
-        {currentState?.diseases.map(e => {
-          return basicKeyValueRender("Tên bệnh", e.diseasesName)
+        {currentState?.diseases.map((e,i) => {
+          return basicKeyValueRender("Tên bệnh", e.diseasesName, i)
         })}
     </>
   }
 
   const renderMedication = (): JSX.Element => {
     return <>
-      {currentState?.medication.map(e => {
-        return basicKeyValueRender("Tên thuốc", e.name)
+      {currentState?.medication.map((e,i) => {
+        return basicKeyValueRender("Tên thuốc", e.name, i)
       })}
       {basicKeyValueRender("Ghi chú", currentState?.note)}
     </>
@@ -143,6 +149,24 @@ function DetailsCureHistory() {
     return <>
       {basicKeyValueRender("Chỉ định", currentState?.summary)}
     </>
+  }
+
+  const renderContentModal = ():JSX.Element => {
+    return (
+      <div className="modal-cure-history-wrapper">
+        <div className="modal-cure-history-content">
+          <div className="modal-cure-history-image"
+            style={{backgroundImage: `url(${resultImage})`}}
+          ></div>
+        </div>
+        <IconButton
+            className="modal-cure-history-btn-dismiss"
+            iconProps={{ iconName: 'Cancel' }}
+            ariaLabel="Close popup modal"
+            onClick={() => setIsModalOpen(false)}
+          />
+      </div>
+    )
   }
 
   return (
@@ -183,6 +207,14 @@ function DetailsCureHistory() {
           />
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onDismiss={() => setIsModalOpen(false)}
+        isBlocking={false}
+        className="modal-cure-history-test-result"
+      >
+        {renderContentModal()}
+      </Modal>
     </div>
   );
 }

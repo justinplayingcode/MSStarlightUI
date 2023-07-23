@@ -18,8 +18,7 @@ function DoctorHome() {
     // call api
     const a = {
       scheduleCount: 2,
-      onboardingIn: 10,
-      onboardingOut: 10,
+      requestCount: 5,
       onboardingInCount: [500, 400, 560, 400, 300, 450, 700, 800, 1000, 650, 600, 500],
       onboardingOutCount: [200, 600, 360, 300, 100, 550, 400, 500, 1200, 250, 500, 800],
       labelsBarChar: ["8/7", "9/7", "10/7", "11/7", "12/7", "13/7", "14/7",],
@@ -48,10 +47,26 @@ function DoctorHome() {
         <div className="schedule-content">
           <div className="schedule-details">
             <div className="schedule-details-text">
-              <div className="schedule-details-title">Lịch hẹn khám bệnh hôm nay:</div>{currentState?.scheduleCount}
+              <div className="schedule-details-title">Lịch hẹn khám bệnh hôm nay</div>{currentState?.scheduleCount}
             </div>          
             <div className="schedule-details-button">
-              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/cure/appointment#tab0')}>Chi tiết</LinkButton>
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/cure/appointment')}>Chi tiết</LinkButton>
+            </div>
+          </div>
+          <div className="schedule-details">
+            <div className="schedule-details-text">
+              <div className="schedule-details-title">Yêu cầu hẹn lịch khám bệnh</div>{currentState?.requestCount}
+            </div>
+            <div className="schedule-details-button">
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/cure/appointment')}>Chi tiết</LinkButton>
+            </div>     
+          </div>
+          <div className="schedule-details">
+            <div className="schedule-details-text">
+              <div className="schedule-details-title">Bệnh nhân đang điều trị tại khoa</div>
+            </div>
+            <div className="schedule-details-button">
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/patient-management-doctor')}>Chi tiết</LinkButton>       
             </div>
           </div>
           <div className="schedule-details">
@@ -60,22 +75,6 @@ function DoctorHome() {
             </div>
             <div className="schedule-details-button">
               <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/schedulehistory')}>Chi tiết</LinkButton>   
-            </div>
-          </div>
-          <div className="schedule-details">
-            <div className="schedule-details-text">
-              <div className="schedule-details-title">Số bệnh nhân đang điều trị nội trú</div>{currentState?.onboardingIn}
-            </div>
-            <div className="schedule-details-button">
-              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/patient-management-doctor')}>Chi tiết</LinkButton>
-            </div>     
-          </div>
-          <div className="schedule-details">
-            <div className="schedule-details-text">
-              <div className="schedule-details-title">Số bệnh nhân đang điều trị ngoại trú</div>{currentState?.onboardingOut}
-            </div>
-            <div className="schedule-details-button">
-              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/patient-management-doctor')}>Chi tiết</LinkButton>       
             </div>
           </div>
         </div>

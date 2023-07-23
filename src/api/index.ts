@@ -16,7 +16,9 @@ const api = {
     getAll: '/account/getall',
     changeInfoDoctorByAdmin: '/account/changeinfodoctor',
     getInfoDetail: '/account/detail',
-    
+    editAvatar: '/account/uploadavatar',
+    avatarToDefault: '/account/defaultavatar',
+  
     //healthcare
     getPatientByInsurance: '/healthcare/searchinsurance', // change
     createPatient: '/healthcare/registerpatient',
@@ -84,7 +86,9 @@ const accountApi = {
         return apiClient.post(api.createPatient, reqbody)
     },
     changeInfoDoctorByAdmin: (reqbody) => apiClient.put(api.changeInfoDoctorByAdmin, reqbody),
-    getInfoDetail: (queryString) => apiClient.get(`${api.getInfoDetail}?id=${queryString}`)
+    getInfoDetail: (queryString) => apiClient.get(`${api.getInfoDetail}?id=${queryString}`),
+    editAvatar: (formData) => apiClient.post(api.editAvatar, formData),
+    toDefaultAvatar: () => apiClient.put(api.avatarToDefault)
 }
 
 const cureProcessApi = {    
@@ -140,7 +144,7 @@ const scheduleApi = {
   testingRequest: (reqbody) => apiClient.put(api.testingRequest, reqbody),
   startTesting: (reqbody) => apiClient.post(api.startTesting, reqbody),
   allTestRequest: (reqbody) => apiClient.post(api.allTestRequest, reqbody),
-  doneTesting: (reqbody) => apiClient.post(api.doneTesting, reqbody),
+  doneTesting: (query, reqbody) => apiClient.post(`${api.doneTesting}?id=${query}`, reqbody),
   done: (reqbody) => apiClient.post(api.done, reqbody),
   doctorRequestSchedule: (reqbody) => apiClient.post(api.doctorRequestSchedule, reqbody),
 }

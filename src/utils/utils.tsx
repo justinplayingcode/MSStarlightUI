@@ -19,9 +19,9 @@ export const tooltipPlainText = (content: string, extraClassName?: string, id?: 
   )
 }
 
-export const basicKeyValueRender = (key, value) => {
+export const basicKeyValueRender = (key, value, index?) => {
   return (
-    <div className='basicInfoRender'
+    <div key={index} className='basicInfoRender'
       style={{ display: "flex", justifyContent: "space-between", minWidth: "160px", height: "36px", margin: "0 0 4px 20px" }}
     >
       <div className='key'

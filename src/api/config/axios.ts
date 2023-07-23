@@ -5,9 +5,9 @@ export const baseURL = 'https://datn-benhvien.onrender.com/api';
 
 const apiClient = axios.create({
     baseURL: baseURL,
-    headers: {
-      "Content-Type": "application/json"
-    },
+    // headers: {
+    //   "Content-Type": "application/json"
+    // },
 });
 
 apiClient.interceptors.request.use(
