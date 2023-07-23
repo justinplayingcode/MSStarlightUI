@@ -129,10 +129,16 @@
                 padding: 4px 8px;
 
                 .test-resutl {
-
                   .no-error {
                     height: 22px;
                     width: 100%;
+                  }
+                  .test-resutl-upload {
+                    display: flex;
+                    .file-card {
+                      margin-right: 16px;
+                      min-width: 100px;
+                    }
                   }
                 }
               }

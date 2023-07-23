@@ -11,6 +11,8 @@ import { useDispatch } from 'react-redux';
 import { closeLoading, openLoading, showToastMessage, tableRefresh } from 'src/redux/reducers';
 import Api from 'api';
 import { toastType } from 'src/model/enum';
+import FileUpload from 'src/app/common/FileUpload';
+import FileItem from 'src/app/common/FileUpload/FileItem';
 
 interface ITest{
   service: string;
@@ -30,6 +32,8 @@ export interface ITestingProps{
 export const TestingForm = ({...props}: ITestingProps) => {
     const {tableSelectedItem } = useSelector((state: RootState) => state.currentSelected)
     const [tests, setTests] = React.useState<ITest[]>([]);
+    // const [resultFile, setResultFile] = useState<File[]>([]);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -75,20 +79,18 @@ export const TestingForm = ({...props}: ITestingProps) => {
         }))
         return;
       }
-      const body = {
-        appointmentScheduleId: tableSelectedItem[0]._id,
-        testResults: tests.map(item => {
-          return {
-            id: item.resultId,
-            reason: item.reason,
-            detailsFileCloud: "",
-          }
-        })
-      }
+      const appointmentScheduleId = tableSelectedItem[0]._id;
+      const formData = new FormData();
+      tests.forEach((result, index) => {
+        formData.append(`testResultIds[${index}]`, result.resultId);
+        formData.append(`reasons[${index}]`, result.reason);
+        formData.append(`detailsFileClouds[${index}]`, result.detailsFileCloud);
+        formData.append(`nameFiles[${index}]`, result.detailsFileCloud.name);
+      });
       dispatch(openLoading());
-      Api.scheduleApi.doneTesting(body).then(data => {
+      Api.scheduleApi.doneTesting( appointmentScheduleId, formData).then(data => {
         if(!data.status) {
-          dispatch(showToastMessage({message: 'Gửi két quả thành công', type: toastType.succes}));
+          dispatch(showToastMessage({message: 'Gửi kết quả thành công', type: toastType.succes}));
           handleDismis();
         } else {
           dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
@@ -96,17 +98,25 @@ export const TestingForm = ({...props}: ITestingProps) => {
       }).catch(() => dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}))).finally(() => dispatch(closeLoading()));
     }
 
-    const _onchange = (value: string, index) => {
+    const _onchange = (key, value: any, index, id?) => {
       const newTests = tests.slice();
-      newTests[index].reason = value;
-      newTests[index].errorMessage = value.length === 0 ? "Vui lòng không để trống" : "";
+      switch(key) {
+        case 'reason':
+          newTests[index].reason = value;
+          newTests[index].errorMessage = value.length === 0 ? "Vui lòng không để trống" : "";
+          break;
+        case 'file':
+          let arr = newTests.map(e => e.resultId);
+          newTests[arr.indexOf(id!)].detailsFileCloud = value;
+          break;
+      }
       setTests(newTests);
     }
 
     const renderTestResult = (item: ITest, index) => {
 
       return (
-        <div className='test-section'>
+        <div className='test-section' key={index}>
           <Label>{item.service}</Label>
           <div className='test-resutl'>
             <TextField 
@@ -114,10 +124,27 @@ export const TestingForm = ({...props}: ITestingProps) => {
               placeholder="kết quả xét nghiệm"
               value={item.reason}
               errorMessage={item.errorMessage}
-              onChange={(_, value) => _onchange(value, index)}
+              onChange={(_, value) => _onchange( 'reason', value, index)}
             />
             {item.errorMessage === "" ? <div className='no-error'></div> : undefined}
             {/* upload file */}
+            <div className='test-resutl-upload'>
+              <FileUpload 
+                files={[item.detailsFileCloud]} 
+                isView={false} 
+                multiple={false}
+                text='Tải lên kết quả'
+                accept="image/*"
+                addFiles={(values) => _onchange( 'file', values[0], index, item.resultId)}
+                index={index}
+              />
+              {!!item.detailsFileCloud && 
+                <FileItem
+                  file={item.detailsFileCloud || undefined}
+                  deleteFile={() => _onchange( 'file', undefined, index, item.resultId)}
+                />
+              }
+            </div>
           </div>
         </div>
       )

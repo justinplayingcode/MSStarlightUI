@@ -144,7 +144,7 @@ const scheduleApi = {
   testingRequest: (reqbody) => apiClient.put(api.testingRequest, reqbody),
   startTesting: (reqbody) => apiClient.post(api.startTesting, reqbody),
   allTestRequest: (reqbody) => apiClient.post(api.allTestRequest, reqbody),
-  doneTesting: (reqbody) => apiClient.post(api.doneTesting, reqbody),
+  doneTesting: (query, reqbody) => apiClient.post(`${api.doneTesting}?id=${query}`, reqbody),
   done: (reqbody) => apiClient.post(api.done, reqbody),
   doctorRequestSchedule: (reqbody) => apiClient.post(api.doctorRequestSchedule, reqbody),
 }

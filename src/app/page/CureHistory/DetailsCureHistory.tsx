@@ -104,7 +104,7 @@ function DetailsCureHistory() {
                 <div className="content-test-result-service">{TestList[e.service]}</div>
                 <DefaultButton 
                   className="content-test-result-download"
-                  onClick={() => handleOpenModel("https://medlatec.vn/media/4321/content/20221004_23501-knee-x-ray.jpg")}
+                  onClick={() => handleOpenModel(e.detailsFileCloud)}
                 >Chi tiết<Icon iconName= 'QuestionnaireMirrored' />
                 </DefaultButton>
               </div>

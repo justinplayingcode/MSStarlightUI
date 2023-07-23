@@ -8,6 +8,7 @@ interface IUploadProps{
     isView: boolean;
     multiple?: boolean;
     accept: string;
+    index?: any
 }
 
 const FileUpload = (props: IUploadProps) => {
@@ -23,8 +24,8 @@ const FileUpload = (props: IUploadProps) => {
         <>
             <Stack className="file-card">
                 <Stack className="file-input">
-                    <input id="upload-input" type="file" accept={props.accept} onChange={uploadHandler}/>
-                    <label htmlFor="upload-input" className="upload-label">{props?.text ? props.text : "Upload"}</label>
+                    <input id={`upload-input-${props.index}`} type="file" accept={props.accept} onChange={uploadHandler}/>
+                    <label htmlFor={`upload-input-${props.index}`} className="upload-label">{props?.text ? props.text : "Upload"}</label>
                 </Stack>
             </Stack>
         </>

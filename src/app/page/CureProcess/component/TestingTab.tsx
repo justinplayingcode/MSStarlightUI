@@ -1,19 +1,40 @@
 import Api from "api";
 import { UniformTable } from "src/app/common";
-import { DepartmentType, TableType } from "src/model/enum";
+import { DepartmentType, TableType, toastType } from "src/model/enum";
 import { nonBoardingPatientColumns } from "../../components/table/nonboardingcolumn";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import ConfirmDialog from "../dialog/Confirm";
 import { TestingForm } from "../dialog/TestingForm";
+import { useDispatch } from "react-redux";
+import { closeLoading, openLoading, showToastMessage } from "src/redux/reducers";
 
 const TestingTab = () => {
-  const { info, role } = useSelector((state: RootState) => state.user);
+  const { info } = useSelector((state: RootState) => state.user);
   const {tableSelectedCount, tableSelectedItem} = useSelector((state: RootState) => state.currentSelected);
 
   const [isConfirmClosed, setConfirmClosed] = React.useState<boolean>(true);
   const [isStartProgress, setIsStartProgress] = React.useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  const confirmStartTesting = () => {
+    dispatch(openLoading());
+    Api.scheduleApi.startTesting({id: tableSelectedItem[0]?._id}).then(data => {
+      if(!data.status) {
+        dispatch(showToastMessage({message: 'Bắt đầu khám bệnh cho bệnh nhân', type: toastType.info}));
+        setConfirmClosed(true);
+        setIsStartProgress(true);
+      } else {
+        dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+        setConfirmClosed(true);
+      }
+    }).catch(() => {
+        dispatch(showToastMessage({message: 'Có lỗi xảy ra, hãy thử lại', type: toastType.error}));
+        setConfirmClosed(true);
+      }).finally(() => dispatch(closeLoading()))
+  }
   
   const getTestingTabCommandBar = () => {
       const commandBar = [];
@@ -43,11 +64,7 @@ const TestingTab = () => {
           closeDialog={() => {
               setConfirmClosed(true)
           }}
-          confirm={() => {
-              setConfirmClosed(true)
-              setIsStartProgress(true)
-              // call api change status testing to process
-          }}
+          confirm={confirmStartTesting}
         />
         <TestingForm
           isOpen={isStartProgress}
