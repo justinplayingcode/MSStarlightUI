@@ -1,5 +1,3 @@
-import logo from "./logo/logo.png"
-
 import dataNotFound from "./logo/dataNotFound.png"
 import info from "./logo/info.png"
 import warning from "./logo/warning.png"
@@ -8,7 +6,6 @@ import success from "./logo/success.png"
 
 const Image = {
     info, warning, error, success, 
-    logo,
     dataNotFound
 }
 

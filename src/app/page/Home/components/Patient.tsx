@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LineChart } from "src/app/common/Chart/lineChart";
+import { LineChart } from "src/app/common/ChartComponents/lineChart";
 import { LinkButton } from "src/app/common/Link";
 import { RootState } from "src/redux/store";
 import { Convert } from "utils";

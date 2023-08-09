@@ -140,3 +140,13 @@ export enum Onboarding {
   inpatient,
   outpatient,
 }
+
+export enum exportCsvType {
+  doctorAccount,
+  patientAccount,
+  patientIn,
+  patientOut,
+  historiesMedical,
+  manageMedication,
+  manageDisease,
+}

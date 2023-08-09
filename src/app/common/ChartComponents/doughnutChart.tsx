@@ -2,6 +2,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import "./index.scss"
 import { Convert } from 'utils';
+import { useEffect } from 'react';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,6 +17,7 @@ interface IDoughnutChartProps {
 
 export function DoughnutChart({...props}: IDoughnutChartProps) {
   const coiors = Convert.colorDonutChart.slice(0, props.values.length);
+
   const data = {
     labels: props.labels,
     datasets: [
@@ -34,8 +36,8 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
       legend: {
         position: "right" as const,
         title: {
-          display: true,
-          text: props.legend
+          display: false,
+          text: props.legend,
         }
       },
       title: {
@@ -59,7 +61,7 @@ export function DoughnutChart({...props}: IDoughnutChartProps) {
     } 
   }
   return (
-    <div className='chart doughnutchart'>
+    <div className='chart doughnutchart' key={props.textCenter}>
       <Doughnut data={data} options={options} plugins={[textCenter]} />
     </div>
   )
