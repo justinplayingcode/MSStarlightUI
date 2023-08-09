@@ -59,6 +59,15 @@ const api = {
     doneTesting: '/schedule/donetesting',
     done: '/schedule/done', // kết thúc 1 lần khám, chưa viết xong
     doctorRequestSchedule: '/schedule/doctorrequestschedule',
+
+    //statistic
+    doctorInDepartment: '/statistic/doctorwithdepartment',
+    patientInDepartment: '/statistic/patientsindepartment',
+    historieslast7day: '/statistic/historieslast7day',
+    onboardinginmonth: '/statistic/onboardinginmonth',
+    datanotification: '/statistic/datanotification',
+    exportExcel: '/statistic/statisticexcel',
+
 }
 
 const authApi = {
@@ -155,6 +164,15 @@ const historyMedicalApi = {
   getDetailsPatient: (queryString) => apiClient.get(`${api.getDetailsPatientWithHitories}?id=${queryString}`)
 }
 
+const statisticApi = {
+  doctorInDepartment: () => apiClient.get(api.doctorInDepartment),
+  patientInDepartment: () => apiClient.get(api.patientInDepartment),
+  historieslast7day: () => apiClient.get(api.historieslast7day),
+  onboardinginmonth: () => apiClient.get(api.onboardinginmonth),
+  datanotification: () => apiClient.get(api.datanotification),
+  exportExcel: (queryString) => apiClient.get(`${api.exportExcel}?datasource=${queryString}`),
+}
+
 const Api = {
     authApi, 
     accountApi, 
@@ -163,6 +181,7 @@ const Api = {
     diseasesApi,
     medicationApi,
     scheduleApi,
-    historyMedicalApi
+    historyMedicalApi,
+    statisticApi
   };
 export default Api;

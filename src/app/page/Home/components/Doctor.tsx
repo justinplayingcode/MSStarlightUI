@@ -4,27 +4,49 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "src/redux/store";
 import { useEffect, useState } from "react";
-import { AreaChart } from "src/app/common/Chart/areaChart";
-import { BarChart } from "src/app/common/Chart/barChart";
+import { BarChart } from "src/app/common/ChartComponents/barChart";
+import { AreaChart } from "src/app/common/ChartComponents/areaChart";
+import Api from "api";
+import { closeLoading, openLoading } from "src/redux/reducers";
 
 function DoctorHome() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { info } = useSelector((state:RootState) => state.user);
-
   const [currentState, setCurrentState] = useState<any>(null);
+  const [labelsOnBoardingChart, setLabelsOnBoardingChart] = useState<string[]>([]);
+  const [valuesOnBoardingInChart, setValuesOnBoardingInChart] = useState<number[]>([]);
+  const [valuesOnBoardingOutChart, setValuesOnBoardingOutChart] = useState<number[]>([]);
+  const [labelsPatientExaminedChart, setLabelsPatientExaminedChart] = useState<string[]>([]);
+  const [valuesPatientExaminedChart, setValuesPatientExaminedChart] = useState<number[]>([]);
 
   useEffect(() => {
-    // call api
-    const a = {
-      scheduleCount: 2,
-      requestCount: 5,
-      onboardingInCount: [500, 400, 560, 400, 300, 450, 700, 800, 1000, 650, 600, 500],
-      onboardingOutCount: [200, 600, 360, 300, 100, 550, 400, 500, 1200, 250, 500, 800],
-      labelsBarChar: ["8/7", "9/7", "10/7", "11/7", "12/7", "13/7", "14/7",],
-      valuesBarChar: [300, 120, 250, 200, 220, 150, 100]
-    }
-    setCurrentState(a)
+    const historyChart = Api.statisticApi.historieslast7day();
+    const onboarding = Api.statisticApi.onboardinginmonth();
+    dispatch(openLoading());
+    Promise.all([historyChart, onboarding])
+    .then(data => {
+      const labels3: string[] = [], values3: number[] = [];
+        Array.from(data[0]?.data?.reverse()).forEach(e => {
+          labels3.push((e as any)?.date);
+          values3.push((e as any)?.appointmentCount);
+        })
+        setLabelsPatientExaminedChart(labels3);
+        setValuesPatientExaminedChart(values3);
+        //
+        const labels4: string[] = [], values41: number[] = [], values42: number[] = [];
+        Array.from(data[1]?.data?.reverse()).forEach(e => {
+          labels4.push((e as any)?.month);
+          values41.push((e as any)?.inCount);
+          values42.push((e as any)?.outCount);
+        })
+        setLabelsOnBoardingChart(labels4);
+        setValuesOnBoardingInChart(values41);
+        setValuesOnBoardingOutChart(values42);
+    })
+    .catch()
+    .finally(() => dispatch(closeLoading()));
+
   }, [])
 
   return (  
@@ -81,18 +103,18 @@ function DoctorHome() {
       </div>
       <div className="chart-container-wrapper chart-container">
         <BarChart
-          labels={currentState?.labelsBarChar} 
-          titleChart='Số lượng bệnh nhân tới khám 7 ngày qua' 
-          values={currentState?.valuesBarChar} 
-          legend='Bệnh nhân'
+          labels={labelsPatientExaminedChart} 
+          titleChart='Số lần khám bệnh cho bệnh nhân 7 ngày qua' 
+          values={valuesPatientExaminedChart} 
+          legend='Đơn vị: Lần'
         />
       </div>
       <div className="chart-container-wrapper chart-container">
         <AreaChart 
-          labels={['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']} 
-          titleChart='Bệnh nhân nhập viện mỗi tháng' 
-          valuefisrt={currentState?.onboardingInCount}
-          valuesecond={currentState?.onboardingOutCount}
+          labels={labelsOnBoardingChart} 
+          titleChart='Bệnh nhân nhập viện mỗi tháng tại khoa' 
+          valuefisrt={valuesOnBoardingInChart}
+          valuesecond={valuesOnBoardingOutChart}
           legendfirst='Nội trú'
           legendsecond='Ngoại trú'
         />

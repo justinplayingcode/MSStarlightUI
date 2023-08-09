@@ -85,7 +85,7 @@ export const TestingForm = ({...props}: ITestingProps) => {
         formData.append(`testResultIds[${index}]`, result.resultId);
         formData.append(`reasons[${index}]`, result.reason);
         formData.append(`detailsFileClouds[${index}]`, result.detailsFileCloud);
-        formData.append(`nameFiles[${index}]`, result.detailsFileCloud.name);
+        formData.append(`nameFiles[${index}]`, result.detailsFileCloud?.name);
       });
       dispatch(openLoading());
       Api.scheduleApi.doneTesting( appointmentScheduleId, formData).then(data => {

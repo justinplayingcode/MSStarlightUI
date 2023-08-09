@@ -24,7 +24,7 @@ const Diseases = () => {
         maxWidth: 120,
         isResizable: true,
         onRender: (item) => {
-            return <span>{item?.diseasesCode}</span>;
+            return <span>{item?._id}</span>;
         },
     },
     {

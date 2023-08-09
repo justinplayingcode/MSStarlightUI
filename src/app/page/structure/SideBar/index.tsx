@@ -49,8 +49,11 @@ const SideBar = () => {
                     />
                 </div>
                 <div className='top-section'>
-                    <img className='logo' alt=''
-                        src={Image.logo} />
+                    <img 
+                      className='logo' alt=''
+                      src={'https://res.cloudinary.com/justinpham311/image/upload/v1691511899/benhvien/image2vector_1_1_sqsa7j.svg'} 
+                      style={{width: '90%'}}
+                    />
                 </div>
                 <div className='menu-section'>
                     {menuItem.map((route, index) => (
