@@ -23,7 +23,7 @@ module.exports = (env, argv) => {
         // để khi import cho ngắn gọn
         // Ví dụ: import Login from 'pages/app'
         // Thay vì: import Login from '../pages/app' chẳng hạn
-        'src':path.resolve(__dirname, './src'),
+        'src': path.resolve(__dirname, './src/'),
         'model': path.resolve(__dirname, './src/model/index.ts'),
         'utils': path.resolve(__dirname, './src/utils/index.ts'),
         'reduxs': path.resolve(__dirname, './src/redux/reducers/index.ts'),

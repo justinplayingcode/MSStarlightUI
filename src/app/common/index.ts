@@ -7,7 +7,7 @@ import { ServiceCard } from "./ServiceCard";
 import { Toast} from "./Toast"
 import {InfomationGridComponent} from './InfomationGrid'
 import UniformTable from "./UniformTable";
-import UniformPanel from "./uniformpanel/UniformPanel";
+import UniformPanel from "./Uniformpanel/UniformPanel";
 
 export {
     Avatar,

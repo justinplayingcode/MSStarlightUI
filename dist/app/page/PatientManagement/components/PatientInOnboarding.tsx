@@ -6,7 +6,7 @@ import { RootState } from "src/redux/store";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { DefaultButton, Dialog, DialogFooter, ICommandBarItemProps, PrimaryButton, TextField } from "@fluentui/react";
-import CustomDatePicker from "src/app/common/Datepicker";
+import CustomDatePicker from "../../../common/Datepicker";
 import { basicKeyValueRender } from "src/utils/utils";
 import { useDispatch } from "react-redux";
 import { closeLoading, openLoading, showToastMessage } from "src/redux/reducers";
