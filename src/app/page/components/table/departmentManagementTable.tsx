@@ -3,6 +3,26 @@ import { LinkButton } from "src/app/common/Link";
 
 export const departmentManagementColumns: IColumn[] = [
     {
+      key: 'departmentCode',
+      name: 'Mã khoa',
+      minWidth: 70,
+      maxWidth: 90,
+      isResizable: true,
+      onRender: (item) => {
+          return <span>{item.departmentCode}</span>;
+      },
+    },
+    {
+      key: 'id',
+      name: 'Mã định danh',
+      minWidth: 150,
+      maxWidth: 250,
+      isResizable: true,
+      onRender: (item) => {
+          return <span>{item._id}</span>;
+      },
+    },
+    {
         key: 'departmentName',
         name: 'Tên khoa',
         minWidth: 120,
