@@ -1,9 +1,10 @@
 import { ICommandBarItemProps } from '@fluentui/react';
 import Api from 'api';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { UniformTable } from 'src/app/common';
-import { MappingTypeAppointmentSchedule, TableType, accountRole } from 'src/model/enum';
+import { MappingTypeAppointmentSchedule, TableType, accountRole, exportCsvType, toastType } from 'src/model/enum';
+import { showToastMessage } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
 import { Convert } from 'utils';
 
@@ -11,6 +12,7 @@ const CureHistory = () => {
     const { role } = useSelector((state: RootState) => state.user);
     const { tableSelectedItem, tableSelectedCount } = useSelector((state: RootState) => state.currentSelected);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const cureHistoryColumns = [
       {
@@ -145,7 +147,32 @@ const CureHistory = () => {
           }
         )
       }
+      if(role === accountRole.Doctor) {
+        commandBar.push({
+          key: "export",
+          text: "Xuất file excel",
+          iconProps: { iconName: 'Installation' },
+          onClick: handleExportCsv
+        })
+      }
       return commandBar
+    }
+
+    const handleExportCsv = () => {
+      dispatch(showToastMessage({message: 'Đang tiến hành tải file, vui lòng chờ trong ít phút', type: toastType.info}));
+      Api.statisticApi.exportExcel(exportCsvType.historiesMedical).api.then(response  => {
+        const blob = new Blob([(response as any).csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        const filename: string = (response as any).fileName;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }).catch(() => {
+        dispatch(showToastMessage({message: 'Xảy ra lỗi khi tải xuống, vui lòng thử lại', type: toastType.error}));
+      });
     }
 
     const tableType = ():TableType => {

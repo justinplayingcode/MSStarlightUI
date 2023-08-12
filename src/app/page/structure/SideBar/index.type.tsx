@@ -154,14 +154,14 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
     );
     let newsItems;
     if(role === accountRole.Patient) {
-      newsItems = {
-        path: '/news/newsfeed',
-        state: '/news/newsfeed',
-        sidebarProps: {
-          displayText: 'Thông tin, tin tức',
-          icon: <FaRegNewspaper />,
-        },
-      }
+      // newsItems = {
+      //   path: '/news/newsfeed',
+      //   state: '/news/newsfeed',
+      //   sidebarProps: {
+      //     displayText: 'Thông tin, tin tức',
+      //     icon: <FaRegNewspaper />,
+      //   },
+      // }
     } else {
       newsItems = {
         state: '/news',
@@ -170,14 +170,14 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
           icon: <FaRegNewspaper />,
         },
         child:[
-          {
-            path: '/news/newsfeed',
-            state: '/news/newsfeed',
-            sidebarProps: {
-                displayText: 'Tin tức',
-                icon: <MdOutlineArrowRightAlt />
-            }
-          },
+          // {
+          //   path: '/news/newsfeed',
+          //   state: '/news/newsfeed',
+          //   sidebarProps: {
+          //       displayText: 'Tin tức',
+          //       icon: <MdOutlineArrowRightAlt />
+          //   }
+          // },
           {
             path: '/news/newscreate',
             state: '/news/newscreate',

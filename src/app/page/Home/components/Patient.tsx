@@ -79,7 +79,7 @@ function PatientHome() {
         <div className="schedule-content">
           <div className="schedule-details">
             <div className="schedule-details-text flexrow">
-              <span>{1}</span><div className="schedule-details-title">Lịch hẹn khám bệnh hôm nay</div>
+              <div className="schedule-details-title">Lịch hẹn khám bệnh hôm nay</div>
             </div>          
             <div className="schedule-details-button">
               <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/make-appointment')}>Chi tiết</LinkButton>
@@ -102,12 +102,12 @@ function PatientHome() {
             </div>
           </div>
           <div className="schedule-details">
-            <div className="schedule-details-text">
+            {/* <div className="schedule-details-text">
               <div className="schedule-details-title">Thông tin, tin tức liên quan đến sức khỏe</div>
             </div>
             <div className="schedule-details-button">
               <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('/news/newsfeed')}>Chi tiết</LinkButton>   
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -126,12 +126,42 @@ function PatientHome() {
           })}
         </div>
       </div>
-      <div className="chart-container-wrapper chart-container">
-        <LineChart
-          title={"Chỉ số đường huyết"}
-          labels={["1/6", "6/6", "25/6", "2/7", "15/7"]}
-          data={dataChart}
-        />
+      <div className="schedule healthInformation">
+        <div className="schedule-date">Thông tin nhanh</div>
+        <div className="schedule-content">
+          <div className="schedule-details">
+            <div className="schedule-details-text">
+              <div className="schedule-details-title">Về bệnh viện</div>
+            </div>
+            <div className="schedule-details-button">
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('')}>Chi tiết</LinkButton>   
+            </div>
+          </div>
+          <div className="schedule-details">
+            <div className="schedule-details-text">
+              <div className="schedule-details-title">Về dịch vụ</div>
+            </div>
+            <div className="schedule-details-button">
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('')}>Chi tiết</LinkButton>   
+            </div>
+          </div>
+          <div className="schedule-details">
+            <div className="schedule-details-text">
+              <div className="schedule-details-title">Liên hệ</div>
+            </div>
+            <div className="schedule-details-button">
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('')}>Chi tiết</LinkButton>   
+            </div>
+          </div>
+          <div className="schedule-details">
+            <div className="schedule-details-text">
+              <div className="schedule-details-title">Thông tin, tin tức liên quan đến sức khỏe</div>
+            </div>
+            <div className="schedule-details-button">
+              <LinkButton className="button" style={{color: "rgb(210,210,210)"}} onClick={() => navigate('')}>Chi tiết</LinkButton>   
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

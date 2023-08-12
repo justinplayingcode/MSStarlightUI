@@ -170,7 +170,10 @@ const statisticApi = {
   historieslast7day: () => apiClient.get(api.historieslast7day),
   onboardinginmonth: () => apiClient.get(api.onboardinginmonth),
   datanotification: () => apiClient.get(api.datanotification),
-  exportExcel: (queryString) => apiClient.get(`${api.exportExcel}?datasource=${queryString}`),
+  exportExcel: (queryString) => ({
+    api: apiClient.get(`${api.exportExcel}?datasource=${queryString}`),
+    url: `${baseURL}${api.exportExcel}?datasource=${queryString}`
+  }),
 }
 
 const Api = {
