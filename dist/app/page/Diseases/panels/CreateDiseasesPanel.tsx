@@ -19,14 +19,12 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
     const [errorMessage, setErrorMessage] = useState<Dictionary<string>>();
     const [id, setId] = useState<string>();
     const [name, setName] = useState<string>();
-    const [code, setCode] = useState<string>();
     const [symptom, setSymptom] = useState<string>();
     const [prevention, setPrevention] = useState<string>();
     useEffect(() => {
       if(props.panelType === PanelType.Edit){
           setId(tableSelectedItem[0]?._id)
           setName(tableSelectedItem[0]?.diseasesName);
-          setCode(tableSelectedItem[0]?.diseasesCode);
           setSymptom(tableSelectedItem[0]?.symptom);
           setPrevention(tableSelectedItem[0]?.prevention);
       }        
@@ -51,16 +49,6 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
                         setName(val)
                     }}
                     errorMessage={errorMessage?.name}
-                />
-                <TextField
-                    required
-                    label="Mã bệnh"
-                    value={code}
-                    onChange={(e, val) => {
-                        setErrorMessage(undefined)
-                        setCode(val)
-                    }}
-                    errorMessage={errorMessage?.code}
                 />
                 <TextField 
                     required
@@ -97,10 +85,6 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
             setErrorMessage({name: 'Hãy điền tên bệnh'});
             return;
         }
-        if(!code){
-            setErrorMessage({code: 'Hãy điền mã bệnh'});
-            return;
-        }
         if(!symptom){
             setErrorMessage({symptom: 'Hãy điền triệu chứng bệnh'});
             return;
@@ -112,7 +96,6 @@ const CreateDiseasesPanel = (props: ICreateDiseasesProps) => {
         const reqbody = {
             ...(props.panelType === PanelType.Edit) && {id: id},
             diseasesName: name,
-            diseasesCode: code,
             symptom: symptom,
             prevention: prevention,
         }

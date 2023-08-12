@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiStatusCode } from "model";
-
+import { useNavigate } from 'react-router-dom';
 export const baseURL = 'https://datn-benhvien.onrender.com/api';
 
 const apiClient = axios.create({
@@ -73,9 +73,11 @@ apiClient.interceptors.response.use(
                     processQueue(null, response.data.accessToken);
                     return await apiClient(originalRequest);
                 } catch (err_1) {
+                    const navigate = useNavigate()
                     processQueue(err_1, null);
                     localStorage.clear();
-                    window.location.pathname = "/login";
+                    navigate("login");
+                    // window.location.pathname = "/login";
                     return await Promise.reject(err_1);
                 }
             } finally {
@@ -84,7 +86,9 @@ apiClient.interceptors.response.use(
         }
         if (error.response.data.message === 'No token provided!' && error.response.status === ApiStatusCode.Forbidden) {
           localStorage.clear();
-          window.location.pathname = "/login";
+          const navigate = useNavigate()
+          navigate("login");
+          // window.location.pathname = "/login";
         }
         return Promise.reject(error);
     }

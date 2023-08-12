@@ -34,8 +34,8 @@ class UniformLayout extends React.Component<UniformLayoutPropsFromState, any> {
             <div>
                 <Router basename="/">
                     <Routes>
-                        <Route path="/" element={<Navigate to="/home" replace />} />
                         <Route path="/login" element={<Login/>} />
+                        <Route path="/" element={<Navigate to="/home" replace />} />
                         <Route path="/home" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_HOME}/>} />
                         <Route path="/home/profile" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PROFILE}/>} />
                         <Route path="/home/change-password" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_PASSWORD_CHANGE} />} />

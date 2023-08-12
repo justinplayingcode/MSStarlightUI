@@ -48,19 +48,18 @@ const Layout = ({...props}: LayoutOwnProps) => {
 
     useEffect(() => {
         Promise.all([checkCurrentUser(), getInfoCurrentUser()]).then(result => {
-          if(result[0] === ApiStatus.succes && result[1] === ApiStatus.succes) {
-            setLoading(false)
-          } else {
+          if(result[0] !== ApiStatus.succes && result[1] !== ApiStatus.succes) {
             localStorage.clear();
             dispatch(userLogout());
           }
-        })
+        }).catch().finally(() => setLoading(false))
     }, [])
 
     const checkCurrentUser = async () => {
         const temp = localStorage.getItem('accessToken');
         if(temp) {
             const res = await Api.authApi.checkCurrentUser();
+            console.log(res)
                 if(res.status === ApiStatus.succes) {
                     dispatch(setUsername(res.data.username));
                     dispatch(setRole(res.data.role));
@@ -73,6 +72,7 @@ const Layout = ({...props}: LayoutOwnProps) => {
 
     const getInfoCurrentUser = async () => {
         const res = await Api.authApi.getInfoCurrentUser();
+        console.log(res)
         if(res.status === ApiStatus.succes) {
           dispatch(setInfoUser(res.data));
         }
@@ -181,7 +181,7 @@ const Layout = ({...props}: LayoutOwnProps) => {
         return (
             <div key={username}>
                 {isLoading ? <LoadingDot /> : <React.Fragment />}
-                {!!username ? renderContent() : <Navigate to="/login" replace={true} />}
+                {!!username ? renderContent() : <Navigate to="/login" replace />}
                 {isShow && <Toast />}
             </div>
         )

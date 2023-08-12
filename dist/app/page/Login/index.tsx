@@ -36,7 +36,7 @@ export const Login: React.FunctionComponent = () => {
             localStorage.setItem("username", username);
             dispatch(setRole(role));
             dispatch(setUsername(username));
-            history("/");
+            history("/home");
         }).catch(err => {
             const { message } = err.response.data;
             setErrorMessage(message)
