@@ -2,11 +2,11 @@ import { IconButton } from "@fluentui/react";
 import "./index.scss";
 import Image from "image";
 import { useEffect, useRef } from "react";
-import { toastType } from "src/model/enum";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useDispatch } from "react-redux";
 import { closeToastMessage } from "src/redux/reducers";
+import { toastType } from "../../../model/enum";
 
 export interface IToastProps{
     message: string;
