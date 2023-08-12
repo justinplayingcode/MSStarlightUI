@@ -1,5 +1,5 @@
 import { UniformTable } from "src/app/common";
-import { ApiStatus, TableType, toastType } from "src/model/enum";
+import { ApiStatus, TableType, exportCsvType, toastType } from "src/model/enum";
 import Api from "api";
 import { patientonboardingtColumns } from "../../components/table/patientonboarding";
 import { RootState } from "src/redux/store";
@@ -47,7 +47,30 @@ const PatientInOnboarding = () => {
         }
       )
     }
+    commandBar.push({
+      key: "export",
+      text: "Xuất file excel",
+      iconProps: { iconName: 'Installation' },
+      onClick: handleExportCsv
+    })
     return commandBar;
+  }
+
+  const handleExportCsv = () => {
+    dispatch(showToastMessage({message: 'Đang tiến hành tải file, vui lòng chờ trong ít phút', type: toastType.info}));
+    Api.statisticApi.exportExcel(exportCsvType.patientIn).api.then(response  => {
+      const blob = new Blob([(response as any).csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      const filename: string = (response as any).fileName;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch(() => {
+      dispatch(showToastMessage({message: 'Xảy ra lỗi khi tải xuống, vui lòng thử lại', type: toastType.error}));
+    });
   }
 
   const handleSubmitDialog = () => {

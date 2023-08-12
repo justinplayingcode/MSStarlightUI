@@ -57,7 +57,7 @@ const SideBar = () => {
                 </div>
                 <div className='menu-section'>
                     {menuItem.map((route, index) => (
-                        route.sidebarProps ? (
+                        route?.sidebarProps ? (
                             route.child ? (
                                 <SidebarItemCollapse item={route} key={index} />
                             ) : (
