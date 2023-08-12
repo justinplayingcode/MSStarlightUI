@@ -1,35 +1,25 @@
 import React from "react";
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Navigate, Route, HashRouter as Router, Routes } from "react-router-dom";
 import Layout from "./page/structure/layout";
 import { accountRole, pageConstant } from "model";
-import { RootState } from "src/redux/store";
 import { connect } from "react-redux";
 import { Login } from "./page/Login";
 import NoPermission from "./page/structure/NoPermission";
 import { ErrorPage } from "./page/structure/ErrorPage";
+import { RootState } from "src/redux/store";
 
 interface UniformLayoutPropsFromState {
+  username?: any;
 }
-
-interface UniformLayoutPropsFromDispatch {
-    
-}
-
-interface UniformLayoutState {
-    
-}
-
-type UniformLayoutProps = UniformLayoutPropsFromState & UniformLayoutPropsFromDispatch;
 
 const mapStateToProps = (state: RootState) => ({
-    isLoading: state.loading.isLoading,
-    user: state.user
+  isLoading: state.loading.isLoading,
+  user: state.user
 })
 
-const mapDispatchToProps = { };
 
-class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutState> {
-    constructor(props: UniformLayoutProps) {
+class UniformLayout extends React.Component<UniformLayoutPropsFromState, any> {
+    constructor(props: UniformLayoutPropsFromState) {
         super(props);
     }
     private Auth = {
@@ -42,7 +32,7 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
     render() {
         return (
             <div>
-                <Router>
+                <Router basename="/">
                     <Routes>
                         <Route path="/login" element={<Login/>} />
                         <Route path="/" element={<Navigate to="/home" replace />} />
@@ -79,4 +69,4 @@ class UniformLayout extends React.Component<UniformLayoutProps, UniformLayoutSta
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UniformLayout)
+export default connect(mapStateToProps, null)(UniformLayout)

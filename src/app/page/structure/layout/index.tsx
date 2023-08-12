@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./index.scss"
 import { RootState } from "src/redux/store";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import UniformHeader from "../header";
 import {  ApiStatus, accountRole, pageConstant } from "model";
 import Home from "src/app/page/Home";
@@ -14,9 +14,9 @@ import News from "src/app/page/News";
 import SideBar from "../SideBar";
 import CureProcess from "src/app/page/CureProcess";
 import { Toast } from "../../../common/Toast";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Api from "src/api";
-import { closeLoading, openLoading, setInfoUser, setRole, setUsername } from "src/redux/reducers";
+import { closeLoading, openLoading, setInfoUser, setRole, setUsername, userLogout } from "src/redux/reducers";
 import AccountPage from "src/app/page/Account";
 import Medication from "src/app/page/Medication";
 import Appointment from "src/app/page/Appointment";
@@ -39,72 +39,30 @@ interface LayoutOwnProps {
     permission: number[];
 }
 
-interface LayoutPropsFromState {
-    isLoading: boolean;
-    username: string;
-    showToast: boolean;
-    role: accountRole;
-}
+const Layout = ({...props}: LayoutOwnProps) => {
+  const [loading, setLoading] = useState<boolean>(true)
+  const dispatch = useDispatch();
+  const { username, role } = useSelector((state: RootState) => state.user);
+  const { isLoading } = useSelector((state: RootState) => state.loading);
+  const { isShow } = useSelector((state: RootState) => state.toast);
 
-interface LayoutPropsFromDispatch {
-    setRole: any;
-    setUsername: any;
-    setInfoUser: any;
-    closeLoading: any;
-    openLoading: any;
-}
-
-const mapStateToProps = (state: RootState) => ({
-    isLoading: state.loading.isLoading,
-    username: state.user.username,
-    showToast: state.toast.isShow,
-    role: state.user.role
-})
-
-const mapDispatchToProps = {
-    setRole,
-    setUsername,
-    setInfoUser,
-    closeLoading, openLoading
-};
-
-type LayoutProps = LayoutOwnProps & LayoutPropsFromState & LayoutPropsFromDispatch;
-
-
-interface LayoutState {
-    loading: boolean
-}
-
-class Layout extends React.Component<LayoutProps, LayoutState> {
-    constructor(props: LayoutProps) {
-        super(props);
-        this.state = {
-            loading: true
-        }
-    }
-
-    componentDidMount() {
-        Promise.all([this.checkCurrentUser(), this.getInfoCurrentUser()]).then(result => {
-          if(result[0] === ApiStatus.succes && result[1] === ApiStatus.succes) {
-            this.setState({loading: false})
-          } else {
+    useEffect(() => {
+        Promise.all([checkCurrentUser(), getInfoCurrentUser()]).then(result => {
+          if(result[0] !== ApiStatus.succes && result[1] !== ApiStatus.succes) {
             localStorage.clear();
-            window.location.pathname = "/login";
+            dispatch(userLogout());
           }
-        })
-        // .catch(() => {
-        //   localStorage.clear();
-        //   window.location.pathname = "/login";
-        // })
-    }
+        }).catch().finally(() => setLoading(false))
+    }, [])
 
-    checkCurrentUser = async () => {
+    const checkCurrentUser = async () => {
         const temp = localStorage.getItem('accessToken');
         if(temp) {
             const res = await Api.authApi.checkCurrentUser();
+            console.log(res)
                 if(res.status === ApiStatus.succes) {
-                    this.props.setUsername(res.data.username);
-                    this.props.setRole(res.data.role);
+                    dispatch(setUsername(res.data.username));
+                    dispatch(setRole(res.data.role));
                 }
             return res.status;
         } else {
@@ -112,16 +70,17 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         }
     }
 
-    getInfoCurrentUser = async () => {
+    const getInfoCurrentUser = async () => {
         const res = await Api.authApi.getInfoCurrentUser();
+        console.log(res)
         if(res.status === ApiStatus.succes) {
-            this.props.setInfoUser(res.data);
+          dispatch(setInfoUser(res.data));
         }
         return res.status
     }
 
-    renderContent() {
-        const { page, permission, role } = this.props;
+    const renderContent = () => {
+        const { page, permission } = props;
         let content: JSX.Element;
 
         switch (page) {
@@ -216,21 +175,17 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         )
     }
 
-    render() {
-        const { loading } = this.state;
-        const { username, showToast, isLoading } = this.props;
-        if(loading) {
-            return <LoadingInComing/>
-        } else {
-            return (
-                <>
-                    {isLoading ? <LoadingDot /> : <React.Fragment />}
-                    {username ? this.renderContent() : <Navigate to="/login" replace/>}
-                    {showToast && <Toast />}
-                </>
-            )
-        }
+    if(loading) {
+        return <LoadingInComing/>
+    } else {
+        return (
+            <div key={username}>
+                {isLoading ? <LoadingDot /> : <React.Fragment />}
+                {!!username ? renderContent() : <Navigate to="/login" replace />}
+                {isShow && <Toast />}
+            </div>
+        )
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default Layout;
