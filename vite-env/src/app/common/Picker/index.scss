@@ -1,0 +1,42 @@
+.custompeoplepicker {
+  padding: 8px 0;
+
+  .custompeoplepicker-label {
+    font-size: 16px;
+  }
+  .ms-BasePicker {
+    margin-bottom: 8px;
+  }
+
+  .ms-BasePicker-text {
+    padding: 4px;
+  }
+
+  .ms-BasePicker-input {
+    font-size: 16px;
+    height: 36px;
+    padding: 0px 8px;
+  }
+
+  .ms-BasePicker-selectedItems {
+    display: flex;
+    flex-direction: column;
+
+    .ms-PickerPersona-container {
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgb(255 255 255);
+      margin: 4px 0px;
+      padding: 8px;
+      max-width: 100%;
+      width: 100%;
+      border: 1px #ccc solid;
+    }
+
+    .ms-Persona-details {
+      padding: 4px 8px;
+    }
+  }
+}

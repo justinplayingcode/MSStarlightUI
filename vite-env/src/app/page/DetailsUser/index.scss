@@ -1,0 +1,46 @@
+.wrapper-table-content{
+    .account-profile{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 10px;
+        .profile-info{
+            display: flex;
+            flex-direction: row;
+            .profile-detail-info{
+                flex: 1;
+                padding-left: 10px;
+                .detail-info-content{
+                    overflow: auto;
+                    .ms-Label{
+                        min-width: 160px;
+                    }
+                    .bottom-detail-info{
+                        padding: 8px;
+                        border: 1px solid #eee;
+                        .bottom-detail-info-avatar {
+                          padding-bottom: 12px;
+                          display: flex;
+                          justify-content: space-between;
+                        } 
+                    }
+                }
+                .footer-button{
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+}
+//660
+@media (max-width: 660px) {
+    .wrapper-table-content .user-profile .profile-info{
+        flex-direction: column ;
+        align-items: center;
+    }
+}

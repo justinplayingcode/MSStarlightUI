@@ -1,0 +1,95 @@
+.patient-management-details {
+  .patient-management-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .patient-management-header {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1f8384;
+      border-bottom: 1px solid #e4e4e4;
+    }
+    .patient-management-content {
+      padding: 16px;
+
+      .patient-management-item {
+        margin-bottom: 16px;
+        .uniform-section-content {
+          .basicInfoRender {
+            width: 40%;
+            min-width: 250px;
+            .key {
+              font-weight: normal !important;
+            }
+          }
+          .patient-management-history {
+            padding: 16px 0;
+            margin-right: 8px;
+            width: calc(50% - 8px);
+            .basicInfoRender {
+              width: 100%;
+              min-width: 250px;
+              .key {
+                font-weight: normal !important;
+                width: 60px !important;
+              }
+              .value {
+                width: calc(100% - 60px) !important;
+              }
+            }
+            .name-viewed {
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.content-section {
+  padding: 12px 0;
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  .content-test-result {
+    width: 100%;
+    display: flex;
+    border: 1px solid #e7e7e7;
+    padding: 6px 0;
+    .content-test-result-title {
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 0 6px;
+      .content-test-result-download {
+        i {
+          margin-left: 4px;
+        }
+        border: none;
+        width: 100px;
+      }
+      .content-test-result-service {
+        margin-bottom: 4px;
+        text-align: center;
+        height: 28px;
+        line-height: 28px;
+        background-color: #e7e7e7;
+        width: 100%;
+      }
+    }
+    .content-test-result-reason {
+      flex: 1;
+      padding-top: 4px;
+    }
+  }
+}

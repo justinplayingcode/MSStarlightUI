@@ -1,0 +1,23 @@
+.infomation-grid-wrapper{
+    display: flex;
+    flex-flow: row wrap;
+    .grid-row{
+        min-height: 32px;
+        min-width: 300px;
+        width: 50%;
+
+        .label-section,
+        .value-section{
+            word-break: break-word;
+            letter-spacing: -0.21px;
+            padding: 8px;
+        }
+
+        .label-section{
+            font-weight: 600;
+            &.has-background{
+                background: #f2f3f4;
+            }
+        }
+    }
+}
