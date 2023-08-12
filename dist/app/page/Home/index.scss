@@ -1,0 +1,267 @@
+.home-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    height: 52px;
+    width: 100%;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px 0;
+  }
+
+  .content {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .chart-container-wrapper {
+      width: calc(50% - 10px);
+      height: calc(50% - 8px);
+      margin-bottom: 16px;
+    }
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #fff;
+      box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+      border-radius: 15px;
+    }
+
+    .doctor-section-container {
+      width: 100%;
+      height: calc(40% - 20px);
+      padding-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+
+      .doctor-section {
+
+        hr {
+          color: #ccc;
+          margin: 0 32px;
+          height: 4px;
+        }
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24%;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+        border-radius: 15px;
+        padding: 28px;
+
+        .date {
+          font-style: italic;
+          font-size: 16px;
+          font-weight: 600;
+          text-align: center;
+        }
+
+        .information {
+          font-size: 16px;
+        }
+
+        .department {
+          font-style: italic;
+        }
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .total {
+          padding-left: 20px;
+          font-size: 90px;
+        }
+        .details {
+          text-align: end;
+        }
+      }
+    }
+  }
+}
+
+#doctor-home,
+#patient-home {
+  display: flex;
+  justify-content: space-between;
+  align-content: start;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  .information {
+    height: 300px;
+    width: calc(50% - 8px);
+    border-radius: 8px;
+    filter: saturate(0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    padding: 20px;
+    margin-bottom: 16px;
+    color: rgb(210,210,210);
+
+    .information-welcome {
+      height: 20%;
+      width: 100%;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    .information-first {
+      height: 60%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: center;
+      padding-top: 12px;
+
+      .information-text {
+        font-size: 18px;
+        width: 100%;
+        line-height: 19px;
+        display: flex;
+        margin-bottom: 8px;
+        div {
+          width: 160px;
+          font-size: 16px;
+          font-style: italic;
+        }
+      }
+
+    }
+    .information-second {
+      height: 20%;
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: end;
+    }
+  }
+  .schedule {
+    height: 300px;
+    width: calc(50% - 8px);
+    background-color: #2E5974;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 20px;
+    color: rgb(210,210,210);
+    margin-bottom: 16px;
+    .schedule-date {
+      font-style: italic;
+      height: 40px;
+      width: 100%;
+      text-decoration: underline;
+      padding-left: 28px;
+    }
+    .schedule-content {
+      height: calc(100% - 40px);
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      padding-top: 20px;
+
+      .schedule-details {
+        width: 50%;
+
+        .schedule-details-text {
+          display: flex;
+          flex-direction: column;
+          font-size: 28px;
+          width: 100%;
+          font-weight: bold;
+          .schedule-details-title {
+            margin-right: 6px;
+            font-size: 16px;
+            font-style: italic;
+            font-weight: normal;
+            display: flex;
+            justify-content: flex-start;
+          }
+        }
+        .schedule-details-button {
+          display: flex;
+          width: 100%;
+          justify-content: start;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+}
+
+#patient-home {
+  display: flex;
+  justify-content: space-between;
+  align-content: start;
+  height: 100%;
+  width: 100%;
+  flex-wrap: wrap;
+  .information {
+    filter: saturate(0.4);
+    color: #fff;
+  }
+  .schedule {
+    background: linear-gradient(to left, #294150,#233643);
+    .schedule-content {
+      .schedule-details {
+        .schedule-details-text.fz20 {
+          font-size: 18px;
+        }
+        .schedule-details-text.flexrow {
+          flex-direction: row;
+          align-items: start;
+          .schedule-details-title {
+            margin-left: 4px;
+          }
+          span {
+            transform: translateY(-11px);
+          }
+        }
+      }
+    }
+  }
+  .schedule.healthInformation {
+    height: calc(50% - 8px);
+    margin-bottom: 16px;
+  }
+  .section {
+    height: 300px;
+    width: calc(50% - 8px);
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 20px;
+    color: rgb(210,210,210);
+    margin-bottom: 16px;
+  }
+}
+
+
+@media (max-width: 1080px) {
+  .chart-container-wrapper {
+    width: 100% !important;
+    max-height: 400px;
+  }
+
+  #doctor-home,
+  #patient-home {
+    .information,
+    .schedule {
+      width: 100%;
+    }
+  }
+}
