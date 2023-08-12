@@ -9,9 +9,9 @@ import { RootState } from 'src/redux/store';
 import './index.scss'
 import { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import VerticalLinearStepper from 'src/app/common/Stepper/VerticalStepper';
 import { Convert } from 'utils';
 import { doctorInDepartmentColumns } from '../components/table/doctorInDepartmentColumn';
+import VerticalLinearStepper from 'src/app/common/Stepper';
 import CustomDatePicker from 'src/app/common/Datepicker';
 
 const AppointmentStep = ({ ...props }: any) => {
