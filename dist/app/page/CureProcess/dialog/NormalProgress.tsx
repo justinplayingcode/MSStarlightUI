@@ -5,12 +5,12 @@ import { RootState } from "src/redux/store";
 import { useState, useEffect } from "react";
 import { basicKeyValueRender } from "src/utils/utils";
 import { Convert, Validate } from "utils";
-import Picker from "src/app/common/Picker";
 import { TestList } from "src/model/doctorModel";
 import { Onboarding, TypeOfTest, toastType } from "src/model/enum";
 import { useDispatch } from "react-redux";
 import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import Api from "api";
+import Picker from "../../../common/Picker";
 
 interface ITestResult {
   service: TypeOfTest,

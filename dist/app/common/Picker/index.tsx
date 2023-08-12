@@ -1,8 +1,5 @@
-import { useState } from "react";
 import CustomPeoplePicker from "./custompeoplepicker";
 import { IPersonaProps } from "@fluentui/react";
-import Api from "api";
-import { ApiStatus } from "model";
 
 interface IPickerProps {
   label: string;
