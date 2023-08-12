@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { setTableSelectedCount, setTableSelectedItem } from 'src/redux/reducers';
 import { RootState } from 'src/redux/store';
 import { TableType } from 'src/model/enum';
-import Pagination from 'src/app/common/Pagination';
+import Pagination from '../pagination';
 
 const classNames = mergeStyleSets({ controlWrapper: { display: 'flex',flexWrap: 'wrap', paddingLeft: '20px'}});
 const controlStyles = {root: { margin: '0 30px 20px 0', maxWidth: '300px'}};
@@ -238,7 +238,7 @@ class UniformTable extends React.Component<IUniformTableProps, IUniformTableStat
                             </div>
                         }
                     </div>
-                    {total > 10 ? 
+                    {total > pageSize ? 
                       <div className='details-list-paging'>
                           <Pagination
                             pageTotal={Math.ceil(total/pageSize)}

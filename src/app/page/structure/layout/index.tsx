@@ -24,7 +24,6 @@ import NewsPost from "src/app/page/News";
 import NewsCreate from "src/app/page/News/SubMenu/NewsCreate";
 import NewsReview from "src/app/page/News/SubMenu/NewsReview";
 // import { MainPanel } from "src/app/common/Uniformpanel";
-import { MainPanel } from "../../../common/Uniformpanel";
 import { LoadingDot, LoadingInComing } from "src/app/common/loading";
 import DoctorAppointment from "../../DoctorAppointments";
 import PasswordChange from "../../PasswordChange";
@@ -34,6 +33,7 @@ import DoctorInDepartment from "../../Speciality/DoctorInDepartment";
 import DetailsCureHistory from "../../CureHistory/DetailsCureHistory";
 import PatientManagement from "../../PatientManagement";
 import PatientDetailsWithHitories from "../../PatientManagement/components/PatientDetailsWithHitstories";
+import { MainPanel } from "src/app/common/uniformpanel";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
