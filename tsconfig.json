@@ -23,6 +23,7 @@
     "baseUrl": ".",
     "paths": {
       "model": [ "src/model/index"],
+      "common": [ "src/common/index"],
       "utils": [ "src/utils/index"],
       "redux": [ "src/redux/index"],
       "image": [ "src/assets/image"],
