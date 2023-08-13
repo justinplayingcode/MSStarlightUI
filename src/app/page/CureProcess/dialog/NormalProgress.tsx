@@ -10,7 +10,7 @@ import { Onboarding, TypeOfTest, toastType } from "src/model/enum";
 import { useDispatch } from "react-redux";
 import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import Api from "api";
-import Picker from "../../../common/Picker";
+import Picker from "../../../common/picker";
 
 interface ITestResult {
   service: TypeOfTest,
@@ -555,7 +555,7 @@ function NormalProgress({ ...props }: INormalProgressPorops) {
     const testDialogButton = <PrimaryButton text="Xét nghiệm" onClick={handleTestingBtn}/>
     const nextButton = <PrimaryButton text="Tiếp theo" onClick={handleNext}/>
     const backButton = <DefaultButton text="Quay lại" onClick={handleBack} />
-    const submitButton = <PrimaryButton text="Hoàn thành" onClick={() => { setDialogOnbroadingClosed(false); onChangeCurrentState("onBoarding", 1) }}/>
+    const submitButton = <PrimaryButton text="Hoàn thành" onClick={() => { setDialogOnbroadingClosed(false); onChangeCurrentState("onBoarding", 0) }}/>
 
     switch (currentStep) {
       case 0:
