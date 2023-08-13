@@ -10,7 +10,7 @@ import { Onboarding, TypeOfTest, toastType } from "src/model/enum";
 import { useDispatch } from "react-redux";
 import { closeLoading, openLoading, showToastMessage, tableRefresh } from "src/redux/reducers";
 import Api from "api";
-import Picker from "../../../common/Picker";
+import Picker from "../../../common/picker";
 
 interface ITestResult {
   service: TypeOfTest,
