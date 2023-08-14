@@ -52,6 +52,7 @@ class UniformLayout extends React.Component<UniformLayoutPropsFromState, any> {
                         <Route path="/patient-management-doctor/details/historymedical/:id" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_ON_BOARDING_HISTORY}/>} />
                         <Route path="/schedulehistory" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY}/>} />
                         <Route path="/schedulehistory/details/:id" element={<Layout permission={this.Auth.noAdmin} page={pageConstant.LAYOUT_CURE_HISTORY_DETAILS}/>} />
+                        <Route path="/schedulehistory/bill/:id" element={<Layout permission={this.Auth.patient} page={pageConstant.LAYOUT_CURE_HISTORY_BILL}/>} />
                         <Route path="/make-appointment" element={<Layout permission={this.Auth.patient} page={pageConstant.LAYOUT_APPOINTMENT} />} />
                         <Route path="/cure/appointment" element={<Layout permission={this.Auth.doctor} page={pageConstant.LAYOUT_DOCTORAPPOINTMENT} />} />
                         <Route path="/diseases" element={<Layout permission={this.Auth.all} page={pageConstant.LAYOUT_DISEASES}/>} />

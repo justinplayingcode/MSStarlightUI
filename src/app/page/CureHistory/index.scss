@@ -30,6 +30,25 @@
           }
         }
       }
+      .cure-details-content-item.bill {
+        .uniform-section-content {
+          width: 100%;
+          div {
+            width: 100%;
+            .basicInfoRender {
+              width: 100%;
+              min-width: 380px;
+              .key {
+                width: 12% !important;
+              }
+              .value {
+                width: 88% !important;
+                padding-left: 68px !important;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

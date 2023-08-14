@@ -121,6 +121,12 @@ export const Location = () => {
           url: '/schedulehistory/details',
           parentKeys:["route-schedulehistory"]
       },
+      CureHistoryBill: {
+        key: 'route-schedulehistory-bill',
+        text: 'Hóa đơn',
+        url: '/schedulehistory/bill',
+        parentKeys:["route-schedulehistory"]
+    },
       Appointment:{
           key: 'route-make-appointment',
           text: 'Lịch khám bệnh',
