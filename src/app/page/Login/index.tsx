@@ -61,7 +61,8 @@ export const Login: React.FunctionComponent = () => {
             >
                 <div id="overlay-login"></div>
                 <div id="header-login">
-                  
+                  <p>Starlight Hospital Management</p>
+                  <p>Hệ thống quản lý khám chữa bệnh bệnh viện Starlight</p>
                 </div>
                 <Stack className="login-form-container">
                     <Stack className="form-container">
