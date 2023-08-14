@@ -155,6 +155,14 @@ const CureHistory = () => {
           onClick: handleExportCsv
         })
       }
+      if(role === accountRole.Patient && tableSelectedCount > 0) {
+        commandBar.push({
+          key: "bill",
+          text: "Hóa đơn",
+          iconProps: { iconName: 'Script' },
+          onClick: () => navigate(`/schedulehistory/bill/${tableSelectedItem[0]?._id}`),
+        })
+      }
       return commandBar
     }
 

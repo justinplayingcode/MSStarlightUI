@@ -34,6 +34,7 @@ import DetailsCureHistory from "../../CureHistory/DetailsCureHistory";
 import PatientManagement from "../../PatientManagement";
 import PatientDetailsWithHitories from "../../PatientManagement/components/PatientDetailsWithHitstories";
 import { MainPanel } from "src/app/common/uniformpanel";
+import DetailsBill from "../../CureHistory/DetailsBill";
 interface LayoutOwnProps {
     page: string;
     permission: number[];
@@ -152,6 +153,9 @@ const Layout = ({...props}: LayoutOwnProps) => {
                 break;
             case pageConstant.LAYOUT_ON_BOARDING_HISTORY:
                 content = <DetailsCureHistory/>
+                break;
+            case pageConstant.LAYOUT_CURE_HISTORY_BILL:
+                content = <DetailsBill/>
                 break;
             default:
                 content = <></>

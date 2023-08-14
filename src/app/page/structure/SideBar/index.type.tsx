@@ -152,56 +152,55 @@ export const getNavList = (role: accountRole, departmentCode , isHomePage: boole
             }
         },
     );
-    let newsItems;
-    if(role === accountRole.Patient) {
-      // newsItems = {
-      //   path: '/news/newsfeed',
-      //   state: '/news/newsfeed',
-      //   sidebarProps: {
-      //     displayText: 'Thông tin, tin tức',
-      //     icon: <FaRegNewspaper />,
-      //   },
-      // }
-    } else {
-      newsItems = {
-        state: '/news',
-        sidebarProps: {
-          displayText: 'Thông tin, tin tức',
-          icon: <FaRegNewspaper />,
-        },
-        child:[
-          // {
-          //   path: '/news/newsfeed',
-          //   state: '/news/newsfeed',
-          //   sidebarProps: {
-          //       displayText: 'Tin tức',
-          //       icon: <MdOutlineArrowRightAlt />
-          //   }
-          // },
-          {
-            path: '/news/newscreate',
-            state: '/news/newscreate',
-            sidebarProps:{
-                displayText: 'Tạo bài đăng',
-                icon: <MdOutlineArrowRightAlt/>
-            }
-          }
-        ]
-      }
-    }
-    if(role === accountRole.Admin){
-        newsItems.child.push(
-            {
-                path: '/news/newsreview',
-                state: '/news/newsreview',
-                sidebarProps:{
-                    displayText: 'Duyệt bài đăng',
-                    icon: <MdOutlineArrowRightAlt/>
-                }
-            }
-        )
-    }
-    list.push(newsItems);
-
+    // let newsItems;
+    // if(role === accountRole.Patient) {
+    //   // newsItems = {
+    //   //   path: '/news/newsfeed',
+    //   //   state: '/news/newsfeed',
+    //   //   sidebarProps: {
+    //   //     displayText: 'Thông tin, tin tức',
+    //   //     icon: <FaRegNewspaper />,
+    //   //   },
+    //   // }
+    // } else {
+    //   newsItems = {
+    //     state: '/news',
+    //     sidebarProps: {
+    //       displayText: 'Thông tin, tin tức',
+    //       icon: <FaRegNewspaper />,
+    //     },
+    //     child:[
+    //       // {
+    //       //   path: '/news/newsfeed',
+    //       //   state: '/news/newsfeed',
+    //       //   sidebarProps: {
+    //       //       displayText: 'Tin tức',
+    //       //       icon: <MdOutlineArrowRightAlt />
+    //       //   }
+    //       // },
+    //       {
+    //         path: '/news/newscreate',
+    //         state: '/news/newscreate',
+    //         sidebarProps:{
+    //             displayText: 'Tạo bài đăng',
+    //             icon: <MdOutlineArrowRightAlt/>
+    //         }
+    //       }
+    //     ]
+    //   }
+    // }
+    // if(role === accountRole.Admin){
+    //     newsItems.child.push(
+    //         {
+    //             path: '/news/newsreview',
+    //             state: '/news/newsreview',
+    //             sidebarProps:{
+    //                 displayText: 'Duyệt bài đăng',
+    //                 icon: <MdOutlineArrowRightAlt/>
+    //             }
+    //         }
+    //     )
+    // }
+    // list.push(newsItems);
     return list;
 }   
